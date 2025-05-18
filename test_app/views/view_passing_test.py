@@ -2,11 +2,12 @@ import flask
 from ..models import Test, Quiz
 
 from flask_login import current_user
+    
+user_answers= []
 
 def render_passing_test(test_code):
     list_answers= []
     list_quiz= []
-    user_answers= []
 
     test_id= flask.request.args.get("test_id")
 
@@ -29,7 +30,7 @@ def render_passing_test(test_code):
 
         print(user_answers)
 
-        return flask.redirect("/")
+        return flask.redirect(f"/result_test{test.test_code}?test_id= {test.id}")
                 
     return flask.render_template(
         template_name_or_list = 'passing_test.html',

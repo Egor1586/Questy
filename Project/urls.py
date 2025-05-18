@@ -10,6 +10,7 @@ home_app.add_url_rule(rule= "/", view_func= render_home)
 home_app.add_url_rule(rule= '/score/', view_func= render_score, methods= ['GET', 'POST'])
 home_app.add_url_rule(rule="/profile/", view_func= render_profile, methods= ['GET', 'POST'])
 home_app.add_url_rule(rule = '/quizzes/', view_func = render_quizzes, methods = ['GET', 'POST'])
+home_app.add_url_rule(rule = '/delete_test<test_id>', view_func = delete_test, methods = ['GET', 'POST'])
 
 
 # 
@@ -21,7 +22,6 @@ sign_up_app.add_url_rule(rule= '/reset_password/', view_func= render_reset_app, 
 sign_up_app.add_url_rule(rule= '/confirmation_account/', view_func= render_confirm_account, methods= ['POST', 'GET'])
 
 sign_up_app.add_url_rule(rule = '/login/', view_func = render_login_app, methods = ['GET', 'POST'])
-
 sign_up_app.add_url_rule(rule="/logout/", view_func= loguot, methods = ['GET', 'POST'])
 
 
@@ -31,7 +31,10 @@ test_app.add_url_rule(rule= '/new_quiz/', view_func= render_new_quiz, methods = 
 test_app.add_url_rule(rule= '/room<test_code>', view_func= render_room, methods = ['GET', 'POST'])
 
 test_app.add_url_rule(rule= '/edit_question', view_func= render_edit_question, methods = ['GET', 'POST'])
-
 test_app.add_url_rule(rule = '/edit_header_test<test_id>', view_func = render_edit_header, methods = ['GET', 'POST'])
 
 test_app.add_url_rule(rule = '/passing_test<test_code>', view_func = render_passing_test, methods = ['GET', 'POST'])
+test_app.add_url_rule(rule = '/result_test<test_code>', view_func = render_test_result, methods = ['GET', 'POST'])
+
+test_app.add_url_rule(rule = '/delete_test<test_id>', view_func = delete_test, methods = ['GET', 'POST'])
+test_app.add_url_rule(rule = '/delete_quiz<quiz_id>', view_func = delete_quiz_question, methods = ['GET', 'POST'])

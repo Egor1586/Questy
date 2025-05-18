@@ -7,12 +7,10 @@ from ..models import Test, Quiz
 
 def render_edit_question():
 
-    
     list_answers = []
 
     answer_options = " "
     correct_answer = " " 
-    first_naswer = 0
 
     quiz_id= flask.request.args.get("quiz_id")
     test_id= flask.request.args.get("test_id")
@@ -20,7 +18,7 @@ def render_edit_question():
     quiz = Quiz.query.filter_by(id = quiz_id).first()
     test = Test.query.filter_by(id = test_id).first()
 
-    list_answers= quiz.answer_options.split("%$№")
+    list_answers = quiz.answer_options.split("%$№")
     
     if flask.request.method == 'POST':
 

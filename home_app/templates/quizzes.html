@@ -42,6 +42,13 @@
                                 <button class="edit">
                                     <a href="/test_app{{ test.test_code }}?test_id={{ test.id }}">Edit</a>                    
                                 </button>
+                                
+                                <form action="/delete_test{{ test.id }}" >
+                                    <button class="delete">
+                                        Delete Test
+                                    </button>
+                                </form>
+
                                 <!-- <button class="start">Start</button> -->
                                 <button class="start">
                                     <a href="/room{{test.test_code}} " class="btn">

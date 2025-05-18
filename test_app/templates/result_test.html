@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Test
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="">
+{% endblock %}
+
+{% block content %}
+    <div>
+        <p>Ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
+        <p>Процент правильных ответов {{ procent_correct_answers }}</p>
+    </div>
+{% endblock %}
