@@ -9,35 +9,38 @@
 {% endblock %}
 
 {% block content %}
-    
-    <div class="info-bar">
-        <div>Author: {{ username }}</div>
-        <div>Test code: <strong>{{ CODE }}</strong></div>
-    </div>
+    <div class="waite-side">
+        <div class="info-bar">
+            <div class="info-text">Author: {{ username }}</div>
+            <div class="info-text">Test code: <strong>{{ CODE }}</strong></div>
+        </div>
 
-    <div class="user-list">
-        <div class="user-block">
-            <div class="user-name">User 1</div>
-            <div class="user-actions">
-                <button class="btn-remove">Delete</button>
-                <button class="btn-block">Block</button>
-            </div>
-
-            </div>
+        <div class="user-list">
             <div class="user-block">
-                <div class="user-name">User 2</div>
+                <div class="user-name">User 1</div>
                 <div class="user-actions">
                     <button class="btn-remove">Delete</button>
                     <button class="btn-block">Block</button>
                 </div>
+
+                </div>
+                <div class="user-block">
+                    <div class="user-name">User 2</div>
+                    <div class="user-actions">
+                        <button class="btn-remove">Delete</button>
+                        <button class="btn-block">Block</button>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
-    <div class="status-message">Waiting for others...</div>  
-
-    <input id="msg" type="text" placeholder="Enter your message">
-    <button onclick="sendMessage()">Send</button>
-    <div id="messages"></div>
+    <div class="chat">
+        <h2>Chat</h2>
+        <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
+        <button onclick="sendMessage()" class="send-btn">Send</button>
+        <div id="messages"></div>
+    </div>
 
     <script>
         

@@ -5,7 +5,7 @@ from Project.database import db
 
 from flask_login import current_user
 
-def render_edit_header(id):
+def render_edit_header(test_id):
 
     test= Test.query.filter_by(id= id).first()
 
@@ -14,12 +14,10 @@ def render_edit_header(id):
         if flask.request.form["title"]:
             title = flask.request.form["title"]
             test.title= title
-            print(title)
 
         if flask.request.form["description"]:
             description = flask.request.form["description"]
             test.description= description
-            print(description)
 
         db.session.commit()
 

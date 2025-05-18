@@ -11,21 +11,16 @@
 {% block content %}
     <form action="" method="post">
         <h1>Edit</h1>
-            {% for answer in list_answers %}
-                {% set numb = list_answers[loop.index0] %}
-                {% for question in range(test.answers_per_question) %}
-                    {% if answer[numb] != right_answer %}
-                        <div>
-                            <input type="text" name="answer{{ question }}" placeholder="Enter new answer">
-                        </div>
-                    {% else %}
-                        <div>
-                            <input type="text" name="correct_answer" placeholder="Enter new right answer">
-                        </div>
-                    {% endif %}
-                {% endfor %}
-                
-            {% endfor %}
+        {% for number in range(test.answers_per_question) %}
+            {% if list_answers[number] != correct_answer %}
+                <p>{{ list_answers[number] }}</p>
+                <input type="text" name="answer{{ number }}" placeholder="Enter new answer">
+            {% else %}
+                <p>{{ list_answers[number] }}</p>
+                <input type="text" name="correct_answer" placeholder="Enter new right answer">
+            {% endif %}
+            
+        {% endfor %}
 
         <button type="submit">Edit question</button>
     </form>

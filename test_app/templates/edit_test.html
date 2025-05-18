@@ -28,7 +28,7 @@
                 <div class="question-header">
                 <div>{{ question.question_text }}</div>
                 <button class="edit-btn">
-                    <a href="/edit_question{{ question.id }}">Edit</a>
+                    <a href="/edit_question?test_id= {{ test.id }}&quiz_id= {{ question.id }}">Edit</a>
                 </button>
                 </div>
                 <div class="question-text">
