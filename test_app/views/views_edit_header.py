@@ -7,7 +7,7 @@ from flask_login import current_user
 
 def render_edit_header(test_id):
 
-    test= Test.query.filter_by(id= id).first()
+    test= Test.query.filter_by(id= test_id).first()
 
     if flask.request.method == "POST":
 

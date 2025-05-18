@@ -32,9 +32,8 @@ body {
 }
 
 main {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
-    /* flex: 1; */
     width: 100vw;
     height: 84vh;
 }
