@@ -34,7 +34,7 @@ def delete_quiz_question(quiz_id):
     test = Test.query.filter_by(id = quiz.test_id).first()
 
     if test.author_name == current_user.username:
+        test.total_questions -= 1 
         db.session.delete(quiz)
         db.session.commit()
-        test.total_questions -= 1 
     return flask.redirect(location= f'/test_app{test.test_code}?test_id={test.id}')
