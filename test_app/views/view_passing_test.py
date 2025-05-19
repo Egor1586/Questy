@@ -2,12 +2,13 @@ import flask
 from ..models import Test, Quiz
 
 from flask_login import current_user
-    
-user_answers= []
+from Project.render_page import render_page
 
+@render_page(template_name = 'passing_test.html')
 def render_passing_test(test_code):
     list_answers= []
     list_quiz= []
+    user_answers= []
 
     test_id= flask.request.args.get("test_id")
 
@@ -28,16 +29,13 @@ def render_passing_test(test_code):
                     user_answers.append("not answer")
                     print(error)
 
-        print(user_answers)
+        flask.session["user_answer"]= user_answers.copy()
+        user_answers.clear()
 
         return flask.redirect(f"/result_test{test.test_code}?test_id= {test.id}")
                 
-    return flask.render_template(
-        template_name_or_list = 'passing_test.html',
-        is_authorization = current_user.is_authenticated,
-        username = current_user.username if current_user.is_authenticated else "", 
-        is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
-        test = test,
-        list_quiz = list_quiz,
-        list_answers= list_answers
-    )
+    return {
+        "test": test,
+        "list_quiz": list_quiz,
+        "list_answers": list_answers
+    }

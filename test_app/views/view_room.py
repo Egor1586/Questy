@@ -2,6 +2,7 @@ import flask, Project
 
 from flask_login import current_user
 from flask_socketio import join_room, emit
+from Project.render_page import render_page
 
 users = {}
 
@@ -17,12 +18,9 @@ def handle_message(data):
     username = users.get(flask.request.sid, "Anonymous") 
     emit("message", f"{username}: {data}", broadcast=True)
 
+@render_page(template_name = 'room.html')
 def render_room(test_code):
 
-    return flask.render_template(
-    template_name_or_list= 'room.html', 
-    is_authorization = current_user.is_authenticated,
-    username = current_user.username if current_user.is_authenticated else "", 
-    is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
-    CODE = test_code
-    )
+    return {
+    "CODE": test_code
+    }

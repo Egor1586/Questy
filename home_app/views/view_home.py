@@ -5,6 +5,8 @@ from Project.settings import socketio
 from flask_socketio import emit, join_room
 from test_app.models import Test
 
+from Project.render_page import render_page
+
 users = {}
 
 @Project.settings.socketio.on('join')
@@ -21,20 +23,16 @@ def handle_message(data):
     emit("message", f"{username}: {data}", broadcast=True) 
     print(f"{username}: {data}")
 
+
 def loguot():
     flask.session.clear()
     return flask.redirect("/")
 
+@render_page(template_name = 'home.html')
 def render_home():
     list_test = []
     
     if current_user.is_authenticated:
         list_test = Test.query.all()
 
-    return flask.render_template(
-    template_name_or_list= 'home.html', 
-    is_authorization = current_user.is_authenticated,
-    username = current_user.username if current_user.is_authenticated else "", 
-    is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
-    list_tests = list_test
-    )
+    return {"list_tests": list_test}

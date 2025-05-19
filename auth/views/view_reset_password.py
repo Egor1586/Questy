@@ -1,25 +1,28 @@
 import flask, Project
 
-from .view_send_email import list_code
-from .view_sing_up import user_data, list_code_account
+from .view_sing_up import user_data
 from flask_login import current_user, login_user
 from ..models import User
 
+from Project.render_page import render_page
+
+@render_page(template_name= 'reset_password.html')
 def render_reset_app():
 
     if flask.request.method == "POST":
-        
+        password_code= flask.session.get("password_code", " ")
         code = int(flask.request.form['code'])
-        if code == list_code[-1]:
+        if code == password_code:
             return flask.redirect(location = '/../new_password')
-        
-    return flask.render_template('reset_password.html')
+    
+    return { }
 
-
+@render_page(template_name= 'reset_password.html')
 def render_confirm_account():
     if flask.request.method == "POST":
+        sing_up_code= flask.session.get("sing_up_code", " ")
         code = int(flask.request.form['code'])
-        if code == list_code_account[-1]:
+        if code == sing_up_code:
                 
             user = User(
                 username = user_data['name'],
@@ -37,7 +40,7 @@ def render_confirm_account():
             return flask.redirect(location = '/../')
     
     if not current_user.is_authenticated:
-        return flask.render_template(template_name_or_list="reset_password.html")
+        return { }
     else:
         return flask.redirect('/')
 

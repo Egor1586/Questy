@@ -4,7 +4,9 @@ from ..models import Test, Quiz
 from Project.database import db
 
 from flask_login import current_user
+from Project.render_page import render_page
 
+@render_page(template_name = 'edit_test.html')
 def render_test_app(test_code):
     
     list_quiz = []
@@ -17,15 +19,11 @@ def render_test_app(test_code):
         list_answers.append(quiz.answer_options.split("%$№"))
         list_quiz.append(quiz)
         
-    return flask.render_template(
-        template_name_or_list= 'edit_test.html', 
-        is_authorization = current_user.is_authenticated,
-        username = current_user.username if current_user.is_authenticated else "", 
-        is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
-        test= test,
-        list_quiz= list_quiz,
-        list_answers= list_answers
-        )
+    return {
+        "test": test,
+        "list_quiz": list_quiz,
+        "list_answers": list_answers
+    }
 
 
 
@@ -37,4 +35,5 @@ def delete_quiz_question(quiz_id):
         test.total_questions -= 1 
         db.session.delete(quiz)
         db.session.commit()
+    
     return flask.redirect(location= f'/test_app{test.test_code}?test_id={test.id}')

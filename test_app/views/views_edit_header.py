@@ -4,7 +4,9 @@ from ..models import Test
 from Project.database import db
 
 from flask_login import current_user
+from Project.render_page import render_page
 
+@render_page(template_name = 'edit_head_test.html')
 def render_edit_header(test_id):
 
     test= Test.query.filter_by(id= test_id).first()
@@ -23,9 +25,4 @@ def render_edit_header(test_id):
 
         return flask.redirect(f"/test_app{test.test_code}?test_id= {test.id}")
 
-    return flask.render_template(
-        template_name_or_list = 'edit_head_test.html',
-        is_authorization = current_user.is_authenticated,
-        username = current_user.username if current_user.is_authenticated else "", 
-        is_teacher= current_user.is_teacher if current_user.is_authenticated else ""
-    )
+    return {}

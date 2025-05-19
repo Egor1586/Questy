@@ -3,7 +3,9 @@ from flask_login import current_user
 from test_app.models import Test    
 
 from Project.database import db
+from Project.render_page import render_page
 
+@render_page(template_name = 'quizzes.html')
 def render_quizzes():
     list_your_test= []
     list_tests = Test.query.all()
@@ -16,14 +18,11 @@ def render_quizzes():
 
     count_of_tests = int(len(list_tests))
     
-    return flask.render_template(
-    template_name_or_list= 'quizzes.html', 
-    is_authorization = current_user.is_authenticated,
-    username = current_user.username if current_user.is_authenticated else "", 
-    is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
-    list_tests = list_your_test,
-    count_of_tests = count_of_tests
-    )
+    return{
+    "list_tests": list_your_test,
+    "count_of_tests": count_of_tests
+    }
+    
 
 def delete_test(test_id):
     test = Test.query.filter_by(id = test_id).first()

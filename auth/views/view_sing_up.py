@@ -5,6 +5,8 @@ from ..models import User
 from flask_login import current_user
 from ..send_email import send_code
 
+from Project.render_page import render_page
+
 user_data = {
     "name": None,
     'password': None,
@@ -13,12 +15,9 @@ user_data = {
     'is_teacher': None
     }
 
-
-list_code_account = []
-
+@render_page(template_name= 'sign_up.html')
 def render_sign_up(): 
-    message= ''
-   
+       
     if flask.request.method == 'POST':
         try:   
             user_data["name"] = flask.request.form['name'] 
@@ -32,7 +31,7 @@ def render_sign_up():
                 user_data['is_teacher'] = True
        
             code= random.randint(100000, 999999)
-            list_code_account.append(code)
+            sing_up_code= flask.session["sing_up_code"]= code
 
             db_email = User.query.filter_by(email = user_data["email"]).first()
             
@@ -40,7 +39,7 @@ def render_sign_up():
                 if db_email is None:
 
                     with Project.project.app_context():
-                        send_code(user_email=user_data["email"], code= code)
+                        send_code(user_email=user_data["email"], code= sing_up_code)
 
                     return flask.redirect(location = '/confirmation_account')
 
@@ -52,5 +51,4 @@ def render_sign_up():
             print(e)
             traceback.print_exc()
     
-
-    return flask.render_template(template_name_or_list= 'sign_up.html', message= message)
+    return { }

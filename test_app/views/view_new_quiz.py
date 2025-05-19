@@ -5,7 +5,9 @@ from Project.database import db
 from ..models import Test, Quiz
 from ..generat_test import generate_test
 
+from Project.render_page import render_page
 
+@render_page(template_name = 'new_quiz.html')
 def render_new_quiz():
     data= {
         "topic": "Основи Python",
@@ -114,8 +116,4 @@ def render_new_quiz():
         except Exception as error:
             print(error)
 
-    return flask.render_template(template_name_or_list = 'new_quiz.html',
-        is_authorization = current_user.is_authenticated,
-        username = current_user.username if current_user.is_authenticated else "", 
-        is_teacher= current_user.is_teacher if current_user.is_authenticated else ""
-        )
+    return {}
