@@ -8,35 +8,37 @@
     --shadow: rgba(0, 0, 0, 0.1);
 }
 
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--green-light);
-    scroll-behavior: smooth;
-    overflow: hidden;
-    color: var(--text-dark);
-}
 
-main {
-    display: flex;
-    gap: 20px;
 
-    width: 100vw;
-    height: 84vh;
+/* main { */
+    /* display: flex; */
+    /* gap: 20px; */
+
+    /* width: 100vw; */
+    /* height: 84vh; */
     /* padding: 20px; */
     /* margin-top: 60px;  */
-    box-sizing: border-box;
-
-
-    overflow-y: scroll;
+    /* box-sizing: border-box; */
+    
+    /* overflow-y: scroll;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    
+} */
+
+footer {
+    display: none;
+}
+
+main{
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    gap: 20px;
 }
 
 aside {
     width: 18vw;
-    height: 100vh;
+    height: 92vh;
     background-color: var(--bg-aside);
     padding: 15px 30px 30px 30px;
     box-shadow: 0 0 15px var(--shadow);

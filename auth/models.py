@@ -12,5 +12,19 @@ class User(db.Model, UserMixin):
     is_teacher = db.Column(db.Boolean)
     is_admin= db.Column(db.Boolean, default= 0)
 
+    quizes = db.relationship('Score', backref='user', cascade="all, delete-orphan")
+
     def __repr__(self):
         return f'User: {self.username}'
+    
+
+class Score(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_answer = db.Column(db.String, nullable = False)
+    accuracy = db.Column(db.Integer, nullable = False)
+    test_id= db.Column(db.Integer, nullable= False)
+
+    date_complete = db.Column(db.String, nullable= False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

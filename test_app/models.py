@@ -23,3 +23,4 @@ class Quiz(db.Model):
     correct_answer = db.Column(db.String(100), nullable=True)
     
     test_id = db.Column(db.Integer, db.ForeignKey('test.id'))
+

@@ -14,8 +14,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    
-    /* scrollbar-width:  none; */
 
 }
 
@@ -33,7 +31,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    /* width: 100%; */
 }
 
 ::-webkit-scrollbar{
@@ -47,7 +45,7 @@ header{
     
     width: 100vw;
     position: relative;
-    height: 10vh;
+    height: 8vh;
 }
   
 .navbar {
