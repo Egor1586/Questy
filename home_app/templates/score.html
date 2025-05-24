@@ -10,4 +10,16 @@
 
 {% block content %}
     <h1>Score page</h1>
+
+    {% if graph_html %}
+        {{ graph_html }}
+    {% endif %}
+
+    <h1>{{ name_test }}</h1>
+    {% for answer in list_user_answers %}
+        <p>{{ answer }}</p>
+    {% endfor %}
+    {% for accuracy in accuracy %}
+        <p>{{ accuracy }}</p>
+    {% endfor %}
 {% endblock %}
