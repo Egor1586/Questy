@@ -45,6 +45,11 @@
                     <div class="test-image">
                     </div>
                     <div class="test-content">
+                        {% if test.image %}
+                            <img src="/home_app/static/images/media/{{ test.id }}.png" alt="">
+                        {% else %}
+                            <img src="/home_app/static/images/media/0.png" alt="">
+                        {% endif %}
                         <span class="test-questions">{{ test.total_questions }} questions</span>
                         <h3 class="test-title">{{ test.title }}</h3>
                         <p class="test-description">{{ test.description }}</p>

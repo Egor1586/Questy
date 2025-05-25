@@ -15,7 +15,7 @@
     <section class="create-test-page">
         <h2 class="page-title">Create new quiz</h2>
 
-        <form class="test-form" method="POST">
+        <form class="test-form" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="test-title">Title</label>
                 <input type="text" id="test-title" name="title" placeholder="Enter test topic" required>
@@ -34,6 +34,11 @@
               <div class="form-group">
                     <label for="correct-answers">Amount of answers</label>
                     <input type="number" id="correct-answers" name="answers_per_question" min="4" placeholder="Standart - 4">
+              </div>
+
+              <div>
+                <label for="image">Test Image</label>
+                <input type="file" name="image" id="" accept="image/*">
               </div>
             </div>
         

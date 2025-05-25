@@ -1,4 +1,4 @@
-import flask, random, datetime
+import flask, random, datetime, os
 
 from flask_login import current_user
 from Project.database import db
@@ -66,18 +66,18 @@ def render_new_quiz():
         ]
         }
     
-    if flask.request.method == "POST":
+    if flask.request.method == "POST":   
         try:
             title = flask.request.form['title']
             description = flask.request.form['description']
             total_questions = flask.request.form['total_questions']
             answers_per_question= flask.request.form["answers_per_question"]
-            
+            image_form = flask.request.files.get('image', None)
+
             if not total_questions:
                 total_questions = 10
             if not answers_per_question:
                 answers_per_question = 4
-
             
             while True: 
                 test_code= random.randint(1000, 9999)
@@ -85,7 +85,7 @@ def render_new_quiz():
                 
                 if db_test_code is None:
                     break
-
+            
             test = Test(
                 title= title,
                 description= description,
@@ -93,12 +93,16 @@ def render_new_quiz():
                 answers_per_question = answers_per_question,
                 test_code= test_code,
                 author_name = current_user.username,
+                image=  1 if image_form else 0,
                 created_date= datetime.date.today()
             )
 
             db.session.add(test)
             db.session.commit()
-            
+
+            if test.image:
+                image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}.png")))
+     
             for quizzes in data["questions"]:
                 answers_list = quizzes["options"].copy()
                 random.shuffle(answers_list)
@@ -117,4 +121,4 @@ def render_new_quiz():
         except Exception as error:
             print(error)
 
-    return {}
+    return { }

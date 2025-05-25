@@ -103,3 +103,16 @@ main {
     background-color: #ffe6e6;
     border-left-color: rgb(238, 72, 72);
 }
+
+
+.delete_quiz {
+    background-color: white;
+    color: rgb(233, 96, 96);
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    height: fit-content;
+}

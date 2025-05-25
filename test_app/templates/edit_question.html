@@ -9,18 +9,17 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post">
-        <h1>Edit</h1>
+    <form action="" method="post" class="edit-question-form">
+        <h1>Edit question</h1>
         {% for number in range(test.answers_per_question) %}
             
             {% if list_answers[number] != correct_answer %}
-                <p>{{ list_answers[number] }}</p>
+                <p class="incorrect-answer-p">{{ list_answers[number] }}</p>
                 <input type="text" name="answer{{ number }}" placeholder="Enter new answer">
 
             {% else %}
-                <p>{{ list_answers[number] }}</p>
+                <p class="correct-answer-p">{{ list_answers[number] }}</p>
                 <input type="text" name="correct_answer" placeholder="Enter new right answer">
-            
             
             {% endif %}
         {% endfor %}

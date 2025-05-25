@@ -12,29 +12,54 @@
     <div>
         {% if username %}
             <p>{{ username }} ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
-        {% else %}
+            {% else %}
             <p>Me ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
-        {% endif %}
-        <p>Процент правильных ответов {{ accuracy }}</p>
+            {% endif %}
+            <p>Процент правильных ответов {{ accuracy }}</p>
+            
+            <button>
+                <a href="/">Back to home page</a>
+            </button>
+            
+            {% if not username %}
+                <div>
+                    <p> Если вы хотите отслежывать свой прогрес в Qusty. Создайте свой акаунт и следите за своим прогресом</p>
+                    <button>
+                        <a href="/sign_up">Sing up</a>
+                    </button>
+                </div>
+        
+                <div>
+                    <p>Если у вас уже есть акаунт зайдите внего</p>
+                    <button>
+                        <a href="login">Login</a>
+                    </button>
+                </div>
+            {% endif %}
+            
+        {% for question in list_quiz %}
+            {% set answers = list_answers[loop.index0] %}
+            {% set user_answer = user_anwsers[loop.index0] %}
+            <div class="question-block">
+                <div class="question-header">
+                    <div>{{ question.question_text }}</div>
+                </div>
 
-        <button>
-            <a href="/">Back to home page</a>
-        </button>
+                <div class="question-text">
+                    Your and the correct option.
+                </div>
+                {% for answer in answers %}
+                    {% if answer != question.correct_answer and answer != user_answer%}
+                        <div class="answer incorrect">✗ {{answer}}</div>                 
+                    {% elif user_answer != question.correct_answer and answer == user_answer %}
+                        <div class="answer user_answers">✗ {{answer}}</div>
+                    {% else %}
+                        <div class="answer correct">✓ {{ answer }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        
     </div>
     
-    {% if not username %}
-        <div>
-            <p> Если вы хотите отслежывать свой прогрес в Qusty. Создайте свой акаунт и следите за своим прогресом</p>
-            <button>
-                <a href="/sign_up">Sing up</a>
-            </button>
-        </div>
-
-        <div>
-            <p>Если у вас уже есть акаунт зайдите внего</p>
-            <button>
-                <a href="login">Login</a>
-            </button>
-        </div>
-    {% endif %}
 {% endblock %}

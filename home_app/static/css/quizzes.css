@@ -10,6 +10,7 @@
 
 
 
+
 /* main { */
     /* display: flex; */
     /* gap: 20px; */
@@ -107,12 +108,17 @@ aside {
     flex: 1;
     padding: 20px;
 
+    height: 100vh;
+
     display: flex;
     flex-direction: column;
+    justify-content: top;
     
     overflow-y: scroll;
     scrollbar-width: none;
     scroll-behavior: smooth;
+
+    margin-top: 100px;
 }
 
 /* .quiz-list::-webkit-scrollbar{

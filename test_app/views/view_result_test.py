@@ -1,4 +1,4 @@
-import flask, time, datetime
+import flask, datetime
 
 from ..models import Test, Quiz
 from Project.database import db
@@ -10,18 +10,20 @@ from auth.models import Score
 
 @render_page(template_name = 'result_test.html')
 def render_test_result(test_code):
+    list_answers= []
     count_correct_answers= 0
     str_user_answers = ""
     
     test_id= flask.request.args.get("test_id")
 
-    quizzes_list= Quiz.query.filter_by(test_id= test_id).all()
+    for quiz in Quiz.query.filter_by(test_id= test_id).all():
+        quizzes_list= Quiz.query.filter_by(test_id= test_id).all()
+        list_answers.append(quiz.answer_options.split("%$№"))
+    
     user_answers= flask.session.get("user_answer", [ ])
 
     for number, quiz in enumerate(quizzes_list):
         str_user_answers += f'{user_answers[number]}%$№'
-        print(f'Сверху принт ответов')
-        print(str_user_answers)
         if quiz.correct_answer == user_answers[number]:
             count_correct_answers += 1
         
@@ -41,6 +43,9 @@ def render_test_result(test_code):
     return {
         "total_questions": test.total_questions,
         'accuracy': count_correct_answers/len(quizzes_list) * 100 // 1,
-        'count_correct_answers': count_correct_answers
+        'count_correct_answers': count_correct_answers,
+        "list_quiz": quizzes_list,
+        "list_answers": list_answers,
+        "user_anwsers": user_answers
     }
 

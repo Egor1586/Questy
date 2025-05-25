@@ -19,7 +19,7 @@ def render_passing_test(test_code):
         list_quiz.append(quiz)
 
     if flask.request.method == "POST":
-        quiz_test_id = list_quiz[0].test_id
+        quiz_test_id = list_quiz[0].id
 
         for id in range(test.total_questions):
             if id != test.total_questions:
@@ -27,7 +27,6 @@ def render_passing_test(test_code):
                     user_answers.append(flask.request.form[f'answers{quiz_test_id + id}'])
                 except Exception as error:
                     user_answers.append("not answer")
-                    print(error)
 
         flask.session["user_answer"]= user_answers.copy()
         user_answers.clear()

@@ -6,8 +6,27 @@
 
 {% block links %}
     <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/score.css') }}">
-{% endblock %}
+{% endblock %} 
 
 {% block content %}
     <h1>Score page</h1>
+
+    {% if graph_html %}
+        {{ graph_html }}
+    {% endif %}
+
+    <h1>{{ name_test }}</h1>
+    {% for answer in list_user_answers %}
+        <p>{{ answer }}</p>
+    {% endfor %}
+    {% for accuracy in accuracy %}
+        <p>{{ accuracy }}</p>
+    {% endfor %}
+    {% if graph %}
+        <img src="data:image/png;base64, {{ graph }}">
+    {% else %}
+        <h1>No graph</h1>
+    {% endif %}
+    
+
 {% endblock %}
