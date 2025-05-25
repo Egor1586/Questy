@@ -12,9 +12,6 @@
     <form action="" method="post">
         <h1>Edit</h1>
         {% for number in range(test.answers_per_question) %}
-            {% if message: %}
-                <p>{{ message }}</p>
-            {% endif %}
             
             {% if list_answers[number] != correct_answer %}
                 <p>{{ list_answers[number] }}</p>

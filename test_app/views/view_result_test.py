@@ -27,15 +27,16 @@ def render_test_result(test_code):
         
     test = Test.query.filter_by(id= quizzes_list[0].test_id).first()
 
-    score = Score(
-        user_answer= str_user_answers,
-        accuracy= count_correct_answers/len(quizzes_list) * 100 // 1,
-        date_complete = datetime.date.today(),
-        test_id = test_id,
-        user_id = current_user.id
-    )
-    db.session.add(score)
-    db.session.commit()
+    if current_user.is_authenticated:
+        score = Score(
+            user_answer= str_user_answers,
+            accuracy= count_correct_answers/len(quizzes_list) * 100 // 1,
+            date_complete = datetime.date.today(),
+            test_id = test_id,
+            user_id = current_user.id
+        )
+        db.session.add(score)
+        db.session.commit()
         
     return {
         "total_questions": test.total_questions,

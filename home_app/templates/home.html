@@ -34,7 +34,7 @@
 
     <hr>
 
-        {% if username and list_tests %}
+        {% if list_tests %}
             <div class="aval-t">
                 <h1 class="av-t">Avaliable Tests</h1>
             </div>
@@ -58,7 +58,8 @@
         {% endif %}
 
     <script>
-
+        //let socket = new WebSocket("ws://javascript.info");
+        
         const socket = io();
 
         const username = "{{ username }}"

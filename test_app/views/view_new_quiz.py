@@ -73,7 +73,6 @@ def render_new_quiz():
             total_questions = flask.request.form['total_questions']
             answers_per_question= flask.request.form["answers_per_question"]
             
-            print("HE")
             if not total_questions:
                 total_questions = 10
             if not answers_per_question:
@@ -101,9 +100,11 @@ def render_new_quiz():
             db.session.commit()
             
             for quizzes in data["questions"]:
+                answers_list = quizzes["options"].copy()
+                random.shuffle(answers_list)
                 quiz = Quiz(
                     question_text = quizzes["question_text"],
-                    answer_options = "%$№".join(quizzes["options"]),
+                    answer_options = "%$№".join(answers_list),
                     correct_answer = quizzes["correct_answer"],
                     test_id = test.id             
                 )

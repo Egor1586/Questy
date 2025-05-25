@@ -32,7 +32,7 @@ def loguot():
 def render_home():
     list_test = []
     
-    if current_user.is_authenticated:
-        list_test = Test.query.all()
+    # if current_user.is_authenticated:
+    list_test = Test.query.all()
 
     return {"list_tests": list_test}
