@@ -11,15 +11,17 @@
 {% block content %}
     <div>
         {% if username %}
-            <p>{{ username }} ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
-            {% else %}
-            <p>Me ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
-            {% endif %}
-            <p>Процент правильных ответов {{ accuracy }}</p>
-            
-            <button>
-                <a href="/">Back to home page</a>
-            </button>
+            <div class="result-info">
+                <p><strong>{{ username }}</strong> ваш резульатат: <strong>{{ count_correct_answers }}</strong> из {{ total_questions }}</p>
+                {% else %}
+                <p>Me ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
+                {% endif %}
+                <p>Точность правильных ответов: <strong>{{ accuracy }}</strong></p>
+                
+                <button class="home-btn">
+                    <a class="home-btn" href="/">HOME</a>
+                </button>
+            </div>
             
             {% if not username %}
                 <div>

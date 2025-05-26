@@ -51,7 +51,7 @@ h1, h3{
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea, input[type="file" i] {
     padding: 10px 14px;
     border: 1px solid var(--border-color);
     border-radius: 6px;
@@ -89,4 +89,10 @@ h1, h3{
 
 .submit-button:hover {
     background-color: var(--accent-color);
+}
+
+.load-img{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }

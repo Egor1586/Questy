@@ -254,7 +254,13 @@ hr {
 }
 
 .test-content {
-  padding: 16px;
+    padding: 16px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
 }
 
 .test-questions {
@@ -262,10 +268,14 @@ hr {
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
+
+  width: 85px;
+  text-align: center;
+
 }
 
 .test-title {
-  margin: 8px 0 4px;
+  /* margin: 8px 0 4px; */
   font-size: 20px;
 }
 
@@ -284,3 +294,11 @@ hr {
 }
 
 
+.test-img{
+    width: auto;
+    max-width: 257px;
+    max-height: 111px;
+
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}

@@ -42,13 +42,13 @@
             <div class="tests">
             {% for test in list_tests %}
                 <a href="/passing_test{{ test.test_code }}?test_id={{ test.id }}" class="test-card">
-                    <div class="test-image">
-                    </div>
+                    <!-- <div class="test-image">
+                    </div> -->
                     <div class="test-content">
                         {% if test.image %}
-                            <img src="/home_app/static/images/media/{{ test.id }}.png" alt="">
+                            <img src="/home_app/static/images/media/{{ test.id }}.png" alt="" class="test-img">
                         {% else %}
-                            <img src="/home_app/static/images/media/0.png" alt="">
+                            <img src="/home_app/static/images/media/0.png" alt=""  class="test-img">
                         {% endif %}
                         <span class="test-questions">{{ test.total_questions }} questions</span>
                         <h3 class="test-title">{{ test.title }}</h3>

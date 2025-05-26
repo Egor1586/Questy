@@ -1,7 +1,7 @@
 from home_app import *
 from home_app.views import *
-from auth.app import *
-from auth.views import *
+from user.app import *
+from user.views import *
 from test_app import *
 
 

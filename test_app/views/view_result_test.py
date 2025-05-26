@@ -6,7 +6,7 @@ from flask_login import current_user
 
 from Project.render_page import render_page
 
-from auth.models import Score
+from user.models import Score
 
 @render_page(template_name = 'result_test.html')
 def render_test_result(test_code):

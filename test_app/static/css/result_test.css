@@ -70,7 +70,7 @@ main {
 .edit-btn:hover {
     background-color: var(--green-light);
 }
-.question-block {
+.question-block, .result-info {
     background-color: white;
     border: 1px solid var(--green-light);
     border-radius: 10px;
@@ -89,7 +89,7 @@ main {
 .question-text {
     margin-bottom: 15px;
 }
-.answer {
+.answer{
     padding: 10px 15px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -109,3 +109,26 @@ main {
     background-color: orange;
     border-left-color: lightsalmon;
 }
+
+.result-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: center; */
+    
+
+}
+
+.home-btn  {
+    background-color: var(--green-main);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 6px var(--shadow);
+    margin: 10px 0;    
+}
+

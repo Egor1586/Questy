@@ -5,28 +5,40 @@
 {% endblock %}
 
 {% block links %}
-    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/score.css') }}">
+    <link rel="stylesheet" href="{{ url_for('home_app.static', filename='css/score.css') }}">
 {% endblock %} 
 
 {% block content %}
-    <h1>Score page</h1>
+    <h1>Score Page</h1>
 
-    {% if graph_html %}
-        {{ graph_html }}
-    {% endif %}
-
-    <h1>{{ name_test }}</h1>
-    {% for answer in list_user_answers %}
-        <p>{{ answer }}</p>
-    {% endfor %}
-    {% for accuracy in accuracy %}
-        <p>{{ accuracy }}</p>
-    {% endfor %}
-    {% if graph %}
-        <img src="data:image/png;base64, {{ graph }}">
+    {% if message %}
+        <h2>{{ message }}</h2>
     {% else %}
-        <h1>No graph</h1>
-    {% endif %}
-    
+        
+        <hr>
+        
+        {% for score in scores %}
+            {% for test in list_tests %}
+                {% if test.id == score.test_id %}
+                    <p>Заголовок теста:{{ test.title }}</p>
+                    <p>Описание теста:{{ test.description }}</p>
+                    <p>Автор теста:{{ test.author_name }}</p>
+                    <p>Код теста:{{ test.test_code }}</p>
+                {% endif %}
+            {% endfor %}
+            <p>Ваша текущая точность:{{ score.accuracy }}</p>
+            <p>Дата создания теста:{{ score.date_complete }}</p>
+            <hr>
+        {% endfor %}
 
+        {% if graph %}
+            <div class="graph">
+                <h3>График:</h3>
+                <img src="data:image/png;base64,{{ graph }}" alt="График">
+            </div>
+        {% endif %}
+
+    {% endif %}
 {% endblock %}
+
+
