@@ -5,21 +5,39 @@
 {% endblock %}
 
 {% block links %}
-    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/score.css') }}">
-{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('home_app.static', filename='css/score.css') }}">
+{% endblock %} 
 
 {% block content %}
-    <h1>Score page</h1>
+    <h1>Score Page</h1>
 
-    {% if graph_html %}
-        {{ graph_html }}
+    {% if message %}
+        <h2>{{ message }}</h2>
+    {% else %}
+        <h2>{{ name_test }}</h2>
+        <hr>
+
+        <div class="results-container">
+            <div class="column">
+                <h3>Ответы пользователя:</h3>
+                {% for answer in list_user_answers %}
+                    <p>{{ answer }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="column">
+                <h3>Точность:</h3>
+                {% for item in accuracy %}
+                    <p>{{ item }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if graph %}
+            <div class="graph">
+                <h3>График:</h3>
+                <img src="data:image/png;base64,{{ graph }}" alt="График">
+            </div>
+        {% endif %}
     {% endif %}
-
-    <h1>{{ name_test }}</h1>
-    {% for answer in list_user_answers %}
-        <p>{{ answer }}</p>
-    {% endfor %}
-    {% for accuracy in accuracy %}
-        <p>{{ accuracy }}</p>
-    {% endfor %}
 {% endblock %}
