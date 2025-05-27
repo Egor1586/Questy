@@ -7,11 +7,11 @@ from Project.render_page import render_page
 users = {}
 
 @Project.settings.socketio.on('join')
-def handle_join(username):
-    username = username
-    users[flask.request.sid] = username
-    join_room(username)
-    emit('user_joined', {'msg': f'{username} присоединился к комнате {username}'}, room= username)
+def handle_join(code):
+    users[flask.request.sid] = current_user.username
+    join_room(code)
+    
+    emit('user_joined', {'msg': f'{current_user.username} присоединился к комнате {code}'}, room= code)
 
 @Project.settings.socketio.on('message')
 def handle_message(data):

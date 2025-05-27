@@ -106,29 +106,65 @@ main {
 }
 
 .user_answers {
-    background-color: orange;
-    border-left-color: lightsalmon;
+    background-color:rgba(255, 224, 130, 1.00);
+    border-left-color: rgb(244, 190, 28);
 }
 
 .result-info{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    /* align-items: center; */
-    
-
+    justify-content: center;
+    margin-top: 30px;
+    height: auto;    
 }
 
-.home-btn  {
-    background-color: var(--green-main);
-    color: white;
+.home-btn{
     font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
     text-decoration: none;
-    box-shadow: 0 4px 6px var(--shadow);
+    color: white;
+    
+    font-weight: 600;
+    background-color: #555;
+    border-radius: 5px;
     margin: 10px 0;    
+    width: 70px;
+    height: 20px;
+    border: none;
 }
 
+
+.auth-block{
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.auth-block p{
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.auth-btn{
+    display: inline-block;
+    background-color: rgb(84, 179, 99);
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3 ease, transform 0.2 ease;
+}
+
+.auth-btn:hover{
+    background-color: #3730a3;
+    transform: scale(1.0);
+
+}

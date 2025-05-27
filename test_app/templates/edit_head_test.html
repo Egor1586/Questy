@@ -5,24 +5,22 @@
 {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="">
+    <link rel = "stylesheet" href = "{{ url_for('test_app.static', filename='css/edit_head_test.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div>
-        <form action="" method="POST">
-            
+    <div class="edit-question-form">
+        <form action="" method="POST" class="edit-form">
             <h1>Edit</h1>
-            
-            <div>
+            <div class="input-group">
                 <input type="text" name="title" placeholder="Enter new title for test">
             </div>
             
-            <div>
+            <div class="input-group">
                 <input type="text" name="description" placeholder="Enter new description for test">
             </div>
 
-            <button>Edit test</button>
+            <button type="submit" class="edit-btn">Edit test</button>
 
         </form>
         

@@ -1,0 +1,69 @@
+:root {
+    --green-main: #4CAF50;
+    --green-dark: #3e8641;
+    --green-light: #aad8af;
+    --bg-light: #f9fdf9;
+    --bg-aside: #f0f7f0;
+    --text-dark: #454343;
+    --shadow: rgba(0, 0, 0, 0.08);
+}
+
+.edit-question-form {
+    background-color: var(--bg-light);
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px var(--shadow);
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    border: 1px solid var(--green-light);
+}
+
+.edit-question-form h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--text-dark);
+}
+
+.edit-question-form input[type="text"] {
+    padding: 0.65rem 0.9rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: all 0.25s ease;
+    margin: 10px 0;
+}
+
+.edit-question-form input[type="text"]:focus {
+    border-color: var(--green-main);
+    box-shadow: 0 0 6px var(--green-light);
+    outline: none;
+}
+
+.edit-question-form button[type="submit"] {
+    align-self: center;
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    background-color: var(--green-main);
+    color: white;
+    border: none;
+    border-radius: 70px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-question-form button[type="submit"]:hover {
+    background-color: var(--green-dark);
+    transform: scale(1.00);
+}

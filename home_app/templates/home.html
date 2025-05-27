@@ -63,13 +63,11 @@
         {% endif %}
 
     <script>
-        //let socket = new WebSocket("ws://javascript.info");
-        
         const socket = io();
 
         const username = "{{ username }}"
         const code = "{{ CODE }}"
-
+                            
         // Listen for messages from server
         socket.on("message", function(data) {
             let messages = document.getElementById("messages");
@@ -79,6 +77,7 @@
 
         function emitUser(){
             const room = document.getElementById('room').value
+            console.log("NEw user in room")
             socket.emit("join", room);
             window.location.href= `/room${ room }`;
         }

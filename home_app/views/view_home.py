@@ -10,19 +10,20 @@ from Project.render_page import render_page
 users = {}
 
 @Project.settings.socketio.on('join')
-def handle_join(username):
-    username = username
-    users[flask.request.sid] = username
-    join_room(username)
-    emit('user_joined', {'msg': f'{username} присоединился к комнате {username}'}, room= username)
-    print(f'{username} присоединился к комнате {username}')
+def handle_join(code):
+    
+    users[flask.request.sid] = current_user.username
+    username=  users.get(flask.request.sid, "Anonymous") 
+    
+    join_room(code)
+    emit('user_joined', {'msg': f'{username} присоединился к комнате {code}'}, room= code)
+    print(f'{username} присоединился к комнате {code}')
 
 @Project.settings.socketio.on('message')
 def handle_message(data):
     username = users.get(flask.request.sid, "Anonymous")  
-    emit("message", f"{username}: {data}", broadcast=True) 
-    print(f"{username}: {data}")
-
+    emit("message", f"{current_user.username}: {data}", broadcast=True) 
+    print(f"{current_user.username}: {data}")
 
 def loguot():
     flask.session.clear()
@@ -32,7 +33,6 @@ def loguot():
 def render_home():
     list_test = []
     
-    # if current_user.is_authenticated:
     list_test = Test.query.all()
 
     return {"list_tests": list_test}

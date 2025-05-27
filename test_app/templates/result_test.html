@@ -14,7 +14,7 @@
             <div class="result-info">
                 <p><strong>{{ username }}</strong> ваш резульатат: <strong>{{ count_correct_answers }}</strong> из {{ total_questions }}</p>
                 {% else %}
-                <p>Me ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
+                <p>Ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
                 {% endif %}
                 <p>Точность правильных ответов: <strong>{{ accuracy }}</strong></p>
                 
@@ -24,18 +24,14 @@
             </div>
             
             {% if not username %}
-                <div>
+                <div class="auth-block">
                     <p> Если вы хотите отслежывать свой прогрес в Qusty. Создайте свой акаунт и следите за своим прогресом</p>
-                    <button>
-                        <a href="/sign_up">Sing up</a>
-                    </button>
+                    <a href="/sign_up" class="auth-btn">Sing up</a>
                 </div>
         
-                <div>
+                <div class="auth-block">
                     <p>Если у вас уже есть акаунт зайдите внего</p>
-                    <button>
-                        <a href="login">Login</a>
-                    </button>
+                    <a href="login" class="auth-btn">Login</a>
                 </div>
             {% endif %}
             
