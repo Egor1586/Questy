@@ -5,19 +5,22 @@
 {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href = "{{ url_for('test_app.static', filename='css/current_question.css') }}">
 {% endblock %}
 
 {% block content %}
     <div class="content">
         <div class="question">
+            <p>{{  list_quiz[question_numb].question_text   }}</p>
             <div class="answers">
-                <div class="answer">Answer 1</div>
-                <div class="answer">Answer 2</div>
-                <div class="answer">Answer 3</div>
-                <div class="answer">Answer 4</div>
+                {% for answer in list_answers[question_numb] %}
+                    <button type="button" class="answer" id="{{ answer }}">
+                        {{answer}}
+                    </button>
+                {% endfor %}
             </div>
         </div>
     </div>
 
+    <script src="{{ url_for('test_app.static', filename = 'js/passing_test.js') }}"></script>
 {% endblock %}
