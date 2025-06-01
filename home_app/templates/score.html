@@ -16,6 +16,15 @@
     {% else %}
         
         <hr>
+        <form action="" method="post">
+            <select name="choice">
+                <option value="graph_1">Graph 1 </option>
+                <option value="graph_2">Graph 2</option>
+                <option value="graph_3">Graph 3</option>
+            </select>
+
+            <input type="submit" value="Send">
+        </form>
         
         {% for score in scores %}
             {% for test in list_tests %}

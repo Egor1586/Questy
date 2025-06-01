@@ -2,6 +2,7 @@ import flask
 import matplotlib.pyplot as plt
 import io
 import base64
+import datetime
 
 from flask_login import current_user
 
@@ -18,6 +19,10 @@ def render_score():
     dates_complete = []
     message = 'Вы не авторизованы'
     list_tests = []
+    selected_option = ['0']
+    if flask.request.method == 'POST':
+        selected_option[0] = (flask.request.form.get('choice'))
+        print(selected_option)
 
     if current_user.is_authenticated:
         scores = Score.query.filter_by(user_id= current_user.id).all()
@@ -27,42 +32,81 @@ def render_score():
             dates_complete.append(score.date_complete)
             if Test.query.filter_by(id= score.test_id).first() not in list_tests:
                 list_tests.append(Test.query.filter_by(id= score.test_id).first())
+    
+        dates_complete.sort()
 
+        if selected_option[0] == 'graph_1':
+            axes.set_xlabel("Дата прохождения теста")
+            axes.set_ylabel("Точность %")
+            axes.set_title("Прогресс пользователя")
+            axes.plot(dates_complete, accuracy, marker='o')
+            plt.savefig(buffer, format='png')
 
-        # print(f'Это аккуратность: {accuracy}')
-        # accuracy[2] = 150
-        # accuracy[3] = 1000
-        # dates_complete[2] = '2025-01-30'
-        # dates_complete[1] = '2025-01-25'
-        # dates_complete[-1] = '2025-02-02'
+            buffer.seek(0)
+            image_bytes = buffer.read()
+            graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
+            buffer.close()
+
+            return {
+                "scores": scores,
+                'graph': graph_to_html,
+                'list_tests': list_tests
+            }
         
-        # if False:
-        #     message = 'Слишком мало данных для построения графика'
+        elif selected_option[0] == 'graph_2':
             
-        #     return {
-        #         'message': message,
-        #         'accuracy': accuracy,
-        #         'test': test,
-        #         'dates_complete': dates_complete,
-        #         'list_user_answers': list_user_answers[0],
-        #         'lists_tests': list_tests
-        #         }
+            obj_date = datetime.datetime.strptime(dates_complete, '%Y-%m-%d')
+            delta_week = (obj_date + datetime.timedelta(days=7))
+            if delta_week <= obj_date:
+                print(f'Зашло в условие')
+            
+                axes.set_xlabel("Дата прохождения теста")
+                axes.set_ylabel("Точность %")
+                axes.set_title("Прогресс пользователя")
+                axes.plot(dates_complete[1], accuracy, marker='o')
+                plt.savefig(buffer, format='png')
 
-        axes.set_xlabel("Дата прохождения теста")
-        axes.set_ylabel("Точность %")
-        axes.set_title("Прогресс пользователя")
-        axes.plot(dates_complete, accuracy, marker='o')
-        plt.savefig(buffer, format='png')
+                buffer.seek(0)
+                image_bytes = buffer.read()
+                graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
+                buffer.close()
 
-        buffer.seek(0)
-        image_bytes = buffer.read()
-        graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
-        buffer.close()
+                return {
+                    "scores": scores,
+                    'graph': graph_to_html,
+                    'list_tests': list_tests
+                }
+            
+            else:
+                message = 'Слишком мало данных для построения графика'
+                return{'message': message}
 
-        return {
-            "scores": scores,
-            'graph': graph_to_html,
-            'list_tests': list_tests
-        }
+        elif selected_option[0] == 'graph_2':
+            
+            obj_date = datetime.datetime.strptime(dates_complete, '%Y-%m-%d')
+            delta_week = (obj_date + datetime.timedelta(days=31))
+            if delta_week <= obj_date:
+                print(f'Зашло в условие')
+            
+                axes.set_xlabel("Дата прохождения теста")
+                axes.set_ylabel("Точность %")
+                axes.set_title("Прогресс пользователя")
+                axes.plot(dates_complete[1], accuracy, marker='o')
+                plt.savefig(buffer, format='png')
 
+                buffer.seek(0)
+                image_bytes = buffer.read()
+                graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
+                buffer.close()
+
+                return {
+                    "scores": scores,
+                    'graph': graph_to_html,
+                    'list_tests': list_tests
+                }
+            
+            else:
+                message = 'Слишком мало данных для построения графика'
+                return{'message': message}
+            
     return {'message': message}
