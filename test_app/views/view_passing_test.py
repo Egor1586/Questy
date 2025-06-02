@@ -11,6 +11,7 @@ def render_passing_test(test_code):
     # user_answers= []
 
     test_id= flask.request.args.get("test_id")
+    question_number= flask.request.args.get("question_number")
 
     test= Test.query.filter_by(id= test_id).first()
 
@@ -37,5 +38,5 @@ def render_passing_test(test_code):
         "test": test,
         "list_quiz": list_quiz,
         "list_answers": list_answers,
-        "question_numb": 1
+        "question_number": int(question_number)
     }
