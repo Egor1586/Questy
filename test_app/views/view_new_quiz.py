@@ -91,7 +91,7 @@ def render_new_quiz():
                 description= description,
                 total_questions = total_questions,
                 answers_per_question = answers_per_question,
-                test_code= test_code,
+                test_code= 0,
                 author_name = current_user.username,
                 image=  1 if image_form else 0,
                 created_date= datetime.date.today()

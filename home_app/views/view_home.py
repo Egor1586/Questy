@@ -31,8 +31,18 @@ def loguot():
 
 @render_page(template_name = 'home.html')
 def render_home():
-    list_test = []
-    
     list_test = Test.query.all()
+    code_list = []
 
-    return {"list_tests": list_test}
+    for test in list_test:
+        if test.test_code != 0:
+            code_list.append(str(test.test_code))
+
+    code_str = " ".join(code_list)
+
+    print(code_str)
+
+    return {
+        "list_tests": list_test,
+        "code_str": code_str
+    }

@@ -23,7 +23,7 @@
                     <input placeholder="Enter code" class= "input_code" id="room">
                     <div class="fake-input-border"></div>
                 </div>
-                <button type="button" class= "search-btn" onclick="emitUser()">START</button>
+                <button type="button" class= "search-btn" onclick="emitUser()">JOIN</button>
             </div>
         </div>
 
@@ -42,8 +42,6 @@
             <div class="tests">
             {% for test in list_tests %}
                 <a href="/passing_test{{ test.test_code }}?test_id={{ test.id }}&question_number= 0" class="test-card">
-                    <!-- <div class="test-image">
-                    </div> -->
                     <div class="test-content">
                         {% if test.image %}
                             <img src="/home_app/static/images/media/{{ test.id }}.png" alt="" class="test-img">
@@ -62,13 +60,12 @@
             <hr>
         {% endif %}
 
-    <script>
+     <script>
+        
         const socket = io();
 
         const username = "{{ username }}"
-        const code = "{{ CODE }}"
-                            
-        // Listen for messages from server
+
         socket.on("message", function(data) {
             let messages = document.getElementById("messages");
             messages.innerHTML += `<p>${data}</p>`;
@@ -76,13 +73,15 @@
         });
 
         function emitUser(){
-            const room = document.getElementById('room').value
-            console.log("NEw user in room")
-            socket.emit("join", room);
-            window.location.href= `/room${ room }`;
+            const room = document.getElementById('room').value.trim();
+            const allCodes = "{{ code_str }}".split(" ");
+
+            if (allCodes.includes(room)) {
+                socket.emit("join", room);
+                window.location.href = `/room${room}`;
+            } 
         }
 
-        // Function to send messages
         function sendMessage() {
             let msgInput = document.getElementById("msg");
             let message = msgInput.value;

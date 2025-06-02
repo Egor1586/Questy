@@ -38,3 +38,4 @@ test_app.add_url_rule(rule = '/result_test<test_code>', view_func = render_test_
 
 test_app.add_url_rule(rule = '/delete_test<test_id>', view_func = delete_test, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = '/delete_quiz<quiz_id>', view_func = delete_quiz_question, methods = ['GET', 'POST'])
+test_app.add_url_rule(rule = '/delete_code<test_id>', view_func = delete_code, methods = ['GET', 'POST'])
