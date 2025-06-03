@@ -15,22 +15,27 @@
                 {% if question_number + 1 != test.total_questions %}
                     {% for answer in list_answers[question_number] %}         
                         <div class="answer">
-                            <button type="button" class="answer" id="{{ answer }}">
-                                <a href="/passing_test{{ test.test_code }}?test_id={{ test.id }}&question_number= {{ question_number + 1}}">{{answer}}</a>
-                            </button>
+                            <a href="/passing_test{{ test.test_code }}?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                                <button type="button" class="answer" id="{{ answer }}">
+                                    {{ answer }}
+                                </button>
+                            </a>
                         </div>              
-                    {% endfor %}
-                {% else %}
-                    {% for answer in list_answers[question_number] %}         
+                        {% endfor %}
+                        {% else %}
+                        {% for answer in list_answers[question_number] %}         
                         <div class="answer">
-                            <button type="button" class="answer" id="{{ answer }}">
-                                <a href="/result_test{{ test.test_code }}?test_id= {{ test.id }}">{{answer}}</a>
-                            </button>
+                            
+                            <a href="/result_test{{ test.test_code }}?test_id= {{ test.id }}">
+                                <button type="button" class="answer" id="{{ answer }}">
+                                    {{ answer }}
+                                </button>
+                            </a>
                         </div>
-                     {% endfor %}
-                {% endif %}
-            </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
     </div>
-
+                
     <script src="{{ url_for('test_app.static', filename = 'js/passing_test.js') }}"></script>
 {% endblock %}

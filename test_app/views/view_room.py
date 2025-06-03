@@ -19,6 +19,12 @@ def handle_message(data):
     username = users.get(flask.request.sid, "Anonymous") 
     emit("message", f"{username}: {data}", broadcast=True)
 
+
+# @Project.settings.socketio.on('start')
+# def handle_message(data):
+#     username = users.get(flask.request.sid, "Anonymous") 
+#     emit("message", f"{username}: {data}", broadcast=True)
+
 @render_page(template_name = 'room.html')
 def render_room(test_code):
 
