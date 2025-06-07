@@ -17,14 +17,14 @@ def render_score():
     buffer = io.BytesIO()
     accuracy = []
     dates_complete = []
-    message = 'Вы не авторизованы'
+    message = ''
     list_tests = []
     selected_option = ['0']
     if flask.request.method == 'POST':
+        print(f'=========')
         selected_option[0] = (flask.request.form.get('choice'))
-        print(selected_option)
-
-    if current_user.is_authenticated:
+        print(f'Это оптион: {selected_option}')
+    elif current_user.is_authenticated:
         scores = Score.query.filter_by(user_id= current_user.id).all()
 
         for score in scores:
@@ -34,8 +34,9 @@ def render_score():
                 list_tests.append(Test.query.filter_by(id= score.test_id).first())
     
         dates_complete.sort()
-
+        print(f'1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         if selected_option[0] == 'graph_1':
+            print(f'выводит график')
             axes.set_xlabel("Дата прохождения теста")
             axes.set_ylabel("Точность %")
             axes.set_title("Прогресс пользователя")
@@ -74,8 +75,7 @@ def render_score():
                 return {
                     "scores": scores,
                     'graph': graph_to_html,
-                    'list_tests': list_tests
-                }
+                    'list_tests': list_tests}
             
             else:
                 message = 'Слишком мало данных для построения графика'
@@ -109,4 +109,4 @@ def render_score():
                 message = 'Слишком мало данных для построения графика'
                 return{'message': message}
             
-    return {'message': message}
+        return {'message': message}
