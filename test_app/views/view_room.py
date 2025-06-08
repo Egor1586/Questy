@@ -19,15 +19,18 @@ def handle_message(data):
     username = users.get(flask.request.sid, "Anonymous") 
     emit("message", f"{username}: {data}", broadcast=True)
 
+@Project.settings.socketio.on('connect')
+def connect():
+    print(f'Кто-то подключился: {flask.request.sid}')
 
-# @Project.settings.socketio.on('start')
-# def handle_message(data):
-#     username = users.get(flask.request.sid, "Anonymous") 
-#     emit("message", f"{username}: {data}", broadcast=True)
+
+    # response.set_cookie(key= 'list_id_users', value= cookies)
+
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
 
+    list_users = ["user1", "user2", "user3"]
     test= Test.query.filter_by(test_code= test_code).first()
     
     if test.test_code == 0:
@@ -35,7 +38,8 @@ def render_room(test_code):
         Project.database.db.session.commit()
 
     return {
-    "test": test
+    "test": test,
+    "list_users": list_users
     }
 
 def delete_code(test_id):
@@ -44,4 +48,4 @@ def delete_code(test_id):
     Project.database.db.session.commit()
 
     return flask.redirect("/quizzes/")
-    # return flask.redirect(f"/room{test.id}")
+    

@@ -15,25 +15,24 @@
                 {% if question_number + 1 != test.total_questions %}
                     {% for answer in list_answers[question_number] %}         
                         <div class="answer">
-                            <a href="/passing_test{{ test.test_code }}?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                            <a href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
                                 <button type="button" class="answer" id="{{ answer }}">
                                     {{ answer }}
                                 </button>
                             </a>
                         </div>              
-                        {% endfor %}
-                        {% else %}
-                        {% for answer in list_answers[question_number] %}         
+                    {% endfor %}
+                {% else %}
+                    {% for answer in list_answers[question_number] %}         
                         <div class="answer">
-                            
-                            <a href="/result_test{{ test.test_code }}?test_id= {{ test.id }}">
+                            <a href="/result_test?test_id= {{ test.id }}">
                                 <button type="button" class="answer" id="{{ answer }}">
                                     {{ answer }}
                                 </button>
                             </a>
                         </div>
-                        {% endfor %}
-                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                     </div>
     </div>
                 

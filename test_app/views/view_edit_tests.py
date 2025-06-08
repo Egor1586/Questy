@@ -7,7 +7,7 @@ from flask_login import current_user
 from Project.render_page import render_page
 
 @render_page(template_name = 'edit_test.html')
-def render_test_app(test_code):
+def render_test_app():
     
     list_quiz = []
     list_answers= []
@@ -34,4 +34,4 @@ def delete_quiz_question(quiz_id):
         db.session.delete(quiz)
         db.session.commit()
     
-    return flask.redirect(location= f'/test_app{test.test_code}?test_id={test.id}')
+    return flask.redirect(location= f'/test_app?test_id={test.id}')

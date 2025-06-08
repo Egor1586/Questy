@@ -36,14 +36,14 @@
                         <div class="info">
                             <strong>{{ test.total_questions }}</strong>
                             
-                            <p class="date"><strong>Author:</strong> {{ test.author_name }}</p>
+                            <p class="date"><strong>Author:</strong> <span id="author" >{{ test.author_name }}</span></p>
                         </div>
                         <!-- <p><strong>Topic description</strong> – 5 questions</p> -->
                         <div class="info-code">
                             
                             <div class="actions">
                                 <button class="edit">
-                                    <a href="/test_app{{ test.test_code }}?test_id={{ test.id }}">Edit</a>                    
+                                    <a href="/test_app?test_id={{ test.id }}">Edit</a>                    
                                 </button>
                                 
                                 <form action="/delete_test{{ test.id }}" >
@@ -68,5 +68,7 @@
             {% endfor %}
         {% endif %}
     </div>
+
+    <script src="{{ url_for('home_app.static', filename='js/addNewUserCookie.js') }}"></script>
 
 {% endblock %}

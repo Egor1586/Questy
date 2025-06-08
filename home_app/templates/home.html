@@ -41,7 +41,7 @@
         
             <div class="tests">
             {% for test in list_tests %}
-                <a href="/passing_test{{ test.test_code }}?test_id={{ test.id }}&question_number= 0" class="test-card">
+                <a href="/passing_test?test_id={{ test.id }}&question_number= 0" class="test-card">
                     <div class="test-content">
                         {% if test.image %}
                             <img src="/home_app/static/images/media/{{ test.id }}.png" alt="" class="test-img">
@@ -64,6 +64,7 @@
         
         const socket = io();
         const username = "{{ username }}"
+        const test_list = "{{ list_tests }}"
 
         socket.on("message", function(data) {
             let messages = document.getElementById("messages");
@@ -74,7 +75,7 @@
         function emitUser(){
             const room = document.getElementById('room').value.trim();
             const allCodes = "{{ code_str }}".split(" ");
-
+            
             if (allCodes.includes(room)) {
                 socket.emit("join", room);
                 window.location.href = `/room${room}`;
