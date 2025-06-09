@@ -14,40 +14,44 @@
     {% if message %}
         <h2>{{ message }}</h2>
     {% else %}
-        
-        <hr>
-        <form action="" method="post">
-            <select name="choice">
-                <option value="graph_1">Graph 1 </option>
-                <option value="graph_2">Graph 2</option>
-                <option value="graph_3">Graph 3</option>
-            </select>
-
-            <input type="submit" value="Send">
-        </form>
-        
-        {% for score in scores %}
-            {% for test in list_tests %}
-                {% if test.id == score.test_id %}
-                    <p>Заголовок теста:{{ test.title }}</p>
-                    <p>Описание теста:{{ test.description }}</p>
-                    <p>Автор теста:{{ test.author_name }}</p>
-                    <p>Код теста:{{ test.test_code }}</p>
-                {% endif %}
-            {% endfor %}
-            <p>Ваша текущая точность:{{ score.accuracy }}</p>
-            <p>Дата создания теста:{{ score.date_complete }}</p>
-            <hr>
-        {% endfor %}
-
-        {% if graph %}
-            <div class="graph">
-                <h3>График:</h3>
-                <img src="data:image/png;base64,{{ graph }}" alt="График">
-            </div>
-        {% endif %}
-
+        <h2 class="h2-none">None</h2>
     {% endif %}
+        
+    <!-- <hr>Add commentMore actions -->
+    <form action="" method="post" class="score-form">
+        <select name="choice">
+            <option value="graph_1">Graph 1 </option>
+            <option value="graph_2">Graph 2</option>
+            <option value="graph_3">Graph 3</option>
+        </select>
+
+        <input type="submit" value="Send">
+    </form>
+    
+    <div class="score-result">
+        {% for score in scores %}
+            <div class="score-block">   
+                {% for test in list_tests %}
+                    {% if test.id == score.test_id %}
+                        <p>Topic: {{ test.title }}</p>
+                        <p>Description: {{ test.description }}</p>
+                        <p>Author: {{ test.author_name }}</p>
+                        <p>Code: {{ test.test_code }}</p>
+                    {% endif %}
+                {% endfor %}
+                <p>Current accuracy: {{ score.accuracy }}</p>
+                <p>Date: {{ score.date_complete }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if graph %}
+        <div class="graph">
+            <h3>График:</h3>
+            <img src="data:image/png;base64,{{ graph }}" alt="График">
+        </div>
+    {% endif %}
+
 {% endblock %}
 
 

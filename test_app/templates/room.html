@@ -12,9 +12,17 @@
     <div class="waite-side">
         <div class="info-bar">
             <div class="info-text">Author: {{ username }}</div>
-            <div class="info-text">Test code: <strong>{{ CODE }}</strong></div>
+            <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
         </div>
-
+        
+        {% if test.author_name == username %}
+            <div>
+                <button>
+                    <a href="/delete_code{{ test.id }}">Start</a>
+                </button>
+            </div>
+        {% endif %}
+        
         <div class="user-list">
             <div class="user-block">
                 <div class="user-name">User 1</div>
@@ -35,7 +43,7 @@
         </div>
     </div>
 
-    <div class="chat">
+   <div class="chat">
         <h2>Chat</h2>
         <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
         <button onclick="sendMessage()" class="send-btn">Send</button>
@@ -46,25 +54,45 @@
         
         const socket = io();
         const username = "{{ username }}";  
-        const code = "{{ CODE }}"
+        const code = "{{ test.test_code }}"
+        const host_arrey_com = ['тут какие-то команды ТОЛЬКО для ХОСТА'];
+        const user_arrey_com = ['тут какие-то команды для ВСЕХ УЧАСТНИКОВ ЧАТА'];
         
-        socket.emit("join", code);  // Notify server of new user
+        let message_chat = 'вероятнее всего тут функция которая должна возвращать слово в чате'
+        
+        socket.emit("join", code); 
         console.log(username)
 
         // Listen for messages from server
         socket.on("message", function(data) {
-            var messages = document.getElementById("messages");
+            let messages = document.getElementById("messages");
             messages.innerHTML += `<p>${data}</p>`;
             console.log(typeof data, data)
         });
 
         // Function to send messages
         function sendMessage() {
-            var msgInput = document.getElementById("msg");
-            var message = msgInput.value;
+            let msgInput = document.getElementById("msg");
+            let message = msgInput.value;
             socket.send(message);
             msgInput.value = "";
         }
+       
+        
+        //socket.on('start', function(data){
+        //    console.log("")
+        //})
+
+
+        //function check_command(message){
+        //    if (host_arrey_com.includes(message_chat)){
+                // пока не знаю что тут
+        //}   else if (user_arrey_com.includes(message_chat)){
+                // 
+        //}
+        //
+        //};
+                
 
     </script>
 

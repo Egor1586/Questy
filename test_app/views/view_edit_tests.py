@@ -25,8 +25,6 @@ def render_test_app(test_code):
         "list_answers": list_answers
     }
 
-
-
 def delete_quiz_question(quiz_id):
     quiz = Quiz.query.filter_by(id = quiz_id).first()
     test = Test.query.filter_by(id = quiz.test_id).first()
