@@ -8,10 +8,11 @@ from Project.render_page import render_page
 
 from user.models import Score
 
-def delete_cookies(test_id):
+def delete_cookies(key):
     print("delete user answers")
-    response = flask.make_response(flask.redirect("/result_test"))
-    response.set_cookie(key= 'user_answers', value= "None")
+    response = flask.make_response()
+    response.set_cookie(key= key, value= "value", max_age=0)
+    response.delete_cookie(key=key)
 
     return response
 
@@ -58,7 +59,7 @@ def render_test_result():
         db.session.add(score)
         db.session.commit()#
 
-    delete_cookies(test.id)
+    delete_cookies(key= "user_answers")
 
     return {
         "total_questions": test.total_questions,

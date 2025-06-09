@@ -14,23 +14,21 @@
             <div class="answers">
                 {% if question_number + 1 != test.total_questions %}
                     {% for answer in list_answers[question_number] %}         
-                        <div class="answer">
-                            <a href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
-                                <button type="button" class="answer" id="{{ answer }}">
-                                    {{ answer }}
-                                </button>
-                            </a>
-                        </div>              
+                        <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                            <div class="answer" id="{{ answer }}">
+                                {{ answer }}
+                            </div>
+                            <!-- <button type="button" class="answer" id="{{ answer }}">
+                            </button> -->
+                        </a>
                     {% endfor %}
                 {% else %}
                     {% for answer in list_answers[question_number] %}         
-                        <div class="answer">
-                            <a href="/result_test?test_id= {{ test.id }}">
-                                <button type="button" class="answer" id="{{ answer }}">
-                                    {{ answer }}
-                                </button>
-                            </a>
-                        </div>
+                        <a  class="answer-link" href="/result_test?test_id= {{ test.id }}">
+                            <div class="answer" id="{{ answer }}">
+                                {{ answer }}
+                            </div>
+                        </a>
                     {% endfor %}
                 {% endif %}
                     </div>

@@ -58,10 +58,15 @@
                                         Start
                                     </a>
                                 </button>
+                                
+                                <button class="edit">
+                                    <a href="/create_code{{ test.id }}" class="btn">
+                                        Create code 
+                                    </a>
+                                </button>
                             </div>
                             <p class="code-p"><strong>Code: </strong>{{test.test_code}}</p>
                         </div>
-                        <!--  -->
                     
                     </div>
                 {% endif %}
@@ -69,6 +74,5 @@
         {% endif %}
     </div>
 
-    <script src="{{ url_for('home_app.static', filename='js/addNewUserCookie.js') }}"></script>
 
 {% endblock %}

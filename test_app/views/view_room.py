@@ -7,35 +7,25 @@ from ..models import Test
 
 users = {}
 
-@Project.settings.socketio.on('join')
-def handle_join(code):
-    users[flask.request.sid] = current_user.username
-    join_room(code)
-    
-    emit('user_joined', {'msg': f'{current_user.username} присоединился к комнате {code}'}, room= code)
+# @Project.settings.socketio.on('join')
+# def handle_join(code):
+#     users[flask.request.sid] = current_user.username
+#     join_room(code)
+
+#     emit('user_joined', {'msg': f'{current_user.username} присоединился к комнате {code}'}, room= code)
 
 @Project.settings.socketio.on('message')
 def handle_message(data):
     username = users.get(flask.request.sid, "Anonymous") 
     emit("message", f"{username}: {data}", broadcast=True)
 
-@Project.settings.socketio.on('connect')
-def connect():
-    print(f'Кто-то подключился: {flask.request.sid}')
-
-
-    # response.set_cookie(key= 'list_id_users', value= cookies)
-
-
 @render_page(template_name = 'room.html')
 def render_room(test_code):
 
     list_users = ["user1", "user2", "user3"]
+    
     test= Test.query.filter_by(test_code= test_code).first()
     
-    if test.test_code == 0:
-        test.test_code= random.randint(1000, 9999)
-        Project.database.db.session.commit()
 
     return {
     "test": test,
