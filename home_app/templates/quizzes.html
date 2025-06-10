@@ -52,18 +52,19 @@
                                     </button>
                                 </form>
 
-                                <!-- <button class="start">Start</button> -->
-                                <button class="start">
-                                    <a href="/room{{test.test_code}} " class="btn">
-                                        Start
-                                    </a>
-                                </button>
+                                {% if test.test_code != 0 %}
+                                    <button class="start" type="button">
+                                        <a href="/room{{ test.test_code }}" class="btn">Start</a>
+                                    </button>
+                                {% endif %}
                                 
-                                <button class="edit">
-                                    <a href="/create_code{{ test.id }}" class="btn">
-                                        Create code 
-                                    </a>
-                                </button>
+                                {% if test.test_code == 0 %}
+                                    <button class="edit">
+                                        <a href="/create_code{{ test.id }}" class="btn">
+                                            Create code 
+                                        </a>
+                                    </button>
+                                {% endif %}
                             </div>
                             <p class="code-p"><strong>Code: </strong>{{test.test_code}}</p>
                         </div>
@@ -73,6 +74,27 @@
             {% endfor %}
         {% endif %}
     </div>
+
+    <script src="{{ url_for('home_app.static', filename='js/startTest.js') }}"> </script>
+
+    <!-- <script>
+        const socket = io();
+
+        document.querySelectorAll('.start-btn').forEach(btn => {
+            btn.addEventListener('click', function (event) {
+                event.preventDefault();
+                const quizItem = btn.closest('.quiz-item');
+                const roomSpan = quizItem.querySelector('.room');
+                const room = roomSpan ? roomSpan.textContent.trim() : null;
+
+                if (room) {
+                    socket.emit("join", room);
+                    window.location.href = `/room${room}`;
+                }
+            });
+        });
+    
+    </script> -->
 
 
 {% endblock %}

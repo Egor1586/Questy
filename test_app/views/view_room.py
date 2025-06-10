@@ -4,19 +4,13 @@ from flask_login import current_user
 from flask_socketio import join_room, emit
 from Project.render_page import render_page
 from ..models import Test
-
-users = {}
-
-# @Project.settings.socketio.on('join')
-# def handle_join(code):
-#     users[flask.request.sid] = current_user.username
-#     join_room(code)
-
-#     emit('user_joined', {'msg': f'{current_user.username} присоединился к комнате {code}'}, room= code)
+from home_app.views.view_quizzes import users
 
 @Project.settings.socketio.on('message')
 def handle_message(data):
-    username = users.get(flask.request.sid, "Anonymous") 
+
+    print(users)
+    username = users.get(flask.request.sid, current_user.username) 
     emit("message", f"{username}: {data}", broadcast=True)
 
 @render_page(template_name = 'room.html')
