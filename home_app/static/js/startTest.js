@@ -1,6 +1,5 @@
 const socket = io();
 
-
 const startButton = document.querySelectorAll('.start-btn');
 
 for (let i = 0; i < startButton.length; i++) {
@@ -11,7 +10,7 @@ for (let i = 0; i < startButton.length; i++) {
         const quiz = button.closest('.quiz-item');
         const span = quiz.querySelector('.room');
         const room = span.textContent.trim()
-        
+
         if (room) {
             socket.emit("join", room);
             window.location.href = `/room${room}`;

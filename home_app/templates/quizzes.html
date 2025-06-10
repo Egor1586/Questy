@@ -75,26 +75,10 @@
         {% endif %}
     </div>
 
+    <script>
+
+    </script>
+
     <script src="{{ url_for('home_app.static', filename='js/startTest.js') }}"> </script>
-
-    <!-- <script>
-        const socket = io();
-
-        document.querySelectorAll('.start-btn').forEach(btn => {
-            btn.addEventListener('click', function (event) {
-                event.preventDefault();
-                const quizItem = btn.closest('.quiz-item');
-                const roomSpan = quizItem.querySelector('.room');
-                const room = roomSpan ? roomSpan.textContent.trim() : null;
-
-                if (room) {
-                    socket.emit("join", room);
-                    window.location.href = `/room${room}`;
-                }
-            });
-        });
     
-    </script> -->
-
-
 {% endblock %}

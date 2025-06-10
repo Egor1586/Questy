@@ -9,7 +9,6 @@ from home_app.views.view_quizzes import users
 @Project.settings.socketio.on('message')
 def handle_message(data):
 
-    print(users)
     username = users.get(flask.request.sid, current_user.username) 
     emit("message", f"{username}: {data}", broadcast=True)
 
