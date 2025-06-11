@@ -1,5 +1,4 @@
 const arreyButton = document.querySelectorAll(".answer")
-console.log("start")
 
 for (let count = 0; count < arreyButton.length; count++ ) {
     let button= arreyButton[count];

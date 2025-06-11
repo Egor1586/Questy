@@ -15,25 +15,32 @@
             <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
         </div>
         
-        {% if test.author_name == username %}
+        <!-- {% if test.author_name == username %}
             <div>
-                <button>
-                    <a href="/delete_code{{ test.id }}">Start</a>
+                <button class= "btn-stop">
+                    <a href="/delete_code{{ test.id }}" class= "btn-block">Start</a>
                 </button>
             </div>
-        {% endif %}
-        
+        {% endif %} -->
+
         <div class="user-list">
-            {% for user in list_users %}
+            
+            {% for username in list_users %}
                 <div class="user-block">
-                    <div class="user-name">{{ user }}</div>
-                    <div class="user-actions">
-                        <button class="btn-remove">Delete</button>
-                        <button class="btn-block">Block</button>
-                    </div>
+                    <div class="user-name">{{ username }}</div>
+                    {% if test.author_name == username %}
+                        <div class="user-actions">
+                            <button class="btn-remove" onclick="kickUser('{{ username }}')">Delete</button>
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
+
+        {% if test.author_name == username %}
+                <button class= "btn-start" onclick="startTest()">Start</button>
+        {% endif %}
+        
     </div>
 
 
@@ -44,27 +51,53 @@
         <div id="messages"></div>
     </div>
 
-    <script>
-        
-        const socket = io();
-        const username = "{{ username }}";  
-        const code = "{{ test.test_code }}"
+    {% if current_user.is_authenticated %}
+        <script>
+            const socket = io();
+            const username = "{{ username }}";  
+            const code = "{{ test.test_code }}"
 
-        // Listen for messages from server
-        socket.on("message", function(data) {
-            let messages = document.getElementById("messages");
-            messages.innerHTML += `<p>${data}</p>`;
-            console.log(typeof data, data)
-        });
+            socket.on("connect", function () {
+                socket.emit("join", {
+                    code: code,
+                    username: username
+                });
+            });
 
-        // Function to send messages
-        function sendMessage() {
-            let msgInput = document.getElementById("msg");
-            let message = msgInput.value;
-            socket.send(message);
-            msgInput.value = "";
-        }
-            
-    </script>
+            socket.on("listening_to_messages", function(data) {
+                console.log(data);
+                let messages = document.getElementById("messages");
+                messages.innerHTML += `<p>${data}</p>`;
+            });
+
+            function sendMessage() {
+                let msgInput = document.getElementById("msg");
+                let message = msgInput.value;
+
+                if (message != ""){
+                    console.log(code, username)
+                    socket.emit("message_to_chat", {
+                        message: message,
+                        room: code,         
+                        username: username  
+                    });
+                }
+                msgInput.value = "";
+            }
+
+            function kickUser(kick_user) {
+                socket.emit("kick_user", {
+                    room: code,
+                    kick_user: kick_user
+                });
+            }
+
+            function startTest() {
+                socket.emit("start_test");
+            }
+
+        </script>
+
+    {% endif %}
 
 {% endblock %}

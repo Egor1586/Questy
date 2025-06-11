@@ -6,16 +6,6 @@ from Project.database import db
 from Project.render_page import render_page
 from flask_socketio import emit, join_room
 
-users= {}
-
-@Project.settings.socketio.on('join')
-def handle_join(code):
-    users[flask.request.sid] = current_user.username
-    join_room(code)
-
-    emit('user_joined', {'msg': f'{current_user.username} присоединился к комнате {code}'}, room= code)
-
-
 @render_page(template_name = 'quizzes.html')
 def render_quizzes():
     list_your_test= []
