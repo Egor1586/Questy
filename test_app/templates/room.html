@@ -14,23 +14,17 @@
             <div class="info-text">Author: {{ username }}</div>
             <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
         </div>
-        
-        <!-- {% if test.author_name == username %}
-            <div>
-                <button class= "btn-stop">
-                    <a href="/delete_code{{ test.id }}" class= "btn-block">Start</a>
-                </button>
-            </div>
-        {% endif %} -->
 
         <div class="user-list">
             
-            {% for username in list_users %}
+            {% for name in list_users %}
                 <div class="user-block">
-                    <div class="user-name">{{ username }}</div>
-                    {% if test.author_name == username %}
+                    {% if test.author_name == name %}
+                        <div class="user-name">Автор: {{ name }}</div>
+                    {% else %}
+                        <div class="user-name">{{ name }}</div>
                         <div class="user-actions">
-                            <button class="btn-remove" onclick="kickUser('{{ username }}')">Delete</button>
+                            <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
                         </div>
                     {% endif %}
                 </div>
@@ -38,7 +32,7 @@
         </div>
 
         {% if test.author_name == username %}
-                <button class= "btn-start" onclick="startTest()">Start</button>
+                <button class= "btn-start" onclick="startTest()" type="button">Start</button>
         {% endif %}
         
     </div>
@@ -47,7 +41,7 @@
    <div class="chat">
         <h2>Chat</h2>
         <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
-        <button onclick="sendMessage()" class="send-btn">Send</button>
+        <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
         <div id="messages"></div>
     </div>
 
@@ -55,6 +49,8 @@
         <script>
             const socket = io();
             const username = "{{ username }}";  
+
+            console.log(username)
             const code = "{{ test.test_code }}"
 
             socket.on("connect", function () {
@@ -68,6 +64,11 @@
                 console.log(data);
                 let messages = document.getElementById("messages");
                 messages.innerHTML += `<p>${data}</p>`;
+            });
+
+            socket.on('kicked', function(data) {
+                document.cookie = "room=; path=/; max-age=0";
+                window.location.href = '/'; 
             });
 
             function sendMessage() {
@@ -88,12 +89,15 @@
             function kickUser(kick_user) {
                 socket.emit("kick_user", {
                     room: code,
-                    kick_user: kick_user
+                    user: kick_user
                 });
             }
 
             function startTest() {
-                socket.emit("start_test");
+                socket.emit("start_test", {
+                    room: code
+                }
+                );
             }
 
         </script>

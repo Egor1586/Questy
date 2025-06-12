@@ -26,3 +26,12 @@ class Quiz(db.Model):
     
     test_id = db.Column(db.Integer, db.ForeignKey('test.id'))
 
+# class Room(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+    
+#     test_id= db.Column(db.Integer, nullable= True)
+#     test_code = db.Column(db.String(10), nullable= False)
+
+#     user_list = db.Column(db.String(300), nullable= False)
+    
+

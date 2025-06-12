@@ -20,7 +20,7 @@ def render_sign_up():
        
     if flask.request.method == 'POST':
         try:   
-            user_data["name"] = flask.request.form['name'] 
+            user_data["name"] = flask.request.form['name'].strip()
             user_data["password"]= flask.request.form['password'] 
             user_data["password_confirmation"]= flask.request.form['password-confirmation']
             user_data["email"]= flask.request.form['email']
