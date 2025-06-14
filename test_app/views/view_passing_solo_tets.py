@@ -4,7 +4,7 @@ from ..models import Test, Quiz
 from flask_login import current_user
 from Project.render_page import render_page
 
-@render_page(template_name = 'current_question.html')
+@render_page(template_name = 'passing_solo_tets.html')
 def render_passing_test():
     list_answers= []
     list_quiz= []

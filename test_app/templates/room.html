@@ -67,8 +67,20 @@
             });
 
             socket.on('kicked', function(data) {
-                document.cookie = "room=; path=/; max-age=0";
+                document.cookie = "room= ''; path= /; max-age= 0";
                 window.location.href = '/'; 
+            });
+
+            socket.on('start_test', function(data) {
+                let messages = document.getElementById("messages");
+                messages.innerHTML += `<p>Start ${data["room"]}</p>`;
+                console.log(data["test_id"])
+                if (username === data["author_name"]) {
+                    console.log("Вы начали тест")
+                }
+                else {
+                    window.location.href = `/passing_test?test_id=${data["test_id"]}`;
+                }
             });
 
             function sendMessage() {
@@ -94,7 +106,7 @@
             }
 
             function startTest() {
-                socket.emit("start_test", {
+                socket.emit("author_start_test", {
                     room: code
                 }
                 );

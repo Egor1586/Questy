@@ -59,10 +59,17 @@ def handle_message(data):
     emit("listening_to_messages", f"{data['username']}: {data['message']}", broadcast=True, to=room)
 
 
-@Project.settings.socketio.on('start_test')
+@Project.settings.socketio.on('author_start_test')
 def handle_start_test(data):
-    
-    print(f"start {data["room"]}")
+    room= data['room']
+    test= Test.query.filter_by(test_code= room).first()
+    print(f"start {data['room']} {current_user.username}")
+    emit("start_test", {
+        "room": room, 
+        "test_id": test.id,
+        "author_name": test.author_name
+        }, 
+        broadcast= True, to= room)
 
 
 @render_page(template_name = 'room.html')
