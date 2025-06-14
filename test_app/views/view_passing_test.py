@@ -5,7 +5,7 @@ from flask_login import current_user
 from Project.render_page import render_page
 
 @render_page(template_name = 'current_question.html')
-def render_passing_test(test_code):
+def render_passing_test():
     list_answers= []
     list_quiz= []
     # user_answers= []

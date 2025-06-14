@@ -9,14 +9,36 @@ from Project.render_page import render_page
 
 users = {}
 
+
 @Project.settings.socketio.on('join')
 def handle_join(code):
-    
+
+    users_id = []
+    test = Test.query.filter_by(test_code = code).first()
+
+
     users[flask.request.sid] = current_user.username
     username=  users.get(flask.request.sid, "Anonymous") 
     
     join_room(code)
     emit('user_joined', {'msg': f'{username} присоединился к комнате {code}'}, room= code)
+
+
+    if current_user.id not in users_id:
+        users_id.append(current_user.id)
+    print(users_id)
+
+    if current_user.username == test.author_name:
+        id_string = ""
+        for u_id in users_id:
+            if id_string:
+                id_string += "|"
+            id_string += str(u_id)
+
+        print(id_string)
+        response = flask.make_response(flask.redirect(f'/'))
+        response.set_cookie(key='users_id', value=id_string)
+
     print(f'{username} присоединился к комнате {code}')
 
 @Project.settings.socketio.on('message')

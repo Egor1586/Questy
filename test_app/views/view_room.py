@@ -6,7 +6,6 @@ from Project.render_page import render_page
 from ..models import Test
 
 users = {}
-users_id = ''
 
 @Project.settings.socketio.on('join')
 def handle_join(code):
@@ -14,15 +13,9 @@ def handle_join(code):
     join_room(code)
     
     emit('user_joined', {'msg': f'{current_user.username} присоединился к комнате {code}'}, room= code)
-    if current_user.id not in users_id:
-        users_id += ' ' + current_user.id
 
-    elif True:
-        print(f'=====================================')
-        response = flask.make_response(flask.redirect(f'/room{code}'))
-        response.set_cookie(key='users_id', value='абоба')
-        print(f'это куки{response}')
-        return {'response': response}
+
+
 
 @Project.settings.socketio.on('message')
 def handle_message(data):
@@ -32,14 +25,16 @@ def handle_message(data):
 @render_page(template_name = 'room.html')
 def render_room(test_code):
 
+    list_users = ["user1", "user2", "user3"]
     test= Test.query.filter_by(test_code= test_code).first()
 
     if test.test_code == 0:
         test.test_code= random.randint(1000, 9999)
         Project.database.db.session.commit()
 
-    return{
-        'test': test
+    return {
+    "test": test,
+    "list_users": list_users
     }
 
 
@@ -49,4 +44,4 @@ def delete_code(test_id):
     Project.database.db.session.commit()
 
     return flask.redirect("/quizzes/")
-    # return flask.redirect(f"/room{test.id}")
+    
