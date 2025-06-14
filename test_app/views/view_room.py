@@ -1,10 +1,10 @@
 import flask, Project, random
 
 from flask_login import current_user
-from flask_socketio import join_room, emit, disconnect, leave_room
+from flask_socketio import join_room, emit, disconnect
 from Project.render_page import render_page
-from ..models import Test
-
+from Project.database import db
+from ..models import Test, Room
 from user.models import User
 
 users= {}
@@ -18,7 +18,25 @@ def handle_join(data):
     join_room(code)
     emit('user_joined', {'msg': f'{username} присоединился к комнате {code}'}, room= code)
 
-    # Добавление в user_list в бд
+    test= Test.query.filter_by(test_code = code).first()
+    room= Room.query.filter_by(test_code = code).first()
+
+    if not room:
+        room = Room(
+            test_id=test.id,
+            test_code=code,
+            user_list=f'|{username}|',
+            author_name = username 
+        )
+        db.session.add(room)
+
+    else:
+        new_user = f'|{username}|'
+        if new_user not in room.user_list:
+            room.user_list += new_user
+
+    db.session.commit()
+
 
 @Project.settings.socketio.on('kick_user')
 def handle_kick_user(data):
@@ -61,21 +79,20 @@ def handle_message(data):
 
 @Project.settings.socketio.on('author_start_test')
 def handle_start_test(data):
-    room= data['room']
-    test= Test.query.filter_by(test_code= room).first()
-    print(f"start {data['room']} {current_user.username}")
+    room = data['room']
+    test= Test.query.filter_by(test_code = room).first()
     emit("start_test", {
-        "room": room, 
+        "room": room,
         "test_id": test.id,
         "author_name": test.author_name
-        }, 
-        broadcast= True, to= room)
+        }
+    , to=room)
 
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
 
-    list_users = ["Егор ", "Денис", "USER1", "USER2"] 
+    list_users = ["Егор", "Денис", "USER1", "USER2"] 
 
     test= Test.query.filter_by(test_code= test_code).first()
     
@@ -90,4 +107,3 @@ def delete_code(test_id):
     Project.database.db.session.commit()
 
     return flask.redirect("/quizzes/")
-    
