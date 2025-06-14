@@ -62,31 +62,16 @@
 
      <script>
         
-        const socket = io();
         const username = "{{ username }}"
         const test_list = "{{ list_tests }}"
-
-        socket.on("message", function(data) {
-            let messages = document.getElementById("messages");
-            messages.innerHTML += `<p>${data}</p>`;
-            console.log(typeof data, data)
-        });
 
         function emitUser(){
             const room = document.getElementById('room').value.trim();
             const allCodes = "{{ code_str }}".split(" ");
             
             if (allCodes.includes(room)) {
-                socket.emit("join", room);
                 window.location.href = `/room${room}`;
             } 
-        }
-
-        function sendMessage() {
-            let msgInput = document.getElementById("msg");
-            let message = msgInput.value;
-            socket.send(message);
-            msgInput.value = "";
         }
 
     </script>

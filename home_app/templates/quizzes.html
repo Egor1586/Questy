@@ -52,16 +52,22 @@
                                     </button>
                                 </form>
 
-                                <!-- <button class="start">Start</button> -->
-                                <button class="start">
-                                    <a href="/room{{test.test_code}} " class="btn">
-                                        Start
-                                    </a>
-                                </button>
+                                {% if test.test_code != 0 %}
+                                    <button class="start" type="button">
+                                        <a href="/room{{ test.test_code }}" class="btn">Start</a>
+                                    </button>
+                                {% endif %}
+                                
+                                {% if test.test_code == 0 %}
+                                    <button class="edit">
+                                        <a href="/create_code{{ test.id }}" class="btn">
+                                            Create code 
+                                        </a>
+                                    </button>
+                                {% endif %}
                             </div>
                             <p class="code-p"><strong>Code: </strong>{{test.test_code}}</p>
                         </div>
-                        <!--  -->
                     
                     </div>
                 {% endif %}
@@ -69,6 +75,6 @@
         {% endif %}
     </div>
 
-    <script src="{{ url_for('home_app.static', filename='js/addNewUserCookie.js') }}"></script>
-
+    <script src="{{ url_for('home_app.static', filename='js/startTest.js') }}"> </script>
+    
 {% endblock %}

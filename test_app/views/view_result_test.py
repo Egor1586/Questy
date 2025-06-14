@@ -8,14 +8,6 @@ from Project.render_page import render_page
 
 from user.models import Score
 
-def delete_cookies(test_id):
-    print("delete user answers")
-    response = flask.make_response(flask.redirect("/result_test"))
-    response.set_cookie(key= 'user_answers', value= "None")
-
-    return response
-
-@render_page(template_name = 'result_test.html')
 def render_test_result():
     list_answers= []
     count_correct_answers= 0
@@ -29,6 +21,7 @@ def render_test_result():
         list_answers.append(quiz.answer_options.split("%$№"))
     
     user_answers_cookies = flask.request.cookies.get(key= 'user_answers')
+    
     user_answers = user_answers_cookies.split("|")
 
     for answer in user_answers:
@@ -56,15 +49,21 @@ def render_test_result():
             user_id = current_user.id
         )
         db.session.add(score)
-        db.session.commit()#
+        db.session.commit()
 
-    delete_cookies(test.id)
+    result_test_page = flask.render_template(
+        'result_test.html',
+        total_questions=test.total_questions,
+        accuracy=count_correct_answers / len(quizzes_list) * 100 // 1,
+        count_correct_answers=count_correct_answers,
+        list_quiz=quizzes_list,
+        list_answers=list_answers,
+        user_anwsers=user_answers_list
+        )
 
-    return {
-        "total_questions": test.total_questions,
-        'accuracy': count_correct_answers/len(quizzes_list) * 100 // 1,
-        'count_correct_answers': count_correct_answers,
-        "list_quiz": quizzes_list,
-        "list_answers": list_answers,
-        "user_anwsers": user_answers_list
-    }
+    response = flask.make_response(result_test_page)
+    response.set_cookie(key= "user_answers", value="", max_age=0) 
+    
+    return response
+
+

@@ -8,7 +8,6 @@ from Project.render_page import render_page
 def render_passing_test():
     list_answers= []
     list_quiz= []
-    # user_answers= []
 
     test_id= flask.request.args.get("test_id")
     question_number= flask.request.args.get("question_number")
@@ -18,21 +17,6 @@ def render_passing_test():
     for quiz in Quiz.query.filter_by(test_id= test_id).all():
         list_answers.append(quiz.answer_options.split("%$№"))
         list_quiz.append(quiz)
-
-    # if flask.request.method == "POST":
-    #     quiz_test_id = list_quiz[0].id
-
-    #     for id in range(test.total_questions):
-    #         if id != test.total_questions:
-    #             try:
-    #                 user_answers.append(flask.request.form[f'answers{quiz_test_id + id}'])
-    #             except Exception as error:
-    #                 user_answers.append("not answer")
-
-    #     flask.session["user_answer"]= user_answers.copy()
-    #     user_answers.clear()
-
-    #     return flask.redirect(f"/result_test{test.test_code}?test_id= {test.id}")
                 
     return {
         "test": test,

@@ -120,12 +120,18 @@ main {
     background-color: #782a21;
 }
 
-.btn-block {
+.btn-start {
+    padding: 15px 80px;
+    margin-top: 20px;
+    margin-left: 30px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
     background-color: #0a651e;
     color: white;
 }
 
-.btn-block:hover {
+.btn-start:hover {
   background-color: #d68910;
 }
 

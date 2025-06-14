@@ -23,6 +23,7 @@ main {
 .container {
     max-width: 800px;
     margin: auto;
+    width: 800px;
 }
 
 .test-header {
@@ -77,6 +78,8 @@ main {
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px var(--shadow);
+
+    width: 800px;
 }
 .question-header {
     display: flex;
@@ -167,4 +170,17 @@ main {
     background-color: #3730a3;
     transform: scale(1.0);
 
+}
+
+.user-information{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-information div{
+    height: 100%;
+    width: 100%;
 }
