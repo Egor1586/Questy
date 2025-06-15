@@ -57,6 +57,9 @@ def handle_kick_user(data):
         emit('kicked', room=sid_to_kick)
         disconnect(sid=sid_to_kick)
 
+        user = Room.query.filter_by(user_list= username)
+        db.session.delete(user)
+        db.session.commit()
         # Удаление из user_list в бд
 
 
@@ -66,6 +69,9 @@ def handle_disconnect():
     if flask.request.sid in users:
         users.pop(flask.request.sid)
 
+        user = Room.query.filter_by(user_list= current_user.username)
+        db.session.delete(user)
+        db.session.commit()
         # Удаление из user_list в бд
 
         print(f"disconect {users[flask.request.sid]}")
@@ -98,7 +104,7 @@ def render_room(test_code):
     
     return {
         "test": test,
-        "list_users": list_users
+        "list_users": l-ьers
         }
 
 def delete_code(test_id):
