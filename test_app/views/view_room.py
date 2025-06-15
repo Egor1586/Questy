@@ -42,7 +42,8 @@ def handle_join(data):
 def handle_kick_user(data):
     username = data['user']
     room = data['room']
-
+    type = data['type']
+    
     print(f"Delete {username} from {room}")
 
     sid_to_kick = None
@@ -54,21 +55,19 @@ def handle_kick_user(data):
     if sid_to_kick:
         users.pop(sid_to_kick, None)
 
-        emit('kicked', room=sid_to_kick)
-        disconnect(sid=sid_to_kick)
+        if type == "kick_user":
+            emit('kicked', room=sid_to_kick)
 
-        # Удаление из user_list в бд
+        ROOM = Room.query.filter_by(test_code= room).first()
+        print(ROOM.user_list)
+        user_list = ROOM.user_list
+        user_list= user_list.replace(f"|{username}|", "")
+        ROOM.user_list= user_list
+        print(user_list)
+        db.session.commit()
 
-
-@Project.settings.socketio.on('disconnect')
-def handle_disconnect():
-    
-    if flask.request.sid in users:
-        users.pop(flask.request.sid)
-
-        # Удаление из user_list в бд
-
-        print(f"disconect {users[flask.request.sid]}")
+        if type == "kick_user":
+            disconnect(sid=sid_to_kick)
 
 
 @Project.settings.socketio.on('message_to_chat')
@@ -81,6 +80,7 @@ def handle_message(data):
 def handle_start_test(data):
     room = data['room']
     test= Test.query.filter_by(test_code = room).first()
+    
     emit("start_test", {
         "room": room,
         "test_id": test.id,

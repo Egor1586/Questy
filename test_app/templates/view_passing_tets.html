@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href = "{{ url_for('test_app.static', filename='css/passing_solo_tets.css') }}">
+    <link rel="stylesheet" href = "{{ url_for('test_app.static', filename='css/view_passing_tets.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
             <div class="answers">
                 {% if question_number + 1 != test.total_questions %}
                     {% for answer in list_answers[question_number] %}         
-                        <a class="answer-link" href="/passing_solo_tets?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                        <a class="answer-link" href="/view_passing_tets?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
                             <div class="answer" id="{{ answer }}">
                                 {{ answer }}
                             </div>
@@ -29,7 +29,7 @@
                         </a>
                     {% endfor %}
                 {% endif %}
-                    </div>
+        </div>
     </div>
                 
     <script src="{{ url_for('test_app.static', filename = 'js/passing_test.js') }}"></script>

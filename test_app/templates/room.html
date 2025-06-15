@@ -23,14 +23,15 @@
                         <div class="user-name">Автор: {{ name }}</div>
                     {% else %}
                         <div class="user-name">{{ name }}</div>
-                        <div class="user-actions">
-                            <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
-                        </div>
+                        {% if test.author_name == username %}
+                            <div class="user-actions">
+                                <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
-
 
         {% if test.author_name == username %}
                 <button class= "btn-start" onclick="authorStartTest()" type="button">Start</button>
@@ -67,7 +68,6 @@
             });
 
             socket.on('kicked', function(data) {
-                document.cookie = "room= ''; path= /; max-age= 0";
                 window.location.href = '/'; 
             });
 
@@ -76,11 +76,10 @@
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
                 console.log(data["test_id"])
                 if (username === data["author_name"]) {
-                    console.log("Вы начали тест")
+                    console.log("Вы начали тест");
                 }
                 else {
-                    //window.location.href = `/passing_test?test_id=${data["test_id"]}`;
-                    window.location.href = `/`;
+                    console.log("Тест начат");
                 }
             });
 
@@ -102,7 +101,8 @@
             function kickUser(kick_user) {
                 socket.emit("kick_user", {
                     room: code,
-                    user: kick_user
+                    user: kick_user,
+                    type: "kick_user"
                 });
             }
 
@@ -112,6 +112,18 @@
                 }
                 );
             }
+
+            socket.on('disconnect', function () {
+                console.log("disconnect 1")
+                setTimeout(function () {
+                    console.log("disconnect 2")
+                    socket.emit("kick_user", {
+                        room: code,
+                        user: username,
+                        type: "disconnect"
+                    });
+                }, 10000);
+            });
 
         </script>
 
