@@ -104,7 +104,7 @@ def render_room(test_code):
     
     return {
         "test": test,
-        "list_users": l-ьers
+        "list_users": list_users
         }
 
 def delete_code(test_id):
