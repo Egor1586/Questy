@@ -7,51 +7,56 @@
 {% block links %}
     <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/room.css') }}">
 {% endblock %}
-
+    
 {% block content %}
-    <div class="waite-side">
-        <div class="info-bar">
-            <div class="info-text">Author: {{ username }}</div>
-            <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
-        </div>
 
-        <div class="user-list">
-            
-            {% for name in list_users %}
+
+
+    <div id="sec-main" class="content">
+        <div class="waite-side">
+            <div class="info-bar">
+                <div class="info-text">Author: {{ username }}</div>
+                <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
+            </div>
+
+            <div class="user-list">
                 <div class="user-block">
-                    {% if test.author_name == name %}
-                        <div class="user-name">Автор: {{ name }}</div>
-                    {% else %}
-                        <div class="user-name">{{ name }}</div>
-                        {% if test.author_name == username %}
-                            <div class="user-actions">
-                                <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
-                            </div>
-                        {% endif %}
-                    {% endif %}
+                    <div class="user-name">Автор: {{test.author_name }}</div>
                 </div>
-            {% endfor %}
+                {% for name in list_users %}
+                    {% if test.author_name != name %}
+                        <div class="user-block">
+                            <div class="user-name">{{ name }}</div>
+                            {% if test.author_name == username %}
+                                <div class="user-actions">
+                                    <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% if test.author_name == username %}
+                    <button class= "btn-start" onclick="authorStartTest()" type="button">Start</button>
+            {% endif %}
         </div>
 
-        {% if test.author_name == username %}
-                <button class= "btn-start" onclick="authorStartTest()" type="button">Start</button>
-        {% endif %}
-    </div>
 
-
-   <div class="chat">
-        <h2>Chat</h2>
-        <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
-        <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
-        <div id="messages"></div>
-    </div>
+        <div class="chat">
+            <h2>Chat</h2>
+            <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
+            <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
+            <div id="messages"></div>
+        </div>
+            
+    </div>      
 
     {% if current_user.is_authenticated %}
         <script>
+            
             const socket = io();
             const username = "{{ username }}";  
-
-            console.log(username)
             const code = "{{ test.test_code }}"
 
             socket.on("connect", function () {
@@ -62,13 +67,17 @@
             });
 
             socket.on("listening_to_messages", function(data) {
-                console.log(data);
                 let messages = document.getElementById("messages");
                 messages.innerHTML += `<p>${data}</p>`;
             });
 
-            socket.on('kicked', function(data) {
+            socket.on('kicked', function(data) {          
                 window.location.href = '/'; 
+            });
+
+            socket.on('user_disconnected', function(data) {       
+                let messages = document.getElementById("messages");
+                messages.innerHTML += `<p>${data['msg']}</p>`;
             });
 
             socket.on('start_test', function(data) {
@@ -77,9 +86,28 @@
                 console.log(data["test_id"])
                 if (username === data["author_name"]) {
                     console.log("Вы начали тест");
+                    let block = document.getElementById('sec-main');
+                    if (block){
+                        block.remove();
+                        let sec_main = document.getElementById('main')
+                        sec_main.textContent = 'ffffff'
+                        let paragraph = document.createElement('p');
+                        paragraph.id = 'just_text';
+                        paragraph.textContent = 'Some text'
+                        main.appendChild(paragraph)
+                    }
+                    else {
+                        console.log('нету блока')
+                        
+                    }
+                    
+                    
                 }
                 else {
                     console.log("Тест начат");
+                    //const response = fetch('view_passing_test.html');
+                    //const html = response.text();
+                    //document.getElementById('content').innerHTML = html;
                 }
             });
 
@@ -88,7 +116,6 @@
                 let message = msgInput.value;
 
                 if (message != ""){
-                    console.log(code, username)
                     socket.emit("message_to_chat", {
                         message: message,
                         room: code,         
@@ -101,8 +128,7 @@
             function kickUser(kick_user) {
                 socket.emit("kick_user", {
                     room: code,
-                    user: kick_user,
-                    type: "kick_user"
+                    user: kick_user
                 });
             }
 
@@ -113,20 +139,8 @@
                 );
             }
 
-            socket.on('disconnect', function () {
-                console.log("disconnect 1")
-                setTimeout(function () {
-                    console.log("disconnect 2")
-                    socket.emit("kick_user", {
-                        room: code,
-                        user: username,
-                        type: "disconnect"
-                    });
-                }, 10000);
-            });
-
         </script>
 
     {% endif %}
-
+    
 {% endblock %}

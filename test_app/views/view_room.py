@@ -16,7 +16,6 @@ def handle_join(data):
     users[flask.request.sid] = username
 
     join_room(code)
-    emit('user_joined', {'msg': f'{username} присоединился к комнате {code}'}, room= code)
 
     test= Test.query.filter_by(test_code = code).first()
     room= Room.query.filter_by(test_code = code).first()
@@ -42,7 +41,6 @@ def handle_join(data):
 def handle_kick_user(data):
     username = data['user']
     room = data['room']
-    type = data['type']
     
     print(f"Delete {username} from {room}")
 
@@ -55,8 +53,7 @@ def handle_kick_user(data):
     if sid_to_kick:
         users.pop(sid_to_kick, None)
 
-        if type == "kick_user":
-            emit('kicked', room=sid_to_kick)
+        emit('kicked', room=sid_to_kick)
 
         ROOM = Room.query.filter_by(test_code= room).first()
         print(ROOM.user_list)
@@ -66,8 +63,23 @@ def handle_kick_user(data):
         print(user_list)
         db.session.commit()
 
-        if type == "kick_user":
-            disconnect(sid=sid_to_kick)
+
+        disconnect(sid=sid_to_kick)
+
+@Project.settings.socketio.on('disconnect')
+def handle_disconnect():
+    username = users.pop(flask.request.sid, None)
+    users.pop(flask.request.sid, None)
+
+    if username:
+        print(f"disconected {username}")
+
+        ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
+        ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
+        db.session.commit()
+
+        emit('user_disconnected', {'msg': f'{username} отключился'}, to=ROOM.test_code)
+
 
 
 @Project.settings.socketio.on('message_to_chat')
@@ -91,8 +103,17 @@ def handle_start_test(data):
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
+    list_users= []
+    current_list_users= []
+    ROOM = Room.query.filter_by(test_code= test_code).first()
+    
+    if ROOM:
+        current_list_users= ROOM.user_list.split('|')
+        for name in current_list_users:
+            if name:
+                list_users.append(name)
 
-    list_users = ["Егор", "Денис", "USER1", "USER2"] 
+    print(list_users)
 
     test= Test.query.filter_by(test_code= test_code).first()
     
