@@ -122,6 +122,13 @@ def render_room(test_code):
         "list_users": list_users
         }
 
+
+@render_page(template_name = 'room_test_result.html')
+def render_question():
+
+    
+    return { }
+
 def delete_code(test_id):
     test= Test.query.filter_by(id= test_id).first()
     test.test_code = 0

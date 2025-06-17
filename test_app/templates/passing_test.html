@@ -5,38 +5,32 @@
 {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="{{ url_for('test_app.static', filename='css/passing_test.css') }}">
+    <link rel="stylesheet" href = "{{ url_for('test_app.static', filename='css/passing_test.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="test-header">
-            <div class="test-details">
-                <div class="test-title">Test Title: {{ test.title }}</div>
-                <div class="test-description">Description: {{ test.description }}</div>
-                <div class="meta-info">Number of total questions: {{ test.total_questions }} </div>
-                <div class="meta-info">Number of answers per question: {{ test.answers_per_question }} </div>
-            </div>
-        </div>
-        <form action="" method="POST">
-            {% for question in list_quiz %}
-                {% set answers = list_answers[loop.index0] %}
-                <div class="question-block">
-                    <div class="question-header">
-                    <div>{{ question.question_text }}</div>
-                    </div>
-                    <div class="question-text">
-                        Choose the correct option from the ones below.
-                    </div>
-                    {% for answer in answers %}
-                        <div>
-                            <input type="radio" id="{{ question.id }}" name="answers{{ question.id }}" value="{{ answer }}" />
-                            <label for="{{ question.id }}">{{ answer }}</label>
-                        </div>                            
+    <div class="content">
+        <div class="question"><p>{{  list_quiz[question_number].question_text   }}</p></div>
+            <div class="answers">
+                {% if question_number + 1 != test.total_questions %}
+                    {% for answer in list_answers[question_number] %}         
+                        <a class="answer-link" href="/view_passing_tets?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                            <div class="answer" id="{{ answer }}">
+                                {{ answer }}
+                            </div>
+                        </a>
                     {% endfor %}
-                </div>
-            {% endfor %}
-            <button class="send-test">Send test</button>
-        </form>
+                {% else %}
+                    {% for answer in list_answers[question_number] %}         
+                        <a  class="answer-link" href="/result_test?test_id= {{ test.id }}">
+                            <div class="answer" id="{{ answer }}">
+                                {{ answer }}
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+        </div>
     </div>
+                
+    <script src="{{ url_for('test_app.static', filename = 'js/passing_test.js') }}"></script>
 {% endblock %}

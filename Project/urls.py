@@ -33,10 +33,12 @@ test_app.add_url_rule(rule= '/room<test_code>', view_func= render_room, methods 
 test_app.add_url_rule(rule= '/edit_question', view_func= render_edit_question, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = '/edit_header_test<test_id>', view_func = render_edit_header, methods = ['GET', 'POST'])
 
-test_app.add_url_rule(rule = '/view_passing_tets', view_func = render_passing_test, methods = ['GET', 'POST'])
+test_app.add_url_rule(rule = '/passing_tets', view_func = render_passing_test, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = '/result_test', view_func = render_test_result, methods = ['GET', 'POST'])
 
 test_app.add_url_rule(rule = '/delete_test<test_id>', view_func = delete_test, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = '/delete_quiz<quiz_id>', view_func = delete_quiz_question, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = '/delete_code<test_id>', view_func = delete_code, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = '/create_code<test_id>', view_func = created_test, methods = ['GET', 'POST'])
+
+test_app.add_url_rule(rule = '/question', view_func = render_question, methods = ['GET', 'POST'])

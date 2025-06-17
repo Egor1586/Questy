@@ -10,10 +10,8 @@
     
 {% block content %}
 
-
-
-    <div id="sec-main" class="content">
-        <div class="waite-side">
+    <div id="room-main" class="content">
+        <div class="waite-side" id="waite-side">
             <div class="info-bar">
                 <div class="info-text">Author: {{ username }}</div>
                 <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
@@ -43,7 +41,7 @@
         </div>
 
 
-        <div class="chat">
+        <div class="chat" id="chat">
             <h2>Chat</h2>
             <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
             <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
@@ -58,6 +56,7 @@
             const socket = io();
             const username = "{{ username }}";  
             const code = "{{ test.test_code }}"
+            const test_id = "{{ test.id }}"
 
             socket.on("connect", function () {
                 socket.emit("join", {
@@ -83,31 +82,40 @@
             socket.on('start_test', function(data) {
                 let messages = document.getElementById("messages");
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
-                console.log(data["test_id"])
                 if (username === data["author_name"]) {
+                    // учитель 
                     console.log("Вы начали тест");
-                    let block = document.getElementById('sec-main');
-                    if (block){
-                        block.remove();
-                        let sec_main = document.getElementById('main')
-                        sec_main.textContent = 'ffffff'
+                    let waiteSide = document.getElementById('waite-side');
+                    let chat = document.getElementById('chat');
+                    let roomMain = document.getElementById('room-main');
+                    if (waiteSide && chat){
+                        waiteSide.remove();
+                        chat.remove();
+                            
                         let paragraph = document.createElement('p');
                         paragraph.id = 'just_text';
                         paragraph.textContent = 'Some text'
-                        main.appendChild(paragraph)
+                        roomMain.appendChild(paragraph)
+                        document.cookie = "state= author_start_test; path=/ ";
                     }
                     else {
-                        console.log('нету блока')
-                        
-                    }
-                    
-                    
+                        console.log('нету блока')          
+                    }               
                 }
                 else {
+                    // ученик
                     console.log("Тест начат");
-                    //const response = fetch('view_passing_test.html');
-                    //const html = response.text();
-                    //document.getElementById('content').innerHTML = html;
+                    let roomMain = document.getElementById('room-main');
+                    let waiteSide = document.getElementById('waite-side');
+                    waiteSide.remove();
+                    chat.remove();
+
+                    document.cookie = "state= qustion1; path=/ ";
+                    fetch(`http://127.0.0.1:5000/question`)
+                    .then(response => response.text())
+                    .then(html => {
+                    document.getElementById('room-main').innerHTML = html;
+                    });
                 }
             });
 
