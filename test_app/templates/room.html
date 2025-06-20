@@ -10,106 +10,107 @@
     
 {% block content %}
 
+    <div class="content" id="content">
 
-
-    <div id="sec-main" class="content">
-        <div class="waite-side">
-            <div class="info-bar">
-                <div class="info-text">Author: {{ username }}</div>
-                <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
-            </div>
-
-            <div class="user-list">
-                <div class="user-block">
-                    <div class="user-name">Автор: {{test.author_name }}</div>
-                </div>
-                {% for name in list_users %}
-                    {% if test.author_name != name %}
-                        <div class="user-block">
-                            <div class="user-name">{{ name }}</div>
-                            {% if test.author_name == username %}
-                                <div class="user-actions">
-                                    <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            {% if test.author_name == username %}
-                    <button class= "btn-start" onclick="authorStartTest()" type="button">Start</button>
-            {% endif %}
-        </div>
-
-
-        <div class="chat">
-            <h2>Chat</h2>
-            <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
-            <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
-            <div id="messages"></div>
-        </div>
-            
-    </div>      
+    </div>
 
     {% if current_user.is_authenticated %}
+        <script src="{{ url_for('test_app.static', filename= 'js/get_cookies.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/render_waite_page.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/render_question.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
+
         <script>
             
             const socket = io();
             const username = "{{ username }}";  
-            const code = "{{ test.test_code }}"
+            const room = "{{ test.test_code }}"
+            const author_name = "{{ test.author_name }}"
 
-            socket.on("connect", function () {
-                socket.emit("join", {
-                    code: code,
-                    username: username
+            let state = getCookie("state");
+
+            if (!state) {
+                socket.on("connect", function () {
+                    let state = getCookie("state");
+                    
+                    if (state === "author_start") {
+                        renderAuthorStart();
+                    } 
+                    else if (state === "question1") {
+                        renderQuestion();
+                    } 
+                    else {
+                        renderRoomMain(room, author_name, username);
+                        let messages = document.getElementById("messages");
+                        messages.innerHTML += `<p>${username} добавился в комнату </p>`; 
+                    }
+
+                    socket.emit("join", {
+                        room: room,
+                        username: username
+                    });
+
+                    if (username != author_name ) {
+                        createUserBlock(username, author_name, username)
+                        
+                        socket.emit("new_user", {
+                            room: room,
+                            username: username
+                        });
+                    }
+
                 });
-            });
+                
+                
+                socket.on("listening_to_messages", function(data) {
+                    let messages = document.getElementById("messages");
+                    messages.innerHTML += `<p>${data}</p>`;  
 
-            socket.on("listening_to_messages", function(data) {
-                let messages = document.getElementById("messages");
-                messages.innerHTML += `<p>${data}</p>`;
-            });
+                });
 
-            socket.on('kicked', function(data) {          
-                window.location.href = '/'; 
-            });
+                socket.on("create_user_block", function(data) {   
+                    console.log(data)  ;           
+                    createUserBlock(username, author_name, data);
+                });
 
-            socket.on('user_disconnected', function(data) {       
-                let messages = document.getElementById("messages");
-                messages.innerHTML += `<p>${data['msg']}</p>`;
-            });
+                socket.on('kicked', function(data) {          
+                    window.location.href = '/'; 
+                });
 
-            socket.on('start_test', function(data) {
-                let messages = document.getElementById("messages");
-                messages.innerHTML += `<p>Start ${data["room"]}</p>`;
-                console.log(data["test_id"])
-                if (username === data["author_name"]) {
-                    console.log("Вы начали тест");
-                    let block = document.getElementById('sec-main');
-                    if (block){
-                        block.remove();
-                        let sec_main = document.getElementById('main')
-                        sec_main.textContent = 'ffffff'
-                        let paragraph = document.createElement('p');
-                        paragraph.id = 'just_text';
-                        paragraph.textContent = 'Some text'
-                        main.appendChild(paragraph)
+                socket.on('user_disconnected', function(data) {    
+                    let messages = document.getElementById("messages");
+                    messages.innerHTML += `<p>${data['msg']}</p>`;  
+
+                    let removeUserBlock= document.getElementById(`${data['username']}`)
+
+                    if (removeUserBlock) {
+                        removeUserBlock.remove()
+                    }
+                });
+
+                socket.on('start_test', function(data) {
+                    let messages = document.getElementById("messages");
+                    messages.innerHTML += `<p>Start ${data["room"]}</p>`;
+                    console.log(data["test_id"])
+                    if (username === data["author_name"]) {
+                        console.log("Вы начали тест");              
+                        document.cookie = "state= author_start; path=/";
+                        renderAuthorStart()
                     }
                     else {
-                        console.log('нету блока')
-                        
+                        console.log("Тест начат");
+                        document.cookie = "state= question1; path=/";
+                        renderQuestion()
                     }
-                    
-                    
-                }
-                else {
-                    console.log("Тест начат");
-                    //const response = fetch('view_passing_test.html');
-                    //const html = response.text();
-                    //document.getElementById('content').innerHTML = html;
-                }
-            });
+                });
+
+            }
+            else {
+                socket.on('user_disconnected', function(data) {    
+                    console.log(`${data['msg']}`)
+                });
+            }
 
             function sendMessage() {
                 let msgInput = document.getElementById("msg");
@@ -118,7 +119,7 @@
                 if (message != ""){
                     socket.emit("message_to_chat", {
                         message: message,
-                        room: code,         
+                        room: room,         
                         username: username  
                     });
                 }
@@ -127,18 +128,23 @@
 
             function kickUser(kick_user) {
                 socket.emit("kick_user", {
-                    room: code,
+                    room: room,
                     user: kick_user
                 });
+
+                let removeUserBlock= document.getElementById(`${kick_user}`)
+
+                if (removeUserBlock) {
+                    removeUserBlock.remove()
+                }
             }
 
             function authorStartTest() {
                 socket.emit("author_start_test", {
-                    room: code
-                }
-                );
+                    room: room
+                });
             }
-
+        
         </script>
 
     {% endif %}

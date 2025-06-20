@@ -11,21 +11,21 @@ users= {}
 
 @Project.settings.socketio.on('join')
 def handle_join(data):
-    code= data['code']
+    room= data['room']
     username= data['username']
     users[flask.request.sid] = username
 
-    join_room(code)
+    join_room(room)
 
-    test= Test.query.filter_by(test_code = code).first()
-    room= Room.query.filter_by(test_code = code).first()
+    test= Test.query.filter_by(test_code = room).first()
+    room= Room.query.filter_by(test_code = room).first()
 
     if not room:
         room = Room(
-            test_id=test.id,
-            test_code=code,
-            user_list=f'|{username}|',
-            author_name = username 
+            test_id= test.id,
+            test_code= room,
+            user_list= f'|{username}|',
+            author_name= username 
         )
         db.session.add(room)
 
@@ -63,7 +63,6 @@ def handle_kick_user(data):
         print(user_list)
         db.session.commit()
 
-
         disconnect(sid=sid_to_kick)
 
 @Project.settings.socketio.on('disconnect')
@@ -78,14 +77,19 @@ def handle_disconnect():
         ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
         db.session.commit()
 
-        emit('user_disconnected', {'msg': f'{username} отключился'}, to=ROOM.test_code)
-
-
+        emit('user_disconnected', {
+                'msg': f'{username} отключился',
+                "username": f"{username}"
+                }, 
+            to=ROOM.test_code)
 
 @Project.settings.socketio.on('message_to_chat')
 def handle_message(data):
-    room = data['room']
-    emit("listening_to_messages", f"{data['username']}: {data['message']}", broadcast=True, to=room)
+    emit("listening_to_messages", f"{data['username']}: {data['message']}", to= data['room'])
+
+@Project.settings.socketio.on('new_user')
+def handle_message(data):
+    emit("create_user_block", f"{data['username']}", include_self= False, to= data['room'])
 
 
 @Project.settings.socketio.on('author_start_test')
@@ -99,6 +103,8 @@ def handle_start_test(data):
         "author_name": test.author_name
         }
     , to=room)
+
+
 
 
 @render_page(template_name = 'room.html')
