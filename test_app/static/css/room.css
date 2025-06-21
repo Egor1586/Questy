@@ -6,7 +6,7 @@ main {
     height: 84vh;
 }
 
-.content{
+.room-content{
     display: flex;
     flex-direction: row;
     align-items: center;

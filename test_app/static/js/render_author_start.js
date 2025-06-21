@@ -1,12 +1,12 @@
-function renderAuthorStart() {
-    const content = document.getElementById("content");
-    content.innerHTML = ""; 
+function renderAuthorStart(countUser) {
+    const roomContent = document.getElementById("room-content");
+    roomContent.innerHTML = ""; 
 
-    content.textContent = "Author start test";
+    roomContent.textContent = `Author start test, count users : ${countUser}`;
 
     const chat = document.createElement('p');
     chat.id = 'messages';
     chat.className = 'messages';
 
-    content.appendChild(chat);
+    roomContent.appendChild(chat);
 }

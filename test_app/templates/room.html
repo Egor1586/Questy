@@ -10,7 +10,7 @@
     
 {% block content %}
 
-    <div class="content" id="content">
+    <div class="room-content" id="room-content">
 
     </div>
 
@@ -28,89 +28,115 @@
             const room = "{{ test.test_code }}"
             const author_name = "{{ test.author_name }}"
 
+            const list_quiz = {{ list_quiz | tojson | safe }};
+            const list_answers = {{ list_answers | tojson | safe }};
+            
+            let count = 0;
+            
             let state = getCookie("state");
 
-            if (!state) {
-                socket.on("connect", function () {
-                    let state = getCookie("state");
-                    
-                    if (state === "author_start") {
-                        renderAuthorStart();
-                    } 
-                    else if (state === "question1") {
-                        renderQuestion();
-                    } 
-                    else {
-                        renderRoomMain(room, author_name, username);
-                        let messages = document.getElementById("messages");
-                        messages.innerHTML += `<p>${username} добавился в комнату </p>`; 
-                    }
+            if (state === "author_start") {
+                renderAuthorStart(localStorage.getItem('countUser'));
+            } 
+            else if (state === "question1") {
+                renderQuestion(0, list_quiz, list_answers, room, 5);
+            } 
+            else {
+                
+                renderRoomMain(room, author_name, username);
+                let messages = document.getElementById("messages");
+                if (messages) {
+                    messages.innerHTML += `<p>${username} добавился в комнату </p>`; 
+                };
+            }
 
-                    socket.emit("join", {
+            socket.on("connect", function () {
+                localStorage.setItem('countUser', count);
+                
+                count= localStorage.getItem('countUser')
+                count++;
+                localStorage.setItem('countUser', count);
+                console.log(count);
+                
+                socket.emit("join", {
+                    room: room,
+                    username: username
+                });
+
+                if (username != author_name ) {
+    
+
+                    if (!state){
+                        createUserBlock(username, author_name, username)
+                    }
+                    
+                    socket.emit("new_user", {
                         room: room,
                         username: username
                     });
+                }
 
-                    if (username != author_name ) {
-                        createUserBlock(username, author_name, username)
-                        
-                        socket.emit("new_user", {
-                            room: room,
-                            username: username
-                        });
-                    }
-
-                });
-                
-                
-                socket.on("listening_to_messages", function(data) {
-                    let messages = document.getElementById("messages");
+            });
+            
+            
+            socket.on("listening_to_messages", function(data) {
+                let messages = document.getElementById("messages");
+                if (messages) {
                     messages.innerHTML += `<p>${data}</p>`;  
+                };
+            });
 
-                });
+            socket.on("create_user_block", function(data) {  
+                count= localStorage.getItem('countUser')
+                count++;
+                localStorage.setItem('countUser', count);
+                console.log(count);
 
-                socket.on("create_user_block", function(data) {   
-                    console.log(data)  ;           
+                console.log(data) ; 
+                if (!state){          
                     createUserBlock(username, author_name, data);
-                });
+                }
+            });
 
-                socket.on('kicked', function(data) {          
-                    window.location.href = '/'; 
-                });
+            socket.on('kicked', function(data) {          
+                window.location.href = '/'; 
+            });
 
-                socket.on('user_disconnected', function(data) {    
-                    let messages = document.getElementById("messages");
+            socket.on('user_disconnected', function(data) {  
+                count= localStorage.getItem('countUser')
+                if (count > 0){
+                    count--;
+                    localStorage.setItem('countUser', count);
+                }
+                console.log(count);
+                
+                let messages = document.getElementById("messages");
+                if (messages) {
                     messages.innerHTML += `<p>${data['msg']}</p>`;  
+                }  
 
-                    let removeUserBlock= document.getElementById(`${data['username']}`)
+                let removeUserBlock= document.getElementById(`${data['username']}`)
 
-                    if (removeUserBlock) {
-                        removeUserBlock.remove()
-                    }
-                });
+                if (removeUserBlock) {
+                    removeUserBlock.remove()
+                }
+            });
 
-                socket.on('start_test', function(data) {
-                    let messages = document.getElementById("messages");
-                    messages.innerHTML += `<p>Start ${data["room"]}</p>`;
-                    console.log(data["test_id"])
-                    if (username === data["author_name"]) {
-                        console.log("Вы начали тест");              
-                        document.cookie = "state= author_start; path=/";
-                        renderAuthorStart()
-                    }
-                    else {
-                        console.log("Тест начат");
-                        document.cookie = "state= question1; path=/";
-                        renderQuestion()
-                    }
-                });
-
-            }
-            else {
-                socket.on('user_disconnected', function(data) {    
-                    console.log(`${data['msg']}`)
-                });
-            }
+            socket.on('start_test', function(data) {
+                let messages = document.getElementById("messages");
+                messages.innerHTML += `<p>Start ${data["room"]}</p>`;
+                console.log(data["test_id"])
+                if (username === data["author_name"]) {
+                    console.log("Вы начали тест");              
+                    document.cookie = "state= author_start; path=/";
+                    renderAuthorStart(localStorage.getItem('countUser'));
+                }
+                else {
+                    console.log("Тест начат");
+                    document.cookie = "state= question1; path=/";
+                    renderQuestion(0, list_quiz, list_answers, room, 5);
+                }
+            });
 
             function sendMessage() {
                 let msgInput = document.getElementById("msg");
@@ -127,6 +153,13 @@
             }
 
             function kickUser(kick_user) {
+
+                count= localStorage.getItem('countUser')
+                count--;
+                localStorage.setItem('countUser', count);
+                
+                console.log(count);
+                
                 socket.emit("kick_user", {
                     room: room,
                     user: kick_user
@@ -144,9 +177,13 @@
                     room: room
                 });
             }
-        
         </script>
+    
+    {% else %}
+        <script>
+            window.location.href = '/'; 
 
+        </script>
     {% endif %}
     
 {% endblock %}

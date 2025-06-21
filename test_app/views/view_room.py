@@ -4,7 +4,7 @@ from flask_login import current_user
 from flask_socketio import join_room, emit, disconnect
 from Project.render_page import render_page
 from Project.database import db
-from ..models import Test, Room
+from ..models import Test, Room, Quiz
 from user.models import User
 
 users= {}
@@ -109,24 +109,24 @@ def handle_start_test(data):
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
-    list_users= []
-    current_list_users= []
-    ROOM = Room.query.filter_by(test_code= test_code).first()
-    
-    if ROOM:
-        current_list_users= ROOM.user_list.split('|')
-        for name in current_list_users:
-            if name:
-                list_users.append(name)
+    list_answers = []
+    list_quiz = []
 
-    print(list_users)
+    test = Test.query.filter_by(test_code= test_code).first()
+    quizzes = Quiz.query.filter_by(test_id= test.id).all()
 
-    test= Test.query.filter_by(test_code= test_code).first()
-    
+    for quiz in quizzes:
+        list_answers.append(quiz.answer_options.split("%$№"))
+        list_quiz.append(quiz.dict()) 
+
+    test = Test.query.filter_by(test_code=test_code).first()
+    ROOM = Room.query.filter_by(test_code=test_code).first()
+
     return {
         "test": test,
-        "list_users": list_users
-        }
+        "list_quiz": list_quiz,
+        "list_answers": list_answers,
+    }
 
 def delete_code(test_id):
     test= Test.query.filter_by(id= test_id).first()

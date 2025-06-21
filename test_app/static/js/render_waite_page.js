@@ -1,6 +1,7 @@
 function renderRoomMain(testCode, authorName, username) {
-    const content= document.getElementById("content");
+    const content= document.getElementById("room-content");
     content.innerHTML= "";
+
 
     const waiteSide= document.createElement("div");
     waiteSide.className= "waite-side";

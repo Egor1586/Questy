@@ -26,6 +26,14 @@ class Quiz(db.Model):
     
     test_id = db.Column(db.Integer, db.ForeignKey('test.id'))
 
+    def dict(self):
+        return {
+            "id": self.id,
+            "question_text": self.question_text,
+            "answer_options": self.answer_options,
+            "test_id": self.test_id
+        }
+
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     

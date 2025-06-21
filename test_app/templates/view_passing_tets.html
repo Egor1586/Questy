@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="content">
+    <div class="question-content">
         <div class="question"><p>{{  list_quiz[question_number].question_text   }}</p></div>
             <div class="answers">
                 {% if question_number + 1 != test.total_questions %}
