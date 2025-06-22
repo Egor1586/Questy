@@ -94,9 +94,13 @@ def handle_message(data):
 def handle_message(data):
     emit("create_user_block", f"{data['username']}", include_self= False, to= data['room'])
 
-# @Project.settings.socketio.on('next_question')
-# def handle_message(data):
-#     emit("create_user_block", f"{data['username']}", include_self= False, to= data['room'])
+@Project.settings.socketio.on('next_question')
+def handle_message(data):
+    emit("next_question", f"Next question in {data['room']} author {data['author_name']}", include_self= False, to= data['room'])
+
+@Project.settings.socketio.on('stop_test')
+def handle_message(data):
+    emit("result_test", f"Stop test {data['room']} result_test page author {data['author_name']}",  to= data['room'])
 
 @Project.settings.socketio.on('user_answer')
 def handle_message(data):

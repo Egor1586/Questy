@@ -12,13 +12,15 @@ function renderWaiteQuestion() {
     roomContent.textContent= "Waite next question"
 }
 
-function renderQuestion(questionNumber, list_quiz, list_answers, room, total_questions, author_name) {
+function renderQuestion(questionNumber, list_quiz, list_answers, room, author_name) {
     const roomContent = document.getElementById("room-content");
+
+    console.log(questionNumber);
 
     if (roomContent != null) {
         roomContent.className = "question-content";
         roomContent.innerHTML = ""; 
-    }
+    };
 
     const questionBlock = document.createElement("div");
     questionBlock.className = "question";
@@ -61,7 +63,8 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, total_que
             type= "click" ,
             listener= function ( event ) {
                 let cookie= getCookie("user_answers")
-                document.cookie = "state= waite_next_question; path=/";
+                let state= getCookie("state")
+                document.cookie = `state= waite_next_question${state.slice(-1)}; path=/`;
                 if (typeof cookie === "undefined"){
                     document.cookie = `user_answers= |${button.id}|; path = /`     
                 }

@@ -1,8 +1,8 @@
-function renderAuthorStart(countUser) {
+function renderAuthorStart() {
     const roomContent = document.getElementById("room-content");
     roomContent.innerHTML = ""; 
 
-    roomContent.textContent = `Author start test, count users : ${countUser}`;
+    roomContent.textContent = `Author start test`;
 
     const chat = document.createElement('p');
     chat.id = 'messages';
