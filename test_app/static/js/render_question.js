@@ -5,12 +5,18 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function renderQuestion(questionNumber, list_quiz, list_answers, test_id, total_questions) {
+function renderWaiteQuestion() {
+    const roomContent = document.getElementById("room-content");
+    roomContent.innerHTML = ""; 
+    roomContent.className = "waite-content"; 
+    roomContent.textContent= "Waite next question"
+}
+
+function renderQuestion(questionNumber, list_quiz, list_answers, room, total_questions, author_name) {
     const roomContent = document.getElementById("room-content");
 
     if (roomContent != null) {
         roomContent.className = "question-content";
-        roomContent.id = "question-content";
         roomContent.innerHTML = ""; 
     }
 
@@ -55,13 +61,22 @@ function renderQuestion(questionNumber, list_quiz, list_answers, test_id, total_
             type= "click" ,
             listener= function ( event ) {
                 let cookie= getCookie("user_answers")
+                document.cookie = "state= waite_next_question; path=/";
                 if (typeof cookie === "undefined"){
                     document.cookie = `user_answers= |${button.id}|; path = /`     
                 }
                 else{
                     cookie= cookie + `|${button.id}|`
                     document.cookie = `user_answers = ${cookie}; path= /`
-                }       
+                }      
+                
+                socket.emit("user_answer", {
+                    room: room,
+                    author_name: author_name,
+                    msg: `${username} do answer ${button.id}`
+                });
+                
+                renderWaiteQuestion();
             }
         )
     }
