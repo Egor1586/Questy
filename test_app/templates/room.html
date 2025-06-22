@@ -10,112 +10,136 @@
     
 {% block content %}
 
-    <div id="room-main" class="content">
-        <div class="waite-side" id="waite-side">
-            <div class="info-bar">
-                <div class="info-text">Author: {{ username }}</div>
-                <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
-            </div>
+    <div class="room-content" id="room-content">
 
-            <div class="user-list">
-                <div class="user-block">
-                    <div class="user-name">Автор: {{test.author_name }}</div>
-                </div>
-                {% for name in list_users %}
-                    {% if test.author_name != name %}
-                        <div class="user-block">
-                            <div class="user-name">{{ name }}</div>
-                            {% if test.author_name == username %}
-                                <div class="user-actions">
-                                    <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            {% if test.author_name == username %}
-                    <button class= "btn-start" onclick="authorStartTest()" type="button">Start</button>
-            {% endif %}
-        </div>
-
-
-        <div class="chat" id="chat">
-            <h2>Chat</h2>
-            <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
-            <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
-            <div id="messages"></div>
-        </div>
-            
-    </div>      
+    </div>
 
     {% if current_user.is_authenticated %}
-        <script>
-            
-            const socket = io();
-            const username = "{{ username }}";  
-            const code = "{{ test.test_code }}"
-            const test_id = "{{ test.id }}"
+        <script src="{{ url_for('test_app.static', filename= 'js/get_cookies.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/render_waite_page.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/render_question.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
 
-            socket.on("connect", function () {
+        <script>
+            const socket= io();
+            const username = "{{ username }}";  
+            const room = "{{ test.test_code }}"
+            const author_name = "{{ test.author_name }}"
+
+            const list_quiz = {{ list_quiz | tojson | safe }};
+            const list_answers = {{ list_answers | tojson | safe }};
+            
+            let state = getCookie("state");
+
+            if (state === "author_start") {
+                renderAuthorStart();
+            } 
+            else if (state === "question1") {
+                renderQuestion(0, list_quiz, list_answers, room, 5, author_name);
+            } 
+            else if (state === "waite_next_question") {
+                renderWaiteQuestion();
+            } 
+            else {
+                
+                renderRoomMain(room, author_name, username);
+                let messages = document.getElementById("messages");
+                if (messages) {
+                    messages.innerHTML += `<p>${username} добавился в комнату </p>`; 
+                };
+            }
+ 
+            socket.on("connect", function () {     
                 socket.emit("join", {
-                    code: code,
+                    room: room,
                     username: username
                 });
-            });
+            
+                if (username != author_name ) {
 
+                    if (!state){
+                        createUserBlock(username, author_name, username)
+                    }
+                    
+                    socket.emit("new_user", {
+                        room: room,
+                        username: username
+                    });
+                }
+            });
+            
+            
             socket.on("listening_to_messages", function(data) {
                 let messages = document.getElementById("messages");
-                messages.innerHTML += `<p>${data}</p>`;
+                if (messages) {
+                    messages.innerHTML += `<p>${data}</p>`;  
+                };
+            });
+
+            socket.on("author_receive_answer", function(data) {
+                console.log(data)
+                let countUsers= getCookie("countUsers");
+                countUsers = Number(countUsers) + 1  
+                document.cookie = `countUsers= ${countUsers}; path=/`;
+                console.log(countUsers)
+                
+                socket.emit("get_room_size", {
+                    room: room,
+                    author_name: author_name
+                });
+
+            });
+            
+            socket.on("recieve_count_users", function(data) {  
+                const COUNTUSERS= data['countUsers']
+                let countUsers= getCookie("countUsers");
+                if (COUNTUSERS === Number(countUsers)){    
+                    console.log("works")
+                   document.cookie = `countUsers= 0; path=/`;
+                };
+            });
+
+            socket.on("create_user_block", function(data) {  
+                console.log(data) ; 
+                if (!state){          
+                    createUserBlock(username, author_name, data);
+                }
             });
 
             socket.on('kicked', function(data) {          
                 window.location.href = '/'; 
             });
 
-            socket.on('user_disconnected', function(data) {       
+            socket.on('user_disconnected', function(data) {  
+                
                 let messages = document.getElementById("messages");
-                messages.innerHTML += `<p>${data['msg']}</p>`;
+                if (messages) {
+                    messages.innerHTML += `<p>${data['msg']}</p>`;  
+                }  
+
+                let removeUserBlock= document.getElementById(`${data['username']}`)
+
+                if (removeUserBlock) {
+                    removeUserBlock.remove()
+                }
             });
 
             socket.on('start_test', function(data) {
                 let messages = document.getElementById("messages");
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
                 if (username === data["author_name"]) {
-                    // учитель 
-                    console.log("Вы начали тест");
-                    let waiteSide = document.getElementById('waite-side');
-                    let chat = document.getElementById('chat');
-                    let roomMain = document.getElementById('room-main');
-                    if (waiteSide && chat){
-                        waiteSide.remove();
-                        chat.remove();
-                            
-                        let paragraph = document.createElement('p');
-                        paragraph.id = 'just_text';
-                        paragraph.textContent = 'Some text'
-                        roomMain.appendChild(paragraph)
-                        document.cookie = "state= author_start_test; path=/ ";
-                    }
-                    else {
-                        console.log('нету блока')          
-                    }               
+                    console.log("Вы начали тест");              
+                    document.cookie = "state= author_start; path=/";
+                    document.cookie = "countUsers= 0; path=/";
+                    renderAuthorStart();
                 }
                 else {
                     // ученик
                     console.log("Тест начат");
-                    let roomMain = document.getElementById('room-main');
-                    let waiteSide = document.getElementById('waite-side');
-                    waiteSide.remove();
-                    chat.remove();
+                    document.cookie = "state= question1; path=/";
+                    renderQuestion(0, list_quiz, list_answers, room, 5, author_name);
 
-                    document.cookie = "state= qustion1; path=/ ";
-                    fetch(`http://127.0.0.1:5000/question`)
-                    .then(response => response.text())
-                    .then(html => {
-                    document.getElementById('room-main').innerHTML = html;
-                    });
                 }
             });
 
@@ -126,7 +150,7 @@
                 if (message != ""){
                     socket.emit("message_to_chat", {
                         message: message,
-                        room: code,         
+                        room: room,         
                         username: username  
                     });
                 }
@@ -134,21 +158,31 @@
             }
 
             function kickUser(kick_user) {
+               
                 socket.emit("kick_user", {
-                    room: code,
+                    room: room,
                     user: kick_user
                 });
+
+                let removeUserBlock= document.getElementById(`${kick_user}`)
+
+                if (removeUserBlock) {
+                    removeUserBlock.remove()
+                }
             }
 
             function authorStartTest() {
                 socket.emit("author_start_test", {
-                    room: code
-                }
-                );
+                    room: room
+                });
             }
+        </script>
+    
+    {% else %}
+        <script>
+            window.location.href = '/'; 
 
         </script>
-
     {% endif %}
     
 {% endblock %}

@@ -38,6 +38,7 @@ def render_sign_up():
             if user_data["password"] == user_data["password_confirmation"]: 
                 if db_email is None:
 
+                    print(sing_up_code)
                     with Project.project.app_context():
                         send_code(user_email=user_data["email"], code= sing_up_code)
 
