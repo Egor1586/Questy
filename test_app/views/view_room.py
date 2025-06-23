@@ -86,21 +86,11 @@ def handle_disconnect():
                 }, 
             to=ROOM.test_code)
 
-@Project.settings.socketio.on('message_to_chat')
-def handle_message(data):
-    emit("listening_to_messages", f"{data['username']}: {data['message']}", to= data['room'])
 
-@Project.settings.socketio.on('new_user')
+@Project.settings.socketio.on('user_answers')
 def handle_message(data):
-    emit("create_user_block", f"{data['username']}", include_self= False, to= data['room'])
-
-@Project.settings.socketio.on('next_question')
-def handle_message(data):
-    emit("next_question", f"Next question in {data['room']} author {data['author_name']}", include_self= False, to= data['room'])
-
-@Project.settings.socketio.on('stop_test')
-def handle_message(data):
-    emit("result_test", f"Stop test {data['room']} result_test page author {data['author_name']}",  to= data['room'])
+    print(f'{data["username"]}  {data["user_answers"]}')
+    # данные которые надо передать в базу данных 
 
 @Project.settings.socketio.on('user_answer')
 def handle_message(data):
@@ -121,17 +111,18 @@ def handle_message(data):
     author_name= data["author_name"]
 
     author_sid= get_sid(author_name)
-
-    users_in_room = []
+    
     count_users = 0
     ROOM = Room.query.filter_by(test_code = room).first()
     user_str = ROOM.user_list
-    users_in_room.append(user_str.split('|'))
-    for user in users_in_room:
-        if user != "":
-            count_users =+ 1
     
-    print(count_users)
+    for user in user_str.split('|'):
+        if user != "":
+            count_users = count_users + 1
+
+    print(f"Количетво людей в тесте {count_users}")
+    
+    count_users = count_users - 1
     
     emit("recieve_count_users", {
         "room": room,
@@ -151,6 +142,21 @@ def handle_start_test(data):
         }
     , to=room)
 
+@Project.settings.socketio.on('message_to_chat')
+def handle_message(data):
+    emit("listening_to_messages", f"{data['username']}: {data['message']}", to= data['room'])
+
+@Project.settings.socketio.on('new_user')
+def handle_message(data):
+    emit("create_user_block", f"{data['username']}", include_self= False, to= data['room'])
+
+@Project.settings.socketio.on('next_question')
+def handle_message(data):
+    emit("next_question", f"Next question in {data['room']} author {data['author_name']}", include_self= False, to= data['room'])
+
+@Project.settings.socketio.on('stop_test')
+def handle_message(data):
+    emit("result_test", f"Stop test {data['room']} result_test page author {data['author_name']}", include_self= False, to= data['room'])
 
 
 
