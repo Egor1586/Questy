@@ -1,11 +1,11 @@
-import flask, Project, random
+import flask, Project, random, datetime
 
 from flask_login import current_user
 from flask_socketio import join_room, emit, disconnect
 from Project.render_page import render_page
 from Project.database import db
 from ..models import Test, Room, Quiz
-from user.models import User
+from user.models import User, Score
 
 users= {}
 
@@ -90,10 +90,41 @@ def handle_disconnect():
 
 @Project.settings.socketio.on('user_answers')
 def handle_message(data):
-    print(f'{data["username"]}  {data["user_answers"]}')
-    data_username = User.query.filter_by(usesrname= data["username"])
+    user_name= data["username"]
+    ROOM = Room.query.filter_by(test_code= data["room"]).first()
+    TEST = Test.query.filter_by(id= ROOM.test_id).first()
+    QUIZ_LIST = Quiz.query.filter_by(test_id= ROOM.test_id).all()
+
     
-    # данные которые надо передать в базу данных 
+    user_answers = data["user_answers"].split("|")
+    user_answers_list = []
+    for answer in user_answers:
+        if answer != "":
+            user_answers_list.append(answer)
+    
+    number_of_correct_answers = 0
+    for i in range(len(QUIZ_LIST)):
+        if user_answers_list[i] == QUIZ_LIST[i].correct_answer:
+            number_of_correct_answers += 1
+    accuracy = number_of_correct_answers / len(QUIZ_LIST) * 100
+    accuracy = int(accuracy)
+    print(accuracy)
+    print(user_answers_list)
+
+    print(f'{data["username"]}  {data["user_answers"]}')
+    
+    USER = User.query.filter_by(username= user_name).first()
+    
+    SCORE = Score(
+        user_answer= data["user_answers"],
+        accuracy= accuracy,
+        test_id= TEST.id,
+        date_complete = datetime.date.today(),
+        user_id= USER.id
+    )
+
+    db.session.add(SCORE)
+    db.session.commit()
 
 @Project.settings.socketio.on('user_answer')
 def handle_message(data):

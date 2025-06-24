@@ -6,6 +6,8 @@
 
 {% block links %}
     <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/room.css') }}">
+    <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/room_test_result.css') }}">
+    <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/author_result_question.css') }}">
 {% endblock %}
     
 {% block content %}
@@ -43,7 +45,6 @@
                 renderResultTest();
             } 
             else if (state && state.includes("question")) {
-                console.log("o;ashgao;si/dgjhnaso;/dghasd")
                 renderQuestion(state.slice(-1), list_quiz, list_answers, room, author_name);
             } 
             else if (state && state.includes("waite_next_question")) {

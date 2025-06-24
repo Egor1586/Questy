@@ -8,5 +8,9 @@ function renderAuthorStart() {
     chat.id = 'messages';
     chat.className = 'messages';
 
+    let blockResults = document.createElement('div')
+    blockResults.className = 'result-block-for-question'
+
     roomContent.appendChild(chat);
+    roomContent.appendChild(blockResults)
 }
