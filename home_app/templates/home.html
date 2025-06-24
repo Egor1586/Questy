@@ -41,7 +41,7 @@
         
             <div class="tests">
             {% for test in list_tests %}
-                <a href="/view_passing_tets?test_id={{ test.id }}&question_number= 0" class="test-card">
+                <a href="/passing_tets?test_id={{ test.id }}&question_number= 0" class="test-card">
                     <div class="test-content">
                         {% if test.image %}
                             <img src="/home_app/static/images/media/{{ test.id }}.png" alt="" class="test-img">
@@ -64,6 +64,20 @@
         
         const username = "{{ username }}"
         const test_list = "{{ list_tests }}"
+        let currentCodes = [];
+
+        async function updateCodes() {
+            try {
+                const response = await fetch('/get_active_codes');
+                const codes = await response.json();
+                currentCodes = codes;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        updateCodes();
+        setInterval(updateCodes, 5000);
 
         function emitUser(){
             const room = document.getElementById('room').value.trim();

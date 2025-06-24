@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Test
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('test_app.static', filename='css/form_passing_tets.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="test-header">
+            <div class="test-details">
+                <div class="test-title">Test Title: {{ test.title }}</div>
+                <div class="test-description">Description: {{ test.description }}</div>
+                <div class="meta-info">Number of total questions: {{ test.total_questions }} </div>
+                <div class="meta-info">Number of answers per question: {{ test.answers_per_question }} </div>
+            </div>
+        </div>
+        <form action="" method="POST">
+            {% for question in list_quiz %}
+                {% set answers = list_answers[loop.index0] %}
+                <div class="question-block">
+                    <div class="question-header">
+                    <div>{{ question.question_text }}</div>
+                    </div>
+                    <div class="question-text">
+                        Choose the correct option from the ones below.
+                    </div>
+                    {% for answer in answers %}
+                        <div>
+                            <input type="radio" id="{{ question.id }}" name="answers{{ question.id }}" value="{{ answer }}" />
+                            <label for="{{ question.id }}">{{ answer }}</label>
+                        </div>                            
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button class="send-test">Send test</button>
+        </form>
+    </div>
+{% endblock %}

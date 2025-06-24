@@ -26,6 +26,14 @@ class Quiz(db.Model):
     
     test_id = db.Column(db.Integer, db.ForeignKey('test.id'))
 
+    def dict(self):
+        return {
+            "id": self.id,
+            "question_text": self.question_text,
+            "answer_options": self.answer_options,
+            "test_id": self.test_id
+        }
+
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
@@ -35,6 +43,8 @@ class Room(db.Model):
     user_list = db.Column(db.String(300), nullable= False)
 
     author_name= db.Column(db.String(300), nullable= False)
+
+    active_test= db.Column(db.Boolean, nullable= True)
 
     
 
