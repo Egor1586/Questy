@@ -157,7 +157,7 @@ main {
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #e8f0fe;
+  background: #cce1d2;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -206,4 +206,20 @@ body {
 
 .answer:active {
   transform: scale(0.97);
+}
+
+.waite-content{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
 }

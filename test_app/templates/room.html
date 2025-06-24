@@ -80,7 +80,7 @@
             
             socket.on("listening_to_messages", function(data) {
                 let messages = document.getElementById("messages");
-                if (message !== "") {
+                if (messages != "") {
                     messages.innerHTML += `<p>${data}</p>`;  
                 };
             });
@@ -183,7 +183,7 @@
             socket.on('user_disconnected', function(data) {  
                 
                 let messages = document.getElementById("messages");
-                if (message !== "") {
+                if (messages != "") {
                     messages.innerHTML += `<p>${data['msg']}</p>`;  
                 }  
 

@@ -81,9 +81,8 @@
 
         function emitUser(){
             const room = document.getElementById('room').value.trim();
-            const allCodes = "{{ code_str }}".split(" ");
             
-            if (allCodes.includes(room)) {
+            if (currentCodes.includes(room)) {
                 window.location.href = `/room${room}`;
             } 
         }

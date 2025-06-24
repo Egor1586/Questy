@@ -91,6 +91,8 @@ def handle_disconnect():
 @Project.settings.socketio.on('user_answers')
 def handle_message(data):
     print(f'{data["username"]}  {data["user_answers"]}')
+    data_username = User.query.filter_by(usesrname= data["username"])
+    
     # данные которые надо передать в базу данных 
 
 @Project.settings.socketio.on('user_answer')

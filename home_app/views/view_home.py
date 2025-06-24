@@ -24,19 +24,9 @@ def get_codes():
 def render_home():
     list_room = Room.query.all()
     list_tests= Test.query.all()
-    code_list = []
-
-    for room in list_room:
-        if room.test_code != 0 and not room.active_test:
-            code_list.append(str(room.test_code))
-
-    code_str = " ".join(code_list)
-
-    print(code_str)
 
     return {
         "list_room": list_room,
-        "list_tests": list_tests,
-        "code_str": code_str
+        "list_tests": list_tests
     }
 
