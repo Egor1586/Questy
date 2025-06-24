@@ -37,7 +37,8 @@ def handle_join(data):
             test_id= test.id,
             test_code= room,
             user_list= f'|{username}|',
-            author_name= username 
+            author_name= username,
+            active_test= False
         )
         db.session.add(NEW_ROOM)
 
@@ -134,6 +135,12 @@ def handle_message(data):
 def handle_start_test(data):
     room = data['room']
     test= Test.query.filter_by(test_code = room).first()
+    
+    ROOM= Room.query.filter_by(test_code= room).first()
+    ROOM.active_test= True
+    db.session.commit()
+
+    print("active_test True")
     
     emit("start_test", {
         "room": room,

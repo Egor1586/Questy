@@ -64,6 +64,20 @@
         
         const username = "{{ username }}"
         const test_list = "{{ list_tests }}"
+        let currentCodes = [];
+
+        async function updateCodes() {
+            try {
+                const response = await fetch('/get_active_codes');
+                const codes = await response.json();
+                currentCodes = codes;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        updateCodes();
+        setInterval(updateCodes, 5000);
 
         function emitUser(){
             const room = document.getElementById('room').value.trim();

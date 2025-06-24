@@ -44,5 +44,7 @@ class Room(db.Model):
 
     author_name= db.Column(db.String(300), nullable= False)
 
+    active_test= db.Column(db.Boolean, nullable= True)
+
     
 
