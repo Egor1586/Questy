@@ -7,50 +7,56 @@
 {% block links %}
     <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/room.css') }}">
 {% endblock %}
-
+    
 {% block content %}
-    <div class="waite-side">
-        <div class="info-bar">
-            <div class="info-text">Author: {{ username }}</div>
-            <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
-        </div>
 
-        <div class="user-list">
-            
-            {% for name in list_users %}
+
+
+    <div id="sec-main" class="content">
+        <div class="waite-side">
+            <div class="info-bar">
+                <div class="info-text">Author: {{ username }}</div>
+                <div class="info-text">Test code: <strong>{{ test.test_code }}</strong></div>
+            </div>
+
+            <div class="user-list">
                 <div class="user-block">
-                    {% if test.author_name == name %}
-                        <div class="user-name">Автор: {{ name }}</div>
-                    {% else %}
-                        <div class="user-name">{{ name }}</div>
-                        <div class="user-actions">
-                            <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
+                    <div class="user-name">Автор: {{test.author_name }}</div>
+                </div>
+                {% for name in list_users %}
+                    {% if test.author_name != name %}
+                        <div class="user-block">
+                            <div class="user-name">{{ name }}</div>
+                            {% if test.author_name == username %}
+                                <div class="user-actions">
+                                    <button class="btn-remove" onclick="kickUser('{{ name }}')" type="button">Delete</button>
+                                </div>
+                            {% endif %}
                         </div>
                     {% endif %}
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+
+            {% if test.author_name == username %}
+                    <button class= "btn-start" onclick="authorStartTest()" type="button">Start</button>
+            {% endif %}
         </div>
 
-        {% if test.author_name == username %}
-                <button class= "btn-start" onclick="startTest()" type="button">Start</button>
-        {% endif %}
-        
-    </div>
 
-
-   <div class="chat">
-        <h2>Chat</h2>
-        <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
-        <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
-        <div id="messages"></div>
-    </div>
+        <div class="chat">
+            <h2>Chat</h2>
+            <input id="msg" type="text" placeholder="Enter your message" class="msg-chat">
+            <button onclick="sendMessage()" class="send-btn" type="button">Send</button>
+            <div id="messages"></div>
+        </div>
+            
+    </div>      
 
     {% if current_user.is_authenticated %}
         <script>
+            
             const socket = io();
             const username = "{{ username }}";  
-
-            console.log(username)
             const code = "{{ test.test_code }}"
 
             socket.on("connect", function () {
@@ -61,14 +67,48 @@
             });
 
             socket.on("listening_to_messages", function(data) {
-                console.log(data);
                 let messages = document.getElementById("messages");
                 messages.innerHTML += `<p>${data}</p>`;
             });
 
-            socket.on('kicked', function(data) {
-                document.cookie = "room=; path=/; max-age=0";
+            socket.on('kicked', function(data) {          
                 window.location.href = '/'; 
+            });
+
+            socket.on('user_disconnected', function(data) {       
+                let messages = document.getElementById("messages");
+                messages.innerHTML += `<p>${data['msg']}</p>`;
+            });
+
+            socket.on('start_test', function(data) {
+                let messages = document.getElementById("messages");
+                messages.innerHTML += `<p>Start ${data["room"]}</p>`;
+                console.log(data["test_id"])
+                if (username === data["author_name"]) {
+                    console.log("Вы начали тест");
+                    let block = document.getElementById('sec-main');
+                    if (block){
+                        block.remove();
+                        let sec_main = document.getElementById('main')
+                        sec_main.textContent = 'ffffff'
+                        let paragraph = document.createElement('p');
+                        paragraph.id = 'just_text';
+                        paragraph.textContent = 'Some text'
+                        main.appendChild(paragraph)
+                    }
+                    else {
+                        console.log('нету блока')
+                        
+                    }
+                    
+                    
+                }
+                else {
+                    console.log("Тест начат");
+                    //const response = fetch('view_passing_test.html');
+                    //const html = response.text();
+                    //document.getElementById('content').innerHTML = html;
+                }
             });
 
             function sendMessage() {
@@ -76,7 +116,6 @@
                 let message = msgInput.value;
 
                 if (message != ""){
-                    console.log(code, username)
                     socket.emit("message_to_chat", {
                         message: message,
                         room: code,         
@@ -93,15 +132,15 @@
                 });
             }
 
-            function startTest() {
-                socket.emit("start_test", {
+            function authorStartTest() {
+                socket.emit("author_start_test", {
                     room: code
-                }
-                );
-            }
+                });
+                const roomSize = io.sockets.adapter.rooms.get(roomName)?.size || 0;
+            }  
 
         </script>
 
     {% endif %}
-
+    
 {% endblock %}

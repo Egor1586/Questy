@@ -33,5 +33,8 @@ class Room(db.Model):
     test_code = db.Column(db.String(10), nullable= False)
 
     user_list = db.Column(db.String(300), nullable= False)
+
+    author_name= db.Column(db.String(300), nullable= False)
+
     
 

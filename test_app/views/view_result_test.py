@@ -58,7 +58,11 @@ def render_test_result():
         count_correct_answers=count_correct_answers,
         list_quiz=quizzes_list,
         list_answers=list_answers,
-        user_anwsers=user_answers_list
+        user_anwsers=user_answers_list,
+        is_authorization = current_user.is_authenticated,
+        username = current_user.username if current_user.is_authenticated else "", 
+        is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
+        is_admin = current_user.is_admin if current_user.is_authenticated else ""
         )
 
     response = flask.make_response(result_test_page)

@@ -1,11 +1,10 @@
-import flask, Project, random, json
+import flask, Project, random
 
 from flask_login import current_user
-from flask_socketio import join_room, emit, disconnect, leave_room
+from flask_socketio import join_room, emit, disconnect
 from Project.render_page import render_page
 from Project.database import db
-from ..models import Test
-
+from ..models import Test, Room
 from user.models import User
 from ..models import Room
 
@@ -18,21 +17,19 @@ def handle_join(data):
     users[flask.request.sid] = username
 
     join_room(code)
-    emit('user_joined', {'msg': f'{username} присоединился к комнате {code}'}, room= code)
 
-    test = Test.query.filter_by(test_code = code).first()
+    test= Test.query.filter_by(test_code = code).first()
+    room= Room.query.filter_by(test_code = code).first()
 
-    
     if not room:
-
         room = Room(
             test_id=test.id,
             test_code=code,
             user_list=f'|{username}|',
-            author=username 
+            author_name = username 
         )
         db.session.add(room)
-        # ТУТ НЕ НУЖЕН КОММИТ ! ! ! ! ! ! ! ! ! ! ! ! 
+
     else:
         new_user = f'|{username}|'
         if new_user not in room.user_list:
@@ -40,11 +37,12 @@ def handle_join(data):
 
     db.session.commit()
 
+
 @Project.settings.socketio.on('kick_user')
 def handle_kick_user(data):
     username = data['user']
     room = data['room']
-
+    
     print(f"Delete {username} from {room}")
 
     sid_to_kick = None
@@ -57,20 +55,32 @@ def handle_kick_user(data):
         users.pop(sid_to_kick, None)
 
         emit('kicked', room=sid_to_kick)
+
+        ROOM = Room.query.filter_by(test_code= room).first()
+        print(ROOM.user_list)
+        user_list = ROOM.user_list
+        user_list= user_list.replace(f"|{username}|", "")
+        ROOM.user_list= user_list
+        print(user_list)
+        db.session.commit()
+
+
         disconnect(sid=sid_to_kick)
-
-        # Удаление из user_list в бд
-
 
 @Project.settings.socketio.on('disconnect')
 def handle_disconnect():
-    
-    if flask.request.sid in users:
-        users.pop(flask.request.sid)
+    username = users.pop(flask.request.sid, None)
+    users.pop(flask.request.sid, None)
 
-        # Удаление из user_list в бд
+    if username:
+        print(f"disconected {username}")
 
-        print(f"disconect {users[flask.request.sid]}")
+        ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
+        ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
+        db.session.commit()
+
+        emit('user_disconnected', {'msg': f'{username} отключился'}, to=ROOM.test_code)
+
 
 
 @Project.settings.socketio.on('message_to_chat')
@@ -79,16 +89,32 @@ def handle_message(data):
     emit("listening_to_messages", f"{data['username']}: {data['message']}", broadcast=True, to=room)
 
 
-@Project.settings.socketio.on('start_test')
+@Project.settings.socketio.on('author_start_test')
 def handle_start_test(data):
+    room = data['room']
+    test= Test.query.filter_by(test_code = room).first()
     
-    print(f"start {data["room"]}")
+    emit("start_test", {
+        "room": room,
+        "test_id": test.id,
+        "author_name": test.author_name
+        }
+    , to=room)
 
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
+    list_users= []
+    current_list_users= []
+    ROOM = Room.query.filter_by(test_code= test_code).first()
+    
+    if ROOM:
+        current_list_users= ROOM.user_list.split('|')
+        for name in current_list_users:
+            if name:
+                list_users.append(name)
 
-    list_users = ["Егор", "Денис", "USER1", "USER2"] 
+    print(list_users)
 
     test= Test.query.filter_by(test_code= test_code).first()
     
@@ -97,11 +123,9 @@ def render_room(test_code):
         "list_users": list_users
         }
 
-
 def delete_code(test_id):
     test= Test.query.filter_by(id= test_id).first()
     test.test_code = 0
     Project.database.db.session.commit()
 
     return flask.redirect("/quizzes/")
-    
