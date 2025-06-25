@@ -132,6 +132,7 @@ def handle_message(data):
 @Project.settings.socketio.on('user_answer')
 def handle_message(data):
     author_name = data['author_name']
+
     author_sid = get_sid(author_name)
 
     if author_sid:
