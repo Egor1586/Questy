@@ -32,8 +32,8 @@
             const total_question = Number("{{ test.total_questions }}");
             const author_name = "{{ test.author_name }}";
 
-            const list_quiz = {{ list_quiz | tojson | safe }};
-            const list_answers = {{ list_answers | tojson | safe }};
+            const list_quiz = {{ list_quiz | tojson }};
+            const list_answers = {{ list_answers | tojson }};
             
             let state = getCookie("state");
 
@@ -129,8 +129,8 @@
                         
                         console.log("next question")
                         document.cookie = `countUsersAnswer= 0; path=/`;
-    
-                        socket.emit("next_question", {
+                    
+                       socket.emit("next_question", {
                             room: room,
                             author_name: author_name
                         });
@@ -218,6 +218,25 @@
 
                 }
             });
+
+            //function nextQuestion(){
+            //    const COUNTUSERS= data['countUsers']
+            //    let countUsersAnswer= getCookie("countUsersAnswer");
+            //    state = getCookie("state");
+            //    
+            //    let number_of_question= Number(state.slice(-1)) + 1;
+            //    console.log(`количество человек в тесте ${COUNTUSERS}  ответившых ${countUsersAnswer}`);
+            //    console.log(state)
+            //    document.cookie = `state= author_start${number_of_question}; path=/`;
+            //    
+            //    console.log("next question")
+            //    document.cookie = `countUsersAnswer= 0; path=/`;
+            //    
+            //    ocket.emit("next_question", {
+            //        room: room,
+            //        author_name: author_name
+            //    });
+            //}
 
             function sendMessage() {
                 let msgInput = document.getElementById("msg");
