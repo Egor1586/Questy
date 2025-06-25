@@ -33,7 +33,6 @@ def render_score():
         print(selected_option)
 
     if current_user.is_authenticated:
-        print("ВЫ а")
     
         dates_complete.sort()
 
@@ -59,15 +58,13 @@ def render_score():
         elif selected_option[0] == 'graph_2':
             
             obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
-            dates_complete[-1] = '2025-06-05'
-            dates_complete[-2] = '2025-06-08'
             delta_week = (obj_date + datetime.timedelta(days=7))
             if delta_week >= obj_date:
-                print(f'Зашло в условие')
-            
+
                 axes.set_xlabel("Дата прохождения теста")
                 axes.set_ylabel("Точность %")
                 axes.set_title("Прогресс пользователя")
+                dates_complete.sort()
                 axes.plot(dates_complete, accuracy, marker='o')
                 plt.savefig(buffer, format='png')
 
@@ -91,11 +88,11 @@ def render_score():
             obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
             delta_week = (obj_date + datetime.timedelta(days=31))
             if delta_week <= obj_date:
-                print(f'Зашло в условие')
-            
+
                 axes.set_xlabel("Дата прохождения теста")
                 axes.set_ylabel("Точность %")
                 axes.set_title("Прогресс пользователя")
+                dates_complete.sort()
                 axes.plot(dates_complete, accuracy, marker='o')
                 plt.savefig(buffer, format='png')
 
@@ -111,7 +108,6 @@ def render_score():
                 }
                 
             else:
-                print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                 message = 'Слишком мало данных для построения графика'
                 return{
                     "scores": scores,

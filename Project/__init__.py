@@ -2,6 +2,7 @@ from .urls import *
 from .settings import project,socketio
 from .loadenv import load_env
 from .login_manager import *
+from .clear_cookie import clear_cookies
 from .database import db
 # 
 project.register_blueprint(blueprint = home_app)

@@ -5,6 +5,7 @@ from Project.database import db
 from flask_login import current_user
 
 from Project.render_page import render_page
+from Project.clear_cookie import clear_cookies
 
 from user.models import Score
 
@@ -13,6 +14,7 @@ def render_test_result():
     count_correct_answers= 0
     user_answers_list = []
     str_user_answers= ""
+    
 
     test_id= flask.request.args.get("test_id")
 
@@ -21,7 +23,7 @@ def render_test_result():
         list_answers.append(quiz.answer_options.split("%$№"))
     
     user_answers_cookies = flask.request.cookies.get(key= 'user_answers')
-    
+
     user_answers = user_answers_cookies.split("|")
 
     for answer in user_answers:
