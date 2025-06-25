@@ -90,8 +90,9 @@ def handle_disconnect():
 
 @Project.settings.socketio.on('user_answers')
 def handle_message(data):
+    room= data["room"]
     user_name= data["username"]
-    ROOM = Room.query.filter_by(test_code= data["room"]).first()
+    ROOM = Room.query.filter_by(test_code= room).first()
     TEST = Test.query.filter_by(id= ROOM.test_id).first()
     QUIZ_LIST = Quiz.query.filter_by(test_id= ROOM.test_id).all()
 
@@ -107,6 +108,7 @@ def handle_message(data):
         if user_answers_list[i] == QUIZ_LIST[i].correct_answer:
             number_of_correct_answers += 1
     accuracy = number_of_correct_answers / len(QUIZ_LIST) * 100
+    
     accuracy = int(accuracy)
     print(accuracy)
     print(user_answers_list)
@@ -120,7 +122,8 @@ def handle_message(data):
         accuracy= accuracy,
         test_id= TEST.id,
         date_complete = datetime.date.today(),
-        user_id= USER.id
+        user_id= USER.id,
+        test_code= room
     )
 
     db.session.add(SCORE)
@@ -129,10 +132,7 @@ def handle_message(data):
 @Project.settings.socketio.on('user_answer')
 def handle_message(data):
     author_name = data['author_name']
-
     author_sid = get_sid(author_name)
-
-    print(data["msg"])
 
     if author_sid:
         emit("author_receive_answer", data["msg"], room= author_sid)
@@ -199,6 +199,60 @@ def handle_message(data):
     emit("result_test", f"Stop test {data['room']} result_test page author {data['author_name']}", include_self= False, to= data['room'])
 
 
+@Project.settings.socketio.on('room_get_result')
+def handle_message(data):
+    room_get_result_data= {}
+
+    room= data["room"]
+    user_name= data["username"]
+    author_name= data["author_name"]
+    user_sid= get_sid(data["username"])
+    
+    ROOM= Room.query.filter_by(test_code= room).first()
+    TEST = Test.query.filter_by(id= ROOM.test_id).first()
+    QUIZ_LIST = Quiz.query.filter_by(test_id= ROOM.test_id).all()
+     
+    users_list= ROOM.user_list.strip('|').split('||')
+    USER_LIST= []
+    SCORE_LIST= []
+
+    for user in users_list:
+        if user:
+            USER= User.query.filter_by(username= user).first()
+            if USER.username != author_name:
+                USER_LIST.append(USER)
+
+    SCORE_LIST= Score.query.filter_by(test_code= room).all()
+
+    print(USER_LIST)
+    print(SCORE_LIST)
+
+    for user in USER_LIST:
+        answers_list= []
+        answers_str= ""
+        correct_answers_list= []
+
+        for score in SCORE_LIST:
+            if score.user_id == user.id:
+                answers_str= score.user_answer
+                break
+
+        answers_list= answers_str.strip('|').split('||')
+
+        print(answers_list)
+
+        for index, quiz in enumerate(QUIZ_LIST):
+            print(quiz.correct_answer, answers_list[index])
+            if quiz.correct_answer == answers_list[index]:
+                correct_answers_list.append(1)
+            else:
+                correct_answers_list.append(0)
+        
+        room_get_result_data[user.username]= correct_answers_list
+
+    print(room_get_result_data)
+
+    emit("room_get_result_data", room_get_result_data, to= user_sid)
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
@@ -206,9 +260,9 @@ def render_room(test_code):
     list_quiz = []
 
     test = Test.query.filter_by(test_code= test_code).first()
-    quizzes = Quiz.query.filter_by(test_id= test.id).all()
+    quizzes_list = Quiz.query.filter_by(test_id= test.id).all()
 
-    for quiz in quizzes:
+    for quiz in quizzes_list:
         list_answers.append(quiz.answer_options.split("%$№"))
         list_quiz.append(quiz.dict()) 
 
@@ -220,13 +274,6 @@ def render_room(test_code):
         "list_quiz": list_quiz,
         "list_answers": list_answers,
     }
-
-
-@render_page(template_name = 'room_test_result.html')
-def render_question():
-
-    
-    return { }
 
 def delete_code(test_id):
     test= Test.query.filter_by(id= test_id).first()

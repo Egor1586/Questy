@@ -12,8 +12,8 @@ def render_login_app():
         email = flask.request.form["email"]
         
         user = User.query.filter_by(email=email).first()
-
-        if user.email == email and user.password == password: 
+        
+        if user and user.email == email and user.password == password: 
             login_user(user)
                 
     if not current_user.is_authenticated:

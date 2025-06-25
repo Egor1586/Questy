@@ -1,8 +1,7 @@
-import flask, Project
+import flask
 
 from test_app.models import Room, Test
 from Project.render_page import render_page
-from flask import jsonify
 
 def loguot():
     flask.session.clear()
@@ -18,7 +17,7 @@ def get_codes():
 
     print(code_list)
     
-    return jsonify(code_list)
+    return flask.jsonify(code_list)
 
 @render_page(template_name = 'home.html')
 def render_home():

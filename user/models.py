@@ -27,3 +27,5 @@ class Score(db.Model):
     date_complete = db.Column(db.String, nullable= False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    test_code= db.Column(db.Integer, nullable= True)
