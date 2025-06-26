@@ -1,3 +1,13 @@
+body, html {
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+    width: 100%; 
+    overflow: hidden;
+    background-color: #d7f0d1; 
+    font-family: Arial, sans-serif;
+}
+
 main {
     display: flex;
     flex-direction: row;
@@ -208,24 +218,9 @@ body {
   transform: scale(0.97);
 }
 
-.waite-content{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  min-height: 100vh;
-  backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2000;
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-}
-
-.author-content {
-    height: 84vh;
+/* Головний контейнер */
+.author-content{
+    height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -234,6 +229,7 @@ body {
     padding: 10px;
 }
 
+/* Стилі для блоків */
 .block1, .block2, .block3 {
     background-color: #154734; 
     color: #e6f2e6; 
@@ -242,39 +238,45 @@ body {
     padding: 1rem;
 }
 
+/* Верхній блок */
 .block1 {
     height: 50%;
     width: 100%;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     gap: 10px;
-    padding: 10px;
-    overflow: hidden; 
+    overflow-y: auto;
 }
 
+/* Нижній контейнер */
 .bottom-container {
     height: 30%;
     width: 100%;
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 10px;
     margin-top: 10px;
 }
 
+/* Блоки питання та статистики */
 .block2, .block3 {
     width: 50%;
     height: 100%;
-    padding: 15px;
-    overflow: hidden; 
+    font-size: 1.5rem;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Кнопка */
 .next-button {
     margin-top: 10px;
     height: 20%;
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     background-color: #f0f5f0; 
     color: #154734; 
     border: none;
@@ -282,6 +284,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 .next-button:hover {
     background-color: #64d5a8;
 }
