@@ -49,7 +49,6 @@ def handle_join(data):
 
     db.session.commit()
 
-
 @Project.settings.socketio.on('kick_user')
 def handle_kick_user(data):
     username = data['user']
@@ -132,13 +131,13 @@ def handle_message(data):
 @Project.settings.socketio.on('user_answer')
 def handle_message(data):
     author_name = data['author_name']
-
+    username= data['username']
+    answer= data['answer']
+    
     author_sid = get_sid(author_name)
 
-    if author_sid:
-        emit("author_receive_answer", data["msg"], room= author_sid)
-    else:
-        print(f"Нет {author_name} в users")
+
+    emit("author_receive_answer", {"username": username, "answer": answer}, room= author_sid)
 
 @Project.settings.socketio.on('get_room_size')
 def handle_message(data):

@@ -23,6 +23,6 @@ def render_edit_header(test_id):
 
         db.session.commit()
 
-        return flask.redirect(f"/test_app{test.test_code}?test_id= {test.id}")
+        return flask.redirect(f"/test_app?test_id= {test.id}")
 
     return {}

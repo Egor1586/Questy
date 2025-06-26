@@ -64,7 +64,7 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
             listener= function ( event ) {
                 let cookie= getCookie("user_answers")
                 let state= getCookie("state")
-                document.cookie = `state= waite_next_question${state.slice(-1)}; path=/`;
+                document.cookie = `state= waite${state.slice(-1)}; path=/`;
                 if (typeof cookie === "undefined"){
                     document.cookie = `user_answers= |${button.id}|; path = /`     
                 }
@@ -76,7 +76,8 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
                 socket.emit("user_answer", {
                     room: room,
                     author_name: author_name,
-                    msg: `${username} do answer ${button.id}`
+                    username: username,
+                    answer: button.id
                 });
                 
                 renderWaiteQuestion();

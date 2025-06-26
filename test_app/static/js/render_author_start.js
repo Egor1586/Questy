@@ -1,23 +1,35 @@
-function renderAuthorStart() {
-    const roomContent = document.getElementById("room-content");
-    roomContent.innerHTML = ""; 
-    roomContent.className= "author-content"
+function addUserAnswer(username, answer) {
+    const block1 = document.getElementById("block1");
+    block1.innerHTML = `
+        <div><strong>Ім’я:</strong>${username}</div>
+        <div><strong>Відповідь:</strong>${answer}</div>
+    `
+}
 
-    const style = document.createElement('style')
-    document.head.appendChild(style)
+function renderAuthorStart(quiz, answers) {
+    const waiteContent = document.getElementById("room-content");
+    waiteContent.innerHTML = ""; 
+    waiteContent.className = 'author-content'
 
-
+    // Верхній блок
     const block1 = document.createElement('div')
     block1.className = 'block1'
-    block1.textContent = 'Хто з учнів на яке питання відповів'
+    block1.id= 'block1'
 
+    // Нижній контейнер
     const bottomContainer = document.createElement('div')
     bottomContainer.className = 'bottom-container'
 
+    // Блок про питання
     const block2 = document.createElement('div')
     block2.className = 'block2'
-    block2.textContent = 'Інформація про питання'
+    block2.innerHTML = `
+        <div><strong>Question:</strong></div>
+        <div>question content</div>
+        <div><strong>Correct answer:</strong> answer</div>
+    `
 
+    // Блок статистики
     const block3 = document.createElement('div')
     block3.className = 'block3'
     block3.textContent = 'Статистика відповідей'
@@ -25,11 +37,14 @@ function renderAuthorStart() {
     bottomContainer.appendChild(block2)
     bottomContainer.appendChild(block3)
 
+    // Кнопка "Наступне питання"
     const nextButton = document.createElement('button')
     nextButton.className = 'next-button'
     nextButton.textContent = 'Наступне питання'
+    nextButton.addEventListener("click", nextQuestion);
 
-    roomContent.appendChild(block1)
-    roomContent.appendChild(bottomContainer)
-    roomContent.appendChild(nextButton)
+    // Збірка
+    waiteContent.appendChild(block1)
+    waiteContent.appendChild(bottomContainer)
+    waiteContent.appendChild(nextButton)
 }
