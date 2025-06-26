@@ -30,15 +30,12 @@ def render_test_result():
         if answer != "":
             user_answers_list.append(answer)
     
-    print(user_answers_list)
-
     for number, quiz in enumerate(quizzes_list):
         str_user_answers += user_answers_list[number]
         print(quiz.correct_answer, user_answers_list[number])
         if quiz.correct_answer == user_answers_list[number]:
             count_correct_answers += 1
 
-    print(str_user_answers)
         
     test = Test.query.filter_by(id= test_id).first()
 
@@ -67,9 +64,7 @@ def render_test_result():
         is_admin = current_user.is_admin if current_user.is_authenticated else ""
         )
 
-    response = flask.make_response(result_test_page)
+    response = clear_cookies(non_clear_cookie= "user_answers", maked_response=result_test_page)
     response.set_cookie(key= "user_answers", value="", max_age=0) 
     
     return response
-
-

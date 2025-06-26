@@ -458,7 +458,8 @@
 </p>
 
 <p style='text-align:  justify; font-size: 18px;'>    
-    <span style="margin-left: 40px;">Давид:</span> 
+    <span style="margin-left: 40px;">Давид:Мені дуже сподобалась робота над цим проєктом — через командну взаємодію, цікаву тему та сам процес написання коду.Цей проєкт дав мені хорошу практику з Flask, а ще я вперше попрацював із JavaScript, з яким раніше не мав досвіду.
+    Крім того, я краще розібрався з Flask SQLAlchemy та WebSocket'ами — тепер працювати з ними стало набагато зрозуміліше.</span> 
 </p> 
 
 <p style='text-align:  justify; font-size: 18px;'>    
