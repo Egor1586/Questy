@@ -462,7 +462,7 @@
 </p> 
 
 <p style='text-align:  justify; font-size: 18px;'>    
-    <span style="margin-left: 40px;">Настя:</span> 
+    <span style="margin-left: 40px;">Настя: мені дуже сподобався цей проект в плані багатьох можливостей. Я мала змогу як і писати код, так і робити власний дизайн. Під час розробки проекту ми справді навчились краще розуміти з'єдання серверу з клієнтом, вивчили багато нового загалом про Javascripts та websocket.</span> 
 </p>
 
 <p style='text-align:  justify; font-size: 18px;'>    
