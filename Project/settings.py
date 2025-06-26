@@ -7,7 +7,6 @@ dotenv.load_dotenv()
 
 GOOGLE_APP_KEY= os.getenv("GOOGLE_APP_KEY")
 
-
 project = flask.Flask(
     import_name = __name__,
     static_folder="static",

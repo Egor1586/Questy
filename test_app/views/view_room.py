@@ -49,6 +49,24 @@ def handle_join(data):
 
     db.session.commit()
 
+@Project.settings.socketio.on('disconnect')
+def handle_disconnect():
+    username = users.pop(flask.request.sid, None)
+    users.pop(flask.request.sid, None)
+
+    if username:
+        print(f"disconected {username}")
+
+        ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
+        ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
+        db.session.commit()
+
+        emit('user_disconnected', {
+                'msg': f'{username} отключился',
+                "username": f"{username}"
+                }, 
+            to=ROOM.test_code)
+
 @Project.settings.socketio.on('kick_user')
 def handle_kick_user(data):
     username = data['user']
@@ -68,23 +86,6 @@ def handle_kick_user(data):
     else:
         print(f"Пользователь {username} не найден среди подключённых.")
 
-@Project.settings.socketio.on('disconnect')
-def handle_disconnect():
-    username = users.pop(flask.request.sid, None)
-    users.pop(flask.request.sid, None)
-
-    if username:
-        print(f"disconected {username}")
-
-        ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
-        ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
-        db.session.commit()
-
-        emit('user_disconnected', {
-                'msg': f'{username} отключился',
-                "username": f"{username}"
-                }, 
-            to=ROOM.test_code)
 
 
 @Project.settings.socketio.on('user_answers')
