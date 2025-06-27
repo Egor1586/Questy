@@ -12,13 +12,13 @@
     <div class="container">
         <div class="test-header">
             <div class="test-details">
-                <div class="test-title">Test Title: {{ test.title }}</div>
-                <div class="test-description">Description: {{ test.description }}</div>
-                <div class="meta-info">Number of total questions: {{ test.total_questions }} </div>
-                <div class="meta-info">Number of answers per question: {{ test.answers_per_question }} </div>
+                <div class="test-title">Назва тесту: {{ test.title }}</div>
+                <div class="test-description">Опис: {{ test.description }}</div>
+                <div class="meta-info">Загальна кількість питань: {{ test.total_questions }} </div>
+                <div class="meta-info">Кількість відповідей на запитання: {{ test.answers_per_question }} </div>
             </div>
             <button class="edit-btn">
-                <a href="/edit_header_test{{ test.id }}">Edit</a>
+                <a href="/edit_header_test{{ test.id }}">Редагувати</a>
             </button>
         </div>
 
@@ -28,16 +28,16 @@
                 <div class="question-header">
                 <div>{{ question.question_text }}</div>
                 <button class="edit-btn">
-                    <a href="/edit_question?test_id= {{ test.id }}&quiz_id= {{ question.id }}">Edit</a>
+                    <a href="/edit_question?test_id= {{ test.id }}&quiz_id= {{ question.id }}">Редагувати</a>
                 </button>
                 </div>
                 
                 <form action="/delete_quiz{{ question.id }}">
-                    <button class="delete_quiz">Delete this quiz?</button>
+                    <button class="delete_quiz">Видалити цей тест?</button>
                 </form>
 
                 <div class="question-text">
-                    Choose the correct option from the ones below.
+                    Виберіть правильний варіант із запропонованих нижче.
                 </div>
                 {% for answer in answers %}
                     {% if answer != question.correct_answer %}

@@ -11,19 +11,19 @@
 {% block content %}
     <div class = "about-questy">
         <div class="description">
-            <h1 class="start-t">START TEST</h1>
-            <p class= "text-d">The Questy platform allows you to create interactive tests,
-                share them via a unique code, and take them in real time. You can customize the questions,
-                time limits, number of participants,
-                and answer format. Suitable for both training and fun quizzes in the company.
+            <h1 class="start-t">ПОЧАТИ ТЕСТ</h1>
+            <p class= "text-d">Платформа Questy дозволяє створювати інтерактивні тести, 
+                ділитися ними за допомогою унікального коду та проходити їх у режимі реального часу. 
+                Ви можете налаштувати питання, часові обмеження, кількість учасників, та формат відповідей. 
+                Підходить як для навчання, так і для розважальних вікторин у компанії.
             </p>
             <div class= "enter-code">
                 <div class="search-input">
                     <i class='bx bx-search'></i>
-                    <input placeholder="Enter code" class= "input_code" id="room">
+                    <input placeholder="Введіть код тесту" class= "input_code" id="room">
                     <div class="fake-input-border"></div>
                 </div>
-                <button type="button" class= "search-btn" onclick="emitUser()">JOIN</button>
+                <button type="button" class= "search-btn" onclick="emitUser()">ПІДКЛЮЧИТИСЬ</button>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
 
         {% if list_tests %}
             <div class="aval-t">
-                <h1 class="av-t">Avaliable Tests</h1>
+                <h1 class="av-t">Доступні тести</h1>
             </div>
         
             <div class="tests">
@@ -48,10 +48,10 @@
                         {% else %}
                             <img src="/home_app/static/images/media/0.png" alt=""  class="test-img">
                         {% endif %}
-                        <span class="test-questions">{{ test.total_questions }} questions</span>
+                        <span class="test-questions">{{ test.total_questions }} питання</span>
                         <h3 class="test-title">{{ test.title }}</h3>
                         <p class="test-description">{{ test.description }}</p>
-                        <div class="test-accuracy">100% accuracy</div>
+                        <div class="test-accuracy">100% точність</div>
                     </div>
                 </a>
             {% endfor %}

@@ -9,7 +9,7 @@
 {% endblock %} 
 
 {% block content %}
-    <h1>Score Page</h1>
+    <h1>Сторінка результатів</h1>
 
     {% if message %}
         <h2>{{ message }}</h2>
@@ -33,21 +33,21 @@
             <div class="score-block">   
                 {% for test in list_tests %}
                     {% if test.id == score.test_id %}
-                        <p>Topic: {{ test.title }}</p>
-                        <p>Description: {{ test.description }}</p>
-                        <p>Author: {{ test.author_name }}</p>
-                        <p>Code: {{ test.test_code }}</p>
+                        <p>Назва: {{ test.title }}</p>
+                        <p>Опис: {{ test.description }}</p>
+                        <p>Автор: {{ test.author_name }}</p>
+                        <p>Код: {{ test.test_code }}</p>
                     {% endif %}
                 {% endfor %}
-                <p>Current accuracy: {{ score.accuracy }}</p>
-                <p>Date: {{ score.date_complete }}</p>
+                <p>Точність: {{ score.accuracy }}</p>
+                <p>Дата: {{ score.date_complete }}</p>
             </div>
         {% endfor %}
     </div>
 
     {% if graph %}
         <div class="graph">
-            <h3>График:</h3>
+            <h3>Графік:</h3>
             <img src="data:image/png;base64,{{ graph }}" alt="График">
         </div>
     {% endif %}

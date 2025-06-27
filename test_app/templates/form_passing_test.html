@@ -12,10 +12,10 @@
     <div class="container">
         <div class="test-header">
             <div class="test-details">
-                <div class="test-title">Test Title: {{ test.title }}</div>
-                <div class="test-description">Description: {{ test.description }}</div>
-                <div class="meta-info">Number of total questions: {{ test.total_questions }} </div>
-                <div class="meta-info">Number of answers per question: {{ test.answers_per_question }} </div>
+                <div class="test-title">Назва тесту: {{ test.title }}</div>
+                <div class="test-description">Опис: {{ test.description }}</div>
+                <div class="meta-info">Загальна кількість питань: {{ test.total_questions }} </div>
+                <div class="meta-info">Кількість відповідей на запитання: {{ test.answers_per_question }} </div>
             </div>
         </div>
         <form action="" method="POST">
@@ -26,7 +26,7 @@
                     <div>{{ question.question_text }}</div>
                     </div>
                     <div class="question-text">
-                        Choose the correct option from the ones below.
+                        Виберіть правильний варіант із запропонованих нижче.
                     </div>
                     {% for answer in answers %}
                         <div>
@@ -36,7 +36,7 @@
                     {% endfor %}
                 </div>
             {% endfor %}
-            <button class="send-test">Send test</button>
+            <button class="send-test">Надіслати тест</button>
         </form>
     </div>
 {% endblock %}

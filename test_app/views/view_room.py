@@ -28,10 +28,10 @@ def handle_join(data):
     ROOM= Room.query.filter_by(test_code = room).first()
 
     if not ROOM:
-        print(f'Это тест айди: {test.id}')
-        print(f'Это комната: {room}')
-        print(f'Это user_list: {username}')
-        print(f'Это author_name: {test.author_name}')
+        print(f'Це тест id: {test.id}')
+        print(f'Кімната: {room}')
+        print(f'Це user_list: {username}')
+        print(f'Це author_name: {test.author_name}')
 
         NEW_ROOM = Room(
             test_id= test.id,
@@ -62,7 +62,7 @@ def handle_disconnect():
         db.session.commit()
 
         emit('user_disconnected', {
-                'msg': f'{username} отключился',
+                'msg': f'{username} відключився',
                 "username": f"{username}"
                 }, 
             to=ROOM.test_code)
@@ -84,7 +84,7 @@ def handle_kick_user(data):
         
         disconnect(sid= kick_sid)
     else:
-        print(f"Пользователь {username} не найден среди подключённых.")
+        print(f"Користувача {username} не знайдено серед підключених.")
 
 
 
@@ -155,7 +155,7 @@ def handle_message(data):
         if user != "":
             count_users = count_users + 1
 
-    print(f"Количетво людей в тесте {count_users}")
+    print(f"Кількістю людей в тесті: {count_users}")
     
     count_users = count_users - 1
     

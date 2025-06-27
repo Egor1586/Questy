@@ -10,20 +10,20 @@
 
 {% block content %}
     <form action="" method="post" class="edit-question-form">
-        <h1>Edit question</h1>
+        <h1>Редагувати питання</h1>
         {% for number in range(test.answers_per_question) %}
             
             {% if list_answers[number] != correct_answer %}
                 <p class="incorrect-answer-p">{{ list_answers[number] }}</p>
-                <input type="text" name="answer{{ number }}" placeholder="Enter new answer">
+                <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь">
 
             {% else %}
                 <p class="correct-answer-p">{{ list_answers[number] }}</p>
-                <input type="text" name="correct_answer" placeholder="Enter new right answer">
+                <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь">
             
             {% endif %}
         {% endfor %}
 
-        <button type="submit">Edit question</button>
+        <button type="submit">Редагувати питання</button>
     </form>
 {% endblock %}

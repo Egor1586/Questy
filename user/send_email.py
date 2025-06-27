@@ -4,7 +4,7 @@ from Project.settings import mail
 def send_code(user_email: str, code: int):
     print(f"Отправка письма на {user_email}")
     message = Message(
-        subject="Recovery password",
+        subject="Код для відновлення паролю",
         sender="egor115819@gmail.com", 
         recipients=[user_email]
     )

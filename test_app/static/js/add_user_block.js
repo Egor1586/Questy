@@ -24,7 +24,7 @@ function createUserBlock(username, author_name, block_username) {
         const btnRemove= document.createElement("button");
         btnRemove.className= "btn-remove";
         btnRemove.type= "button";
-        btnRemove.textContent= "Delete"
+        btnRemove.textContent= "Видалити"
         btnRemove.onclick = function () {
             kickUser(block_username);
         };

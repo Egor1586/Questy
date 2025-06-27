@@ -13,30 +13,30 @@
 
 {% block content %}
     <aside>
-        <button class="create-btn" ><a href="/new_quiz">+ Create new quiz</a></button>
+        <button class="create-btn" ><a href="/new_quiz">+ Створити новий тест</a></button>
         <section class="library">
-            <h2>My library</h2>
-            <div class="quiz-card">Test&nbsp;&nbsp; {{ count_of_tests }}/20</div>
+            <h2>Моя бібліотека</h2>
+            <div class="quiz-card">Тест&nbsp;&nbsp; {{ count_of_tests }}/20</div>
         </section>
     </aside>
     
 
     <div class="quiz-list">
         {% if list_tests %}
-            <h2>List of quizzes</h2>
+            <h2>Список доступних вікторин</h2>
             {% for test in list_tests %} 
                 {% if test.author_name == username %}
                     <div class="quiz-item">
                         <div class="info">
                             <strong>{{ test.title }}</strong>
                             <p>{{ test.description }}</p>
-                            <p class="date"><strong>Date:</strong> {{ test.created_date }}</p>
+                            <p class="date"><strong>Дата:</strong> {{ test.created_date }}</p>
                         </div>
 
                         <div class="info">
                             <strong>{{ test.total_questions }}</strong>
                             
-                            <p class="date"><strong>Author:</strong> <span id="author" >{{ test.author_name }}</span></p>
+                            <p class="date"><strong>Автор:</strong> <span id="author" >{{ test.author_name }}</span></p>
                         </div>
                         <!-- <p><strong>Topic description</strong> – 5 questions</p> -->
                         <div class="info-code">
@@ -48,25 +48,25 @@
                                 
                                 <form action="/delete_test{{ test.id }}" >
                                     <button class="delete">
-                                        Delete Test
+                                        Видалити тест
                                     </button>
                                 </form>
 
                                 {% if test.test_code != 0 %}
                                     <button class="start" type="button">
-                                        <a href="/room{{ test.test_code }}" class="btn">Start</a>
+                                        <a href="/room{{ test.test_code }}" class="btn">Почати</a>
                                     </button>
                                 {% endif %}
                                 
                                 {% if test.test_code == 0 %}
                                     <button class="edit">
                                         <a href="/create_code{{ test.id }}" class="btn">
-                                            Create code 
+                                            Створити код
                                         </a>
                                     </button>
                                 {% endif %}
                             </div>
-                            <p class="code-p"><strong>Code: </strong>{{test.test_code}}</p>
+                            <p class="code-p"><strong>Код: </strong>{{test.test_code}}</p>
                         </div>
                     
                     </div>

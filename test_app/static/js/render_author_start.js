@@ -1,8 +1,9 @@
 function addUserAnswer(username, answer) {
+    console.log("add user answer")
     const block1 = document.getElementById("block1");
-    block1.innerHTML = `
-        <div><strong>Ім’я:</strong>${username}</div>
-        <div><strong>Відповідь:</strong>${answer}</div>
+    block1.innerHTML += `
+        <div><strong>Ім’я:</strong> ${username}</div>
+        <div><strong>Відповідь:</strong> ${answer}</div>
     `
 }
 
@@ -24,9 +25,8 @@ function renderAuthorStart(quiz, answers) {
     const block2 = document.createElement('div')
     block2.className = 'block2'
     block2.innerHTML = `
-        <div><strong>Question:</strong></div>
-        <div>question content</div>
-        <div><strong>Correct answer:</strong> answer</div>
+        <div id = "question_text><strong>Питання:</strong> ${quiz.question_text}</div>
+        <div><strong>Правильна відповідь:</strong> ${quiz.correct_answer}</div>
     `
 
     // Блок статистики

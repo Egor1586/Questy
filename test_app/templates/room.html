@@ -86,14 +86,14 @@
                 };
             });
 
-            socket.on("author_receive_answer", function(data) {                
+            socket.on("author_receive_answer", function(data) {     
+                let answer= data["answer"]           
                 let countUsersAnswer= getCookie("countUsersAnswer");
                 countUsersAnswer = Number(countUsersAnswer) + 1  
                 document.cookie = `countUsersAnswer= ${countUsersAnswer}; path=/`;
                 console.log(countUsersAnswer)
-
-                console.log(data["username"], data["answer"])
-                addUserAnswer(data["username"], data["answer"]);
+                
+                addUserAnswer(data["username"], answer);
                 
                 socket.emit("get_room_size", {
                     room: room,
@@ -101,7 +101,7 @@
                 });
 
             });
-            
+
             socket.on("recieve_count_users", function(data) {  
                 const COUNTUSERS= data['countUsers']
                 let countUsersAnswer= getCookie("countUsersAnswer");
@@ -123,30 +123,43 @@
 
                         renderResultTest(username, author_name, total_question);
                     }  
-                    //else {
-                    //    let block1= document.getElementById("block1")
-                    //    block1.textContent = 'Хто з учнів на яке питання відповів'
-                    //
-                    //    let number_of_question= Number(state.slice(-1)) + 1;
-                    //    console.log(`количество человек в тесте ${COUNTUSERS}  ответившых ${countUsersAnswer}`);
-                    //    console.log(state)
-                    //    document.cookie = `state= author_start${number_of_question}; path=/`;
-                    //    
-                    //    console.log("next question")
-                    //    document.cookie = `countUsersAnswer= 0; path=/`;
-                    //
-                    //   socket.emit("next_question", {
-                    //        room: room,
-                    //        author_name: author_name
-                    //    });
-                    //}
-
                 }
             });
 
             socket.on("next_question", function(data) {  
                 state = getCookie("state");
+                let answers = getCookie("user_answers")
                 
+                if (answers) {
+                    let answers_list = answers.split("|")
+                    let user_answers = []
+                    let user_answers_list = []
+                    for (let answer of answers_list){
+                        if (answer != "|"){
+                            user_answers.push(answer)
+                        }
+                    }
+                    for (let answer of user_answers){
+                        if (answer != ""){
+                            user_answers_list.push(answer)
+                        }
+                    }
+                    
+                    console.log(user_answers_list)
+                    console.log(user_answers_list.length, Number(state.slice(-1)) + 1)
+                    
+                    if (user_answers_list.length !== Number(state.slice(-1)) + 1) {
+    
+                        answers += "|not_answer|"
+                        document.cookie = `user_answers= ${answers}; path=/`;
+                    }
+                }
+                else {
+                    console.log("нет куков")
+                    document.cookie = `user_answers= |not_answer|; path=/`;
+                }
+
+  
                 if (state != "result_test") {
                     console.log(state);
                     let number_of_question= Number(state.slice(-1)) + 1;
@@ -206,14 +219,14 @@
                 }
             });
 
-            socket.on('start_test', function(data) {
+            socket.on('start_test', function(data) {             
                 let messages = document.getElementById("messages");
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
                 if (username === data["author_name"]) {
                     console.log("Вы начали тест");              
                     document.cookie = "state= author_start0; path=/";
                     document.cookie = "countUsersAnswer= 0; path=/";
-                    renderAuthorStart();
+                    renderAuthorStart(list_quiz[0], list_answers[0] );
                 }
                 else {
                     console.log("Тест начат");
@@ -226,7 +239,10 @@
             function nextQuestion(){
                 let countUsersAnswer= getCookie("countUsersAnswer");
                 state = getCookie("state");
-                
+
+                const block1 = document.getElementById("block1");
+                block1.innerHTML = ""
+                 
                 let number_of_question= Number(state.slice(-1)) + 1;
                 console.log(state)
                 document.cookie = `state= author_start${number_of_question}; path=/`;
@@ -234,6 +250,10 @@
                 console.log("next question")
                 document.cookie = `countUsersAnswer= 0; path=/`;
                 
+                // получать блок 2 и менять его дивы
+                //const question_text = document.getElementById("question_text")
+                //question_text.textContent = "fhfhfh"
+
                 socket.emit("next_question", {
                     room: room,
                     author_name: author_name
@@ -279,7 +299,6 @@
     {% else %}
         <script>
             window.location.href = '/'; 
-
         </script>
     {% endif %}
     

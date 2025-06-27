@@ -8,8 +8,8 @@ function getCookie(name) {
 function renderWaiteQuestion() {
     const roomContent = document.getElementById("room-content");
     roomContent.innerHTML = ""; 
-    roomContent.className = "waite-content"; 
-    roomContent.textContent= "Waite next question"
+    roomContent.className = "wait-content"; 
+    roomContent.textContent= "Зачекайте на наступне питання..."
 }
 
 function renderQuestion(questionNumber, list_quiz, list_answers, room, author_name) {
@@ -71,7 +71,9 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
                 else{
                     cookie= cookie + `|${button.id}|`
                     document.cookie = `user_answers = ${cookie}; path= /`
-                }      
+                }   
+                
+                console.log(button.id)
                 
                 socket.emit("user_answer", {
                     room: room,

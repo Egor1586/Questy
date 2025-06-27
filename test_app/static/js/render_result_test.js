@@ -1,3 +1,19 @@
+function leaveTest(){
+    
+    const cookies = document.cookie.split(';'); // сплитим куки
+    
+    for (let index = 0;  index < cookies.length; index++){
+        const cookie = cookies[index].trim();  // тут мы очищаем от пробелов
+        const key = cookie.indexOf('='); // Ищем первый элемент
+        const name = key > -1 ? cookie.substring(0, key): cookie;
+        
+        if (document.cookie.indexOf(name + '=') > -1 && !/expires=/.test(cookie)){ // тут как я понял проверка на session
+            document.cookie = name + "=; max_age= 0; path=/;";
+        }
+    }
+    
+    window.location.href = '/'; 
+}
 function appendResultRow(resultContainer, username, answersArrey) {
     const resultRow = document.createElement('div');
     resultRow.className = 'result-row';
@@ -58,7 +74,7 @@ function renderResultTest(username, author_name, total_question) {
             username: username,
             author_name: author_name
         });
-    }, 10); 
+    }, 100); 
 
     let accurancyArray= []
     
@@ -128,4 +144,12 @@ function renderResultTest(username, author_name, total_question) {
             headerAnswers.appendChild(div);
         })
     });
+
+
+    const leaveButton = document.createElement('button');
+    leaveButton.className = 'leave-btn';
+    leaveButton.textContent = 'Leave button';
+    leaveButton.addEventListener("click", leaveTest);
+
+    resultContainer.appendChild(leaveButton);
 }

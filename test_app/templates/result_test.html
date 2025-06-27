@@ -12,27 +12,27 @@
     <div class="container">
         {% if username %}
             <div class="result-info">
-                <p><strong>{{ username }}</strong> ваш резульатат: <strong>{{ count_correct_answers }}</strong> из {{ total_questions }}</p>
+                <p><strong>{{ username }}</strong> ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
                 {% else %}
-                <p>Ваш резульатат: {{ count_correct_answers }} из {{ total_questions }}</p>
+                <p>Ваш результат: {{ count_correct_answers }} з {{ total_questions }}</p>
                 {% endif %}
-                <p>Точность правильных ответов: <strong>{{ accuracy }}</strong></p>
+                <p>Точність правильних відповідей: <strong>{{ accuracy }}</strong></p>
                 
                 <button class="home-btn">
-                    <a class="home-btn" href="/">HOME</a>
+                    <a class="home-btn" href="/">На головну</a>
                 </button>
             </div>
             
             {% if not username %}
                 <div class="user-information">
                     <div class="auth-block">
-                        <p> Если вы хотите отслежывать свой прогрес в Qusty. Создайте свой акаунт и следите за своим прогресом</p>
-                        <a href="/sign_up" class="auth-btn">Sing up</a>
+                        <p>Якщо ви хочете відстежувати свій прогрес у Qusty - створіть свій аккаунт та стежте за своїм прогресом</p>
+                        <a href="/sign_up" class="auth-btn">Реєстрація</a>
                     </div>
             
                     <div class="auth-block">
-                        <p>Если у вас уже есть акаунт зайдите внего</p>
-                        <a href="login" class="auth-btn">Login</a>
+                        <p>Якщо у вас вже є аккаунт - авторизуйтесь</p>
+                        <a href="login" class="auth-btn">Авторизація</a>
                     </div>
                 </div>
             {% endif %}
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="question-text">
-                    Your and the correct option.
+                    Ваш правильний варіант.
                 </div>
                 {% for answer in answers %}
                     {% if answer != question.correct_answer and answer != user_answer%}

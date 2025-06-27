@@ -2,7 +2,6 @@ function renderRoomMain(testCode, authorName, username) {
     const content= document.getElementById("room-content");
     content.innerHTML= "";
 
-
     const waiteSide= document.createElement("div");
     waiteSide.className= "waite-side";
     
@@ -16,7 +15,7 @@ function renderRoomMain(testCode, authorName, username) {
     
     const textCode= document.createElement("div");
     textCode.className= "info-text";
-    textCode.textContent= `Test code: `;
+    textCode.textContent= `Код тесту: `;
     
     const strongCode= document.createElement("strong");
     strongCode.textContent= `${testCode}`;
@@ -47,7 +46,7 @@ function renderRoomMain(testCode, authorName, username) {
         const buttonStart = document.createElement("button");
         buttonStart.type= "button";
         buttonStart.className = "btn-start";
-        buttonStart.textContent= "Start";
+        buttonStart.textContent= "Почати";
         buttonStart.addEventListener("click", authorStartTest);
 
         waiteSide.appendChild(buttonStart)
@@ -58,19 +57,19 @@ function renderRoomMain(testCode, authorName, username) {
     chat.className= "chat";
     
     const title = document.createElement("h2");
-    title.textContent= "Chat";
+    title.textContent= "Чат";
 
     const msg = document.createElement("input");
     msg.id= "msg";
     msg.type= "text";
-    msg.placeholder= "Enter your message";
+    msg.placeholder= "Введіть своє повідомлення";
     msg.class= "msg-chat";
 
 
     const buttonSend = document.createElement("button");
     buttonSend.class= "send-btn";
     buttonSend.type= "button";
-    buttonSend.textContent= "Send";
+    buttonSend.textContent= "Надіслати повідомлення";
     buttonSend.addEventListener("click", sendMessage);
 
     const messages = document.createElement("div");

@@ -9,40 +9,40 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Create an awesome quiz in minutes using AI</h1>
-    <h3>Questy is the easiest way to make quizzes FREE</h3>
+    <h1>Створіть чудову вікторину за лічені хвилини за допомогою штучного інтелекту</h1>
+    <h3>Questy – це найпростіший спосіб зробити вікторини</h3>
 
     <section class="create-test-page">
-        <h2 class="page-title">Create new quiz</h2>
+        <h2 class="page-title">Створити новий тест</h2>
 
         <form class="test-form" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="test-title">Title</label>
-                <input type="text" id="test-title" name="title" placeholder="Enter test topic" required>
+                <label for="test-title">Назва</label>
+                <input type="text" id="test-title" name="title" placeholder="Введіть тему тесту" required>
             </div>
       
             <div class="form-group">
-                <label for="test-description">Short description</label>
-                <textarea id="test-description" name="description" placeholder="Describe your test" rows="3"></textarea>
+                <label for="test-description">Короткий опис</label>
+                <textarea id="test-description" name="description" placeholder="Опишіть свій тест" rows="3"></textarea>
             </div>
         
             <div class="form-row">
               <div class="form-group">
-                    <label for="question-count">Amount of questions</label>
-                    <input type="number" id="question-count" name="total_questions" min="1" placeholder="Standart - 10" required>
+                    <label for="question-count">Кількість питань</label>
+                    <input type="number" id="question-count" name="total_questions" min="1" placeholder="За замовчуванням - 10" required>
               </div>
               <div class="form-group">
-                    <label for="correct-answers">Amount of answers</label>
-                    <input type="number" id="correct-answers" name="answers_per_question" min="4" placeholder="Standart - 4">
+                    <label for="correct-answers">Кількість відповідей на питання</label>
+                    <input type="number" id="correct-answers" name="answers_per_question" min="4" placeholder="За замовчуванням - 4">
               </div>
 
               <div class="load-img">
-                <label for="image">Image (not necessary)</label>
+                <label for="image">Зображення (необов'язково)</label>
                 <input type="file" name="image" id="" accept="image/*">
               </div>
             </div>
         
-            <button type="submit" class="submit-button">Create test with AI</button>
+            <button type="submit" class="submit-button">Створити тест за допомогою ШІ</button>
         </form>
       </section>
       
