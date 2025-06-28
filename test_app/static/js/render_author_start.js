@@ -29,12 +29,13 @@ function renderAuthorStart(quiz, answers) {
     //     <div><strong>Правильна відповідь:</strong> ${quiz.correct_answer}</div>
     // `
     const question_text = document.createElement('div')
-    question_text.className = "question_text"
-    question_text.textContent = "<div>Питання:${quiz.question_text}</div>"
+    question_text.id = "question-text"
+    question_text.textContent = `Питання:${quiz.question_text}`
+
 
     const correct_answer = document.createElement('div')
-    correct_answer.className = "correct_answer"
-    correct_answer.textContent = "<div>Правильна відповідь: ${quiz.correct_answer}</div>"
+    correct_answer.id = "correct-answer"
+    correct_answer.textContent = `Правильна відповідь: ${quiz.correct_answer}`
 
     block2.appendChild(question_text)
     block2.appendChild(correct_answer)
