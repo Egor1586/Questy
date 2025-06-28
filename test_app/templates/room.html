@@ -253,9 +253,11 @@
                 console.log("next question")
                 document.cookie = `countUsersAnswer= 0; path=/`;
                 
-                // получать блок 2 и менять его дивы
-                //const question_text = document.getElementById("question_text")
-                //question_text.textContent = "fhfhfh"
+                const question_text = document.getElementById("question-text")
+                question_text.textContent = `Питання:${list_quiz[Number(state.slice(-1))+1].question_text}`
+
+                const correct_answer = document.getElementById("correct-answer")
+                correct_answer.textContent =`Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
 
                 socket.emit("next_question", {
                     room: room,

@@ -31,6 +31,7 @@ class Quiz(db.Model):
             "id": self.id,
             "question_text": self.question_text,
             "answer_options": self.answer_options,
+            "correct_answer": self.correct_answer,
             "test_id": self.test_id
         }
 
