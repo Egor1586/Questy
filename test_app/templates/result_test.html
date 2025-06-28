@@ -12,16 +12,25 @@
     <div class="container">
         {% if username %}
             <div class="result-info">
-            <p><strong>{{ username }}</strong> ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
+                <div class="test-info">
+                    <p><strong>{{ username }}</strong> ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
         {% else %}
-                <p>Ваш результат: {{ count_correct_answers }} з {{ total_questions }}</p>
+                    <p>Ваш результат: {{ count_correct_answers }} з {{ total_questions }}</p>
         {% endif %}
-                <p>Точність правильних відповідей: <strong>{{ accuracy }}</strong></p>
+                    <p>Точність правильних відповідей: <strong>{{ accuracy }}</strong></p>
+                        
+                    <button class="home-btn">
+                        <a class="home-btn" href="/">На головну</a>
+                    </button>
+                </div>
                 
-                <button class="home-btn">
-                    <a class="home-btn" href="/">На головну</a>
-                </button>
+                <div class="answer-info">
+                    <p><strong class="green-answer">Зелений колір відповіді</strong> – правильна відповідь.</p>
+                    <p><strong class="yellow-answer">Жовтий колір відповіді</strong> - ваша неправильна відповідь.</p>
+                    <p><strong class="red-answer">Червоний колір відповіді</strong> – неправильний відповідь.</p>
+                </div>
             </div>
+
             
         {% if not username %}
             <div class="user-information">

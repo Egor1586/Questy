@@ -115,10 +115,28 @@ main {
 
 .result-info{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 30px;
+    flex-direction: row;
     height: auto;    
+}
+
+.answer-info{
+    margin-left: 20px;
+}
+
+.answer-info p{
+    margin-bottom: 5px;
+}
+
+.green-answer{
+    color: rgb(84, 179, 99);
+}
+
+.yellow-answer{
+    color: rgb(244, 190, 28);
+}
+
+.red-answer{
+    color: rgb(238, 72, 72);
 }
 
 .home-btn{

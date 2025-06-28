@@ -53,6 +53,9 @@ function renderResultTest(username, author_name, total_question, answers_per_que
     
     const resultInfo= document.createElement('div');
     resultInfo.className= 'result-info';
+
+    const testInfo= document.createElement('div');
+    testInfo.className= 'text-info';
     
     const info1= document.createElement('p');
     info1.innerHTML= `<strong>${username}</strong> ваш результат: <strong>${correctAnswer}</strong> з ${total_question}`
@@ -65,9 +68,19 @@ function renderResultTest(username, author_name, total_question, answers_per_que
     leaveButton.textContent = 'Покинути тест';
     leaveButton.addEventListener("click", leaveTest);
 
-    resultInfo.appendChild(info1);
-    resultInfo.appendChild(info2);
-    resultInfo.appendChild(leaveButton);
+    testInfo.appendChild(info1);
+    testInfo.appendChild(info2);
+    testInfo.appendChild(leaveButton);
+
+    resultInfo.appendChild(testInfo);
+
+    const answerInfo= document.createElement('div');
+    answerInfo.className= 'answer-info';
+    answerInfo.innerHTML= `<p><strong class="green-answer">Зелений колір відповіді</strong> – правильна відповідь.</p>
+                        <p><strong class="yellow-answer">Жовтий колір відповіді</strong> - ваша неправильна відповідь.</p>
+                        <p><strong class="red-answer">Червоний колір відповіді</strong> – неправильний відповідь.</p>`
+
+    resultInfo.appendChild(answerInfo);
 
     resultContainer.appendChild(resultInfo);
 
