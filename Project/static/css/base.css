@@ -112,15 +112,6 @@ header{
     left: auto;
 }
 
-/* .nav-links a.active {
-    color: red;
-} */
-
-/* .nav-links a.active::after {
-    width: 100%;
-}
-   */
-
 .auth-buttons {
     display: flex;
     align-items: center;

@@ -38,9 +38,9 @@ def render_score():
         dates_complete.sort()
 
         if selected_option[0] == 'graph_1':
-            axes.set_xlabel("Дата прохождения теста")
-            axes.set_ylabel("Точность %")
-            axes.set_title("Прогресс пользователя")
+            axes.set_xlabel("Дата проходження тесту")
+            axes.set_ylabel("Точність %")
+            axes.set_title("Прогрес користувача")
             axes.plot(dates_complete, accuracy, marker='o')
             plt.savefig(buffer, format='png')
 
@@ -62,9 +62,9 @@ def render_score():
             delta_week = (obj_date + datetime.timedelta(days=7))
             if delta_week >= obj_date:
 
-                axes.set_xlabel("Дата прохождения теста")
-                axes.set_ylabel("Точность %")
-                axes.set_title("Прогресс пользователя")
+                axes.set_xlabel("Дата проходження тесту")
+                axes.set_ylabel("Точність %")
+                axes.set_title("Прогрес користувача")
                 dates_complete.sort()
                 axes.plot(dates_complete, accuracy, marker='o')
                 plt.savefig(buffer, format='png')
@@ -81,7 +81,7 @@ def render_score():
                 }
             
             else:
-                message = 'Слишком мало данных для построения графика'
+                message = 'Занадто мало даних для побудови графіка'
                 return{'message': message}
 
         elif selected_option[0] == 'graph_3':
@@ -90,9 +90,9 @@ def render_score():
             delta_week = (obj_date + datetime.timedelta(days=31))
             if delta_week <= obj_date:
 
-                axes.set_xlabel("Дата прохождения теста")
-                axes.set_ylabel("Точность %")
-                axes.set_title("Прогресс пользователя")
+                axes.set_xlabel("Дата проходження тесту")
+                axes.set_ylabel("Точність %")
+                axes.set_title("Прогрес користувача")
                 dates_complete.sort()
                 axes.plot(dates_complete, accuracy, marker='o')
                 plt.savefig(buffer, format='png')
@@ -109,7 +109,7 @@ def render_score():
                 }
                 
             else:
-                message = 'Слишком мало данных для построения графика'
+                message = 'Занадто мало даних для побудови графіка'
                 return{
                     "scores": scores,
                     'message': message,
@@ -117,7 +117,7 @@ def render_score():
                     }
     
     else:
-        message = "Вы не авторизованы"
+        message = "Ви не авторизовані"
 
 
     return {

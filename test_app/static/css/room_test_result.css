@@ -129,13 +129,11 @@
 }
 
 .correct {
-    background-color: #4caf50; 
+    background-color: #add3ae; 
+    border-left-color: #2d4d3a;
 }
-  
-.incorrect {
-    background-color: #e53935; 
-}
-  
+
+
 .partial {
     background-color: #fbc02d; 
 }

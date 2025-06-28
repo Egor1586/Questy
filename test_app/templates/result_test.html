@@ -12,10 +12,10 @@
     <div class="container">
         {% if username %}
             <div class="result-info">
-                <p><strong>{{ username }}</strong> ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
-                {% else %}
+            <p><strong>{{ username }}</strong> ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
+        {% else %}
                 <p>Ваш результат: {{ count_correct_answers }} з {{ total_questions }}</p>
-                {% endif %}
+        {% endif %}
                 <p>Точність правильних відповідей: <strong>{{ accuracy }}</strong></p>
                 
                 <button class="home-btn">
@@ -23,19 +23,19 @@
                 </button>
             </div>
             
-            {% if not username %}
-                <div class="user-information">
-                    <div class="auth-block">
-                        <p>Якщо ви хочете відстежувати свій прогрес у Qusty - створіть свій аккаунт та стежте за своїм прогресом</p>
-                        <a href="/sign_up" class="auth-btn">Реєстрація</a>
-                    </div>
-            
-                    <div class="auth-block">
-                        <p>Якщо у вас вже є аккаунт - авторизуйтесь</p>
-                        <a href="login" class="auth-btn">Авторизація</a>
-                    </div>
+        {% if not username %}
+            <div class="user-information">
+                <div class="auth-block">
+                    <p>Якщо ви хочете відстежувати свій прогрес у Qusty - створіть свій аккаунт та стежте за своїм прогресом</p>
+                    <a href="/sign_up" class="auth-btn">Реєстрація</a>
                 </div>
-            {% endif %}
+        
+                <div class="auth-block">
+                    <p>Якщо у вас вже є аккаунт - авторизуйтесь</p>
+                    <a href="login" class="auth-btn">Авторизація</a>
+                </div>
+            </div>
+        {% endif %}
             
         {% for question in list_quiz %}
             {% set answers = list_answers[loop.index0] %}

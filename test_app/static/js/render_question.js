@@ -34,7 +34,7 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
 
     list_answers[questionNumber].forEach(answer => {
         const link = document.createElement("button");
-        link.className = "answer";
+        link.className = "passing-answer";
         link.id= `${answer}`;
 
         const answerDiv = document.createElement("div");
@@ -55,7 +55,7 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
         questionContent.appendChild(answersDiv);
     };
 
-    const arreyButton = document.querySelectorAll(".answer")
+    const arreyButton = document.querySelectorAll(".passing-answer")
 
     for (let count = 0; count < arreyButton.length; count++ ) {
         let button= arreyButton[count];

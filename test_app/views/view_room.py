@@ -66,7 +66,15 @@ def handle_disconnect():
                 "username": f"{username}"
                 }, 
             to=ROOM.test_code)
-
+        
+@Project.settings.socketio.on('test_end')
+def handle_clear_test_code(data):
+    room = data['room']
+    print(f";oaehgp['oae] {room}")
+    TEST = Test.query.filter_by(test_code = room).first()
+    TEST.test_code = 0  
+    db.session.commit()
+    
 @Project.settings.socketio.on('kick_user')
 def handle_kick_user(data):
     username = data['user']
@@ -85,6 +93,24 @@ def handle_kick_user(data):
         disconnect(sid= kick_sid)
     else:
         print(f"Користувача {username} не знайдено серед підключених.")
+
+@Project.settings.socketio.on('get_usernames')
+def handle_send_usernames(data):
+    room = data['room']
+    author = data['authorname']
+    author_sid = get_sid(author)
+
+    ROOM = Room.query.filter_by(test_code = room).first()
+
+    users_in_room = ROOM.user_list.split('|')
+    print(f'Это автор: {author}')
+    clean_users_in_room = []
+    for user in users_in_room:
+        if user != author and user:
+            clean_users_in_room.append(user)
+
+    print(clean_users_in_room)
+    emit("get_usernames", clean_users_in_room, room= author_sid)
 
 
 
@@ -136,7 +162,6 @@ def handle_message(data):
     answer= data['answer']
     
     author_sid = get_sid(author_name)
-
 
     emit("author_receive_answer", {"username": username, "answer": answer}, room= author_sid)
 

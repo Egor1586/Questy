@@ -1,4 +1,14 @@
 function leaveTest(){
+    let currentURL = window.location.href;
+    let roomCode = currentURL.split('room')[1]
+
+    console.log(currentURL)
+    console.log(`Это код теста: ${roomCode}`)
+    
+    socket.emit("test_end", {
+            room: roomCode
+        });
+    
     document.cookie = `state=; max-age=0; path=/;`;
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
@@ -37,7 +47,7 @@ function appendResultRow(resultContainer, username, answersArrey) {
     answersArrey.forEach(correct => {
         const answerBox = document.createElement('div');
         answerBox.className = 'answer-box';
-        answerBox.classList.add(correct ? 'correct' : 'incorrect');
+        answerBox.classList.add(correct ? 'correct-answer' : 'incorrect-answer');
         answerBox.textContent = correct ? '✓' : 'x';
         answersList.appendChild(answerBox);
     });
@@ -54,12 +64,14 @@ function appendResultRow(resultContainer, username, answersArrey) {
 
 function renderAuthorResultTest(username, author_name, total_question) {
 
-    const resultContainer = document.getElementById("room-content");
-    resultContainer.innerHTML= "";
+    const container = document.getElementById("room-content");
+    container.innerHTML= "";
+    container.className= 'wrapper-author-results-container';
+
+    const resultContainer = document.createElement('div');
     resultContainer.id = 'author-results-container';
     resultContainer.className= 'author-results-container';
 
-    
     setTimeout(function() {
         socket.emit("room_get_result", {
             room: room,
@@ -76,15 +88,15 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         const headerName = document.createElement('div');
         headerName.className = 'header-name';
-        headerName.textContent = 'header name';
+        headerName.textContent = "Ім'я";
 
         const headerScore = document.createElement('div');
         headerScore.className = 'header-score';
-        headerScore.textContent = 'Header score'
+        headerScore.textContent = 'Оцінка'
 
         const headerAccuracy = document.createElement('div');
         headerAccuracy.className = 'header-accuracy';
-        headerAccuracy.textContent = 'header accuracy'
+        headerAccuracy.textContent = 'Точність'
 
         const headerAnswers = document.createElement('div');
         headerAnswers.className = 'header-answers';       
@@ -140,9 +152,9 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
     const leaveButton= document.createElement('button');
     leaveButton.className= 'leave-btn';
-    leaveButton.textContent = 'Leave button';
+    leaveButton.textContent = 'Покинути тест';
     leaveButton.addEventListener("click", leaveTest);
 
-    const main= document.getElementById("main")
-    main.appendChild(leaveButton);
+    container.appendChild(resultContainer)
+    container.appendChild(leaveButton);
 }

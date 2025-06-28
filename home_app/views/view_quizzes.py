@@ -9,18 +9,11 @@ from flask_socketio import emit, join_room
 @render_page(template_name = 'quizzes.html')
 def render_quizzes():
     list_your_test= []
-    list_tests = Test.query.all()
-    
-    count_of_tests = 0
-
-    for test in list_tests:
-        if test.author_name == current_user.username:
-            list_your_test.append(test)
-
+    list_tests = Test.query.filter_by(author_name= current_user.username).all()
     count_of_tests = int(len(list_tests))
     
     return{
-    "list_tests": list_your_test,
+    "list_tests": list_tests,
     "count_of_tests": count_of_tests
     }
 
