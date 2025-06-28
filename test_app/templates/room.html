@@ -24,6 +24,7 @@
         <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
         <script src="{{ url_for('test_app.static', filename= 'js/render_question.js') }}"></script>
         <script src="{{ url_for('test_app.static', filename= 'js/render_result_test.js') }}"></script>
+        <script src="{{ url_for('test_app.static', filename= 'js/render_author_result_test.js') }}"></script>
 
         <script>
             const socket= io();
@@ -41,8 +42,10 @@
                 state= getCookie("state")
                 renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))] );
             } 
+            else if (state === "author_result_test") {
+                renderAuthorResultTest(username, author_name, total_question);
+            } 
             else if (state === "result_test") {
-                console.log("Result of test");
                 renderResultTest(username, author_name, total_question);
             } 
             else if (state && state.includes("question")) {
@@ -118,10 +121,10 @@
                             author_name: author_name
                         });
                         
-                        document.cookie = `state= result_test; path=/`;
+                        document.cookie = `state= author_result_test; path=/`;
                         console.log(`Stop test ${getCookie("state")}`);
 
-                        renderResultTest(username, author_name, total_question);
+                        renderAuthorResultTest(username, author_name, total_question);
                     }  
                 }
             });
@@ -160,7 +163,7 @@
                 }
 
   
-                if (state != "result_test") {
+                if (state != "author_result_test") {
                     console.log(state);
                     let number_of_question= Number(state.slice(-1)) + 1;
                     console.log(number_of_question);

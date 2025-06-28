@@ -9,47 +9,51 @@
 {% endblock %} 
 
 {% block content %}
-    <h1>Сторінка результатів</h1>
+    {% if is_authorization %}
+        <h1>Сторінка результатів</h1>
 
-    {% if message %}
-        <h2>{{ message }}</h2>
-    {% else %}
-        <h2 class="h2-none">None</h2>
-    {% endif %}
+        {% if message %}
+            <h2>{{ message }}</h2>
+        {% else %}
+            <h2 class="h2-none">None</h2>
+        {% endif %}
+            
+        <!-- <hr>Add commentMore actions -->
+        <form action="" method="post" class="score-form">
+            <select name="choice">
+                <option value="graph_1">Graph 1 </option>
+                <option value="graph_2">Graph 2</option>
+                <option value="graph_3">Graph 3</option>
+            </select>
+
+            <input type="submit" value="Send">
+        </form>
         
-    <!-- <hr>Add commentMore actions -->
-    <form action="" method="post" class="score-form">
-        <select name="choice">
-            <option value="graph_1">Graph 1 </option>
-            <option value="graph_2">Graph 2</option>
-            <option value="graph_3">Graph 3</option>
-        </select>
-
-        <input type="submit" value="Send">
-    </form>
-    
-    <div class="score-result">
-        {% for score in scores %}
-            <div class="score-block">   
-                {% for test in list_tests %}
-                    {% if test.id == score.test_id %}
-                        <p>Назва: {{ test.title }}</p>
-                        <p>Опис: {{ test.description }}</p>
-                        <p>Автор: {{ test.author_name }}</p>
-                        <p>Код: {{ test.test_code }}</p>
-                    {% endif %}
-                {% endfor %}
-                <p>Точність: {{ score.accuracy }}</p>
-                <p>Дата: {{ score.date_complete }}</p>
-            </div>
-        {% endfor %}
-    </div>
-
-    {% if graph %}
-        <div class="graph">
-            <h3>Графік:</h3>
-            <img src="data:image/png;base64,{{ graph }}" alt="График">
+        <div class="score-result">
+            {% for score in scores %}
+                <div class="score-block">   
+                    {% for test in list_tests %}
+                        {% if test.id == score.test_id %}
+                            <p>Назва: {{ test.title }}</p>
+                            <p>Опис: {{ test.description }}</p>
+                            <p>Автор: {{ test.author_name }}</p>
+                            <p>Код: {{ test.test_code }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <p>Точність: {{ score.accuracy }}</p>
+                    <p>Дата: {{ score.date_complete }}</p>
+                </div>
+            {% endfor %}
         </div>
+
+        {% if graph %}
+            <div class="graph">
+                <h3>Графік:</h3>
+                <img src="data:image/png;base64,{{ graph }}" alt="График">
+            </div>
+        {% endif %}
+    {% else %}
+            <h1>{{ message }}</h1>
     {% endif %}
 
 {% endblock %}

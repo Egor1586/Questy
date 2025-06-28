@@ -18,21 +18,22 @@ def render_score():
     accuracy = []
     dates_complete = []
     message = ' '
+    scores= None
     list_tests = []
     selected_option = ['0']
 
-    scores = Score.query.filter_by(user_id= current_user.id).all()
-    for score in scores:
-        accuracy.append(score.accuracy)
-        dates_complete.append(score.date_complete)
-        if Test.query.filter_by(id= score.test_id).first() not in list_tests:
-            list_tests.append(Test.query.filter_by(id= score.test_id).first())
-    
-    if flask.request.method == 'POST':
-        selected_option[0] = (flask.request.form.get('choice'))
-        print(selected_option)
-
     if current_user.is_authenticated:
+        scores = Score.query.filter_by(user_id= current_user.id).all()
+        for score in scores:
+            accuracy.append(score.accuracy)
+            dates_complete.append(score.date_complete)
+            if Test.query.filter_by(id= score.test_id).first() not in list_tests:
+                list_tests.append(Test.query.filter_by(id= score.test_id).first())
+        
+        if flask.request.method == 'POST':
+            selected_option[0] = (flask.request.form.get('choice'))
+            print(selected_option)
+
     
         dates_complete.sort()
 

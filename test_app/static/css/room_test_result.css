@@ -1,9 +1,4 @@
-/* body {
-    margin: 0;
-    padding: 40px;
-    color: #ddd;
-}*/
-.results-container {
+.author-results-container {
     min-width: 100%;
     overflow-x: auto;
     background-color: #fdfdfd;

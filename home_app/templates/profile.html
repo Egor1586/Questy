@@ -9,5 +9,10 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Профіль</h1>
+    {% if is_authorization %}
+        <h1>Профіль</h1>
+    {% else %}
+            <h1>У вас профілю, ви не авторизовані</h1>
+    {% endif %}
+
 {% endblock %}

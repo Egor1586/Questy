@@ -24,47 +24,50 @@ def render_test_result():
     
     user_answers_cookies = flask.request.cookies.get(key= 'user_answers')
 
-    user_answers = user_answers_cookies.split("|")
+    if user_answers_cookies:
+        user_answers = user_answers_cookies.split("|")
 
-    for answer in user_answers:
-        if answer != "":
-            user_answers_list.append(answer)
-    
-    for number, quiz in enumerate(quizzes_list):
-        str_user_answers += user_answers_list[number]
-        print(quiz.correct_answer, user_answers_list[number])
-        if quiz.correct_answer == user_answers_list[number]:
-            count_correct_answers += 1
-
+        for answer in user_answers:
+            if answer != "":
+                user_answers_list.append(answer)
         
-    test = Test.query.filter_by(id= test_id).first()
+        for number, quiz in enumerate(quizzes_list):
+            str_user_answers += user_answers_list[number]
+            print(quiz.correct_answer, user_answers_list[number])
+            if quiz.correct_answer == user_answers_list[number]:
+                count_correct_answers += 1
 
-    if current_user.is_authenticated:
-        score = Score(
-            user_answer= str_user_answers,
-            accuracy= count_correct_answers/len(quizzes_list) * 100 // 1,
-            date_complete = datetime.date.today(),
-            test_id = test_id,
-            user_id = current_user.id
-        )
-        db.session.add(score)
-        db.session.commit()
+            
+        test = Test.query.filter_by(id= test_id).first()
 
-    result_test_page = flask.render_template(
-        'result_test.html',
-        total_questions=test.total_questions,
-        accuracy=count_correct_answers / len(quizzes_list) * 100 // 1,
-        count_correct_answers=count_correct_answers,
-        list_quiz=quizzes_list,
-        list_answers=list_answers,
-        user_anwsers=user_answers_list,
-        is_authorization = current_user.is_authenticated,
-        username = current_user.username if current_user.is_authenticated else "", 
-        is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
-        is_admin = current_user.is_admin if current_user.is_authenticated else ""
-        )
+        if current_user.is_authenticated:
+            score = Score(
+                user_answer= str_user_answers,
+                accuracy= count_correct_answers/len(quizzes_list) * 100 // 1,
+                date_complete = datetime.date.today(),
+                test_id = test_id,
+                user_id = current_user.id
+            )
+            db.session.add(score)
+            db.session.commit()
 
-    response = clear_cookies(non_clear_cookie= "user_answers", maked_response=result_test_page)
-    response.set_cookie(key= "user_answers", value="", max_age=0) 
+        result_test_page = flask.render_template(
+            'result_test.html',
+            total_questions=test.total_questions,
+            accuracy=count_correct_answers / len(quizzes_list) * 100 // 1,
+            count_correct_answers=count_correct_answers,
+            list_quiz=quizzes_list,
+            list_answers=list_answers,
+            user_anwsers=user_answers_list,
+            is_authorization = current_user.is_authenticated,
+            username = current_user.username if current_user.is_authenticated else "", 
+            is_teacher= current_user.is_teacher if current_user.is_authenticated else "",
+            is_admin = current_user.is_admin if current_user.is_authenticated else ""
+            )
+
+        response = clear_cookies(non_clear_cookie= "user_answers", maked_response=result_test_page)
+        response.set_cookie(key= "user_answers", value="", max_age=0) 
+        
+        return response
     
-    return response
+    return flask.redirect("/")
