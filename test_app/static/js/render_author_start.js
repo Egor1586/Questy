@@ -24,11 +24,20 @@ function renderAuthorStart(quiz, answers) {
     // Блок про питання
     const block2 = document.createElement('div')
     block2.className = 'block2'
-    block2.innerHTML = `
-        <div id = "question_text><strong>Питання:</strong> ${quiz.question_text}</div>
-        <div><strong>Правильна відповідь:</strong> ${quiz.correct_answer}</div>
-    `
+    // block2.innerHTML = `
+    //     <div id = "question_text><strong>Питання:</strong> ${quiz.question_text}</div>
+    //     <div><strong>Правильна відповідь:</strong> ${quiz.correct_answer}</div>
+    // `
+    const question_text = document.createElement('div')
+    question_text.className = "question_text"
+    question_text.textContent = "<div>Питання:${quiz.question_text}</div>"
 
+    const correct_answer = document.createElement('div')
+    correct_answer.className = "correct_answer"
+    correct_answer.textContent = "<div>Правильна відповідь: ${quiz.correct_answer}</div>"
+
+    block2.appendChild(question_text)
+    block2.appendChild(correct_answer)
     // Блок статистики
     const block3 = document.createElement('div')
     block3.className = 'block3'
