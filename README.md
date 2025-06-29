@@ -454,7 +454,7 @@
 </p>
 
 <p style='text-align:  justify; font-size: 18px;'>    
-    <span style="margin-left: 40px;">Егор:</span> 
+    <span style="margin-left: 40px;">Егор: у цьому проєкті я був Team Lead'ом — для мене це був перший досвід управління командою, організації зустрічей, контролю завдань і кінцевого результату. Також я вперше розробив вебсайт на Flask, навчився працювати з базою даних і передавати інформацію між користувачами за допомогою WebSocket.</span> 
 </p>
 
 <p style='text-align:  justify; font-size: 18px;'>    
