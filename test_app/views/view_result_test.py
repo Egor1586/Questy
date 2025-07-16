@@ -65,7 +65,7 @@ def render_test_result():
             is_admin = current_user.is_admin if current_user.is_authenticated else ""
             )
 
-        response = clear_cookies(non_clear_cookie= "user_answers", maked_response=result_test_page)
+        response = clear_cookies(non_clear_cookie= "user_answers", maked_response= result_test_page)
         response.set_cookie(key= "user_answers", value="", max_age=0) 
         
         return response

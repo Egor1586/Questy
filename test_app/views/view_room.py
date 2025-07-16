@@ -46,6 +46,9 @@ def handle_join(data):
         new_user = f'|{username}|'
         if new_user not in ROOM.user_list:
             ROOM.user_list += new_user
+            if new_user != test.author_name:
+                print("new user")
+                ROOM.all_members += new_user
 
     db.session.commit()
 

@@ -81,9 +81,12 @@
 
         function emitUser(){
             const room = document.getElementById('room').value.trim();
+
+            console.log(`${room}`)
             
             if (currentCodes.includes(room)) {
                 window.location.href = `/room${room}`;
+                console.log("переход")
             } 
         }
 
