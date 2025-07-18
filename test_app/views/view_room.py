@@ -296,6 +296,7 @@ def render_room(test_code):
         list_quiz.append(quiz.dict()) 
 
     test = Test.query.filter_by(test_code= test_code).first()
+    
     print(test.test_code)
 
     return {
