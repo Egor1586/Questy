@@ -15,8 +15,6 @@
     <div class="room-content" id="room-content">
 
     </div>
-
-
     
     <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
     
@@ -32,12 +30,17 @@
         const room = "{{ test.test_code }}"; 
         console.log("not reg")
         
-        if (!username) {
-            username= getCookie("temporary_name")
-        }
         
         if (!username) {
-            window.location.href = `/temporary_name${room}`; 
+            console.log("нет имени")
+            username= getCookie("temporary_name")
+            if (!username) {
+                console.log("нет имени2")
+                console.log(username)
+                setTimeout(() => {
+                    window.location.href = `/temporary_name${room}`;
+                }, 4000); 
+            }
         }
         
         const socket= io();

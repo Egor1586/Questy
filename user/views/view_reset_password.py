@@ -17,7 +17,7 @@ def render_reset_app():
     
     return { }
 
-@render_page(template_name= 'reset_password.html')
+@render_page(template_name= 'confirm_password.html')
 def render_confirm_account():
     if flask.request.method == "POST":
         sing_up_code= flask.session.get("sing_up_code", " ")

@@ -7,5 +7,6 @@ from Project.clear_cookie import clear_cookies
 @render_page(template_name='temporary_name.html')
 def render_temporary_name(code):
     
-    
-    return {}
+    return {
+        "room": code
+    }

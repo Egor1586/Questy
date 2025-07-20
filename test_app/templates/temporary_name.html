@@ -9,14 +9,13 @@
 {% endblock %}
 
 {% block content %}
-
-    <script src="{{ url_for('test_app.static', filename= 'js/temp_name.js') }}"></script>
-
     <div>
-        <form action="" method="POST">
-            <input class="temp_button" type="text" name="temporary-name" placeholder="Enter your name to take the test" required>
-            <button type="submit" class="temp_input">Next</button>
-        </form>
+        <input class="temp_input" type="text" name="temporary-name" placeholder="Enter your name to take the test" required>
+        <button type="button" class="temp_button" data-value="">Next</button>
     </div>
 
+    <script>
+        window.room = "{{ room }}";
+    </script>
+    <script src="{{ url_for('test_app.static', filename= 'js/temp_name.js') }}"></script>
 {% endblock %}

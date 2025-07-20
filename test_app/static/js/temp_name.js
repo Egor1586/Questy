@@ -1,10 +1,16 @@
-const tempButton = document.querySelectorAll(".temp_button")
-const tempInput = document.querySelectorAll(".temp_input")
+const tempButton = document.querySelector(".temp_button");
+const tempInput = document.querySelector(".temp_input");
 
-console.log("ah;gdf")
+const room = window.room;
 
 tempButton.addEventListener('click', function() {
     console.log(tempInput.value)
-    document.cookie = `teporary_name = ${tempInput.value}; path= /`
-    console.log('Кнопка нажата!');
+    document.cookie = `temporary_name = ${tempInput.value}; path= /`
+    console.log(`Кнопка нажата! /room${room}`);
+
+    alert(`Редирект на /room${room}`);
+
+    window.location.href = `/room${room}`; 
+    console.log(`Кнопка нажата! /room${room}`);
+
 });
