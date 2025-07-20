@@ -34,3 +34,10 @@ def delete_test(test_id):
         db.session.commit()
 
     return flask.redirect("/quizzes/")
+
+def reset_test(test_id):
+    test = Test.query.filter_by(id = test_id).first()
+    test.test_code = 0
+    db.session.commit()
+
+    return flask.redirect("/quizzes/")

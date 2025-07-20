@@ -18,7 +18,7 @@ def render_send_email():
         
 
         with project.app_context():
-            send_code(user_email= email, code= code)
+            send_code(user_email= email, code= code, type= "reset")
         
         return flask.redirect(location = '/../reset_password')
     

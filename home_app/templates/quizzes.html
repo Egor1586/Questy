@@ -45,6 +45,15 @@
                                 <a href="/test_app?test_id={{ test.id }}">
                                     <button class="edit">Edit</button>
                                 </a>
+                                
+                                {% if test.test_code != 0 %}
+                                    <form action="/reset_test{{ test.id }}" >
+                                        <button class="btn">
+                                            Скинути тест
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
                                 <form action="/delete_test{{ test.id }}" >
                                     <button class="delete">
                                         Видалити тест

@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import datetime
+import pandas as pd
+import mplcyberpunk
 
 from flask_login import current_user
 
@@ -38,18 +40,36 @@ def render_score():
         dates_complete.sort()
 
         if selected_option[0] == 'graph_1':
-            axes.set_xlabel("Дата проходження тесту")
-            axes.set_ylabel("Точність %")
-            axes.set_title("Прогрес користувача")
-            axes.plot(dates_complete, accuracy, marker='o')
-            plt.savefig(buffer, format='png')
+            dates_complete = ['2025-07-20', '2025-07-21', '2025-07-22']
+            accuracy = [13, 25, 60]
+
+            data = {
+                'Dates': dates_complete,
+                'Accuracy': accuracy
+            }
+
+            df = pd.DataFrame(data)
+
+            with plt.style.context('cyberpunk'):
+                ax = df.plot(
+                    x='Dates', y='Accuracy',
+                    kind='line',
+                    lw=3, marker='o', ms=10,
+                    figsize=(10, 6)
+                )
+                fig.patch.set_facecolor('#0f0f0f')
+                mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
+                plt.xlabel('Дата проходження тесту')
+                plt.ylabel('Точність %')
+                plt.title('Прогрес користувача')
+                plt.tight_layout()
+                plt.savefig(buffer, format='png')
 
             buffer.seek(0)
             image_bytes = buffer.read()
             graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
             buffer.close()
 
-            print("")
             return {
                 "scores": scores,
                 'graph': graph_to_html,

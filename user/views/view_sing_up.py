@@ -40,7 +40,7 @@ def render_sign_up():
 
                     print(sing_up_code)
                     with Project.project.app_context():
-                        send_code(user_email=user_data["email"], code= sing_up_code)
+                        send_code(user_email=user_data["email"], code= sing_up_code, type= "confirm")
 
                     return flask.redirect(location = '/confirmation_account')
 

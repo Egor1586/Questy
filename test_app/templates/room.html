@@ -37,9 +37,7 @@
             if (!username) {
                 console.log("нет имени2")
                 console.log(username)
-                setTimeout(() => {
-                    window.location.href = `/temporary_name${room}`;
-                }, 4000); 
+                window.location.href = `/temporary_name${room}`;
             }
         }
         
@@ -230,7 +228,8 @@
             }
         });
 
-        socket.on('kicked', function(data) {          
+        socket.on('kicked', function(data) {
+            document.cookie = `temporary_name = ; path= /; max_age= 0`          
             window.location.href = '/'; 
         });
 
