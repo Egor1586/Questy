@@ -13,7 +13,7 @@
 
 {% block content %}
     <aside>
-        <button class="create-btn" ><a href="/new_quiz">+ Створити новий тест</a></button>
+        <a href="/new_quiz"><button class="create-btn" >+ Створити новий тест</button></a>
         <section class="library">
             <h2>Моя бібліотека</h2>
             <div class="quiz-card">Тест&nbsp;&nbsp; {{ count_of_tests }}/20</div>
@@ -42,10 +42,9 @@
                         <div class="info-code">
                             
                             <div class="actions">
-                                <button class="edit">
-                                    <a href="/test_app?test_id={{ test.id }}">Edit</a>                    
-                                </button>
-                                
+                                <a href="/test_app?test_id={{ test.id }}">
+                                    <button class="edit">Edit</button>
+                                </a>
                                 <form action="/delete_test{{ test.id }}" >
                                     <button class="delete">
                                         Видалити тест
@@ -53,17 +52,15 @@
                                 </form>
 
                                 {% if test.test_code != 0 %}
-                                    <button class="start" type="button">
-                                        <a href="/room{{ test.test_code }}" class="btn">Почати</a>
-                                    </button>
+                                    <a href="/room{{ test.test_code }}" class="btn">
+                                        <button class="start" type="button">Почати</button>
+                                    </a>
                                 {% endif %}
                                 
                                 {% if test.test_code == 0 %}
-                                    <button class="edit">
-                                        <a href="/create_code{{ test.id }}" class="btn">
-                                            Створити код
-                                        </a>
-                                    </button>
+                                    <a href="/create_code{{ test.id }}" class="btn">
+                                        <button class="edit">Створити код</button>
+                                    </a>
                                 {% endif %}
                             </div>
                             {% if test.test_code != 0 %}

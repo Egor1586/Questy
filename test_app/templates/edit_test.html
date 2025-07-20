@@ -17,9 +17,9 @@
                 <div class="meta-info">Загальна кількість питань: {{ test.total_questions }} </div>
                 <div class="meta-info">Кількість відповідей на запитання: {{ test.answers_per_question }} </div>
             </div>
-            <button class="edit-btn">
-                <a href="/edit_header_test{{ test.id }}">Редагувати</a>
-            </button>
+            <a href="/edit_header_test{{ test.id }}">
+                <button class="edit-btn">Редагувати</button>
+            </a>
         </div>
 
         {% for question in list_quiz %}
@@ -27,9 +27,9 @@
             <div class="question-block">
                 <div class="question-header">
                 <div>{{ question.question_text }}</div>
-                <button class="edit-btn">
-                    <a href="/edit_question?test_id= {{ test.id }}&quiz_id= {{ question.id }}">Редагувати</a>
-                </button>
+                <a href="/edit_question?test_id= {{ test.id }}&quiz_id= {{ question.id }}">
+                    <button class="edit-btn">Редагувати</button>
+                </a>
                 </div>
                 
                 <form action="/delete_quiz{{ question.id }}">
