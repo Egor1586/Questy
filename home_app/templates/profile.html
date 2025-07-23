@@ -11,6 +11,9 @@
 {% block content %}
     {% if is_authorization %}
         <h1>Профіль</h1>
+        <a href="/edit_profile{{ current_user.id }}">
+            <button class="edit-btn">Змінити ім'я</button>
+        </a>
     {% else %}
             <h1>У вас немає профілю, ви не авторизовані</h1>
     {% endif %}

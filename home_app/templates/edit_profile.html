@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Test
+{% endblock %}
+
+{% block links %}
+    <!-- <link rel = "stylesheet" href = "{{ url_for('test_app.static', filename='css/edit_head_test.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+    <div class="edit-question-form">
+        <form action="" method="POST" class="edit-form">
+            <h1>Редагувати iм`я</h1>
+            <div class="input-group">
+                <input type="text" name="name" placeholder="Введіть нове iм`я">
+            </div>
+            
+            <button type="submit" class="edit-btn">Пiдтвердити</button>
+
+        </form>
+        
+    </div>
+{% endblock %}

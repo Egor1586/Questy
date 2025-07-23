@@ -12,6 +12,7 @@ home_app.add_url_rule(rule="/profile/", view_func= render_profile, methods= ['GE
 home_app.add_url_rule(rule = '/quizzes/', view_func = render_quizzes, methods = ['GET', 'POST'])
 home_app.add_url_rule(rule = '/delete_test<test_id>', view_func = delete_test, methods = ['GET', 'POST'])
 home_app.add_url_rule(rule = '/reset_test<test_id>', view_func = reset_test, methods = ['GET', 'POST'])
+home_app.add_url_rule(rule= "/edit_profile<user_id>", view_func= render_edit_profile, methods = ['GET', 'POST'])
 
 home_app.add_url_rule(rule = '/get_active_codes', view_func = get_codes, methods = ['GET', 'POST'])
 
