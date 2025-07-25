@@ -6,6 +6,10 @@ import datetime
 import pandas as pd
 import mplcyberpunk
 
+import pandas as pd
+import mplcyberpunk
+import numpy as np
+
 from flask_login import current_user
 
 from Project.render_page import render_page
@@ -63,10 +67,6 @@ def render_score():
                 plt.ylabel('Точність %')
                 plt.title('Прогрес користувача')
                 plt.tight_layout()
-                plt.savefig(buffer, format='png')
-
-            buffer.seek(0)
-            image_bytes = buffer.read()
             graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
             buffer.close()
 
@@ -82,12 +82,31 @@ def render_score():
             delta_week = (obj_date + datetime.timedelta(days=7))
             if delta_week >= obj_date:
 
-                axes.set_xlabel("Дата проходження тесту")
-                axes.set_ylabel("Точність %")
-                axes.set_title("Прогрес користувача")
-                dates_complete.sort()
-                axes.plot(dates_complete, accuracy, marker='o')
-                plt.savefig(buffer, format='png')
+                dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
+                accuracy = [13, 25, 60]
+
+                data = {
+                    'Dates': dates_complete,
+                    'Accuracy': accuracy
+                }
+
+                df = pd.DataFrame(data)
+
+                with plt.style.context('cyberpunk'):
+                    ax = df.plot(
+                        x='Dates', y='Accuracy',
+                        kind='line',
+                        lw=3, marker='o', ms=10,
+                        figsize=(10, 6)
+                    )
+                    
+                    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
+                    plt.xlabel('Дата проходження тесту')
+                    plt.ylabel('Точність %')
+                    plt.title('Прогрес користувача')
+                    plt.tight_layout()
+                    axes.set_facecolor('#1a1a1a')
+                    plt.savefig(buffer, format='png')
 
                 buffer.seek(0)
                 image_bytes = buffer.read()
@@ -110,23 +129,36 @@ def render_score():
             delta_week = (obj_date + datetime.timedelta(days=31))
             if delta_week <= obj_date:
 
-                axes.set_xlabel("Дата проходження тесту")
-                axes.set_ylabel("Точність %")
-                axes.set_title("Прогрес користувача")
-                dates_complete.sort()
-                axes.plot(dates_complete, accuracy, marker='o')
-                plt.savefig(buffer, format='png')
+                dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
+                accuracy = [13, 25, 60]
+
+                data = {
+                    'Dates': dates_complete,
+                    'Accuracy': accuracy
+                }
+
+                df = pd.DataFrame(data)
+
+                with plt.style.context('cyberpunk'):
+                    ax = df.plot(
+                        x='Dates', y='Accuracy',
+                        kind='line',
+                        lw=3, marker='o', ms=10,
+                        figsize=(10, 6)
+                    )
+                    
+                    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
+                    plt.xlabel('Дата проходження тесту')
+                    plt.ylabel('Точність %')
+                    plt.title('Прогрес користувача')
+                    plt.tight_layout()
+                    axes.set_facecolor('#1a1a1a')
+                    plt.savefig(buffer, format='png')
 
                 buffer.seek(0)
                 image_bytes = buffer.read()
                 graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
                 buffer.close()
-
-                return {
-                    "scores": scores,
-                    'graph': graph_to_html,
-                    'list_tests': list_tests
-                }
                 
             else:
                 message = 'Занадто мало даних для побудови графіка'
