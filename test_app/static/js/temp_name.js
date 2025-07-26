@@ -8,9 +8,5 @@ tempButton.addEventListener('click', function() {
     document.cookie = `temporary_name = ${tempInput.value}; path= /`
     console.log(`Кнопка нажата! /room${room}`);
 
-    alert(`Редирект на /room${room}`);
-
     window.location.href = `/room${room}`; 
-    console.log(`Кнопка нажата! /room${room}`);
-
 });

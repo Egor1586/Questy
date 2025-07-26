@@ -21,8 +21,14 @@ def get_codes():
 
 @render_page(template_name = 'home.html')
 def render_home():
-    list_room = Room.query.all()
-    list_tests= Test.query.all()
+    list_room= []
+    list_tests= []
+    
+    try:
+        list_room = Room.query.all()
+        list_tests= Test.query.all()
+    except:
+        pass
 
     return {
         "list_room": list_room,

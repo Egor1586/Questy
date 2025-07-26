@@ -5,10 +5,11 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function leaveTest(){
+function userLeaveTest(){
     document.cookie = `state=; max-age=0; path=/;`;
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
+    document.cookie = `temporary_name=; max-age=0; path=/;`;
 
     window.location.href = '/'; 
 }
@@ -66,7 +67,7 @@ function renderResultTest(username, author_name, total_question, answers_per_que
     const leaveButton= document.createElement('button');
     leaveButton.className= 'leave-btn';
     leaveButton.textContent = 'Покинути тест';
-    leaveButton.addEventListener("click", leaveTest);
+    leaveButton.addEventListener("click", userLeaveTest);
 
     testInfo.appendChild(info1);
     testInfo.appendChild(info2);

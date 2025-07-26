@@ -47,4 +47,4 @@ class Room(db.Model):
 
     active_test= db.Column(db.Boolean, nullable= True)
 
-    all_members = db.Column(db.String(300), nullable = True)
+    all_members = db.Column(db.String(300), nullable = False)
