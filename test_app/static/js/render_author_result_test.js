@@ -1,4 +1,4 @@
-function leaveTest(){
+function authorLeaveTest(){
     let currentURL = window.location.href;
     let roomCode = currentURL.split('room')[1]
 
@@ -153,7 +153,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
     const leaveButton= document.createElement('button');
     leaveButton.className= 'leave-btn';
     leaveButton.textContent = 'Покинути тест';
-    leaveButton.addEventListener("click", leaveTest);
+    leaveButton.addEventListener("click", authorLeaveTest);
 
     container.appendChild(resultContainer)
     container.appendChild(leaveButton);

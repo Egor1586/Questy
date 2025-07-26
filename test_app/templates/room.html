@@ -23,7 +23,15 @@
     <script src="{{ url_for('test_app.static', filename= 'js/render_question.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_result_test.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_author_result_test.js') }}"></script>
-    
+
+    <!-- stop_test
+    Stop test
+
+    user_answer
+    author_receive_answer
+    recieve_count_users
+    result_test
+     -->
     <script>
 
         let username = "{{ username }}"; 
@@ -53,7 +61,7 @@
 
         if (state && state.includes("author_start")) {
             state= getCookie("state")
-            renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
+            renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
         } 
         else if (state === "author_result_test") {
             renderAuthorResultTest(username, author_name, total_question);
@@ -126,62 +134,33 @@
             console.log(`Checking ${Number(state.slice(-1))} and ${total_question -1}`)
             
             //if (Number(COUNTUSERS) === Number(countUsersAnswer)) {    
-            if (Number(state.slice(-1)) === total_question - 1) {
-                console.log("stop test")
-                
-                socket.emit("stop_test", {
-                    room: room,
-                    author_name: author_name
-                });
-                
-                document.cookie = `state= author_result_test; path=/`;
-                console.log(`Stop test ${getCookie("state")}`);
-
-                renderAuthorResultTest(username, author_name, total_question);
-            }  
+            //if (Number(state.slice(-1)) === total_question- 1) {
+            //    console.log("stop test")
+            //    
+            //    socket.emit("stop_test", {
+            //        room: room,
+            //        author_name: author_name
+            //    });
+            //    
+            //    document.cookie = `state= author_result_test; path=/`;
+            //    console.log(`Stop test ${getCookie("state")}`);
+            //    
+            //    renderAuthorResultTest(username, author_name, total_question);
+            //}  
             //}
         });
 
         socket.on("next_question", function(data) {  
             state = getCookie("state");
-            let answers = getCookie("user_answers")
             
-            if (answers) {
-                let answers_list = answers.split("|")
-                let user_answers = []
-                let user_answers_list = []
-                for (let answer of answers_list){
-                    if (answer != "|"){
-                        user_answers.push(answer)
-                    }
-                }
-                for (let answer of user_answers){
-                    if (answer != ""){
-                        user_answers_list.push(answer)
-                    }
-                }
-                
-                console.log(user_answers_list)
-                console.log(user_answers_list.length, Number(state.slice(-1)) + 1)
-                
-                if (user_answers_list.length !== Number(state.slice(-1)) + 1) {
-    
-                    answers += "|not_answer|"
-                    document.cookie = `user_answers= ${answers}; path=/`;
-                }
-            }
-            else {
-                console.log("нет куков")
-                document.cookie = `user_answers= |not_answer|; path=/`;
-            }
-
+            checkAnswers();
   
             if (state != "author_result_test") {
                 console.log(state);
-                let number_of_question= Number(state.slice(-1)) + 1;
+                let number_of_question= Number(state.slice(-1));
                 if (number_of_question != total_question - 1) {
                     console.log(number_of_question);
-                    document.cookie = `state= question${number_of_question}; path=/`;
+                    document.cookie = `state= question${number_of_question + 1}; path=/`;
                     state= getCookie("state");
                     console.log(state);
                     
@@ -189,6 +168,7 @@
                 }
                 else {
                     console.log("stop test skip last question")
+                    console.log(`${number_of_question} and ${total_question - 1}`)
                 
                     socket.emit("stop_test", {
                         room: room,
@@ -203,7 +183,9 @@
             }
         });
 
-        socket.on("result_test", function(data) {  
+        socket.on("result_test", function(data) { 
+            
+            checkAnswers();
 
             renderResultTest(username, author_name, total_question, answers_per_question, list_quiz, list_answers);
 
@@ -251,14 +233,16 @@
             }
         });
 
-        socket.on('start_test', function(data) {             
+        socket.on('start_test', function(data) {   
+            let stateCookies= getCookie("state")
+            let state= stateCookies ? Number(stateCookies.slice(-1)) : 0;
             let messages = document.getElementById("messages");
             messages.innerHTML += `<p>Start ${data["room"]}</p>`;
             if (username === data["author_name"]) {
                 console.log("Вы начали тест");              
                 document.cookie = "state= author_start0; path=/";
                 document.cookie = "countUsersAnswer= 0; path=/";
-                renderAuthorStart(list_quiz[0], list_answers[0], room, author_name);
+                renderAuthorStart(list_quiz[0], list_answers[0], room, author_name, state, total_question);
             }
             else {
                 console.log("Тест начат");
@@ -269,6 +253,7 @@
         });
 
         function nextQuestion(){
+            const nextButton = document.getElementById("next-button");
             let countUsersAnswer= getCookie("countUsersAnswer");
             state = getCookie("state");
 
@@ -278,7 +263,14 @@
             let number_of_question= Number(state.slice(-1)) + 1;
             console.log(state)
             document.cookie = `state= author_start${number_of_question}; path=/`;
-            
+            console.log(state)
+
+            if (number_of_question === total_question- 1) {
+                console.log(`Кінець тесту ${number_of_question} === ${total_question- 1}`)
+                nextButton.textContent = 'Кінець тесту'
+                nextButton.addEventListener("click", testStop);
+            }
+
             console.log("next question")
             document.cookie = `countUsersAnswer= 0; path=/`;
             
@@ -292,6 +284,55 @@
                 room: room,
                 author_name: author_name
             });
+        }
+
+        function testStop(){
+            console.log("stop test")
+            
+            socket.emit("stop_test", {
+                room: room,
+                author_name: author_name
+            });
+            
+            document.cookie = `state= author_result_test; path=/`;
+            console.log(`Stop test ${getCookie("state")}`);
+            
+            renderAuthorResultTest(username, author_name, total_question);
+        }
+
+
+        function checkAnswers(){
+            state = getCookie("state");
+            let answers = getCookie("user_answers")
+            
+            if (answers) {
+                let answers_list = answers.split("|")
+                let user_answers = []
+                let user_answers_list = []
+                for (let answer of answers_list){
+                    if (answer != "|"){
+                        user_answers.push(answer)
+                    }
+                }
+                for (let answer of user_answers){
+                    if (answer != ""){
+                        user_answers_list.push(answer)
+                    }
+                }
+                
+                console.log(user_answers_list)
+                console.log(user_answers_list.length, Number(state.slice(-1)) + 1)
+                
+                if (user_answers_list.length !== Number(state.slice(-1)) + 1) {
+    
+                    answers += "|not_answer|"
+                    document.cookie = `user_answers= ${answers}; path=/`;
+                }
+            }
+            else {
+                console.log("нет куков")
+                document.cookie = `user_answers= |not_answer|; path=/`;
+            }
         }
 
         function sendMessage() {

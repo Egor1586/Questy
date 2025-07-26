@@ -9,6 +9,10 @@ from user.models import User, Score
 
 users= {}
 
+# user_answer
+# get_room_size
+# stop_test
+
 def get_sid(username):
     for sid, name in users.items():
         if name == username:
@@ -38,7 +42,8 @@ def handle_join(data):
             test_code= room,
             user_list= f'|{username}|',
             author_name= username,
-            active_test= False
+            active_test= False,
+            all_members= ""
         )
         db.session.add(NEW_ROOM)
 
@@ -46,8 +51,8 @@ def handle_join(data):
         new_user = f'|{username}|'
         if new_user not in ROOM.user_list:
             ROOM.user_list += new_user
-            if new_user != test.author_name:
-                print("new user")
+            if username != test.author_name:
+                print(f"new user{username}")
                 ROOM.all_members += new_user
 
     db.session.commit()
@@ -151,7 +156,8 @@ def handle_message(data):
         accuracy= accuracy,
         test_id= TEST.id,
         date_complete = datetime.date.today(),
-        user_id= USER.id,
+        user_id= USER.id if USER else 0,
+        user_name= user_name,
         test_code= room
     )
 
@@ -191,7 +197,7 @@ def handle_message(data):
         "room": room,
         "countUsers": count_users
         }
-    , to=author_sid)
+    , to= author_sid)
 
 @Project.settings.socketio.on('author_start_test')
 def handle_start_test(data):
@@ -248,11 +254,13 @@ def handle_message(data):
     for user in users_list:
         if user:
             USER= User.query.filter_by(username= user).first()
-            if USER.username != author_name:
+            if not USER and user != author_name:
+                USER_LIST.append(user)
+            elif USER.username != author_name:
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
-
+ 
     print(USER_LIST)
     print(SCORE_LIST)
 
@@ -262,9 +270,14 @@ def handle_message(data):
         correct_answers_list= []
 
         for score in SCORE_LIST:
-            if score.user_id == user.id:
-                answers_str= score.user_answer
-                break
+            try:
+                if score.user_id == user.id:
+                    answers_str= score.user_answer
+                    break
+            except:
+                if score.user_name == user:
+                    answers_str= score.user_answer
+                    break
 
         answers_list= answers_str.strip('|').split('||')
 
@@ -276,8 +289,10 @@ def handle_message(data):
                 correct_answers_list.append(1)
             else:
                 correct_answers_list.append(0)
-        
-        room_get_result_data[user.username]= correct_answers_list
+        try:
+            room_get_result_data[user.username]= correct_answers_list
+        except:
+            room_get_result_data[user]= correct_answers_list
 
     print(room_get_result_data)
 

@@ -13,6 +13,20 @@ function addUserAnswer(username, answer) {
     block1.appendChild(userAnswerBlock)
 }
 
+function stopTest(){
+    console.log("stop test")
+
+    socket.emit("stop_test", {
+        room: room,
+        author_name: author_name
+    });
+
+    document.cookie = `state= author_result_test; path=/`;
+    console.log(`Stop test ${getCookie("state")}`);
+
+    renderAuthorResultTest(username, author_name, total_question);
+}
+
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -20,7 +34,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function renderAuthorStart(quiz, answers, room, authorname) {
+function renderAuthorStart(quiz, answers, room, authorname, state, total_question) {
     const waiteContent = document.getElementById("room-content");
     waiteContent.innerHTML = ""; 
     waiteContent.className = 'author-content'
@@ -59,9 +73,11 @@ function renderAuthorStart(quiz, answers, room, authorname) {
 
     // Кнопка "Наступне питання"
     const nextButton = document.createElement('button')
+    nextButton.id = 'next-button'
     nextButton.className = 'next-button'
     nextButton.textContent = 'Наступне питання'
     nextButton.addEventListener("click", nextQuestion);
+
 
     // Збірка
     waiteContent.appendChild(block1)

@@ -44,9 +44,10 @@ def render_test_result():
             score = Score(
                 user_answer= str_user_answers,
                 accuracy= count_correct_answers/len(quizzes_list) * 100 // 1,
-                date_complete = datetime.date.today(),
-                test_id = test_id,
-                user_id = current_user.id
+                date_complete= datetime.date.today(),
+                test_id= test_id,
+                user_id= current_user.id,
+                user_name= current_user.username
             )
             db.session.add(score)
             db.session.commit()
