@@ -38,4 +38,3 @@ function createUserBlock(username, author_name, block_username) {
     return userListDiv;
  
 }
-

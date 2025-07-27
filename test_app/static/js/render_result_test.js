@@ -129,3 +129,4 @@ function renderResultTest(username, author_name, total_question, answers_per_que
         resultContainer.appendChild(questionBlock);
     }
 }
+

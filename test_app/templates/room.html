@@ -24,27 +24,18 @@
     <script src="{{ url_for('test_app.static', filename= 'js/render_result_test.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_author_result_test.js') }}"></script>
 
-    <!-- stop_test
-    Stop test
-
-    user_answer
-    author_receive_answer
-    recieve_count_users
-    result_test
-     -->
     <script>
+
+        //create_user_block
+        //create_all_user_blocks
 
         let username = "{{ username }}"; 
         const room = "{{ test.test_code }}"; 
-        console.log("not reg")
         
         
         if (!username) {
-            console.log("нет имени")
             username= getCookie("temporary_name")
             if (!username) {
-                console.log("нет имени2")
-                console.log(username)
                 window.location.href = `/temporary_name${room}`;
             }
         }
@@ -102,6 +93,11 @@
                 });
             }
         });
+
+        socket.on("create_all_user_blocks", function(data) {
+            let temp_user_list= data.trim("|").split('||')
+            console.log(temp_user_list)
+        });
         
         socket.on("listening_to_messages", function(data) {
             let messages = document.getElementById("messages");
@@ -132,22 +128,6 @@
             state = getCookie("state");
             console.log(state)
             console.log(`Checking ${Number(state.slice(-1))} and ${total_question -1}`)
-            
-            //if (Number(COUNTUSERS) === Number(countUsersAnswer)) {    
-            //if (Number(state.slice(-1)) === total_question- 1) {
-            //    console.log("stop test")
-            //    
-            //    socket.emit("stop_test", {
-            //        room: room,
-            //        author_name: author_name
-            //    });
-            //    
-            //    document.cookie = `state= author_result_test; path=/`;
-            //    console.log(`Stop test ${getCookie("state")}`);
-            //    
-            //    renderAuthorResultTest(username, author_name, total_question);
-            //}  
-            //}
         });
 
         socket.on("next_question", function(data) {  

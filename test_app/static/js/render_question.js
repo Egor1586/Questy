@@ -87,5 +87,3 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
         )
     }
 }
-
-

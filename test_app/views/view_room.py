@@ -9,9 +9,8 @@ from user.models import User, Score
 
 users= {}
 
-# user_answer
-# get_room_size
-# stop_test
+# new_user
+# test_end
 
 def get_sid(username):
     for sid, name in users.items():
@@ -78,8 +77,9 @@ def handle_disconnect():
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
     room = data['room']
-    print(f";oaehgp['oae] {room}")
-    TEST = Test.query.filter_by(test_code = room).first()
+    ROOM = Room.query.filter_by(test_code= room).first()
+    ROOM.active = 0
+    TEST = Test.query.filter_by(test_code= room).first()
     TEST.test_code = 0  
     db.session.commit()
     
@@ -223,7 +223,14 @@ def handle_message(data):
 
 @Project.settings.socketio.on('new_user')
 def handle_message(data):
-    emit("create_user_block", f"{data['username']}", include_self= False, to= data['room'])
+    room= data['room']
+    username= data['username']
+    user_sid = get_sid(username)
+
+    ROOM= Room.query.all(test_code= room)
+
+    emit("create_user_block", f"{username}", include_self= False, to= room)
+    emit("create_all_user_blocks", ROOM.all_members, to= user_sid)
 
 @Project.settings.socketio.on('next_question')
 def handle_message(data):

@@ -84,3 +84,4 @@ function renderRoomMain(testCode, authorName, username) {
     content.appendChild(waiteSide)
     content.appendChild(chat)
 }
+
