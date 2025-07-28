@@ -24,8 +24,9 @@
     <div class="quiz-list">
         {% if list_tests %}
             <h2>Список доступних вікторин</h2>
-            {% for test in list_tests %}       
+            {% for test in list_tests %}  
                 {% if test.author_name == username %}
+                    {% set can_start = start_button[loop.index0] %}     
                     <div class="quiz-item">
                         <div class="info">
                             <strong>{{ test.title }}</strong>
@@ -60,7 +61,7 @@
                                     </button>
                                 </form>
 
-                                {% if test.test_code != 0 %}
+                                {% if test.test_code != 0 and not can_start %}
                                     <a href="/room{{ test.test_code }}" class="btn">
                                         <button class="start" type="button">Почати</button>
                                     </a>
