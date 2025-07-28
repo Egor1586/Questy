@@ -9,9 +9,6 @@ from user.models import User, Score
 
 users= {}
 
-# new_user
-# test_end
-
 def get_sid(username):
     for sid, name in users.items():
         if name == username:
@@ -50,7 +47,7 @@ def handle_join(data):
         new_user = f'|{username}|'
         if new_user not in ROOM.user_list:
             ROOM.user_list += new_user
-            if username != test.author_name:
+            if username != test.author_name and username not in ROOM.all_members:
                 print(f"new user{username}")
                 ROOM.all_members += new_user
 
@@ -88,7 +85,6 @@ def handle_kick_user(data):
     username = data['user']
     room = data['room']
     
-  
     kick_sid = get_sid(username)
 
     if kick_sid:
@@ -119,8 +115,6 @@ def handle_send_usernames(data):
 
     print(clean_users_in_room)
     emit("get_usernames", clean_users_in_room, room= author_sid)
-
-
 
 @Project.settings.socketio.on('user_answers')
 def handle_message(data):
@@ -225,12 +219,21 @@ def handle_message(data):
 def handle_message(data):
     room= data['room']
     username= data['username']
+    author_name= data["author_name"]
     user_sid = get_sid(username)
 
-    ROOM= Room.query.all(test_code= room)
+    ROOM= Room.query.filter_by(test_code= room).first()
+
+    users_string= ROOM.user_list.replace(f"|{username}|", "")
+    
+    if username != author_name:
+        users_string= users_string.replace(f"|{author_name}|", "")
+
+    print("fffffffffffffffffffffffffffffffffff")
+    print(users_string)
 
     emit("create_user_block", f"{username}", include_self= False, to= room)
-    emit("create_all_user_blocks", ROOM.all_members, to= user_sid)
+    emit("create_all_user_blocks", users_string, to= user_sid)
 
 @Project.settings.socketio.on('next_question')
 def handle_message(data):

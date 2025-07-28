@@ -26,7 +26,6 @@
 
     <script>
 
-        //create_user_block
         //create_all_user_blocks
 
         let username = "{{ username }}"; 
@@ -89,14 +88,23 @@
                 
                 socket.emit("new_user", {
                     room: room,
-                    username: username
+                    username: username,
+                    author_name: author_name
                 });
             }
         });
 
         socket.on("create_all_user_blocks", function(data) {
-            let temp_user_list= data.trim("|").split('||')
+            console.log(data)
+            let temp_user_list= data.slice(1, -1);
+            temp_user_list= temp_user_list.split('||')
             console.log(temp_user_list)
+
+            temp_user_list.forEach(function(username) {
+                if (username.trim() !== ""){
+                    createUserBlock(username, author_name, username)
+                }
+            })
         });
         
         socket.on("listening_to_messages", function(data) {
