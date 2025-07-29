@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/room_test_result.css') }}">
 
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('test_app.static.js', filename='js/render_result_test.js') }}"></script>
+</head>
+
+
 <div class="results-container">
     <div class="result-header">
       <div class="header-name">Учні</div>
