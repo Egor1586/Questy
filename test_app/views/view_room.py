@@ -229,7 +229,6 @@ def handle_message(data):
     if username != author_name:
         users_string= users_string.replace(f"|{author_name}|", "")
 
-    print("fffffffffffffffffffffffffffffffffff")
     print(users_string)
 
     emit("create_user_block", f"{username}", include_self= False, to= room)
@@ -314,6 +313,10 @@ def render_room(test_code):
     list_quiz = []
 
     test = Test.query.filter_by(test_code= test_code).first()
+
+    if not test:
+        return flask.redirect("/")
+
     quizzes_list = Quiz.query.filter_by(test_id= test.id).all()
 
     for quiz in quizzes_list:
