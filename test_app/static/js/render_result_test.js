@@ -58,13 +58,17 @@ function renderResultTest(username, author_name, total_question, answers_per_que
   const info2 = document.createElement('p');
   info2.innerHTML = `Точність правильних відповідей: <strong>${accuracy.toFixed(1)}%</strong>`;
 
+  const leaveLink = document.createElement('a');
+  leaveLink.className = 'home-link';
+
   const leaveButton = document.createElement('button');
-  leaveButton.className = 'leave-btn';
+  leaveButton.className = 'home-btn';
   leaveButton.textContent = 'Покинути тест';
   leaveButton.addEventListener("click", userLeaveTest);
 
   testInfo.appendChild(info1);
   testInfo.appendChild(info2);
+  leaveLink.appendChild(leaveButton);
   testInfo.appendChild(leaveButton);
 
   resultInfo.appendChild(testInfo);
@@ -72,9 +76,11 @@ function renderResultTest(username, author_name, total_question, answers_per_que
   const answerInfo = document.createElement('div');
   answerInfo.className = 'answer-info';
   answerInfo.innerHTML = `
-      <p><strong class="green-answer">Зелений колір відповіді</strong> – правильна відповідь.</p>
-      <p><strong class="yellow-answer">Жовтий колір відповіді</strong> - ваша неправильна відповідь.</p>
-      <p><strong class="red-answer">Червоний колір відповіді</strong> – неправильний відповідь.</p>
+      <ul>
+        <li><span class="color-dot color-green"></span>Правильна відповідь (зелений)</li>
+        <li><span class="color-dot color-yellow"></span>Ваша неправильна відповідь (жовтий)</li>
+        <li><span class="color-dot color-red"></span>Неправильна відповідь (червоний)</li>
+      </ul>
   `;
 
   resultInfo.appendChild(answerInfo);
@@ -98,7 +104,7 @@ function renderResultTest(username, author_name, total_question, answers_per_que
       labels: ['Правильні відповіді', 'Усього питань'],
       datasets: [{
         label: 'Результат',
-        data: [correctAnswer, total_question],
+        data: [correctAnswer, total_question - correctAnswer],
         backgroundColor: [
           'rgba(75, 192, 192, 0.5)',
           'rgba(255, 99, 132, 0.5)'

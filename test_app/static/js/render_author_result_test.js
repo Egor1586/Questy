@@ -61,6 +61,51 @@ function appendResultRow(resultContainer, username, answersArrey) {
     resultContainer.appendChild(resultRow);
 }
 
+function renderAccuracyChart(canvasId, accuracy_aquestions){
+
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: accuracy_aquestions.map(item => item.question),
+            datasets: [{
+                label: 'Точність відповідей (%)',
+                data: accuracy_aquestions.map(item => parseFloat(item.accuracy)),
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Точність (%)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Номер питання'
+                    }
+                }
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
 
 function renderAuthorResultTest(username, author_name, total_question) {
 
@@ -109,11 +154,24 @@ function renderAuthorResultTest(username, author_name, total_question) {
         header.appendChild(headerAnswers);
         
         resultContainer.appendChild(header);
+
+        const chartWrapper = document.createElement('div');
+        chartWrapper.className = 'chart-wrapper';
+
+        const chartCanvas = document.createElement('canvas');
+        chartCanvas.id = 'authorAccuracyChart';
+        chartCanvas.width = 1100;
+        chartCanvas.height = 500;
+
+        chartWrapper.appendChild(chartCanvas);
+        container.appendChild(chartWrapper);
+
         
         let allAnswersArray= Object.values(data)
         const userCount = Object.keys(allAnswersArray).length;
         
         let answersArray= []
+        let accuracy_aquestions= []
         for (const username in data) {
             answersArray = data[username];
             appendResultRow(resultContainer, username, answersArray);
@@ -128,13 +186,13 @@ function renderAuthorResultTest(username, author_name, total_question) {
                     pas_accurasy++
                 }
             }
+            
             const accuracy= (pas_accurasy / userCount) * 100;
             accurancyArray.push(accuracy.toFixed(1));
         }   
 
         console.log(accurancyArray)
         
-        let accuracy_aquestions= []
         for (number=0; number < total_question; number++){
             accuracy_aquestions.push({
                 question: `Q${number + 1}`,
@@ -147,8 +205,9 @@ function renderAuthorResultTest(username, author_name, total_question) {
             div.innerHTML = `${questionFor.question}<br><small>${questionFor.accuracy}</small>`;
             headerAnswers.appendChild(div);
         })
+    
+        renderAccuracyChart('authorAccuracyChart', accuracy_aquestions);
     });
-
 
     const leaveButton= document.createElement('button');
     leaveButton.className= 'leave-btn';

@@ -1,5 +1,5 @@
-const tempButton = document.querySelector(".temp_button");
-const tempInput = document.querySelector(".temp_input");
+const tempButton = document.querySelector(".submit-btn");
+const tempInput = document.querySelector(".input-name");
 
 const room = window.room;
 
