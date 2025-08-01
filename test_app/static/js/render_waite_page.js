@@ -57,12 +57,12 @@ function renderRoomMain(testCode, authorName, username) {
     chat.className= "chat";
     
     const title = document.createElement("h2");
-    title.textContent= "Чат";
+    title.textContent= "Чат для учасників";
 
     const msg = document.createElement("input");
     msg.id= "msg";
     msg.type= "text";
-    msg.placeholder= "Введіть своє повідомлення";
+    msg.placeholder= "Введіть повідомлення";
     msg.class= "msg-chat";
 
 

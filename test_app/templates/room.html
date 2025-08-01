@@ -17,6 +17,7 @@
     </div>
     
     <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/clearCookies.js') }}"></script>
     
     <script src="{{ url_for('test_app.static', filename= 'js/render_waite_page.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
@@ -25,8 +26,6 @@
     <script src="{{ url_for('test_app.static', filename= 'js/render_author_result_test.js') }}"></script>
 
     <script>
-
-        //create_all_user_blocks
 
         let username = "{{ username }}"; 
         const room = "{{ test.test_code }}"; 
