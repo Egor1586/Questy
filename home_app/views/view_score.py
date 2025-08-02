@@ -45,83 +45,33 @@ def render_score():
 
         if selected_option[0] == 'graph_1':
             dates_complete = ['2025-07-20', '2025-07-21', '2025-07-22']
-            accuracy = [13, 25, 60]
-
-            data = {
-                'Dates': dates_complete,
-                'Accuracy': accuracy
-            }
-
-            df = pd.DataFrame(data)
-
-            with plt.style.context('cyberpunk'):
-                ax = df.plot(
-                    x='Dates', y='Accuracy',
-                    kind='line',
-                    lw=3, marker='o', ms=10,
-                    figsize=(10, 6)
-                )
-                fig.patch.set_facecolor('#0f0f0f')
-                mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
-                plt.xlabel('Дата проходження тесту')
-                plt.ylabel('Точність %')
-                plt.title('Прогрес користувача')
-                plt.tight_layout()
-            graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
-            buffer.close()
+            accuracy = [13, 25, 66]
 
             return {
                 "scores": scores,
-                'graph': graph_to_html,
-                'list_tests': list_tests
+                "dates_complete": dates_complete,
+                'accuracy': accuracy,
+                'list_tests': list_tests,
+                'wt_graph': '1'
             }
         
         elif selected_option[0] == 'graph_2':
             
-            obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
-            delta_week = (obj_date + datetime.timedelta(days=7))
-            if delta_week >= obj_date:
+                print(dates_complete)
+                name_test = []
+                for test in list_tests:
+                    name_test.append(test.title)
+                name_test[0] = 'hello'
+                name_test.append('olleh')
+                name_test.append('aboba')
+                print(name_test)
 
-                dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
-                accuracy = [13, 25, 60]
-
-                data = {
-                    'Dates': dates_complete,
-                    'Accuracy': accuracy
-                }
-
-                df = pd.DataFrame(data)
-
-                with plt.style.context('cyberpunk'):
-                    ax = df.plot(
-                        x='Dates', y='Accuracy',
-                        kind='line',
-                        lw=3, marker='o', ms=10,
-                        figsize=(10, 6)
-                    )
-                    
-                    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
-                    plt.xlabel('Дата проходження тесту')
-                    plt.ylabel('Точність %')
-                    plt.title('Прогрес користувача')
-                    plt.tight_layout()
-                    axes.set_facecolor('#1a1a1a')
-                    plt.savefig(buffer, format='png')
-
-                buffer.seek(0)
-                image_bytes = buffer.read()
-                graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
-                buffer.close()
 
                 return {
-                    "scores": scores,
-                    'graph': graph_to_html,
-                    'list_tests': list_tests
+                    'dates_complete': dates_complete,
+                    'wt_graph': 'd_cmpl',
+                    'name_test': name_test
                 }
-            
-            else:
-                message = 'Занадто мало даних для побудови графіка'
-                return{'message': message}
 
         elif selected_option[0] == 'graph_3':
             

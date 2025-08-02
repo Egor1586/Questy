@@ -95,10 +95,10 @@ function renderResultTest(username, author_name, total_question, answers_per_que
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Правильні відповіді', 'Усього питань'],
+      labels: ['Правильні відповіді', 'Неправильні відповіді'],
       datasets: [{
         label: 'Результат',
-        data: [correctAnswer, total_question],
+        data: [correctAnswer, total_question - correctAnswer],
         backgroundColor: [
           'rgba(75, 192, 192, 0.5)',
           'rgba(255, 99, 132, 0.5)'
