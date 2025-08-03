@@ -48,8 +48,15 @@ function renderRoomMain(testCode, authorName, username) {
         buttonStart.className = "btn-start";
         buttonStart.textContent= "Почати";
         buttonStart.addEventListener("click", authorStartTest);
-
+ 
+        const buttonEnd = document.createElement("button");
+        buttonEnd.class= "end-btn";
+        buttonEnd.type= "button";
+        buttonEnd.textContent= "Закінчити тест";
+        buttonEnd.addEventListener("click", endTest);
+        
         waiteSide.appendChild(buttonStart)
+        waiteSide.appendChild(buttonEnd);
     }
     
     
@@ -74,7 +81,6 @@ function renderRoomMain(testCode, authorName, username) {
 
     const messages = document.createElement("div");
     messages.id= "messages";
-
 
     chat.appendChild(title);
     chat.appendChild(msg);

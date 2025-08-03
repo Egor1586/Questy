@@ -80,7 +80,7 @@
             console.log(`Это код теста: ${roomCode}`)
             
             socket.emit("test_end", {
-                    room: roomCode
+                room: roomCode
             });
             
             document.cookie = `state=; max-age=0; path=/;`;
@@ -230,7 +230,7 @@
         });
 
         socket.on('kicked', function(data) {
-            document.cookie = `temporary_name = ; path= /; max_age= 0`          
+            document.cookie = `temporary_name=; max-age=0; path=/;`;      
             window.location.href = '/'; 
         });
 
@@ -305,6 +305,38 @@
             });
         }
 
+        function sendMessage() {
+            let msgInput = document.getElementById("msg");
+            let message = msgInput.value;
+
+            if (message != ""){
+                socket.emit("message_to_chat", {
+                    message: message,
+                    room: room,         
+                    username: username  
+                });
+            }
+            msgInput.value = "";
+        }
+
+        function endTest() {
+            let currentURL = window.location.href;
+            let roomCode = currentURL.split('room')[1]
+
+            socket.emit("end_test", {
+                room: room,         
+                username: username  
+            });
+
+            socket.emit("test_end", {
+                room: roomCode
+            });
+            
+            setTimeout(() => {
+                window.location.href = '/'; 
+            }, 200);
+        }
+
         function testStop(){
             console.log("stop test")
             
@@ -312,7 +344,7 @@
                 room: room,
                 author_name: author_name
             });
-            
+
             document.cookie = `state= author_result_test; path=/`;
             console.log(`Stop test ${getCookie("state")}`);
             
@@ -352,20 +384,6 @@
                 console.log("нет куков")
                 document.cookie = `user_answers= |not_answer|; path=/`;
             }
-        }
-
-        function sendMessage() {
-            let msgInput = document.getElementById("msg");
-            let message = msgInput.value;
-
-            if (message != ""){
-                socket.emit("message_to_chat", {
-                    message: message,
-                    room: room,         
-                    username: username  
-                });
-            }
-            msgInput.value = "";
         }
 
         function kickUser(kick_user) {

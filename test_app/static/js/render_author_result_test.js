@@ -1,6 +1,6 @@
 function authorLeaveTest(){
     let currentURL = window.location.href;
-    let roomCode = currentURL.split('room')[1]
+    let roomCode = currentURL.split('room')[1];
 
     console.log(currentURL)
     console.log(`Это код теста: ${roomCode}`)
