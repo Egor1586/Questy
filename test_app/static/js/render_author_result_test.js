@@ -7,7 +7,7 @@ function authorLeaveTest(){
     
     socket.emit("test_end", {
             room: roomCode
-        });
+    });
     
     document.cookie = `state=; max-age=0; path=/;`;
     document.cookie = `user_answers=; max-age=0; path=/;`;
