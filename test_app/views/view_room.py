@@ -73,6 +73,7 @@ def handle_disconnect():
         
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
+    print("NTNTNTNNTEST END")
     room = data['room']
     ROOM = Room.query.filter_by(test_code= room).first()
     ROOM.active = 0
@@ -242,6 +243,10 @@ def handle_message(data):
 def handle_message(data):
     emit("result_test", f"Stop test {data['room']} result_test page author {data['author_name']}", include_self= False, to= data['room'])
 
+@Project.settings.socketio.on('end_test')
+def handle_message(data):
+    room= data["room"]
+    emit("kicked", room, include_self= False, to= room)
 
 @Project.settings.socketio.on('room_get_result')
 def handle_message(data):

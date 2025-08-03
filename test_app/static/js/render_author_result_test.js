@@ -1,13 +1,13 @@
 function authorLeaveTest(){
     let currentURL = window.location.href;
-    let roomCode = currentURL.split('room')[1]
+    let roomCode = currentURL.split('room')[1];
 
     console.log(currentURL)
     console.log(`Это код теста: ${roomCode}`)
     
     socket.emit("test_end", {
             room: roomCode
-        });
+    });
     
     document.cookie = `state=; max-age=0; path=/;`;
     document.cookie = `user_answers=; max-age=0; path=/;`;
