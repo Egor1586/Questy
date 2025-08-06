@@ -295,12 +295,12 @@
         });
 
         function nextQuestion(){
-            const nextButton = document.getElementById("next-button");
+            const nextButton = document.getElementById("next-q");
             let countUsersAnswer= getCookie("countUsersAnswer");
             state = getCookie("state");
 
-            const block1 = document.getElementById("block1");
-            block1.innerHTML = ""
+            const userAnswers = document.getElementById("user-answers");
+            userAnswers.innerHTML = ""
              
             let number_of_question= Number(state.slice(-1)) + 1;
             console.log(state)
@@ -316,10 +316,10 @@
             console.log("next question")
             document.cookie = `countUsersAnswer= 0; path=/`;
             
-            const question_text = document.getElementById("question-text")
+            const question_text = document.getElementById("author-question")
             question_text.textContent = `Питання:${list_quiz[Number(state.slice(-1))+1].question_text}`
 
-            const correct_answer = document.getElementById("correct-answer")
+            const correct_answer = document.getElementById("author-correct-answer")
             correct_answer.textContent =`Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
 
             socket.emit("next_question", {

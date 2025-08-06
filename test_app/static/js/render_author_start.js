@@ -1,16 +1,14 @@
 function addUserAnswer(username, answer) {
     console.log("add user answer")
-    const block1 = document.getElementById("block1");
-
-    const userAnswerBlock = document.createElement('div')
-    userAnswerBlock.className = 'user-answer-block'
+    const userAnswers = document.getElementById("user-answers");
     
-    userAnswerBlock.innerHTML += `
-        <div><strong>Ім’я:</strong> ${username}</div>
-        <div><strong>Відповідь:</strong> ${answer}</div>
+    userAnswers.innerHTML += `
+        <div class="user-answer">
+            <div class="user-name">${username}</div>
+            <div class="answer-text">${answer}</div>
+        </div>
     `
 
-    block1.appendChild(userAnswerBlock)
 }
 
 function stopTest(){
@@ -37,63 +35,88 @@ function getCookie(name) {
 function renderAuthorStart(quiz, answers, room, authorname, state, total_question) {
     const waiteContent = document.getElementById("room-content");
     waiteContent.innerHTML = ""; 
-    waiteContent.className = 'author-content'
+    waiteContent.id = 'container-question'
+    waiteContent.className = 'container-question'
 
     // Верхній блок
-    const block1 = document.createElement('div')
-    block1.className = 'block1'
-    block1.id= 'block1'
+    // const containerQuestion = document.createElement('div')
+    // containerQuestion.className = 'container-question'
+    // containerQuestion.id= 'container-question'
 
     // Нижній контейнер
-    const bottomContainer = document.createElement('div')
-    bottomContainer.className = 'bottom-container'
+    const headerBar = document.createElement('div')
+    headerBar.className = 'header-bar'
 
-    // Блок про питання
-    const block2 = document.createElement('div')
-    block2.className = 'block2'
-
-    const question_text = document.createElement('div')
-    question_text.id = "question-text"
-    question_text.textContent = `Питання:${quiz.question_text}`
+    const question = document.createElement('div')
+    question.id = 'author-question'
+    question.className = 'author-question'
+    question.textContent= `Питання: ${quiz.question_text}`
 
     const correct_answer = document.createElement('div')
-    correct_answer.id = "correct-answer"
-    correct_answer.textContent = `Правильна відповідь: ${quiz.correct_answer}`
+    correct_answer.id = 'author-correct-answer'
+    correct_answer.className = 'author-correct-answer'
+    correct_answer.textContent= `Правильна відповідь: ${quiz.correct_answer}`
 
-    block2.appendChild(question_text)
-    block2.appendChild(correct_answer)
-
-    // Блок статистики
-    const block3 = document.createElement('div')
-    block3.className = 'block3'
-    block3.textContent = 'Статистика відповідей'
-
-    bottomContainer.appendChild(block2)
-    bottomContainer.appendChild(block3)
-
-    // Кнопка "Наступне питання"
     const nextButton = document.createElement('button')
-    nextButton.id = 'next-button'
-    nextButton.className = 'next-button'
+    nextButton.id = 'next-q'
+    nextButton.className = 'next-q'
     nextButton.textContent = 'Наступне питання'
     nextButton.addEventListener("click", nextQuestion);
 
+    headerBar.appendChild(question)
+    headerBar.appendChild(correct_answer)
+    headerBar.appendChild(nextButton)
+    
+    waiteContent.appendChild(headerBar)
 
-    // Збірка
-    waiteContent.appendChild(block1)
-    waiteContent.appendChild(bottomContainer)
-    waiteContent.appendChild(nextButton)
+    const userAnswers = document.createElement('div')
+    userAnswers.id = 'user-answers'
+    userAnswers.className = 'user-answers'
+
+    waiteContent.appendChild(userAnswers)
+    
+    // const question_text = document.createElement('div')
+    // question_text.id = "question-text"
+    // question_text.textContent = `Питання:${quiz.question_text}`
+
+    // const correct_answer = document.createElement('div')
+    // correct_answer.id = "correct-answer"
+    // correct_answer.textContent = `Правильна відповідь: ${quiz.correct_answer}`
+
+    // block2.appendChild(question_text)
+    // block2.appendChild(correct_answer)
+
+    // // Блок статистики
+    // const block3 = document.createElement('div')
+    // block3.className = 'block3'
+    // block3.textContent = 'Статистика відповідей'
+
+    // bottomContainer.appendChild(block2)
+    // bottomContainer.appendChild(block3)
+
+    // // Кнопка "Наступне питання"
+    // const nextButton = document.createElement('button')
+    // nextButton.id = 'next-button'
+    // nextButton.className = 'next-button'
+    // nextButton.textContent = 'Наступне питання'
+    // nextButton.addEventListener("click", nextQuestion);
+
+
+    // // Збірка
+    // waiteContent.appendChild(block1)
+    // waiteContent.appendChild(bottomContainer)
+    // waiteContent.appendChild(nextButton)
 
     socket.emit("get_usernames", {
         room: room,
         authorname: authorname
     });
 
-    socket.on('get_usernames', function(data){
-        let userArrey = data;
-        lengthArrey = userArrey.length
-        block3.innerHTML = `<div><strong>Список пользователей:</strong>${data}<div>
-                            <div><strong>Всего пользователей:</strong> ${lengthArrey}</div>                                               
-                            `
-    })
+    // socket.on('get_usernames', function(data){
+    //     let userArrey = data;
+    //     lengthArrey = userArrey.length
+    //     block3.innerHTML = `<div><strong>Список пользователей:</strong>${data}<div>
+    //                         <div><strong>Всего пользователей:</strong> ${lengthArrey}</div>                                               
+    //                         `
+    // })
 }
