@@ -99,10 +99,18 @@
         else {       
             renderRoomMain(room, author_name, username);
 
-            let messages = document.getElementById("messages");
-            if (messages) {
-                messages.innerHTML += `<p>${username} добавился в комнату </p>`; 
+            let messages= document.getElementById("messages");
+            
+            if (messages && author_name != username) {
+                messages.innerHTML += `<p>${username} додався до кімнати </p>`; 
             };
+            
+            if (messages && messages.children.length != 1){
+                const emptyMessages= document.getElementById("no-messages");
+                if (emptyMessages){
+                    emptyMessages.remove()
+                }
+            }
         }
  
         socket.on("connect", function () {     
@@ -140,9 +148,17 @@
         
         socket.on("listening_to_messages", function(data) {
             let messages = document.getElementById("messages");
+
             if (messages != "") {
                 messages.innerHTML += `<p>${data}</p>`;  
             };
+
+            if (messages && messages.children.length != 1){
+                const emptyMessages= document.getElementById("no-messages");
+                if (emptyMessages){
+                    emptyMessages.remove()
+                }
+            }
         });
 
         socket.on("author_receive_answer", function(data) {     
@@ -244,6 +260,13 @@
             if (messages) {
                 messages.innerHTML += `<p>${data['msg']}</p>`;  
             }  
+
+            if (messages && messages.children.length != 1){
+                const emptyMessages= document.getElementById("no-messages");
+                if (emptyMessages){
+                    emptyMessages.remove()
+                }
+            }
 
             let removeUserBlock= document.getElementById(`${data['username']}`)
 

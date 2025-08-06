@@ -53,6 +53,7 @@ def handle_join(data):
 
     db.session.commit()
 
+
 @Project.settings.socketio.on('disconnect')
 def handle_disconnect():
     username = users.pop(flask.request.sid, None)

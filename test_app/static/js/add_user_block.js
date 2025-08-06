@@ -1,5 +1,10 @@
 function createUserBlock(username, author_name, block_username) {    
     const userListDiv = document.getElementById("user-list")
+    const emptyUserBlock= document.getElementById("emty-users-list")
+
+    if (emptyUserBlock){
+        emptyUserBlock.remove();
+    }
     
     let checkingUserBlock= document.getElementById(`${block_username}`)
     
