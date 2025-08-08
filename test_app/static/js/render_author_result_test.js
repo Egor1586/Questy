@@ -12,6 +12,7 @@ function authorLeaveTest(){
     document.cookie = `state=; max-age=0; path=/;`;
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
+    document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
 
     window.location.href = '/'; 
 }
@@ -63,7 +64,7 @@ function appendResultRow(resultContainer, username, answersArrey) {
 
 function renderAccuracyChart(canvasId, accuracy_aquestions){
 
-    const ctx = document.getElementById(canvasId).getContext('2d');
+    const ctx= document.getElementById(canvasId).getContext('2d');
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -81,16 +82,16 @@ function renderAccuracyChart(canvasId, accuracy_aquestions){
         },
         options: {
             scales: {
-                y: {
+                y:{
                     beginAtZero: true,
                     max: 100,
                     title: {
                         display: true,
-                        text: 'Точність (%)'
+                        text:'Точність (%)'
                     }
                 },
                 x: {
-                    title: {
+                    title:{
                         display: true,
                         text: 'Номер питання'
                     }

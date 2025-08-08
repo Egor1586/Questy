@@ -1,14 +1,8 @@
 import flask
 import matplotlib.pyplot as plt
 import io
-import base64
-import datetime
-import pandas as pd
-import mplcyberpunk
 
-import pandas as pd
-import mplcyberpunk
-import numpy as np
+import datetime
 
 from flask_login import current_user
 
@@ -45,129 +39,81 @@ def render_score():
 
         if selected_option[0] == 'graph_1':
             dates_complete = ['2025-07-20', '2025-07-21', '2025-07-22']
-            accuracy = [13, 25, 60]
-
-            data = {
-                'Dates': dates_complete,
-                'Accuracy': accuracy
-            }
-
-            df = pd.DataFrame(data)
-
-            with plt.style.context('cyberpunk'):
-                ax = df.plot(
-                    x='Dates', y='Accuracy',
-                    kind='line',
-                    lw=3, marker='o', ms=10,
-                    figsize=(10, 6)
-                )
-                fig.patch.set_facecolor('#0f0f0f')
-                mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
-                plt.xlabel('Дата проходження тесту')
-                plt.ylabel('Точність %')
-                plt.title('Прогрес користувача')
-                plt.tight_layout()
-            graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
-            buffer.close()
+            accuracy = [13, 25, 66]
 
             return {
                 "scores": scores,
-                'graph': graph_to_html,
-                'list_tests': list_tests
+                "dates_complete": dates_complete,
+                'accuracy': accuracy,
+                'list_tests': list_tests,
+                'wt_graph': '1'
             }
         
         elif selected_option[0] == 'graph_2':
             
-            obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
-            delta_week = (obj_date + datetime.timedelta(days=7))
-            if delta_week >= obj_date:
+            count_cmpl_quiz = []
 
-                dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
-                accuracy = [13, 25, 60]
-
-                data = {
-                    'Dates': dates_complete,
-                    'Accuracy': accuracy
-                }
-
-                df = pd.DataFrame(data)
-
-                with plt.style.context('cyberpunk'):
-                    ax = df.plot(
-                        x='Dates', y='Accuracy',
-                        kind='line',
-                        lw=3, marker='o', ms=10,
-                        figsize=(10, 6)
-                    )
-                    
-                    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
-                    plt.xlabel('Дата проходження тесту')
-                    plt.ylabel('Точність %')
-                    plt.title('Прогрес користувача')
-                    plt.tight_layout()
-                    axes.set_facecolor('#1a1a1a')
-                    plt.savefig(buffer, format='png')
-
-                buffer.seek(0)
-                image_bytes = buffer.read()
-                graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
-                buffer.close()
-
-                return {
-                    "scores": scores,
-                    'graph': graph_to_html,
-                    'list_tests': list_tests
-                }
+            for date in dates_complete:
+                count = Score.query.filter_by(user_id=current_user.id, date_complete=date).count()
+                count_cmpl_quiz.append(count)
             
-            else:
-                message = 'Занадто мало даних для побудови графіка'
-                return{'message': message}
+            print(f'Это кол-во пройденных тестов: {count_cmpl_quiz}')
+            count_cmpl_quiz = [5,3,2,3]
+            print(dates_complete)
+            dates_complete = ['2025-07-20', '2025-07-21','2025-07-22', '2025-08-08']
+
+
+
+            return {
+                'dates_complete': dates_complete,
+                'wt_graph': 'd_cmpl',
+                'count_cmpl_quiz': count_cmpl_quiz
+            }
 
         elif selected_option[0] == 'graph_3':
             
             obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
-            delta_week = (obj_date + datetime.timedelta(days=31))
+            delta_week = (obj_date + datetime.timedelta(days=7))
             if delta_week <= obj_date:
 
                 dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
                 accuracy = [13, 25, 60]
 
-                data = {
-                    'Dates': dates_complete,
-                    'Accuracy': accuracy
-                }
-
-                df = pd.DataFrame(data)
-
-                with plt.style.context('cyberpunk'):
-                    ax = df.plot(
-                        x='Dates', y='Accuracy',
-                        kind='line',
-                        lw=3, marker='o', ms=10,
-                        figsize=(10, 6)
-                    )
-                    
-                    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.4)
-                    plt.xlabel('Дата проходження тесту')
-                    plt.ylabel('Точність %')
-                    plt.title('Прогрес користувача')
-                    plt.tight_layout()
-                    axes.set_facecolor('#1a1a1a')
-                    plt.savefig(buffer, format='png')
-
-                buffer.seek(0)
-                image_bytes = buffer.read()
-                graph_to_html = base64.b64encode(image_bytes).decode('utf-8')
-                buffer.close()
+                
                 
             else:
                 message = 'Занадто мало даних для побудови графіка'
                 return{
                     "scores": scores,
                     'message': message,
+                    'flag_graph': 'flag_graph',
+                    'dates_complete': dates_complete,
+                    'accuracy': accuracy,
                     'list_tests': list_tests
                     }
-    
+            
+        elif selected_option[0] == 'graph_4':
+            
+            obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
+            delta_week = (obj_date + datetime.timedelta(days=31))
+            
+            if delta_week <= obj_date:
+
+                dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
+                accuracy = [13, 25, 60]
+
+                
+                
+            else:
+                message = 'Занадто мало даних для побудови графіка'
+                return{
+                    "scores": scores,
+                    'message': message,
+                    'flag_graph': 'flag_graph',
+                    'dates_complete': dates_complete,
+                    'accuracy': accuracy,
+                    'list_tests': list_tests
+                    }
     else:
         message = "Ви не авторизовані"
 

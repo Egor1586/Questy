@@ -38,8 +38,10 @@ function createUserBlock(username, author_name, block_username) {
         userBlock.appendChild(userActions);
     }
     
-    userListDiv.appendChild(userBlock);
+    if (userListDiv){
+        userListDiv.appendChild(userBlock);
+        return userListDiv;
+    }
 
-    return userListDiv;
- 
+    return
 }
