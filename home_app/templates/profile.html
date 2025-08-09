@@ -14,6 +14,51 @@
         <a href="/edit_profile{{ current_user.id }}">
             <button class="edit-btn">Змінити ім'я</button>
         </a>
+        <h1>Сторінка результатів</h1> 
+
+        <form action="" method="post" class="score-form">
+            <select name="choice">
+                <option value="date">по датi </option>
+                <option value="accuracy">по точностi</option>
+            </select>
+
+            <input type="submit" value="Send">
+        </form>
+        {% if selected_option[0] == "date" %}
+            <div class="score-result">
+                {% for score in scores %}
+                    <div class="score-block">   
+                        {% for test in list_tests %}
+                            {% if test.id == score.test_id %}
+                                <p>Назва: {{ test.title }}</p>
+                                <p>Опис: {{ test.description }}</p>
+                                <p>Автор: {{ test.author_name }}</p>
+                                <p>Код: {{ test.test_code }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p>Точність: {{ score.accuracy }}</p>
+                        <p>Дата: {{ score.date_complete }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="score-result">
+                {% for score in accuracy_sort %}
+                    <div class="score-block">   
+                        {% for test in list_tests_sort %}
+                            {% if test.id == score[2] %}
+                                <p>Назва: {{ test.title }}</p>
+                                <p>Опис: {{ test.description }}</p>
+                                <p>Автор: {{ test.author_name }}</p>
+                                <p>Код: {{ test.test_code }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p>Точність: {{ score[0] }}</p>
+                        <p>Дата: {{ score[3] }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% else %}
             <h1>У вас немає профілю, ви не авторизовані</h1>
     {% endif %}
