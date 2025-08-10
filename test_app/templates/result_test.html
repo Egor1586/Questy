@@ -86,7 +86,10 @@
                 </div>
                 {% for answer in answers %}
                     {% if answer != question.correct_answer and answer != user_answer%}
-                        <div class="answer incorrect">✗ {{answer}}</div>                 
+                        <div class="answer incorrect">✗ {{answer}}</div>   
+                    {% if not user_answer %}      
+                        <!-- Якщо неправильна відповідь -->
+                        <div class="answer no-answer">Відповідь відсутня</div>
                     {% elif user_answer != question.correct_answer and answer == user_answer %}
                         <div class="answer user_answers">✗ {{answer}}</div>
                     {% else %}
