@@ -1,14 +1,73 @@
-function addUserAnswer(username, answer) {
+let donatChart;
+
+function renderDoughnutChart(canvasId, totalAnswer, correctCount){
+    let correctPercent= (correctCount/totalAnswer) * 100;
+    let incorrectPercent= 100- correctPercent;
+
+    const ctx= document.getElementById(canvasId).getContext('2d');
+    donatChart= new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Правильні (%)', 'Неправильні (%)'],
+            datasets: [{
+                data: [correctPercent, incorrectPercent],
+                borderColor: ['rgba(69, 184, 46, 0.6)', 'rgba(186, 47, 60, 0.6)'],
+                backgroundColor: ['rgba(69, 184, 46, 1)', 'rgba(186, 47, 60, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom'
+                },
+            cutout:'50%'
+            }
+        }
+    });
+}
+
+function addUserAnswer(username, answer, authorname, totalAnswer) {
     console.log("add user answer")
-    const userAnswers = document.getElementById("user-answers");
     
+    const userAnswers = document.getElementById("user-answers");
+    const countAnswerSpan  = document.getElementById("count-answer-span");
+
+    countAnswerSpan.textContent= `${parseInt(countAnswerSpan.textContent) + 1}`;
+
+    let correctAnswerDiv  = document.getElementById("author-correct-answer");
+    let correctAnswer= correctAnswerDiv.textContent.split(":")[1].trim()
+
+    console.log(typeof correctAnswer, correctAnswer, typeof answer, answer)
+    if (answer == correctAnswer){
+        countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
+        document.cookie = `countCorrectAnswer= ${countCorrect}; path=/`;
+    }
     userAnswers.innerHTML += `
         <div class="user-answer">
             <div class="user-name">${username}</div>
             <div class="answer-text">${answer}</div>
         </div>
     `
+    socket.emit("get_usernames", {
+        room: room,
+        authorname: authorname
+    });
 
+    socket.on('get_usernames', function(data){
+        let userArrey = data;
+        lengthArrey = userArrey.length
+
+        countUsersAnswer= getCookie("countUsersAnswer")
+        correctAnswerChart= getCookie("countCorrectAnswer")
+        
+        if (lengthArrey == countUsersAnswer){
+            console.log("create chart")
+            renderDoughnutChart("donat-chart", lengthArrey, correctAnswerChart)
+        }
+    })
 }
 
 function stopTest(){
@@ -38,11 +97,6 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     waiteContent.id = 'container-question'
     waiteContent.className = 'container-question'
 
-    // Верхній блок
-    // const containerQuestion = document.createElement('div')
-    // containerQuestion.className = 'container-question'
-    // containerQuestion.id= 'container-question'
-
     // Нижній контейнер
     const headerBar = document.createElement('div')
     headerBar.className = 'header-bar'
@@ -69,54 +123,54 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     
     waiteContent.appendChild(headerBar)
 
+    const userBlock = document.createElement('div')
+    userBlock.id = 'user-block'
+    userBlock.className = 'user-block'
+
     const userAnswers = document.createElement('div')
     userAnswers.id = 'user-answers'
     userAnswers.className = 'user-answers'
 
-    waiteContent.appendChild(userAnswers)
     
-    // const question_text = document.createElement('div')
-    // question_text.id = "question-text"
-    // question_text.textContent = `Питання:${quiz.question_text}`
+    userBlock.appendChild(userAnswers)
+    
+    const userInfo = document.createElement('div')
+    userInfo.id = 'user-info'
+    userInfo.className = 'user-info'
 
-    // const correct_answer = document.createElement('div')
-    // correct_answer.id = "correct-answer"
-    // correct_answer.textContent = `Правильна відповідь: ${quiz.correct_answer}`
+    const allUsers = document.createElement('div')
+    allUsers.id = 'all-user'
+    allUsers.className = 'all-user'
 
-    // block2.appendChild(question_text)
-    // block2.appendChild(correct_answer)
+    const countAnswer = document.createElement('div')
+    countAnswer.id = 'count-answer'
+    countAnswer.className = 'count-answer'
 
-    // // Блок статистики
-    // const block3 = document.createElement('div')
-    // block3.className = 'block3'
-    // block3.textContent = 'Статистика відповідей'
+    const chartCanvas = document.createElement('canvas');
+    chartCanvas.id = 'donat-chart'
+    chartCanvas.className = 'donat-chart'
+    chartCanvas.width = 500;
+    chartCanvas.height = 500;
+    
+    userInfo.appendChild(allUsers)
+    userInfo.appendChild(countAnswer)
+    userInfo.appendChild(chartCanvas)
 
-    // bottomContainer.appendChild(block2)
-    // bottomContainer.appendChild(block3)
+    userBlock.appendChild(userInfo)
 
-    // // Кнопка "Наступне питання"
-    // const nextButton = document.createElement('button')
-    // nextButton.id = 'next-button'
-    // nextButton.className = 'next-button'
-    // nextButton.textContent = 'Наступне питання'
-    // nextButton.addEventListener("click", nextQuestion);
-
-
-    // // Збірка
-    // waiteContent.appendChild(block1)
-    // waiteContent.appendChild(bottomContainer)
-    // waiteContent.appendChild(nextButton)
+    waiteContent.appendChild(userBlock)
 
     socket.emit("get_usernames", {
         room: room,
         authorname: authorname
     });
 
-    // socket.on('get_usernames', function(data){
-    //     let userArrey = data;
-    //     lengthArrey = userArrey.length
-    //     block3.innerHTML = `<div><strong>Список пользователей:</strong>${data}<div>
-    //                         <div><strong>Всего пользователей:</strong> ${lengthArrey}</div>                                               
-    //                         `
-    // })
+    socket.once('get_usernames', function(data){
+        console.log(":OSDLGHOLKNGDS?")
+        let userArrey = data;
+        lengthArrey = userArrey.length
+        allUsers.innerHTML= `<div><strong>Список користувачів: </strong>${data}<div></div>
+                            <div><strong>Всего пользователей: </strong> ${lengthArrey}</div>`
+        countAnswer.innerHTML= `<div><strong>Всего пользователей: </strong> <span id="count-answer-span">0</span></div>`
+    })
 }

@@ -52,6 +52,7 @@
                 document.cookie = `state= author_leave; max-age=3; path=/;`;
                 document.cookie = `user_answers=; max-age=0; path=/;`;
                 document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
+                document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
             }
             else if (state && state=== "result_test"){
                 document.cookie = `state= user_leave; max-age=3; path=/;`;
@@ -100,10 +101,6 @@
             renderRoomMain(room, author_name, username);
 
             let messages= document.getElementById("messages");
-            
-            if (messages && author_name != username) {
-                messages.innerHTML += `<p>${username} додався до кімнати </p>`; 
-            };
             
             if (messages && messages.children.length != 1){
                 const emptyMessages= document.getElementById("no-messages");
@@ -168,7 +165,7 @@
             document.cookie = `countUsersAnswer= ${countUsersAnswer}; path=/`;
             console.log(countUsersAnswer)
             
-            addUserAnswer(data["username"], answer);
+            addUserAnswer(data["username"], answer, author_name, answers_per_question);
             
             socket.emit("get_room_size", {
                 room: room,
@@ -180,6 +177,7 @@
         socket.on("recieve_count_users", function(data) {  
             const COUNTUSERS= data['countUsers']
             let countUsersAnswer= getCookie("countUsersAnswer");
+            
             state = getCookie("state");
             console.log(state)
             console.log(`Checking ${Number(state.slice(-1))} and ${total_question -1}`)
@@ -284,6 +282,7 @@
                 console.log("Вы начали тест");              
                 document.cookie = "state= author_start0; path=/";
                 document.cookie = "countUsersAnswer= 0; path=/";
+                document.cookie = `countCorrectAnswer= 0; path=/`;
                 renderAuthorStart(list_quiz[0], list_answers[0], room, author_name, state, total_question);
             }
             else {
@@ -301,10 +300,14 @@
 
             const userAnswers = document.getElementById("user-answers");
             userAnswers.innerHTML = ""
+
+            const countAnswer = document.getElementById("count-answer-span");
+            countAnswer.textContent= 0;
              
             let number_of_question= Number(state.slice(-1)) + 1;
             console.log(state)
             document.cookie = `state= author_start${number_of_question}; path=/`;
+            document.cookie = `countCorrectAnswer= 0; path=/`;
             console.log(state)
 
             if (number_of_question === total_question- 1) {
@@ -321,6 +324,14 @@
 
             const correct_answer = document.getElementById("author-correct-answer")
             correct_answer.textContent =`Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
+
+            
+            console.log("clear chart")
+            if (donatChart){
+                donatChart.destroy()
+            }
+            //const chart= canvas.getContext('2d');
+            //chart.clearRect(0,0, canvas.width, canvas.height);
 
             socket.emit("next_question", {
                 room: room,
@@ -373,7 +384,6 @@
             
             renderAuthorResultTest(username, author_name, total_question);
         }
-
 
         function checkAnswers(){
             state = getCookie("state");

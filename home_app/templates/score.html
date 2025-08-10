@@ -6,6 +6,7 @@
 
 {% block links %}
     <link rel="stylesheet" href="{{ url_for('home_app.static', filename='css/score.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %} 
 
 {% block content %}
@@ -18,18 +19,30 @@
             <h2 class="h2-none">None</h2>
         {% endif %}
             
-        <!-- <hr>Add commentMore actions -->
         <form action="" method="post" class="score-form">
-            <select name="choice">
-                <option value="graph_1">Graph 1 </option>
-                <option value="graph_2">Graph 2</option>
-                <option value="graph_3">Graph 3</option>
-            </select>
+    <select name="choice" id="choice" onchange="saveSelectedValue()">
+        <option value="graph_1">Graph 1 </option>
+        <option value="graph_2">Graph 2</option>
+        <option value="graph_3">Graph 3</option>
+        <option value="graph_3">Graph 4</option>
+    </select>
 
-            <input type="submit" value="Send">
-        </form>
-        
-        <div class="score-result">
+    <script>
+        const selectElement = document.getElementById("choice");
+
+        function saveSelectedValue(){
+            localStorage.setItem('selectedOption', selectElement.value)
+        }
+        function LoadSelection(element){
+            const savedValue = localStorage.getItem('selectedOption')
+            if (savedValue) {
+                selectElement.value = savedValue;
+            }
+        }
+        window.onload = LoadSelection;
+    </script>
+
+    <!-- <div class="score-result">
             {% for score in scores %}
                 <div class="score-block">   
                     {% for test in list_tests %}
@@ -44,14 +57,144 @@
                     <p>Дата: {{ score.date_complete }}</p>
                 </div>
             {% endfor %}
-        </div>
+        </div> -->
 
-        {% if graph %}
-            <div class="graph">
-                <h3>Графік:</h3>
-                <img src="data:image/png;base64,{{ graph }}" alt="График">
-            </div>
-        {% endif %}
+    <input type="submit" value="Send">
+    
+    </form>
+
+    {% if dates_complete and accuracy and wt_graph == '1' %}
+        <canvas id="accuracyChart" width="400" height="150"></canvas>
+
+        <script>
+            
+            const dates_complete = {{ dates_complete | tojson }};
+            const accuracy = {{ accuracy | tojson }};
+
+            const ctx = document.getElementById('accuracyChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates_complete,
+                    datasets: [{
+                        label: 'Точність (%)',
+                        data: accuracy,
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                        borderWidth: 2,
+                        tension: 0.2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Графік точності по датах'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        </script>
+    {% endif %}
+
+    {% if dates_complete and wt_graph == 'd_cmpl' %}
+        <canvas id="datesCompleteChart" width="400" height="150"></canvas>
+        
+        <script>
+            console.log('d_cmpl')
+                const ctx = document.getElementById('datesCompleteChart').getContext('2d');
+                
+                const dates_complete = {{ dates_complete | tojson }};
+                const count_cmpl_quiz = {{ count_cmpl_quiz | tojson }};
+
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates_complete,
+                    datasets: [{
+                        label: 'Виконанні тести ',
+                        data: count_cmpl_quiz,
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                        borderWidth: 2,
+                        tension: 0.2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Графік активності'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+
+        </script>
+    {% endif %}
+
+    {% if dates_complete and accuracy and flag_graph == 'flag_graph'  %}
+        <canvas id="accuracyChartWeek" width="400" height="150"></canvas>
+
+        <script>
+            
+            const dates_complete = {{ dates_complete | tojson }};
+            const accuracy = {{ accuracy | tojson }};
+
+            const ctx = document.getElementById('accuracyChartWeek').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates_complete,
+                    datasets: [{
+                        label: 'Точність (%)',
+                        data: accuracy,
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                        borderWidth: 2,
+                        tension: 0.2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Графік точності по датах'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        </script>
+    {% endif %}
+
+
     {% else %}
             <h1>{{ message }}</h1>
     {% endif %}

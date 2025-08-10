@@ -363,8 +363,8 @@ main {
     padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 1000px;
+    width: 90vw;
+    margin-left: 5vw;
 }
 
 .answers {
@@ -401,7 +401,6 @@ main {
     transform: scale(0.97);
 }
 
-
 /* AUTHOR PAGE */
 /* Головний контейнер */
 
@@ -431,6 +430,17 @@ main {
     border-radius: 8px;
 }
 
+.user-block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+
+    height: 100%;
+    width: 100%;
+}
+
 .next-q{
     background-color: rgb(137, 198, 176);
     color: white;
@@ -451,6 +461,49 @@ main {
 
 }
 
+.user-info{
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+    overflow-y: auto;
+    gap: 15px;
+    padding: 10px 15px;
+    background-color: #f9fff8;
+    border-radius: 10px;
+    border: 2px dashed var(--green-light);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+
+    margin-left: 2%;
+
+    width: 49%;
+    height: 95%;
+}
+
+.all-user{
+    display: flex;
+    flex-direction: column;
+    
+    width: 95%;
+    height: 33%;
+}
+
+.count-answer{
+    display: flex;
+    flex-direction: column;
+    
+    width: 95%;
+    height: 33%;
+}
+
+.donat-chart{
+    display: flex;
+    flex-direction: column;
+    
+    width: 95%;
+    height: 33%;
+}
+
 .user-answers {
     display: flex;
     flex-direction: column;
@@ -463,6 +516,9 @@ main {
     border-radius: 10px;
     border: 2px dashed var(--green-light);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+
+    width: 49%;
+    height: 95%;
 }
 
 .user-answers-done {
@@ -484,7 +540,7 @@ main {
     display: flex;
     flex-direction: column;
     padding: 12px 16px;
-    background-color: #ffffff;
+    background-color: #c7e3c7;
     border-left: 6px solid var(--green-main);
     border-radius: 8px;
     box-shadow: 0 2px 6px var(--shadow);
@@ -635,7 +691,7 @@ main {
 
 .next-button:hover {
     background-color: #64d5a8;
-}
+}*/
 
 
 .wait-content{
@@ -655,7 +711,7 @@ main {
     width: 100%;
     box-sizing: border-box;
     padding: 2rem;
-} */
+} 
 
 
 /* TEST RESULT */
@@ -871,3 +927,4 @@ main {
     gap: 2rem;
     padding: 1rem;
 }
+
