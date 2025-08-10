@@ -7,9 +7,16 @@ function getCookie(name) {
 
 function renderWaiteQuestion() {
     const roomContent = document.getElementById("room-content");
+
+    let waitingMessage = document.createElement('div')
+    waitingMessage.className = 'waiting-message'
+    waitingMessage.textContent = 'Будь ласка, зачекайте, поки інші учасники відповідають...'
+
     roomContent.innerHTML = ""; 
     roomContent.className = "wait-content"; 
-    roomContent.textContent= "Зачекайте на наступне питання..."
+    roomContent.appendChild(waitingMessage)
+
+    // roomContent.textContent= "Зачекайте на наступне питання..."
 }
 
 function renderQuestion(questionNumber, list_quiz, list_answers, room, author_name) {
