@@ -259,3 +259,13 @@ header{
 
     gap: 10px;
 }
+
+/*  */
+.devider-p {
+    font-size: 1.04rem;
+    font-style: italic;
+    color: #606974ce;
+    line-height: 1.5;
+    text-align: center;
+    margin: 5px 0;
+}
