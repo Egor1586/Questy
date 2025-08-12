@@ -65,8 +65,7 @@ def bubble_sort(list_):
     
 
 @render_page(template_name='profile.html')
-def render_score():
-
+def render_profile():
     accuracy = []
     accuracy_sort = []
     dates_complete = []
@@ -74,8 +73,12 @@ def render_score():
     list_tests = []
     list_tests_sort = []
     selected_option = ["date"]
+    message = ' '
+
+    fig, axes = plt.subplots()
+    buffer = io.BytesIO()
     if current_user.is_authenticated:
-        user = User.query.filter_by(id= current_user.id)
+        user = User.query.filter_by(id=current_user.id).first()
         
         scores = Score.query.filter_by(user_id= current_user.id).all()
         for score in scores:
@@ -91,18 +94,6 @@ def render_score():
         print(accuracy_sort)
         print(list_tests_sort)
 
-
-    fig, axes = plt.subplots()
-    buffer = io.BytesIO()
-    accuracy = []
-    user = User.query.filter_by(id= current_user.id)
-    dates_complete = []
-    message = ' '
-    scores= None
-    list_tests = []
-    selected_option = ['0']
-
-    if current_user.is_authenticated:
         scores = Score.query.filter_by(user_id= current_user.id).all()
         for score in scores:
             accuracy.append(score.accuracy)
@@ -126,6 +117,7 @@ def render_score():
                 "dates_complete": dates_complete,
                 'accuracy': accuracy,
                 'list_tests': list_tests,
+                "selected_option": selected_option,
                 'wt_graph': '1',
                 'user': user
             }
@@ -147,6 +139,7 @@ def render_score():
                 'dates_complete': dates_complete,
                 'wt_graph': 'd_cmpl',
                 'count_cmpl_quiz': count_cmpl_quiz,
+                "selected_option": selected_option,
                 'user': user
             }
 
@@ -170,6 +163,7 @@ def render_score():
                     'dates_complete': dates_complete,
                     'accuracy': accuracy,
                     'list_tests': list_tests,
+                    "selected_option": selected_option,
                     'user': user
                     }
             
@@ -194,11 +188,13 @@ def render_score():
                     'dates_complete': dates_complete,
                     'accuracy': accuracy,
                     'list_tests': list_tests,
+                    "selected_option": selected_option,
                     'user': user
                     }
     else:
         message = "Ви не авторизовані"
 
+    selected_option = ['0']
 
     return {
         "scores": scores,
