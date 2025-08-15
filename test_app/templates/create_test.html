@@ -1,13 +1,30 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Edit Test
+    Create Test
 {% endblock %}
 
 {% block links %}
-
+    <link rel = "stylesheet" href = "{{ url_for('test_app.static', filename='css/create_test.css') }}">
 {% endblock %}
 
 {% block content %}
-    <h1>Створити новий тест</h1>
+    <div class="container">
+        <div class="test-header">
+            <div class="test-details">
+                <input type="text" placeholder="Назва тесту">
+                <input type="text" placeholder="Опис">
+            </div>
+        </div>
+
+        <div class="test-question">
+
+        </div>
+
+        <div class="div-button-create-quesion">
+            <button class="button-create-quesion">+</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('test_app.static', filename= 'js/create_question.js') }}"></script>
 {% endblock %}
