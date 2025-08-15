@@ -4,6 +4,12 @@ function renderDoughnutChart(canvasId, totalAnswer, correctCount){
     let correctPercent= (correctCount/totalAnswer) * 100;
     let incorrectPercent= 100- correctPercent;
 
+    try {
+        let existing_chart = Chart.getChart('donat-chart')
+        existing_chart.destroy();
+    } catch(error) {
+    }
+
     const ctx= document.getElementById(canvasId).getContext('2d');
     donatChart= new Chart(ctx, {
         type: 'doughnut',
@@ -138,13 +144,26 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     userInfo.id = 'user-info'
     userInfo.className = 'user-info'
 
-    const allUsers = document.createElement('div')
-    allUsers.id = 'all-user'
-    allUsers.className = 'all-user'
+    const studInfoBox = document.createElement('div')
+    studInfoBox.id = 'stud-info-box'
+    studInfoBox.className = 'stud-info-box'
 
-    const countAnswer = document.createElement('div')
-    countAnswer.id = 'count-answer'
-    countAnswer.className = 'count-answer'
+    // const allUsers = document.createElement('div')
+    // allUsers.id = 'all-user'
+    // allUsers.className = 'all-user'
+
+    // const countAnswer = document.createElement('div')
+    // countAnswer.id = 'count-answer'
+    // countAnswer.className = 'count-answer'
+
+    // <div class="stud-info-box">
+    //     <h3>Інформація для вчителя</h3>
+    //     <ul>
+    //         <li>Відповіли: <strong>6</strong></li>
+    //         <li>Досі відповідають: <strong>4</strong></li>
+    //         <li>Всього учнів: <strong>10</strong></li>
+    //     </ul>
+    // </div>
 
     const chartCanvas = document.createElement('canvas');
     chartCanvas.id = 'donat-chart'
@@ -152,8 +171,9 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     chartCanvas.width = 500;
     chartCanvas.height = 500;
     
-    userInfo.appendChild(allUsers)
-    userInfo.appendChild(countAnswer)
+    // userInfo.appendChild(allUsers)
+    // userInfo.appendChild(countAnswer)
+    userInfo.appendChild(studInfoBox)
     userInfo.appendChild(chartCanvas)
 
     userBlock.appendChild(userInfo)
@@ -166,11 +186,19 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     });
 
     socket.once('get_usernames', function(data){
-        console.log(":OSDLGHOLKNGDS?")
+        // console.log(":OSDLGHOLKNGDS?")
         let userArrey = data;
         lengthArrey = userArrey.length
-        allUsers.innerHTML= `<div><strong>Список користувачів: </strong>${data}<div></div>
-                            <div><strong>Всего пользователей: </strong> ${lengthArrey}</div>`
-        countAnswer.innerHTML= `<div><strong>Всего пользователей: </strong> <span id="count-answer-span">0</span></div>`
+        // allUsers.innerHTML= `<div><strong>Список користувачів: </strong>${data}<div></div>
+        //                     <div><strong>Всего пользователей: </strong> ${lengthArrey}</div>`
+        // countAnswer.innerHTML= `<div><strong>Всего пользователей: </strong> <span id="count-answer-span">0</span></div>`
+        studInfoBox.innerHTML = `
+            <h3>Інформація для вчителя</h3>
+            <ul>
+                <li>Відповіли: <strong><span id="count-answer-span">0</span></strong></li>
+                <li>Список користувачів: <strong>${lengthArrey}</strong></li>
+                <li>Всього учнів: <strong></strong>${lengthArrey}</li>
+            </ul>
+            `
     })
 }

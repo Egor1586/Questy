@@ -16,7 +16,7 @@
                     <div class="dropdown">
                         <label for="chartType">Вибір графіка:</label>
                         <form action="" method="post" class="score-form">
-                            <select name="choice" id="choice" onchange="saveSelectedValue()">
+                            <select name="choice" id="choice" onchange="saveSelectedValueChart()">
                                 <option value="graph_1">Graph 1 </option>
                                 <option value="graph_2">Graph 2</option>
                                 <option value="graph_3">Graph 3</option>
@@ -26,16 +26,17 @@
                             <script>
                                 const selectElement = document.getElementById("choice");
 
-                                function saveSelectedValue(){
+                                function saveSelectedValueChart(){
                                     localStorage.setItem('selectedOption', selectElement.value)
                                 }
-                                function LoadSelection(element){
+                                
+                                function LoadSelectionChart(element){
                                     const savedValue = localStorage.getItem('selectedOption')
                                     if (savedValue) {
                                         selectElement.value = savedValue;
                                     }
                                 }
-                                window.onload = LoadSelection;
+                                window.onload = LoadSelectionChart;
                             </script>
 
                             <input type="submit" value="Send">
@@ -185,25 +186,42 @@
                         <a href="/edit_profile{{ current_user.id }}">
                             <button class="edit-btn">Змінити ім'я</button>
                         </a>
-                        <button>Змінити пароль</button>
+                        <a href="/send_email_app/">
+                            <button>Змінити пароль</button>
+                        </a>
                     </div>
-                    <p>Пройдено тестів: <strong>79</strong></p>
-                    <p>Створено тестів: <strong>60</strong></p>
+                    <p>Пройдено тестів: <strong>{{ scores_count }}</strong></p>
+                    <p>Створено тестів: <strong>{{ tests_count }}</strong></p>
                 </div>
             </div>
 
             
             <div class="tests-section">
                 <form action="" method="post" class="score-form">
-                    <select name="choice">
+                    <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
                         <option value="date">по датi </option>
                         <option value="accuracy">по точностi</option>
                     </select>
             
                     <input type="submit" value="Send">
                 </form>
+                <script>
+                    const selectElementTest = document.getElementById("choice_test");
+
+                    function saveSelectedValueScore(){
+                        localStorage.setItem('selectedOption', selectElementTest.value)
+                    }
+                    
+                    function LoadSelectionScore(element){
+                        const savedValue = localStorage.getItem('selectedOption')
+                        if (savedValue) {
+                            selectElementTest.value = savedValue;
+                        }
+                    }
+                    window.onload = LoadSelectionScore;
+                </script>
                 
-                {% if selected_option[0] == "date" %}
+                {% if selected_option_test[0] == "date" %}
                     <div class="score-result">
                         {% for score in scores %}
                             <div class="test-card">   

@@ -20,50 +20,6 @@ def bubble_sort(list_):
                 list_[j], list_[j+1] = list_[j+1], list_[j]
     return list_
 
-# @render_page(template_name = 'profile.html')
-# def render_profile():
-#     accuracy = []
-#     accuracy_sort = []
-#     dates_complete = []
-#     scores= None
-#     list_tests = []
-#     list_tests_sort = []
-#     selected_option = ["date"]
-#     if current_user.is_authenticated:
-#         user = User.query.filter_by(id= current_user.id)
-        
-#         scores = Score.query.filter_by(user_id= current_user.id).all()
-#         for score in scores:
-#             accuracy.append(score.accuracy)
-#             accuracy_sort.append([score.accuracy, score.id, score.test_id, score.date_complete])
-#             dates_complete.append(score.date_complete)
-#             if Test.query.filter_by(id= score.test_id).first() not in list_tests:
-#                 list_tests.append(Test.query.filter_by(id= score.test_id).first())
-
-#         bubble_sort(list_=accuracy_sort)
-#         for id in accuracy_sort:
-#             list_tests_sort.append(Test.query.filter_by(id= id[2]).first())
-#         print(accuracy_sort)
-#         print(list_tests_sort)
-
-
-        
-#         if flask.request.method == 'POST':
-#             selected_option[0] = (flask.request.form.get('choice'))
-#             print(selected_option)
-
-#         return{"user": user,
-#                'list_tests': list_tests,
-#                "scores": scores,
-#                "selected_option": selected_option,
-#                "list_tests_sort": list_tests_sort,
-#                "accuracy_sort": accuracy_sort
-#                }
-
-#     else:
-#         return {"user": None}
-    
-
 @render_page(template_name='profile.html')
 def render_profile():
     accuracy = []
@@ -72,8 +28,12 @@ def render_profile():
     scores= None
     list_tests = []
     list_tests_sort = []
-    selected_option = ["date"]
+    selected_option = ["0"]
+    selected_option_test = ["date"]
     message = ' '
+    tests_count= 0
+    scores_count= 0
+    user= None
 
     fig, axes = plt.subplots()
     buffer = io.BytesIO()
@@ -81,6 +41,11 @@ def render_profile():
         user = User.query.filter_by(id=current_user.id).first()
         
         scores = Score.query.filter_by(user_id= current_user.id).all()
+        tests_count = len(Test.query.filter_by(author_name= current_user.username).all())
+        scores_count= len(scores)
+
+        print("'pdafjghap';j")
+        print(tests_count, scores_count)
         for score in scores:
             accuracy.append(score.accuracy)
             accuracy_sort.append([score.accuracy, score.id, score.test_id, score.date_complete])
@@ -91,8 +56,7 @@ def render_profile():
         bubble_sort(list_=accuracy_sort)
         for id in accuracy_sort:
             list_tests_sort.append(Test.query.filter_by(id= id[2]).first())
-        print(accuracy_sort)
-        print(list_tests_sort)
+
 
         scores = Score.query.filter_by(user_id= current_user.id).all()
         for score in scores:
@@ -102,9 +66,14 @@ def render_profile():
                 list_tests.append(Test.query.filter_by(id= score.test_id).first())
         
         if flask.request.method == 'POST':
-            selected_option[0] = (flask.request.form.get('choice'))
+            if flask.request.form.get('choice') != None:
+                selected_option[0] = (flask.request.form.get('choice'))
+                print(selected_option)
+            if flask.request.form.get('choice_test') != None:
+                selected_option_test[0] = (flask.request.form.get('choice_test'))
+                print(selected_option_test)
             print(selected_option)
-
+            print(selected_option_test)
     
         dates_complete.sort()
 
@@ -114,10 +83,13 @@ def render_profile():
 
             return {
                 "scores": scores,
+                "scores_count": scores_count,
+                "tests_count": tests_count,
                 "dates_complete": dates_complete,
                 'accuracy': accuracy,
                 'list_tests': list_tests,
                 "selected_option": selected_option,
+                "selected_option_test": selected_option_test,
                 'wt_graph': '1',
                 'user': user
             }
@@ -137,9 +109,12 @@ def render_profile():
 
             return {
                 'dates_complete': dates_complete,
+                "scores_count": scores_count,
+                "tests_count": tests_count,
                 'wt_graph': 'd_cmpl',
                 'count_cmpl_quiz': count_cmpl_quiz,
                 "selected_option": selected_option,
+                "selected_option_test": selected_option_test,
                 'user': user
             }
 
@@ -158,12 +133,15 @@ def render_profile():
                 message = 'Занадто мало даних для побудови графіка'
                 return{
                     "scores": scores,
+                    "scores_count": scores_count,
+                    "tests_count": tests_count,
                     'message': message,
                     'flag_graph': 'flag_graph',
                     'dates_complete': dates_complete,
                     'accuracy': accuracy,
                     'list_tests': list_tests,
                     "selected_option": selected_option,
+                    "selected_option_test": selected_option_test,
                     'user': user
                     }
             
@@ -183,12 +161,15 @@ def render_profile():
                 message = 'Занадто мало даних для побудови графіка'
                 return{
                     "scores": scores,
+                    "scores_count": scores_count,
+                    "tests_count": tests_count,
                     'message': message,
                     'flag_graph': 'flag_graph',
                     'dates_complete': dates_complete,
                     'accuracy': accuracy,
                     'list_tests': list_tests,
                     "selected_option": selected_option,
+                    "selected_option_test": selected_option_test,
                     'user': user
                     }
     else:
@@ -198,12 +179,15 @@ def render_profile():
 
     return {
         "scores": scores,
+        "scores_count": scores_count,
+        "tests_count": tests_count,
         'message': message,
         'list_tests': list_tests,
         'user': user,
         'list_tests': list_tests,
         "scores": scores,
         "selected_option": selected_option,
+        "selected_option_test": selected_option_test,
         "list_tests_sort": list_tests_sort,
         "accuracy_sort": accuracy_sort
         }
