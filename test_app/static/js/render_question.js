@@ -7,14 +7,24 @@ function getCookie(name) {
 
 function renderWaiteQuestion() {
     const roomContent = document.getElementById("room-content");
+    roomContent.className = 'blur-overlay'
+
+    let waitСontent = document.createElement('div')
+    waitСontent.className = 'wait-content'
 
     let waitingMessage = document.createElement('div')
     waitingMessage.className = 'waiting-message'
     waitingMessage.textContent = 'Будь ласка, зачекайте, поки інші учасники відповідають...'
 
-    roomContent.innerHTML = ""; 
-    roomContent.className = "wait-content"; 
-    roomContent.appendChild(waitingMessage)
+    waitСontent.appendChild(waitingMessage)
+    roomContent.appendChild(waitСontent)
+
+    // roomContent.innerHTML = ""; 
+    // roomContent.className = "wait-content"; 
+    // roomContent.appendChild(waitingMessage)
+
+    // blurOverlay.className = 'blur-overlay';
+    // const blurOverlay = document.createElement('div')
 
     // roomContent.textContent= "Зачекайте на наступне питання..."
 }
