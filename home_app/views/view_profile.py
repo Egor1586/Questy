@@ -55,7 +55,11 @@ def render_profile():
 
         bubble_sort(list_=accuracy_sort)
         for id in accuracy_sort:
-            list_tests_sort.append(Test.query.filter_by(id= id[2]).first())
+            if Test.query.filter_by(id= id[2]).first() not in list_tests_sort:
+                list_tests_sort.append(Test.query.filter_by(id= id[2]).first())
+        print(list_tests)
+        print(list_tests_sort)
+        print(accuracy_sort)
 
 
         scores = Score.query.filter_by(user_id= current_user.id).all()
