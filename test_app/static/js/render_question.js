@@ -7,17 +7,32 @@ function getCookie(name) {
 
 function renderWaiteQuestion() {
     const roomContent = document.getElementById("room-content");
-    roomContent.className = 'blur-overlay'
+    roomContent.innerHTML = ""; 
+    roomContent.className = 'waite-next-question'
 
-    let waitСontent = document.createElement('div')
-    waitСontent.className = 'wait-content'
+    // const blurOverlay = document.createElement('div')
+    // blurOverlay.className = 'blur-overlay';
+    // roomContent.appendChild(blurOverlay)
 
-    let waitingMessage = document.createElement('div')
-    waitingMessage.className = 'waiting-message'
-    waitingMessage.textContent = 'Будь ласка, зачекайте, поки інші учасники відповідають...'
+    roomContent.innerHTML= `
+        <div class="blur-overlay"></div>
+        <div class="wait-content">
+            <div class="waiting-message">
+                Будь ласка, зачекайте, поки інші учасники відповідають...
+            </div>
+        </div>
+    `
+    console.log(roomContent.textContent)
 
-    waitСontent.appendChild(waitingMessage)
-    roomContent.appendChild(waitСontent)
+    // let waitСontent = document.createElement('div')
+    // waitСontent.className = 'wait-content'
+
+    // let waitingMessage = document.createElement('div')
+    // waitingMessage.className = 'waiting-message'
+    // waitingMessage.textContent = 'Будь ласка, зачекайте, поки інші учасники відповідають...'
+
+    // roomContent.appendChild(waitingMessage)
+    // roomContent.appendChild(waitСontent)
 
     // roomContent.innerHTML = ""; 
     // roomContent.className = "wait-content"; 
@@ -26,7 +41,7 @@ function renderWaiteQuestion() {
     // blurOverlay.className = 'blur-overlay';
     // const blurOverlay = document.createElement('div')
 
-    // roomContent.textContent= "Зачекайте на наступне питання..."
+    roomContent.textContent= "Зачекайте на наступне питання..."
 }
 
 function renderQuestion(questionNumber, list_quiz, list_answers, room, author_name) {
@@ -89,8 +104,6 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
                     cookie= cookie + `|${button.id}|`
                     document.cookie = `user_answers = ${cookie}; path= /`
                 }   
-                
-                console.log(button.id)
                 
                 socket.emit("user_answer", {
                     room: room,

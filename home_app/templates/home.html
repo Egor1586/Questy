@@ -60,17 +60,6 @@
             <hr>
         {% endif %}
 
-        <footer>
-            <div class="footer-content">
-                <div class="footer-text">© 2025 Questy. All rights reserved.</div>
-                <div class="social-media">
-                    <a href="#"><i class='bx bxl-facebook'></i></a>
-                    <a href="#"><i class='bx bxl-instagram'></i></a>
-                    <a href="#"><i class='bx bxl-twitter'></i></a>
-                </div>
-            </div>
-        </footer>
-
      <script>
         
         const username = "{{ username }}"
@@ -100,4 +89,17 @@
 
     </script>
     
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="footer-content">
+            <div class="footer-text">© 2025 Questy. All rights reserved.</div>
+            <div class="social-media">
+                <a href="#"><i class='bx bxl-facebook'></i></a>
+                <a href="#"><i class='bx bxl-instagram'></i></a>
+                <a href="#"><i class='bx bxl-twitter'></i></a>
+            </div>
+        </div>
+    </footer>
 {% endblock %}

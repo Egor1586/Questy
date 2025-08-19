@@ -719,6 +719,7 @@ main {
 }*/
 
 /* --------------- BLUR --------------- */
+
 .blur-overlay {
     position: fixed;
     inset: 0;
