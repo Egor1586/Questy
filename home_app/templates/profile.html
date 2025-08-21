@@ -204,22 +204,23 @@
                     </select>
             
                     <input type="submit" value="Send">
-                </form>
-                <script>
-                    const selectElementTest = document.getElementById("choice_test");
+                    <script>
+                        const selectElementTest = document.getElementById("choice_test");
 
-                    function saveSelectedValueScore(){
-                        localStorage.setItem('selectedOption', selectElementTest.value)
-                    }
-                    
-                    function LoadSelectionScore(element){
-                        const savedValue = localStorage.getItem('selectedOption')
-                        if (savedValue) {
-                            selectElementTest.value = savedValue;
+                        function saveSelectedValueScore(){
+                            localStorage.setItem('selectedOption', selectElementTest.value)
                         }
-                    }
-                    window.onload = LoadSelectionScore;
-                </script>
+                        
+                        function LoadSelectionScore(element){
+                            const savedValue = localStorage.getItem('selectedOption')
+                            if (savedValue) {
+                                selectElementTest.value = savedValue;
+                            }
+                        }
+                        window.onload = LoadSelectionScore;
+                    </script>
+                </form>
+              
                 
                 {% if selected_option_test[0] == "date" %}
                     <div class="score-result">
@@ -239,7 +240,7 @@
                             </div>
                         {% endfor %}
                     </div>
-                {% else %}
+                {% elif selected_option_test[0] == "accuracy" %}
                     <div class="score-result">
                         {% for score in accuracy_sort %}
                             <div class="test-card">   
