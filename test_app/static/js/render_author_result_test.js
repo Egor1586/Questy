@@ -17,7 +17,6 @@ function authorLeaveTest(){
     window.location.href = '/'; 
 }
 
-
 function appendResultRow(resultTable, username, answersArrey) {
     const resultRow = document.createElement('div');
     resultRow.className = 'results-row';
@@ -147,6 +146,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         const chartCanvas = document.createElement('canvas');
         chartCanvas.id = 'authorAccuracyChart';
+        chartCanvas.className = 'authorAccuracyChart';
         chartCanvas.width = 1100;
         chartCanvas.height = 500;
 
@@ -160,23 +160,9 @@ function renderAuthorResultTest(username, author_name, total_question) {
         resultsInfoBox.className = 'results-info-box';
 
         const headerTitle3 = document.createElement('h3');
-        headerTitle3.textContent = "Підсумок";
+        headerTitle3.textContent = "Підсумок";  
 
-        // посчитать средний результат 
-        const resultsInfoBoxText = document.createElement('p');
-        resultsInfoBoxText.innerHTML = `<p><strong>Середній результат:</strong> 75%</p>`;
-
-        // найти лучший результат
-        const resultsInfoBoxText2 = document.createElement('p');
-        resultsInfoBoxText2.innerHTML = `<p><strong>Найкращий результат:</strong> User 1 (100%)</p>`;
-
-        resultsInfoBox.appendChild(headerTitle3);
-        resultsInfoBox.appendChild(resultsInfoBoxText);
-        resultsInfoBox.appendChild(resultsInfoBoxText2);
-        container.appendChild(resultsInfoBox);
-        
         //
-        
         let allAnswersArray= Object.values(data)
         const userCount = Object.keys(allAnswersArray).length;
 
@@ -186,7 +172,8 @@ function renderAuthorResultTest(username, author_name, total_question) {
         for (let question_number= 0; question_number < total_question; question_number++){
             console.log("question_number")
             let pas_accurasy= 0;
-            for (let array= 0; array < allAnswersArray.length; array++){
+            ///////////////////////  allAnswersArray.length
+            for (let array= 0; array < total_question; array++){
                 console.log("array")
                 if (allAnswersArray[array][question_number]){
                     pas_accurasy++
@@ -203,6 +190,20 @@ function renderAuthorResultTest(username, author_name, total_question) {
                 accuracy: `${accurancyArray[number]}`
             });
         }
+
+        // посчитать средний результат 
+        const resultsInfoBoxText = document.createElement('p')
+        //// ${}
+        resultsInfoBoxText.innerHTML = `<p><strong>Середній результат:</strong> </p>`;
+
+        // найти лучший результат
+        const resultsInfoBoxText2 = document.createElement('p');
+        resultsInfoBoxText2.innerHTML = `<p><strong>Найкращий результат:</strong> User 1 (100%)</p>`;
+
+        resultsInfoBox.appendChild(headerTitle3);
+        resultsInfoBox.appendChild(resultsInfoBoxText);
+        resultsInfoBox.appendChild(resultsInfoBoxText2);
+        container.appendChild(resultsInfoBox);
 
         const resultTable = document.createElement('div');
         resultTable.className = 'results-table';
@@ -223,7 +224,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
             const div = document.createElement('div');
             div.className= "cell";
             div.innerHTML = `${questionFor.question}`;
-            // div.innerHTML = `${questionFor.question}<br><small>${questionFor.accuracy}</small>`;
             resultHeader.appendChild(div);
         })
 

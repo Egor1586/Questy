@@ -28,7 +28,7 @@ def render_profile():
     scores= None
     list_tests = []
     list_tests_sort = []
-    selected_option = ["0"]
+    selected_option = ["graph_1"]
     selected_option_test = ["date"]
     message = ' '
     tests_count= 0

@@ -45,6 +45,7 @@ def render_test_result():
                 user_answer= str_user_answers,
                 accuracy= count_correct_answers/len(quizzes_list) * 100 // 1,
                 date_complete= datetime.date.today(),
+                time_complete= datetime.datetime.now().strftime("%H:%M:%S"),
                 test_id= test_id,
                 user_id= current_user.id,
                 user_name= current_user.username
