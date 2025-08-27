@@ -1,7 +1,6 @@
 import flask
 from ..models import Test, Quiz
 
-from flask_login import current_user
 from Project.render_page import render_page
 
 @render_page(template_name = 'passing_test.html')

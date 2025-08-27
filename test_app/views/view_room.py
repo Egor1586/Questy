@@ -1,6 +1,5 @@
-import flask, Project, random, datetime
+import flask, Project, datetime
 
-from flask_login import current_user
 from flask_socketio import join_room, emit, disconnect
 from Project.render_page import render_page
 from Project.database import db
@@ -151,6 +150,7 @@ def handle_message(data):
         accuracy= accuracy,
         test_id= TEST.id,
         date_complete = datetime.date.today(),
+        time_complete= datetime.datetime.now().strftime("%H:%M:%S"),
         user_id= USER.id if USER else 0,
         user_name= user_name,
         test_code= room
@@ -274,7 +274,15 @@ def handle_message(data):
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
- 
+    # BEST_SCORE= Score.query.filter_by(test_code= room).order_by(Score.accuracy.desc()).first()
+    
+    # averega_score= 0
+    # full_score= 0
+    # for score in SCORE_LIST:
+    #     full_score += score.accuracy
+
+    # averega_score= full_score/len(SCORE_LIST)
+    
     print(USER_LIST)
     print(SCORE_LIST)
 
@@ -301,6 +309,8 @@ def handle_message(data):
             print(quiz.correct_answer, answers_list[index])
             if quiz.correct_answer == answers_list[index]:
                 correct_answers_list.append(1)
+            elif answers_list[index] == "not_answer":
+                correct_answers_list.append(2)
             else:
                 correct_answers_list.append(0)
         try:
@@ -311,6 +321,14 @@ def handle_message(data):
     print(room_get_result_data)
 
     emit("room_get_result_data", room_get_result_data, to= user_sid)
+
+    # best_score_data= {
+    #     "user_name": BEST_SCORE.user_name,
+    #     "accurasy": BEST_SCORE.accurasy,
+    # }
+    # emit("add_info_result_room", {"avg_accurasy": averega_score,
+    #                               "best_score": best_score_data}, to= user_sid)
+
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
