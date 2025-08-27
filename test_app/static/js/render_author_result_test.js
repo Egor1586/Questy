@@ -27,7 +27,7 @@ function appendResultRow(resultTable, username, answersArrey) {
 
     let numberCorrectAnswers = 0;
     for (let index= 0; index < answersArrey.length; index++) {
-        if (answersArrey[index]){
+        if (answersArrey[index] == 1){
             numberCorrectAnswers++;
         }
     }
@@ -47,7 +47,18 @@ function appendResultRow(resultTable, username, answersArrey) {
         const spanBox = document.createElement('span');
         spanBox.className = 'cell';
 
-        spanBox.className= (correct ? 'circle correct' : 'circle wrong');
+        switch (correct){
+            case 0:
+                spanBox.className= 'circle wrong';
+                break;
+            case 1:
+                spanBox.className= 'circle correct';
+                break;
+            case 2:
+                spanBox.className= 'circle no-answer';
+                break; 
+        }
+
         answerBox.appendChild(spanBox)
         resultRow.appendChild(answerBox);
     });
@@ -120,6 +131,8 @@ function renderAuthorResultTest(username, author_name, total_question) {
     let accurancyArray= []
     
     socket.once('room_get_result_data', function(data) {  
+        console.log(data)
+
         const header = document.createElement('div');
         header.className = 'results-header-block';
 
@@ -134,7 +147,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
         container.appendChild(header);
 
         //
-
         const chartBox = document.createElement('div');
         chartBox.className = 'chart-box';
 
@@ -172,10 +184,9 @@ function renderAuthorResultTest(username, author_name, total_question) {
         for (let question_number= 0; question_number < total_question; question_number++){
             console.log("question_number")
             let pas_accurasy= 0;
-            ///////////////////////  allAnswersArray.length
-            for (let array= 0; array < total_question; array++){
+            for (let array= 0; array < allAnswersArray.length; array++){
                 console.log("array")
-                if (allAnswersArray[array][question_number]){
+                if (allAnswersArray[array][question_number] == 1){
                     pas_accurasy++
                 }
             }
@@ -193,12 +204,11 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         // посчитать средний результат 
         const resultsInfoBoxText = document.createElement('p')
-        //// ${}
-        resultsInfoBoxText.innerHTML = `<p><strong>Середній результат:</strong> </p>`;
+        resultsInfoBoxText.id= "results-info-box-text"
 
         // найти лучший результат
         const resultsInfoBoxText2 = document.createElement('p');
-        resultsInfoBoxText2.innerHTML = `<p><strong>Найкращий результат:</strong> User 1 (100%)</p>`;
+        resultsInfoBoxText2.id= "results-info-box-text2"
 
         resultsInfoBox.appendChild(headerTitle3);
         resultsInfoBox.appendChild(resultsInfoBoxText);
@@ -232,13 +242,12 @@ function renderAuthorResultTest(username, author_name, total_question) {
         headerAccyracy.textContent= "Точність"
         
         resultHeader.appendChild(headerUsers);
-        console.log(data);
 
         resultHeader.appendChild(headerAccyracy);
         resultTable.appendChild(resultHeader);
         
         for (const username in data) {
-            answersArray = data[username];
+            answersArray = data[username]; 
             appendResultRow(resultTable, username, answersArray);
         }  
 
@@ -272,4 +281,12 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         renderAccuracyChart('authorAccuracyChart', accuracy_aquestions);
     });
+
+    // socket.once('add_info_result_room', function(data){
+    //     console.log("add_info_result_room")
+    //     const resultsInfoBoxText = document.getElementById("results-info-box-text");
+    //     resultsInfoBoxText.textContent= `<p><strong>Середний результат:</strong>${data['avg_accurasy']}</p>`;
+    //     const resultsInfoBoxText2 = document.getElementById("results-info-box-text2");
+    //     resultsInfoBoxText2.innerHTML = `<p><strong>Найкращий результат:</strong>${data['best_score'].user_name} (${data['best_score'].accuracy})</p>`;
+    // });
 }
