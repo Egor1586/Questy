@@ -17,7 +17,7 @@
                         <label for="chartType">Вибір графіка:</label>
                         <form action="" method="post" class="score-form">
                             <select name="choice" id="choice" onchange="saveSelectedValueChart()">
-                                <option value="graph_1">Graph 1 </option>
+                                <option value="graph_1" selected>Graph 1 </option>
                                 <option value="graph_2">Graph 2</option>
                                 <option value="graph_3">Graph 3</option>
                                 <option value="graph_4">Graph 4</option>
@@ -199,8 +199,8 @@
             <div class="tests-section">
                 <form action="" method="post" class="score-form">
                     <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
-                        <option value="date">по датi </option>
-                        <option value="accuracy">по точностi</option>
+                        <option value="date" selected>По датi </option>
+                        <option value="accuracy">По точностi</option>
                     </select>
             
                     <input type="submit" value="Send">
@@ -232,7 +232,9 @@
                                         <p><strong>Опис: </strong>{{ test.description }}</p>
                                         <p><strong>Автор: </strong>{{ test.author_name }}</p>
                                         <p><strong>Код: </strong>{{ test.test_code }}</p>
-                                        <button>Переглянути</button>
+                                        <a href="/result_test_online{{ score.id }}">
+                                            <button>Переглянути</button>
+                                        </a>
                                     {% endif %}
                                 {% endfor %}
                                 <p><strong>Результат: </strong>{{ score.accuracy }}</p>
@@ -250,7 +252,9 @@
                                         <p><strong>Опис: </strong>{{ test.description }}</p>
                                         <p><strong>Автор: </strong>{{ test.author_name }}</p>
                                         <p><strong>Код: </strong>{{ test.test_code }}</p>
-                                        <button>Переглянути</button>
+                                        <a href="/result_test_online{{ score[1] }}">
+                                            <button>Переглянути</button>
+                                        </a>
                                     {% endif %}
                                 {% endfor %}
                                 <p><strong>Результат: </strong>{{ score[0] }}</p>

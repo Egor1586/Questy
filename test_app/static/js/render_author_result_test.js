@@ -17,49 +17,55 @@ function authorLeaveTest(){
     window.location.href = '/'; 
 }
 
-function appendResultRow(resultContainer, username, answersArrey) {
+function appendResultRow(resultTable, username, answersArrey) {
     const resultRow = document.createElement('div');
-    resultRow.className = 'result-row';
+    resultRow.className = 'results-row';
 
     const studentName = document.createElement('div');
-    studentName.className = 'student-name';
+    studentName.className = 'cell student-name';
     studentName.textContent = `${username}`;
 
     let numberCorrectAnswers = 0;
     for (let index= 0; index < answersArrey.length; index++) {
-        if (answersArrey[index]){
+        if (answersArrey[index] == 1){
             numberCorrectAnswers++;
         }
     }
 
-    const studentScore = document.createElement('div');
-    studentScore.className = 'student-score';
-    studentScore.textContent = `${numberCorrectAnswers}/${answersArrey.length}`;
-
     let accuracy = (numberCorrectAnswers / total_question) * 100;
 
     const studentAccuracy = document.createElement('div');
-    studentAccuracy.className = 'student-accuracy';
+    studentAccuracy.className = 'cell accuracy';
     studentAccuracy.textContent = `${accuracy.toFixed(1)}%`;
 
-    const answersList = document.createElement('div');
-    answersList.className = 'answer-list';
+    resultRow.appendChild(studentName);
 
     answersArrey.forEach(correct => {
         const answerBox = document.createElement('div');
-        answerBox.className = 'answer-box';
-        answerBox.classList.add(correct ? 'correct-answer' : 'incorrect-answer');
-        answerBox.textContent = correct ? '✓' : 'x';
-        answersList.appendChild(answerBox);
+        answerBox.className = 'cell';
+
+        const spanBox = document.createElement('span');
+        spanBox.className = 'cell';
+
+        switch (correct){
+            case 0:
+                spanBox.className= 'circle wrong';
+                break;
+            case 1:
+                spanBox.className= 'circle correct';
+                break;
+            case 2:
+                spanBox.className= 'circle no-answer';
+                break; 
+        }
+
+        answerBox.appendChild(spanBox)
+        resultRow.appendChild(answerBox);
     });
 
-    resultRow.appendChild(studentName);
-    resultRow.appendChild(studentScore);
     resultRow.appendChild(studentAccuracy);
-    resultRow.append(answersList)
 
-
-    resultContainer.appendChild(resultRow);
+    resultTable.appendChild(resultRow);
 }
 
 function renderAccuracyChart(canvasId, accuracy_aquestions){
@@ -114,10 +120,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
     container.innerHTML= "";
     container.className= 'wrapper-author-results-container';
 
-    const resultContainer = document.createElement('div');
-    resultContainer.id = 'author-results-container';
-    resultContainer.className= 'author-results-container';
-
     setTimeout(function() {
         socket.emit("room_get_result", {
             room: room,
@@ -129,71 +131,70 @@ function renderAuthorResultTest(username, author_name, total_question) {
     let accurancyArray= []
     
     socket.once('room_get_result_data', function(data) {  
+        console.log(data)
+
         const header = document.createElement('div');
-        header.className = 'result-header';
+        header.className = 'results-header-block';
 
-        const headerName = document.createElement('div');
-        headerName.className = 'header-name';
-        headerName.textContent = "Ім'я";
+        const headerTitle = document.createElement('h1');
+        headerTitle.textContent = "Результати тесту";
 
-        const headerScore = document.createElement('div');
-        headerScore.className = 'header-score';
-        headerScore.textContent = 'Оцінка'
+        const headerText = document.createElement('p');
+        headerText.textContent = "Зведена статистика успішності всіх учасників";
 
-        const headerAccuracy = document.createElement('div');
-        headerAccuracy.className = 'header-accuracy';
-        headerAccuracy.textContent = 'Точність'
+        header.appendChild(headerTitle);
+        header.appendChild(headerText);
+        container.appendChild(header);
 
-        const headerAnswers = document.createElement('div');
-        headerAnswers.className = 'header-answers';       
-        console.log(data);
-        
-        
-        header.appendChild(headerName);
-        header.appendChild(headerScore);
-        header.appendChild(headerAccuracy);
-        header.appendChild(headerAnswers);
-        
-        resultContainer.appendChild(header);
+        //
+        const chartBox = document.createElement('div');
+        chartBox.className = 'chart-box';
+
+        const headerTitle2 = document.createElement('h2');
+        headerTitle2.textContent = "Загальна успішність";
 
         const chartWrapper = document.createElement('div');
         chartWrapper.className = 'chart-wrapper';
 
         const chartCanvas = document.createElement('canvas');
         chartCanvas.id = 'authorAccuracyChart';
+        chartCanvas.className = 'authorAccuracyChart';
         chartCanvas.width = 1100;
         chartCanvas.height = 500;
 
+        chartBox.appendChild(headerTitle2);
         chartWrapper.appendChild(chartCanvas);
-        container.appendChild(chartWrapper);
+        chartBox.appendChild(chartWrapper);
+        container.appendChild(chartBox);
 
-        
+        //
+        const resultsInfoBox = document.createElement('div');
+        resultsInfoBox.className = 'results-info-box';
+
+        const headerTitle3 = document.createElement('h3');
+        headerTitle3.textContent = "Підсумок";  
+
+        //
         let allAnswersArray= Object.values(data)
         const userCount = Object.keys(allAnswersArray).length;
-        
+
         let answersArray= []
         let accuracy_aquestions= []
-        for (const username in data) {
-            answersArray = data[username];
-            appendResultRow(resultContainer, username, answersArray);
-        }
 
-        for (let question_number= 0; question_number < answersArray.length; question_number++){
+        for (let question_number= 0; question_number < total_question; question_number++){
             console.log("question_number")
             let pas_accurasy= 0;
             for (let array= 0; array < allAnswersArray.length; array++){
                 console.log("array")
-                if (allAnswersArray[array][question_number]){
+                if (allAnswersArray[array][question_number] == 1){
                     pas_accurasy++
                 }
             }
             
             const accuracy= (pas_accurasy / userCount) * 100;
             accurancyArray.push(accuracy.toFixed(1));
-        }   
+        } 
 
-        console.log(accurancyArray)
-        
         for (number=0; number < total_question; number++){
             accuracy_aquestions.push({
                 question: `Q${number + 1}`,
@@ -201,20 +202,91 @@ function renderAuthorResultTest(username, author_name, total_question) {
             });
         }
 
+        // посчитать средний результат 
+        const resultsInfoBoxText = document.createElement('p')
+        resultsInfoBoxText.id= "results-info-box-text"
+
+        // найти лучший результат
+        const resultsInfoBoxText2 = document.createElement('p');
+        resultsInfoBoxText2.id= "results-info-box-text2"
+
+        resultsInfoBox.appendChild(headerTitle3);
+        resultsInfoBox.appendChild(resultsInfoBoxText);
+        resultsInfoBox.appendChild(resultsInfoBoxText2);
+        container.appendChild(resultsInfoBox);
+
+        const resultTable = document.createElement('div');
+        resultTable.className = 'results-table';
+
+        resultTable.style.setProperty(
+            'grid-template-columns',
+            `200px repeat(${total_question}, 1fr) 120px`
+        )
+
+        const resultHeader = document.createElement('div');
+        resultHeader.className = 'results-header';
+
+        const headerUsers = document.createElement('div');
+        headerUsers.className = 'cell label';  
+        headerUsers.textContent= "Учні"
+
         accuracy_aquestions.forEach(questionFor => {
             const div = document.createElement('div');
-            div.innerHTML = `${questionFor.question}<br><small>${questionFor.accuracy}</small>`;
-            headerAnswers.appendChild(div);
+            div.className= "cell";
+            div.innerHTML = `${questionFor.question}`;
+            resultHeader.appendChild(div);
         })
+
+        const headerAccyracy = document.createElement('div');
+        headerAccyracy.className = 'cell label';  
+        headerAccyracy.textContent= "Точність"
+        
+        resultHeader.appendChild(headerUsers);
+
+        resultHeader.appendChild(headerAccyracy);
+        resultTable.appendChild(resultHeader);
+        
+        for (const username in data) {
+            answersArray = data[username]; 
+            appendResultRow(resultTable, username, answersArray);
+        }  
+
+        console.log(accurancyArray)
+
+        container.appendChild(resultTable);
+        
+        const legenBox = document.createElement('div');
+        legenBox.className = 'legend-box';
     
+        const legenBoxTitle = document.createElement('h3');
+        legenBoxTitle.textContent = "Позначення";
+    
+        const legend = document.createElement('div');
+        legend.className= "legend";
+        legend.innerHTML += `
+                        <span><span class="circle correct"></span> Правильно</span>
+                        <span><span class="circle wrong"></span> Неправильно</span>
+                        <span><span class="circle no-answer"></span> Немає відповіді</span>
+                        `
+        legenBox.appendChild(legenBoxTitle);
+        legenBox.appendChild(legend);
+        container.appendChild(legenBox);
+     
+        const leaveButton= document.createElement('button');
+        leaveButton.className= 'leave-btn';
+        leaveButton.textContent = 'Покинути тест';
+        leaveButton.addEventListener("click", authorLeaveTest);
+        
+        container.appendChild(leaveButton);
+
         renderAccuracyChart('authorAccuracyChart', accuracy_aquestions);
     });
 
-    const leaveButton= document.createElement('button');
-    leaveButton.className= 'leave-btn';
-    leaveButton.textContent = 'Покинути тест';
-    leaveButton.addEventListener("click", authorLeaveTest);
-
-    container.appendChild(resultContainer)
-    container.appendChild(leaveButton);
+    // socket.once('add_info_result_room', function(data){
+    //     console.log("add_info_result_room")
+    //     const resultsInfoBoxText = document.getElementById("results-info-box-text");
+    //     resultsInfoBoxText.textContent= `<p><strong>Середний результат:</strong>${data['avg_accurasy']}</p>`;
+    //     const resultsInfoBoxText2 = document.getElementById("results-info-box-text2");
+    //     resultsInfoBoxText2.innerHTML = `<p><strong>Найкращий результат:</strong>${data['best_score'].user_name} (${data['best_score'].accuracy})</p>`;
+    // });
 }

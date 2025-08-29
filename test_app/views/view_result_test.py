@@ -3,10 +3,7 @@ import flask, datetime
 from ..models import Test, Quiz
 from Project.database import db
 from flask_login import current_user
-
-from Project.render_page import render_page
 from Project.clear_cookie import clear_cookies
-
 from user.models import Score
 
 def render_test_result():
@@ -45,6 +42,7 @@ def render_test_result():
                 user_answer= str_user_answers,
                 accuracy= count_correct_answers/len(quizzes_list) * 100 // 1,
                 date_complete= datetime.date.today(),
+                time_complete= datetime.datetime.now().strftime("%H:%M:%S"),
                 test_id= test_id,
                 user_id= current_user.id,
                 user_name= current_user.username
