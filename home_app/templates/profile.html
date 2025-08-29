@@ -179,19 +179,22 @@
                 </div>
 
                 <div class="profile-section">
-                    <img src="/home_app/static/images/default-profile.jpg" alt="avatar" class="avatar">
-                    <h3>User 1</h3>
+                    <div class="profile-content">
+                        <img src="/home_app/static/images/default-profile.jpg" alt="avatar" class="avatar">
+                        <h3>User 1</h3>
 
-                    <div class="edit-profile-btns">
-                        <a href="/edit_profile{{ current_user.id }}">
-                            <button class="edit-btn">Змінити ім'я</button>
-                        </a>
-                        <a href="/send_email_app/">
-                            <button>Змінити пароль</button>
-                        </a>
+                        <div class="edit-profile-btns">
+                            <a href="/edit_profile{{ current_user.id }}">
+                                <button class="edit-btn">Змінити ім'я</button>
+                            </a>
+                            <a href="/send_email_app/">
+                                <button>Змінити пароль</button>
+                            </a>
+                        </div>
+
+                        <p>Пройдено тестів: <strong>{{ scores_count }}</strong></p>
+                        <p>Створено тестів: <strong>{{ tests_count }}</strong></p>
                     </div>
-                    <p>Пройдено тестів: <strong>{{ scores_count }}</strong></p>
-                    <p>Створено тестів: <strong>{{ tests_count }}</strong></p>
                 </div>
             </div>
 
