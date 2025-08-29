@@ -6,11 +6,11 @@
     padding: 20px;
 
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     margin: auto;
 }
 
-.top-section {
+/* .top-section {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -26,7 +26,48 @@
 
 .graph-section {
     flex: 2;
+}
+
+
+.profile-section {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+/* .container-profile {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+    padding: 20px;
+
+    width: 100%;
+    max-width: 1500px;
+
+    margin: auto;
+} */
+
+.top-section {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.graph-section, .profile-section, .tests-section {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+
     height: 40vh;
+}
+
+
+.graph-section {
+    flex: 2;
 }
 
 
@@ -37,8 +78,6 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-
-    height: 40vh;
 
     border-radius: 10px;
     border: 2px dashed #a5d6a7;
@@ -61,6 +100,7 @@
     cursor: pointer;
     font-weight: bold;
 }
+
 
 .tests-section {
     width: 100%;
