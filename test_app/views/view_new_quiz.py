@@ -9,7 +9,7 @@ from Project.render_page import render_page
 
 @render_page(template_name = 'new_quiz.html')
 def render_new_quiz():
-    data1= {
+    data= {
         "topic": "Основи Python",
         "description": "Тест на базові знання Python для початківців.",
         "questions": [
@@ -66,7 +66,7 @@ def render_new_quiz():
         ]
         }
     
-    data2= {
+    data1= {
         "topic": "Основи Python",
         "description": "Тест на базові знання Python для початківців.",
         "questions": [
@@ -160,7 +160,7 @@ def render_new_quiz():
             if test.image:
                 image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}.png")))
      
-            for quizzes in data2["questions"]:
+            for quizzes in data["questions"]:
                 answers_list = quizzes["options"].copy()
                 random.shuffle(answers_list)
                 quiz = Quiz(

@@ -1,5 +1,5 @@
 const createQuestionButton = document.querySelector(".button-create-question");
-const questionDiv = document.querySelector(".test-question");
+
 const testQuestionDiv = document.querySelector(".test-question");
 
 createQuestionButton.addEventListener('click', function() {
@@ -8,21 +8,25 @@ createQuestionButton.addEventListener('click', function() {
     testQuestionDiv.innerHTML += 
             `<div class="question-block">
                 <div class="question-header">
-                    <div class="test-title">Введіть запитання: <input type="text" placeholder="Введіть питання"></div>
+                    <span>Питання 1</span>
+                    <button type="button" class="delete-question">Видалити питання?</button>
                 </div>
-                
-                <button class="delete-quiz">Видалити питання?</button>
 
-                <div class="question-text">
-                    <div class="test-title">Правильна відповідь: <input type="text" placeholder="Введіть правильну відповідь"></div>
-                    <div class="test-title">Відповідь: <input type="text" placeholder="Введіть відповідь"></div>
-                </div>  
-                
-                <button class="add-answer">+ відповідь</button>
+                <label>Текст питання:</label>
+                <input type="text" name="question-text">
+
+                <div class="answers">
+                    <label>Варіанти відповідей:</label>
+                    <div class="answer-input">
+                        <input type="text" placeholder="Відповідь 1">
+                        <input type="radio" name="correct-answer-1"> Правильна
+                    </div>
+                </div>
+                <button type="button" class="add-answer">Додати відповідь</button>
             </div>`
 });
 
-questionDiv.addEventListener("click", function(event){
+testQuestionDiv.addEventListener("click", function(event){
     if (event.target.classList.contains("delete-quiz")){
         event.target.closest(".question-block").remove(); 
     }

@@ -274,14 +274,6 @@ def handle_message(data):
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
-    # BEST_SCORE= Score.query.filter_by(test_code= room).order_by(Score.accuracy.desc()).first()
-    
-    # averega_score= 0
-    # full_score= 0
-    # for score in SCORE_LIST:
-    #     full_score += score.accuracy
-
-    # averega_score= full_score/len(SCORE_LIST)
     
     print(USER_LIST)
     print(SCORE_LIST)
@@ -321,14 +313,6 @@ def handle_message(data):
     print(room_get_result_data)
 
     emit("room_get_result_data", room_get_result_data, to= user_sid)
-
-    # best_score_data= {
-    #     "user_name": BEST_SCORE.user_name,
-    #     "accurasy": BEST_SCORE.accurasy,
-    # }
-    # emit("add_info_result_room", {"avg_accurasy": averega_score,
-    #                               "best_score": best_score_data}, to= user_sid)
-
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):

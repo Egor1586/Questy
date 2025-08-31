@@ -11,7 +11,8 @@ body, html {
     padding: 0; 
     height: 100%; 
     width: 100%; 
-    background-color: #d7f0d1; 
+    /* background-color: #d7f0d1;  */
+    background-color: hwb(120 82% 11% / 0.877);
     font-family: Arial, sans-serif;
 }
 

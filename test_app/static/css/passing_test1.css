@@ -8,7 +8,8 @@ body, html {
   height: 100vh;
   width: 100vw;
   font-family: Arial, sans-serif;
-  background-color: #d7f0d1;
+  /* background-color: #d7f0d1; */
+  background-color: hwb(120 82% 11% / 0.877);
   overflow: hidden;
 }
 
