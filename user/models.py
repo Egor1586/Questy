@@ -25,6 +25,7 @@ class Score(db.Model):
     test_id= db.Column(db.Integer, nullable= False)
 
     date_complete = db.Column(db.String, nullable= False)
+    time_complete = db.Column(db.String, nullable= False)
 
     user_id = db.Column(db.Integer, nullable= False)
 

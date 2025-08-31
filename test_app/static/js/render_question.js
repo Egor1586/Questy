@@ -10,38 +10,16 @@ function renderWaiteQuestion() {
     roomContent.innerHTML = ""; 
     roomContent.className = 'waite-next-question'
 
-    // const blurOverlay = document.createElement('div')
-    // blurOverlay.className = 'blur-overlay';
-    // roomContent.appendChild(blurOverlay)
-
-    roomContent.innerHTML= `
-        <div class="blur-overlay"></div>
-        <div class="wait-content">
-            <div class="waiting-message">
-                Будь ласка, зачекайте, поки інші учасники відповідають...
+    roomContent.innerHTML = `
+        <div class="blur-overlay">
+            <div class="wait-content">
+                <div class="waiting-message">
+                    Будь ласка, зачекайте, поки інші учасники відповідають...
+                </div>
             </div>
         </div>
     `
-    console.log(roomContent.textContent)
-
-    // let waitСontent = document.createElement('div')
-    // waitСontent.className = 'wait-content'
-
-    // let waitingMessage = document.createElement('div')
-    // waitingMessage.className = 'waiting-message'
-    // waitingMessage.textContent = 'Будь ласка, зачекайте, поки інші учасники відповідають...'
-
-    // roomContent.appendChild(waitingMessage)
-    // roomContent.appendChild(waitСontent)
-
-    // roomContent.innerHTML = ""; 
-    // roomContent.className = "wait-content"; 
-    // roomContent.appendChild(waitingMessage)
-
-    // blurOverlay.className = 'blur-overlay';
-    // const blurOverlay = document.createElement('div')
-
-    roomContent.textContent= "Зачекайте на наступне питання..."
+    console.log("waite next question")
 }
 
 function renderQuestion(questionNumber, list_quiz, list_answers, room, author_name) {
@@ -104,6 +82,8 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
                     cookie= cookie + `|${button.id}|`
                     document.cookie = `user_answers = ${cookie}; path= /`
                 }   
+
+                renderWaiteQuestion();
                 
                 socket.emit("user_answer", {
                     room: room,
@@ -111,8 +91,6 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
                     username: username,
                     answer: button.id
                 });
-                
-                renderWaiteQuestion();
             }
         )
     }
