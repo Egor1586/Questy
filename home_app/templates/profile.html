@@ -45,7 +45,9 @@
                         <div class="chart-container">
 
                             {% if dates_complete and accuracy and wt_graph == '1' %}
-                                <canvas id="accuracyChart" width="1400" height="450"></canvas>
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChart"></canvas>
+                                </div>
 
                                 <script>
                                     
@@ -71,7 +73,8 @@
                                             }]
                                         },
                                         options: {
-                                            responsive: false,
+                                            responsive: true,
+                                            maintainAspectRadio: false,
                                             plugins: {
                                                 title: {
                                                     display: true,
@@ -88,7 +91,9 @@
                             {% endif %}
 
                             {% if dates_complete and wt_graph == 'd_cmpl' %}
-                                <canvas id="accuracyChart" width="1400" height="450"></canvas>
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChart"></canvas>
+                                </div>
                             
                                 <script>
                                     console.log('d_cmpl')
@@ -115,7 +120,8 @@
                                             }]
                                         },
                                         options: {
-                                            responsive: false,
+                                            responsive: true,
+                                            maintainAspectRadio: false,
                                             plugins: {
                                                 title: {
                                                     display: true,
@@ -133,7 +139,9 @@
                             {% endif %}
 
                             {% if dates_complete and accuracy and flag_graph == 'flag_graph'  %}
-                                <canvas id="accuracyChart" width="1400" height="450"></canvas>
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChart"></canvas>
+                                </div>
 
                                 <script>
                                     
@@ -159,7 +167,8 @@
                                             }]
                                         },
                                         options: {
-                                            responsive: false,
+                                            responsive: true,
+                                            maintainAspectRadio: false,
                                             plugins: {
                                                 title: {
                                                     display: true,
@@ -179,19 +188,22 @@
                 </div>
 
                 <div class="profile-section">
-                    <img src="/home_app/static/images/default-profile.jpg" alt="avatar" class="avatar">
-                    <h3>User 1</h3>
+                    <div class="profile-content">
+                        <img src="/home_app/static/images/default-profile.jpg" alt="avatar" class="avatar">
+                        <h3>User 1</h3>
 
-                    <div class="edit-profile-btns">
-                        <a href="/edit_profile{{ current_user.id }}">
-                            <button class="edit-btn">Змінити ім'я</button>
-                        </a>
-                        <a href="/send_email_app/">
-                            <button>Змінити пароль</button>
-                        </a>
+                        <div class="edit-profile-btns">
+                            <a href="/edit_profile{{ current_user.id }}">
+                                <button class="edit-btn">Змінити ім'я</button>
+                            </a>
+                            <a href="/send_email_app/">
+                                <button>Змінити пароль</button>
+                            </a>
+                        </div>
+
+                        <p>Пройдено тестів: <strong>{{ scores_count }}</strong></p>
+                        <p>Створено тестів: <strong>{{ tests_count }}</strong></p>
                     </div>
-                    <p>Пройдено тестів: <strong>{{ scores_count }}</strong></p>
-                    <p>Створено тестів: <strong>{{ tests_count }}</strong></p>
                 </div>
             </div>
 
@@ -232,7 +244,11 @@
                                         <p><strong>Опис: </strong>{{ test.description }}</p>
                                         <p><strong>Автор: </strong>{{ test.author_name }}</p>
                                         <p><strong>Код: </strong>{{ test.test_code }}</p>
+<<<<<<< HEAD
                                         <a href="/result_test_online{{ score.id }}">
+=======
+                                        <a href="/review_results{{ score.id }}">
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
                                             <button>Переглянути</button>
                                         </a>
                                     {% endif %}

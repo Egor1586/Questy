@@ -9,29 +9,33 @@
 {% endblock %}
 
 {% block content %}
+<script src="{{ url_for('test_app.static', filename= 'js/build_test.js') }}"></script>
 
     <div class="container">
-        <h1>Створіть чудову вікторину за лічені хвилини за допомогою штучного інтелекту</h1>
-        <h3>Questy – це найпростіший спосіб зробити вікторини</h3>
+        <h1>Новий тест</h1>
         
-        <div class="test-header">
-            <div class="test-details">
-                <div class="test-title">Назва тесту: <input type="text" placeholder="Назва тесту"></div>
-                <div class="test-description">Опис: <input type="text" placeholder="Опис"></div>
-            </div>
-            <div class="load-img">
-                <label for="image">Зображення (необов'язково)</label>
-                <input type="file" name="image" id="" accept="image/*">
-            </div>
-        </div>
-        
+        <label for="test-title">Назва тесту:</label>
+        <input type="text" id="test-title" name="test-title">
+
+        <label for="test-description">Опис:</label>
+        <input type="text" id="test-description" name="test-description">
+
+        <label for="test-image">Зображення (необов'язково):</label>
+        <input type="file" id="test-image" name="test-image" accept="image/*">
+
         <div class="test-question">
 
         </div>
+<<<<<<< HEAD
 
         <div class="div-button-create-quesion">
             <button class="button-create-question">Створити ще одне питання +</button>
         </div>
+=======
+ 
+        <button type="button" class="button-create-question">Створити ще одне питання</button>
+        <button type="submit" class="submit-button">Завершити створення тесту</button>
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
     </div>
 
     <script src="{{ url_for('test_app.static', filename= 'js/create_question.js') }}"></script>

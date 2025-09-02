@@ -10,7 +10,8 @@ main {
 }
 
 .wrapper{
-    background-color: rgba(113, 145, 107, 1);
+    /* background-color: rgba(113, 145, 107, 1); */
+    background-color: hwb(120 82% 11% / 0.877);
     width: 100vw;
     height: 100vh;
 

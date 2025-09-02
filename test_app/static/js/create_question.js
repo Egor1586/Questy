@@ -1,5 +1,9 @@
 const createQuestionButton = document.querySelector(".button-create-question");
+<<<<<<< HEAD
 const questionDiv = document.querySelector(".test-question");
+=======
+
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
 const testQuestionDiv = document.querySelector(".test-question");
 
 createQuestionButton.addEventListener('click', function() {
@@ -8,6 +12,7 @@ createQuestionButton.addEventListener('click', function() {
     testQuestionDiv.innerHTML += 
             `<div class="question-block">
                 <div class="question-header">
+<<<<<<< HEAD
                     <div class="test-title">Введіть запитання: <input type="text" placeholder="Введіть питання"></div>
                 </div>
                 
@@ -23,6 +28,27 @@ createQuestionButton.addEventListener('click', function() {
 });
 
 questionDiv.addEventListener("click", function(event){
+=======
+                    <span>Питання 1</span>
+                    <button type="button" class="delete-question">Видалити питання?</button>
+                </div>
+
+                <label>Текст питання:</label>
+                <input type="text" name="question-text">
+
+                <div class="answers">
+                    <label>Варіанти відповідей:</label>
+                    <div class="answer-input">
+                        <input type="text" placeholder="Відповідь 1">
+                        <input type="radio" name="correct-answer-1"> Правильна
+                    </div>
+                </div>
+                <button type="button" class="add-answer">Додати відповідь</button>
+            </div>`
+});
+
+testQuestionDiv.addEventListener("click", function(event){
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
     if (event.target.classList.contains("delete-quiz")){
         event.target.closest(".question-block").remove(); 
     }

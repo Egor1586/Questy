@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+    align-items: flex-start; 
 }
 
 .graph-section, .profile-section, .tests-section {
@@ -26,23 +27,39 @@
 
 .graph-section {
     flex: 2;
+<<<<<<< HEAD
     height: 40vh;
+=======
+    height: 60vh;
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
 }
 
+.accuracy-chart-div{
+    width: 100%;
+    height: 100%;
+}
 
 .profile-section {
     flex: 1;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 
+<<<<<<< HEAD
     height: 40vh;
 
     border-radius: 10px;
     border: 2px dashed #a5d6a7;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+=======
+    border-radius: 10px;
+    border: 2px dashed #a5d6a7;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+
+    height: auto;        
+    max-height: 40vh;   
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
 }
 
 .edit-profile-btns {
@@ -111,4 +128,63 @@
 .chart-container {
     width: 90%;         
     height: 90%;
+}
+
+.top-section {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: stretch; 
+}
+
+.graph-section {
+    flex: 2;
+    height: 40vh; 
+}
+
+.profile-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    border-radius: 10px;
+    border: 2px dashed #a5d6a7;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+
+    padding: 10px;
+    overflow: hidden; 
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    width: 80%;
+    height: 80%;
+    justify-content: center;
+
+    transform: scale(1);
+}
+
+
+.profile-section .avatar {
+    width: 40%;  
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-section h3 {
+    font-size: clamp(1rem, 2.5vh, 2rem);
+}
+
+.profile-section p {
+    font-size: clamp(0.9rem, 2vh, 1.5rem);
+}
+
+.edit-profile-btns button {
+    padding: 0.8em 1.5em;
+    font-size: clamp(0.9rem, 2vh, 1.2rem);
 }

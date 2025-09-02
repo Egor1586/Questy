@@ -66,6 +66,63 @@ def render_new_quiz():
         ]
         }
     
+    data1= {
+        "topic": "Основи Python",
+        "description": "Тест на базові знання Python для початківців.",
+        "questions": [
+            {
+            "question_text": "Яка правильна команда для виводу тексту на екран у Python?",
+            "options": [
+                "echo('Hello World')",
+                "console.log('Hello World')",
+                "printf('Hello World')",
+                "print('Hello World')", 
+                "print('Hello World')2",
+                "print('Hello World')3"
+            ],
+            "correct_answer": "print('Hello World')"
+            },
+            {
+            "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
+            "options": [
+                "float",
+                "str"
+            ],
+            "correct_answer": "int"
+            },
+            {
+            "question_text": "Як позначається початок коментаря в Python?",
+            "options": [
+                "//",
+                "<!-- -->",
+                "/* */"
+            ],
+            "correct_answer": "#"
+            },
+            {
+            "question_text": "Який з наведених варіантів створює список у Python?",
+            "options": [
+                "(1, 2, 3)",
+                "{1, 2, 3}",
+                "<1, 2, 3>",
+                "[1, 2, 3]"
+            ],
+            "correct_answer": "[1, 2, 3]"
+            },
+            {
+            "question_text": "Як можна отримати довжину списку у Python?",
+            "options": [
+                "length(list)",
+                "count(list)",
+                "size(list)",
+                "len(list)",
+                "len(list)2"
+            ],
+            "correct_answer": "len(list)"
+            }
+        ]
+        }
+    
     if flask.request.method == "POST":   
         try:
             title = flask.request.form['title']

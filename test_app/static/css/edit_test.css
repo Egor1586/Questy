@@ -10,7 +10,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--bg-light);
+    /* background-color: var(--bg-light); */
+    background-color: hwb(120 82% 11% / 0.877);
     color: var(--text-dark);
 }
 

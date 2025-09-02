@@ -140,7 +140,7 @@ function renderResultTest(username, author_name, total_question, answers_per_que
     questionText.className = 'question-text';
     questionBlock.appendChild(questionText);
 
-    for (let answer_number = 0; answer_number < answers_per_question; answer_number++) {
+    for (let answer_number = 0; answer_number < list_answers[quiz_number].length; answer_number++) {
       const answerText = list_answers[quiz_number][answer_number];
 
       if (
