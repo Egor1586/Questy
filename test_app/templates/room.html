@@ -7,7 +7,6 @@
 {% block links %}
     <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/room.css') }}">
     <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/room_test_result.css') }}">
-    <link rel="stylesheet" href="{{ url_for('test_app.static', filename= 'css/author_result_question.css') }}">
 {% endblock %}
     
 {% block content %}
@@ -324,14 +323,14 @@
 
             const correct_answer = document.getElementById("author-correct-answer")
             correct_answer.textContent =`Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
-
+            
+            const newTime = document.getElementById("timer")
+            newTime.textContent =`${list_quiz[Number(state.slice(-1))+1].time}`
             
             console.log("clear chart")
             if (donatChart){
                 donatChart.destroy()
             }
-            //const chart= canvas.getContext('2d');
-            //chart.clearRect(0,0, canvas.width, canvas.height);
 
             socket.emit("next_question", {
                 room: room,

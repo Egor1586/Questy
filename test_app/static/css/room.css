@@ -359,6 +359,9 @@ main {
 }
 
 .question {
+    display: flex;
+    flex-direction: row;
+
     font-size: 2rem;
     font-weight: 700;
     text-align: center;

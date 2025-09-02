@@ -39,6 +39,11 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
     question.textContent = list_quiz[questionNumber].question_text;
     questionBlock.appendChild(question);
 
+    const timer = document.createElement("p");
+    timer.id= "timer"
+    timer.textContent = list_quiz[questionNumber].time;
+    questionBlock.appendChild(timer);
+
     const answersDiv = document.createElement("div");
     answersDiv.className = "answers";
 
@@ -94,4 +99,17 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
             }
         )
     }
+
+    const timerText= document.getElementById("timer")
+    
+    const coundown= setInterval(() =>{
+        time= parseInt(timerText.textContent);
+        timerText.textContent= --time;
+
+        if (time <= 0){
+            clearInterval(coundown);
+            timerText.textContent = "Час закінчений"
+        }
+
+    }, 1000);
 }
