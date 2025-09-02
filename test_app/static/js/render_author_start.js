@@ -185,6 +185,21 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
                 <li>Список користувачів: <strong>${lengthArrey}</strong></li>
                 <li>Всього учнів: <strong></strong>${lengthArrey}</li>
             </ul>
+            <p id="timer">${quiz.time}</p>
             `
-    })
+        const timerText= document.getElementById("timer")
+        
+
+        if (timerText){
+            const coundown= setInterval(() =>{
+                time= parseInt(timerText.textContent);
+                timerText.textContent= --time;
+            
+                if (time <= 0){
+                    clearInterval(coundown);
+                    timerText.textContent = "Час закінчений"
+                }        
+            }, 1000);
+        }
+    });
 }

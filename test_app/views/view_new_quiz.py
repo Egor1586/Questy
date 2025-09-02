@@ -9,62 +9,67 @@ from Project.render_page import render_page
 
 @render_page(template_name = 'new_quiz.html')
 def render_new_quiz():
-    data= {
+    data = {
         "topic": "Основи Python",
         "description": "Тест на базові знання Python для початківців.",
         "questions": [
             {
-            "question_text": "Яка правильна команда для виводу тексту на екран у Python?",
-            "options": [
-                "echo('Hello World')",
-                "console.log('Hello World')",
-                "printf('Hello World')",
-                "print('Hello World')"
-            ],
-            "correct_answer": "print('Hello World')"
+                "question_text": "Яка правильна команда для виводу тексту на екран у Python?",
+                "options": [
+                    "echo('Hello World')",
+                    "console.log('Hello World')",
+                    "printf('Hello World')",
+                    "print('Hello World')"
+                ],
+                "correct_answer": "print('Hello World')",
+                "time": 60
             },
             {
-            "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
-            "options": [
-                "float",
-                "str",
-                "bool",
-                "int"
-            ],
-            "correct_answer": "int"
+                "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
+                "options": [
+                    "float",
+                    "str",
+                    "bool",
+                    "int"
+                ],
+                "correct_answer": "int",
+                "time": 60
             },
             {
-            "question_text": "Як позначається початок коментаря в Python?",
-            "options": [
-                "//",
-                "<!-- -->",
-                "/* */",
-                "#"
-            ],
-            "correct_answer": "#"
+                "question_text": "Як позначається початок коментаря в Python?",
+                "options": [
+                    "//",
+                    "<!-- -->",
+                    "/* */",
+                    "#"
+                ],
+                "correct_answer": "#",
+                "time": 60
             },
             {
-            "question_text": "Який з наведених варіантів створює список у Python?",
-            "options": [
-                "(1, 2, 3)",
-                "{1, 2, 3}",
-                "<1, 2, 3>",
-                "[1, 2, 3]"
-            ],
-            "correct_answer": "[1, 2, 3]"
+                "question_text": "Який з наведених варіантів створює список у Python?",
+                "options": [
+                    "(1, 2, 3)",
+                    "{1, 2, 3}",
+                    "<1, 2, 3>",
+                    "[1, 2, 3]"
+                ],
+                "correct_answer": "[1, 2, 3]",
+                "time": 60
             },
             {
-            "question_text": "Як можна отримати довжину списку у Python?",
-            "options": [
-                "length(list)",
-                "count(list)",
-                "size(list)",
-                "len(list)"
-            ],
-            "correct_answer": "len(list)"
+                "question_text": "Як можна отримати довжину списку у Python?",
+                "options": [
+                    "length(list)",
+                    "count(list)",
+                    "size(list)",
+                    "len(list)"
+                ],
+                "correct_answer": "len(list)",
+                "time": 60
             }
         ]
-        }
+    }
     
     data1= {
         "topic": "Основи Python",
@@ -129,12 +134,12 @@ def render_new_quiz():
             description = flask.request.form['description']
             total_questions = flask.request.form['total_questions']
             answers_per_question= flask.request.form["answers_per_question"]
+            time= flask.request.form["time"]
             image_form = flask.request.files.get('image', None)
 
-            if not total_questions:
-                total_questions = 10
-            if not answers_per_question:
-                answers_per_question = 4
+            total_questions = total_questions or 10
+            answers_per_question = answers_per_question or 4
+            time= time or 20
             
             while True: 
                 test_code= random.randint(1000, 9999)
@@ -167,6 +172,7 @@ def render_new_quiz():
                     question_text = quizzes["question_text"],
                     answer_options = "%$№".join(answers_list),
                     correct_answer = quizzes["correct_answer"],
+                    time= quizzes["time"],
                     test_id = test.id             
                 )
                 db.session.add(quiz)

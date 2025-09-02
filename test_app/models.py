@@ -1,28 +1,29 @@
 from Project.database import db
 
 class Test(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key= True)
 
-    title = db.Column(db.String(100), nullable=True)
-    description = db.Column(db.String(200), nullable=True)
+    title = db.Column(db.String(100), nullable= True)
+    description = db.Column(db.String(200), nullable= True)
 
     total_questions = db.Column(db.Integer)
     answers_per_question = db.Column(db.Integer)
     test_code = db.Column(db.Integer)
-    author_name = db.Column(db.String(100), nullable=True)
-    created_date = db.Column(db.String(100), nullable=True)
+    author_name = db.Column(db.String(100), nullable= True)
+    created_date = db.Column(db.String(100), nullable= True)
 
-    image= db.Column(db.Boolean, nullable=True)
+    image= db.Column(db.Boolean, nullable= True)
 
-    quizes = db.relationship('Quiz', backref='test', cascade="all, delete-orphan")
+    quizes= db.relationship('Quiz', backref= 'test', cascade= "all, delete-orphan")
 
 
 class Quiz(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key= True)
 
-    question_text = db.Column(db.String(100), nullable=True)
-    answer_options = db.Column(db.String(300), nullable=True)
-    correct_answer = db.Column(db.String(100), nullable=True)
+    question_text = db.Column(db.String(100), nullable= True)
+    answer_options = db.Column(db.String(300), nullable= True)
+    correct_answer = db.Column(db.String(100), nullable= True)
+    time= db.Column(db.Integer, nullable= True)
     
     test_id = db.Column(db.Integer, db.ForeignKey('test.id'))
 
@@ -32,6 +33,7 @@ class Quiz(db.Model):
             "question_text": self.question_text,
             "answer_options": self.answer_options,
             "correct_answer": self.correct_answer,
+            "time": self.time,
             "test_id": self.test_id
         }
 
