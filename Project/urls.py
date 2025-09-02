@@ -44,10 +44,8 @@ test_app.add_url_rule(rule = '/delete_quiz<quiz_id>', view_func = delete_quiz_qu
 test_app.add_url_rule(rule = '/delete_code<test_id>', view_func = delete_code, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = '/create_code<test_id>', view_func = created_test, methods = ['GET', 'POST'])
 
-<<<<<<< HEAD
-test_app.add_url_rule(rule = '/result_test_online<id>', view_func = render_result_test_online, methods = ['GET', 'POST'])
-=======
+
 test_app.add_url_rule(rule = '/review_results<id>', view_func = render_review_results, methods = ['GET', 'POST'])
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3
+
 
 test_app.add_url_rule(rule = "/temporary_name<code>", view_func= render_temporary_name, methods = ['GET', 'POST'])

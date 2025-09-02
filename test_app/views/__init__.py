@@ -7,8 +7,5 @@ from .view_passing_tets import render_passing_test
 from .view_result_test import render_test_result
 from .view_temporary_name import render_temporary_name
 from .view_create_test import render_create_test
-<<<<<<< HEAD
-from .view_result_test_online import render_result_test_online
-=======
 from .view_review_results import render_review_results
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3
+

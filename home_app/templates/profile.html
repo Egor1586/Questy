@@ -244,17 +244,15 @@
                                         <p><strong>Опис: </strong>{{ test.description }}</p>
                                         <p><strong>Автор: </strong>{{ test.author_name }}</p>
                                         <p><strong>Код: </strong>{{ test.test_code }}</p>
-<<<<<<< HEAD
-                                        <a href="/result_test_online{{ score.id }}">
-=======
                                         <a href="/review_results{{ score.id }}">
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3
                                             <button>Переглянути</button>
                                         </a>
                                     {% endif %}
                                 {% endfor %}
                                 <p><strong>Результат: </strong>{{ score.accuracy }}</p>
                                 <p><strong>Дата: </strong>{{ score.date_complete }}</p>
+                                <p><strong>Час: </strong>{{ score.time_complete }}</p>
+                                
                             </div>
                         {% endfor %}
                     </div>
@@ -262,19 +260,20 @@
                     <div class="score-result">
                         {% for score in accuracy_sort %}
                             <div class="test-card">   
-                                {% for test in list_tests_sort %}
+                                {% for test in list_tests %}
                                     {% if test.id == score[2] %}
                                         <p><strong>Тест: </strong>{{ test.title }}</p>
                                         <p><strong>Опис: </strong>{{ test.description }}</p>
                                         <p><strong>Автор: </strong>{{ test.author_name }}</p>
                                         <p><strong>Код: </strong>{{ test.test_code }}</p>
-                                        <a href="/result_test_online{{ score[1] }}">
+                                        <a href="/review_results{{ score[1] }}">
                                             <button>Переглянути</button>
                                         </a>
                                     {% endif %}
                                 {% endfor %}
                                 <p><strong>Результат: </strong>{{ score[0] }}</p>
                                 <p><strong>Дата: </strong>{{ score[3] }}</p>
+                                <p><strong>Час: </strong>{{ score[4] }}</p>
                             </div>
                         {% endfor %}
                     </div>
