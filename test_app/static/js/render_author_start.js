@@ -153,13 +153,10 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     studInfoBox.id = 'stud-info-box'
     studInfoBox.className = 'stud-info-box'
 
-<<<<<<< HEAD
-=======
     const chartDiv = document.createElement('div')
     chartDiv.id = 'chart-div'
     chartDiv.className = 'chart-div'
 
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3
     const chartCanvas = document.createElement('canvas');
     chartCanvas.id = 'donat-chart'
     chartCanvas.className = 'donat-chart'
