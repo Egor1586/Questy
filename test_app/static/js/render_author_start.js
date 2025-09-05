@@ -153,12 +153,18 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     studInfoBox.id = 'stud-info-box'
     studInfoBox.className = 'stud-info-box'
 
+    const chartDiv = document.createElement('div')
+    chartDiv.id = 'chart-div'
+    chartDiv.className = 'chart-div'
+
     const chartCanvas = document.createElement('canvas');
     chartCanvas.id = 'donat-chart'
     chartCanvas.className = 'donat-chart'
     
     userInfo.appendChild(studInfoBox)
-    userInfo.appendChild(chartCanvas)
+
+    chartDiv.appendChild(chartCanvas)
+    userInfo.appendChild(chartDiv)
 
     userBlock.appendChild(userInfo)
 
@@ -179,6 +185,21 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
                 <li>Список користувачів: <strong>${lengthArrey}</strong></li>
                 <li>Всього учнів: <strong></strong>${lengthArrey}</li>
             </ul>
+            <p id="timer">${quiz.time}</p>
             `
-    })
+        const timerText= document.getElementById("timer")
+        
+
+        if (timerText){
+            const coundown= setInterval(() =>{
+                time= parseInt(timerText.textContent);
+                timerText.textContent= --time;
+            
+                if (time <= 0){
+                    clearInterval(coundown);
+                    timerText.textContent = "Час закінчений"
+                }        
+            }, 1000);
+        }
+    });
 }

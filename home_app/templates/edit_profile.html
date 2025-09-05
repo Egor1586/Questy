@@ -5,19 +5,24 @@
 {% endblock %}
 
 {% block links %}
-    <!-- <link rel = "stylesheet" href = "{{ url_for('test_app.static', filename='css/edit_head_test.css') }}"> -->
+    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/edit_profile.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="edit-question-form">
-        <form action="" method="POST" class="edit-form">
-            <h1>Редагувати iм`я</h1>
-            <div class="input-group">
-                <input type="text" name="name" placeholder="Введіть нове iм`я">
+    <div class="wrapper">
+        <form action="" method="POST" class="form">
+            <div class="container">
+                <div class="title-section">
+                    <h2 class="title">Редагувати iм`я</h2>
+                </div>
+                <div class="input-group">
+                    <label for="email" class="label-title">Введіть нове iм`я вашого профілю</label>
+                    <input type="text" name="name" placeholder="Нове iм`я " required class="input-email">
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="submit-btn">Пiдтвердити</button>
+                </div>
             </div>
-            
-            <button type="submit" class="edit-btn">Пiдтвердити</button>
-
         </form>
         
     </div>

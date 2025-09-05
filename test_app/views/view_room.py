@@ -274,15 +274,7 @@ def handle_message(data):
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
-    # BEST_SCORE= Score.query.filter_by(test_code= room).order_by(Score.accuracy.desc()).first()
-    
-    # averega_score= 0
-    # full_score= 0
-    # for score in SCORE_LIST:
-    #     full_score += score.accuracy
 
-    # averega_score= full_score/len(SCORE_LIST)
-    
     print(USER_LIST)
     print(SCORE_LIST)
 

@@ -48,7 +48,7 @@ def render_profile():
         print(tests_count, scores_count)
         for score in scores:
             accuracy.append(score.accuracy)
-            accuracy_sort.append([score.accuracy, score.id, score.test_id, score.date_complete])
+            accuracy_sort.append([score.accuracy, score.id, score.test_id, score.date_complete, score.time_complete])
             dates_complete.append(score.date_complete)
             if Test.query.filter_by(id= score.test_id).first() not in list_tests:
                 list_tests.append(Test.query.filter_by(id= score.test_id).first())
@@ -57,9 +57,8 @@ def render_profile():
         for id in accuracy_sort:
             if Test.query.filter_by(id= id[2]).first() not in list_tests_sort:
                 list_tests_sort.append(Test.query.filter_by(id= id[2]).first())
-        print(list_tests)
-        print(list_tests_sort)
         print(accuracy_sort)
+      
 
 
         scores = Score.query.filter_by(user_id= current_user.id).all()
@@ -72,11 +71,11 @@ def render_profile():
         if flask.request.method == 'POST':
             if flask.request.form.get('choice') != None:
                 selected_option[0] = (flask.request.form.get('choice'))
-                print(selected_option)
+                
             if flask.request.form.get('choice_test') != None:
                 selected_option_test[0] = (flask.request.form.get('choice_test'))
-                print(selected_option_test)
-            print(selected_option)
+                
+           
             print(selected_option_test)
     
         dates_complete.sort()
@@ -95,7 +94,9 @@ def render_profile():
                 "selected_option": selected_option,
                 "selected_option_test": selected_option_test,
                 'wt_graph': '1',
-                'user': user
+                'user': user,
+                "list_tests_sort": list_tests_sort,
+                "accuracy_sort": accuracy_sort
             }
         
         elif selected_option[0] == 'graph_2':
@@ -146,7 +147,9 @@ def render_profile():
                     'list_tests': list_tests,
                     "selected_option": selected_option,
                     "selected_option_test": selected_option_test,
-                    'user': user
+                    'user': user,
+                    "list_tests_sort": list_tests_sort,
+                    "accuracy_sort": accuracy_sort
                     }
             
         elif selected_option[0] == 'graph_4':
@@ -174,7 +177,9 @@ def render_profile():
                     'list_tests': list_tests,
                     "selected_option": selected_option,
                     "selected_option_test": selected_option_test,
-                    'user': user
+                    'user': user,
+                    "list_tests_sort": list_tests_sort,
+                    "accuracy_sort": accuracy_sort
                     }
     else:
         message = "Ви не авторизовані"

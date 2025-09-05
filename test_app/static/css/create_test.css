@@ -10,27 +10,29 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--bg-light);
+    /* background-color: var(--bg-light); */
+    background-color: hwb(120 82% 11% / 0.877);
     color: var(--text-dark);
-}
-
-main {
-    display: flex;
-    height: inherit;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    margin: auto;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow);
 }
 
-h1, h3{
-    color: var(--primary-color1);
+h1 {
+    text-align: center;
+    color: var(--green-dark);
+    margin-bottom: 20px;
 }
 
+<<<<<<< HEAD
 h1{
     margin-top: 3vh;
 }
@@ -39,11 +41,28 @@ h1{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+=======
+label {
+    font-weight: 600;
+    display: block;
+    margin: 10px 0 6px;
+}
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
 
+input[type="text"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    
+    border: 1px solid var(--green-light);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.question-block {
     background-color: var(--bg-aside);
     border: 1px solid var(--green-light);
-
     border-radius: 10px;
+<<<<<<< HEAD
     margin-top: 15px;
     padding: 20px;
     margin-bottom: 20px;
@@ -102,58 +121,90 @@ h1{
     width: 25vw;
     min-height: 15vh;
 }
+=======
+    padding: 15px;
+
+    margin-top: 20px;
+    box-shadow: 0 2px 5px var(--shadow);
+}
+
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
 .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
+    margin-bottom: 10px;
     font-weight: bold;
-    margin-bottom: 10px;
-}
-.question-text {
-    margin-bottom: 15px;
-}
-.answer {
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 15px;
-    border-left: 5px solid transparent;
-}
-.correct {
-    background-color: var(--green-light);
-    border-left-color: var(--green-main);
-}
-.incorrect {
-    background-color: #ffe6e6;
-    border-left-color: rgb(238, 72, 72);
+    color: var(--green-dark);
 }
 
+<<<<<<< HEAD
 
 .delete-quiz {
     background-color: white;
+=======
+.delete-question {
+    background: none;
+    border: none;
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3
     color: rgb(233, 96, 96);
-    font-weight: 600;
-    border: none;
-    border-radius: 6px;
-    padding-bottom: 5px;
+    cursor: pointer;
     font-size: 14px;
-    cursor: pointer;
-    height: fit-content;
+    font-weight: 600;
 }
 
-.submit-button {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 12px 20px;
-    font-size: 16px;
+.answers {
+    margin-top: 10px;
+}
+
+
+.answer-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.answer-input input[type="text"] {
+    flex: 1;
+}
+
+
+.add-answer {
+    background-color: var(--green-main);
     border: none;
+    color: white;
+    padding: 8px 14px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
+.add-answer:hover {
+    background-color: var(--green-dark);
+}
+
+.button-create-question,
+.submit-button {
+    background-color: var(--green-dark);
+    border: none;
+    width: 100%;
+    padding: 14px 36px;
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    margin-top: 20px;
+}
+
+
+.button-create-question:hover,
 .submit-button:hover {
+<<<<<<< HEAD
     background-color: var(--accent-color);
 }
 
@@ -184,3 +235,8 @@ background-color: #3a803a;
     background-color: #4caf50;
     transform: translateY(-1px);
 }
+=======
+    background-color: var(--green-main);
+    transform: translateY(-2px);
+}
+>>>>>>> a588940606dcbcc2c774722489872e51750c39f3

@@ -46,7 +46,9 @@
                         <div class="chart-container">
 
                             {% if dates_complete and accuracy and wt_graph == '1' %}
-                                <canvas id="accuracyChart" width="1400" height="450"></canvas>
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChart"></canvas>
+                                </div>
 
                                 <script>
                                     
@@ -72,7 +74,8 @@
                                             }]
                                         },
                                         options: {
-                                            responsive: false,
+                                            responsive: true,
+                                            maintainAspectRadio: false,
                                             plugins: {
                                                 title: {
                                                     display: true,
@@ -89,7 +92,9 @@
                             {% endif %}
 
                             {% if dates_complete and wt_graph == 'd_cmpl' %}
-                                <canvas id="accuracyChart" width="1400" height="450"></canvas>
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChart"></canvas>
+                                </div>
                             
                                 <script>
                                     console.log('d_cmpl')
@@ -116,7 +121,8 @@
                                             }]
                                         },
                                         options: {
-                                            responsive: false,
+                                            responsive: true,
+                                            maintainAspectRadio: false,
                                             plugins: {
                                                 title: {
                                                     display: true,
@@ -134,7 +140,9 @@
                             {% endif %}
 
                             {% if dates_complete and accuracy and flag_graph == 'flag_graph'  %}
-                                <canvas id="accuracyChart" width="1400" height="450"></canvas>
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChart"></canvas>
+                                </div>
 
                                 <script>
                                     
@@ -160,7 +168,8 @@
                                             }]
                                         },
                                         options: {
-                                            responsive: false,
+                                            responsive: true,
+                                            maintainAspectRadio: false,
                                             plugins: {
                                                 title: {
                                                     display: true,
@@ -236,11 +245,15 @@
                                         <p><strong>Опис: </strong>{{ test.description }}</p>
                                         <p><strong>Автор: </strong>{{ test.author_name }}</p>
                                         <p><strong>Код: </strong>{{ test.test_code }}</p>
-                                        <button>Переглянути</button>
+                                        <a href="/review_results{{ score.id }}">
+                                            <button>Переглянути</button>
+                                        </a>
                                     {% endif %}
                                 {% endfor %}
                                 <p><strong>Результат: </strong>{{ score.accuracy }}</p>
                                 <p><strong>Дата: </strong>{{ score.date_complete }}</p>
+                                <p><strong>Час: </strong>{{ score.time_complete }}</p>
+                                
                             </div>
                         {% endfor %}
                     </div>
@@ -248,17 +261,20 @@
                     <div class="score-result">
                         {% for score in accuracy_sort %}
                             <div class="test-card">   
-                                {% for test in list_tests_sort %}
+                                {% for test in list_tests %}
                                     {% if test.id == score[2] %}
                                         <p><strong>Тест: </strong>{{ test.title }}</p>
                                         <p><strong>Опис: </strong>{{ test.description }}</p>
                                         <p><strong>Автор: </strong>{{ test.author_name }}</p>
                                         <p><strong>Код: </strong>{{ test.test_code }}</p>
-                                        <button>Переглянути</button>
+                                        <a href="/review_results{{ score[1] }}">
+                                            <button>Переглянути</button>
+                                        </a>
                                     {% endif %}
                                 {% endfor %}
                                 <p><strong>Результат: </strong>{{ score[0] }}</p>
                                 <p><strong>Дата: </strong>{{ score[3] }}</p>
+                                <p><strong>Час: </strong>{{ score[4] }}</p>
                             </div>
                         {% endfor %}
                     </div>

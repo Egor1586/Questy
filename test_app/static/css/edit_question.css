@@ -9,7 +9,8 @@
 }
 
 .edit-question-form {
-    background-color: var(--bg-light);
+    /* background-color: var(--bg-light); */
+    background-color: hwb(120 82% 11% / 0.877);
     margin: 30px;
     padding: 20px;
     border-radius: 16px;

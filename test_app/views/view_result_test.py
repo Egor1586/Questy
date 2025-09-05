@@ -29,7 +29,8 @@ def render_test_result():
                 user_answers_list.append(answer)
         
         for number, quiz in enumerate(quizzes_list):
-            str_user_answers += user_answers_list[number]
+            str_user_answers += f"|{user_answers_list[number]}|"
+            
             print(quiz.correct_answer, user_answers_list[number])
             if quiz.correct_answer == user_answers_list[number]:
                 count_correct_answers += 1
