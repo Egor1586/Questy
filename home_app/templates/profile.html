@@ -10,12 +10,12 @@
 
 {% block content %}
     {% if is_authorization %}
-        <div class="container-profile">
+            <div class="container-profile">
             <div class="top-section">
                 <div class="graph-section">
                     <div class="dropdown">
                         <label for="chartType">Вибір графіка:</label>
-                        <form action="" method="post" class="score-form">
+                        <form action="" method="POST" class="score-form">
                             <select name="choice" id="choice" onchange="saveSelectedValueChart()">
                                 <option value="graph_1" selected>Graph 1 </option>
                                 <option value="graph_2">Graph 2</option>
@@ -48,141 +48,91 @@
                                 <div class="accuracy-chart-div">                          
                                     <canvas id="accuracyChart"></canvas>
                                 </div>
-
-                                <script>
-                                    
-                                    const dates_complete = {{ dates_complete | tojson }};
-                                    const accuracy = {{ accuracy | tojson }};
-
-                                    const ctx = document.getElementById('accuracyChart').getContext('2d');
-
-                                    new Chart(ctx, {
-                                        type: 'line',
-                                        data: {
-                                            labels: dates_complete,
-                                            datasets: [{
-                                                label: 'Точність (%)',
-                                                data: accuracy,
-                                                fill: false,
-                                                borderColor: 'rgba(75, 192, 192, 1)',
-                                                backgroundColor: 'rgba(75, 192, 192, 0.3)',
-                                                borderWidth: 2,
-                                                tension: 0.2,
-                                                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-                                                pointRadius: 5
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRadio: false,
-                                            plugins: {
-                                                title: {
-                                                    display: true,
-                                                    text: 'Графік точності по датах'
-                                                },
-                                                tooltip: {
-                                                    mode: 'index',
-                                                    intersect: false
-                                                }
-                                            }
-                                        }
-                                    });
-                                </script>
                             {% endif %}
 
                             {% if dates_complete and wt_graph == 'd_cmpl' %}
-                                <div class="accuracy-chart-div">                          
-                                    <canvas id="accuracyChart"></canvas>
+                                <div class="dates_cmpl-chart-div">                          
+                                    <canvas id="datesCompleteChart"></canvas>
                                 </div>
+                            {% endif %}
+
+                            {% if dates_complete and accuracy and flag_graph == 'flag_graph' %}
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChartWeek"></canvas>
+                                </div>
+                            {% endif %}
+
+                            {% if dates_complete and accuracy and flag_graph == 'month' %}
+                                <div class="accuracy-chart-div">                          
+                                    <canvas id="accuracyChartMonth"></canvas>
+                                </div>
+                            {% endif %}
+
+                            <script>
+                                function graphs(ctx, xCor, yCor, label, text) {
+                                    new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: xCor,
+                                            datasets: [{
+                                                label: label,
+                                                data: yCor,
+                                                fill: false,
+                                                borderColor: 'rgba(75, 192, 192, 1)',
+                                                backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                                                borderWidth: 2,
+                                                tension: 0.2,
+                                                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                                                pointRadius: 5
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                title: {
+                                                    display: true,
+                                                    text: text
+                                                },
+                                                tooltip: {
+                                                    mode: 'index',
+                                                    intersect: false
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+
+                                const dates_complete = {{ dates_complete | tojson }};
+                                const accuracy = {{ accuracy | tojson }};
+                                const count_cmpl_quiz = {{ count_cmpl_quiz | tojson }};
+
+                                const accuracyCanvas = document.getElementById('accuracyChart');
+                                if (accuracyCanvas) {
+                                    const ctx1 = accuracyCanvas.getContext('2d');
+                                    graphs(ctx1, dates_complete, accuracy, 'Точність (%)', 'Графік точності за датами');
+                                }
+
+                                const datesCompleteCanvas = document.getElementById('datesCompleteChart');
+                                if (datesCompleteCanvas) {
+                                    const ctx2 = datesCompleteCanvas.getContext('2d');
+                                    graphs(ctx2, dates_complete, count_cmpl_quiz, 'Виконані тести', 'Графік активності');
+                                }
+
+                                const accuracyChartWeek = document.getElementById('accuracyChartWeek')
+                                if (accuracyChartWeek) {
+                                    const ctx3 = accuracyChartWeek.getContext('2d');
+                                    graphs(ctx3, dates_complete, accuracy, 'Виконані тести за тиждень', 'Графік точності за датами');
+                                }
+
+                                const accuracyChartMonth = document.getElementById('accuracyChartMonth')
+                                if (accuracyChartMonth){
+                                    const ctx4 = accuracyChartMonth.getContext('2d');
+                                    graphs(ctx4, dates_complete, accuracy, 'Виконані тести за місяць', 'Графік точності за датами');
+                                }
+
+                            </script>
                             
-                                <script>
-                                    console.log('d_cmpl')
-                                        const ctx = document.getElementById('datesCompleteChart').getContext('2d');
-                                        
-                                        const dates_complete = {{ dates_complete | tojson }};
-                                        const count_cmpl_quiz = {{ count_cmpl_quiz | tojson }};
-
-
-                                    new Chart(ctx, {
-                                        type: 'line',
-                                        data: {
-                                            labels: dates_complete,
-                                            datasets: [{
-                                                label: 'Виконанні тести ',
-                                                data: count_cmpl_quiz,
-                                                fill: false,
-                                                borderColor: 'rgba(75, 192, 192, 1)',
-                                                backgroundColor: 'rgba(75, 192, 192, 0.3)',
-                                                borderWidth: 2,
-                                                tension: 0.2,
-                                                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-                                                pointRadius: 5
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRadio: false,
-                                            plugins: {
-                                                title: {
-                                                    display: true,
-                                                    text: 'Графік активності'
-                                                },
-                                                tooltip: {
-                                                    mode: 'index',
-                                                    intersect: false
-                                                }
-                                            }
-                                        }
-                                    });
-
-                                </script>
-                            {% endif %}
-
-                            {% if dates_complete and accuracy and flag_graph == 'flag_graph'  %}
-                                <div class="accuracy-chart-div">                          
-                                    <canvas id="accuracyChart"></canvas>
-                                </div>
-
-                                <script>
-                                    
-                                    const dates_complete = {{ dates_complete | tojson }};
-                                    const accuracy = {{ accuracy | tojson }};
-
-                                    const ctx = document.getElementById('accuracyChartWeek').getContext('2d');
-
-                                    new Chart(ctx, {
-                                        type: 'line',
-                                        data: {
-                                            labels: dates_complete,
-                                            datasets: [{
-                                                label: 'Точність (%)',
-                                                data: accuracy,
-                                                fill: false,
-                                                borderColor: 'rgba(75, 192, 192, 1)',
-                                                backgroundColor: 'rgba(75, 192, 192, 0.3)',
-                                                borderWidth: 2,
-                                                tension: 0.2,
-                                                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-                                                pointRadius: 5
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRadio: false,
-                                            plugins: {
-                                                title: {
-                                                    display: true,
-                                                    text: 'Графік точності по датах'
-                                                },
-                                                tooltip: {
-                                                    mode: 'index',
-                                                    intersect: false
-                                                }
-                                            }
-                                        }
-                                    });
-                                </script>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -206,7 +156,6 @@
                     </div>
                 </div>
             </div>
-
             
             <div class="tests-section">
                 <form action="" method="post" class="score-form">
@@ -220,11 +169,11 @@
                         const selectElementTest = document.getElementById("choice_test");
 
                         function saveSelectedValueScore(){
-                            localStorage.setItem('selectedOption', selectElementTest.value)
+                            localStorage.setItem('selectedOptionScore', selectElementTest.value)
                         }
                         
                         function LoadSelectionScore(element){
-                            const savedValue = localStorage.getItem('selectedOption')
+                            const savedValue = localStorage.getItem('selectedOptionScore')
                             if (savedValue) {
                                 selectElementTest.value = savedValue;
                             }
