@@ -3,14 +3,14 @@ from Project.database import db
 class Test(db.Model):
     id = db.Column(db.Integer, primary_key= True)
 
-    title = db.Column(db.String(100), nullable= True)
-    description = db.Column(db.String(200), nullable= True)
+    title = db.Column(db.String(100), nullable= False)
+    description = db.Column(db.String(200), nullable= False)
 
-    total_questions = db.Column(db.Integer)
-    answers_per_question = db.Column(db.Integer)
-    test_code = db.Column(db.Integer)
-    author_name = db.Column(db.String(100), nullable= True)
-    created_date = db.Column(db.String(100), nullable= True)
+    total_questions = db.Column(db.Integer, nullable= False)
+    answers_per_question = db.Column(db.Integer, nullable= True)
+    test_code = db.Column(db.Integer, nullable= True)
+    author_name = db.Column(db.String(100), nullable= False)
+    created_date = db.Column(db.String(100), nullable= False)
 
     image= db.Column(db.Boolean, nullable= True)
 
@@ -20,7 +20,7 @@ class Test(db.Model):
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key= True)
 
-    question_text = db.Column(db.String(100), nullable= True)
+    question_text = db.Column(db.String(100), nullable= False)
     answer_options = db.Column(db.String(300), nullable= True)
     correct_answer = db.Column(db.String(100), nullable= True)
     time= db.Column(db.Integer, nullable= True)
@@ -40,7 +40,7 @@ class Quiz(db.Model):
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
-    test_id= db.Column(db.Integer, nullable= True)
+    test_id= db.Column(db.Integer, nullable= False)
     test_code = db.Column(db.String(10), nullable= False)
 
     user_list = db.Column(db.String(300), nullable= False)

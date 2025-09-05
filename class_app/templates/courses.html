@@ -1,0 +1,52 @@
+{% extends "class.html" %}
+
+{% block calss_title %}
+    Create Test
+{% endblock %}
+
+{% block class_links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/courses.css') }}">
+{% endblock %}
+
+{% block class_content %}
+    <div class="container-classroom">
+        <div class="classroom-content">
+            <div class="course-header">
+                <h2>Course name</h2>
+            </div>
+
+
+            <div class="course-tasks">
+                <div class="task">
+                    <h3>Завдання 1</h3>
+                    <p>Опис завдання 1...</p>
+                </div>
+
+                <div class="task">
+                    <h3>Завдання 1</h3>
+                    <p>Опис завдання 2...</p>
+                </div>
+
+                <div class="task">
+                    <h3>Завдання 1</h3>
+                    <p>Опис завдання 3...</p>
+                </div>
+
+                <div class="task">
+                    <h3>Завдання 1</h3>
+                    <p>Опис завдання 4...</p>
+                </div>
+
+                <div class="task">
+                    <h3>Завдання 1</h3>
+                    <p>Опис завдання 3...</p>
+                </div>
+
+                <div class="task">
+                    <h3>Завдання 1</h3>
+                    <p>Опис завдання 4...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

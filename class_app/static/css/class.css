@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e8fbe8;
+}
+
+.main{
+    display: flex;
+    width: 100vw;
+    height: 84vh;
+}
+
+.container-classroom {
+    display: flex;
+    width: 100vw;
+    height: 84vh;
+}
+
+.container-classroom {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar-classroom {
+    width: 220px;
+    background: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+}
+
+.classroom-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #aaa;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.classroom-username {
+    font-weight: bold;
+    margin: 0;
+}
+
+.classroom-email {
+    font-size: 1em;
+    color: #777;
+    margin: 5px 0 20px 0;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.page a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.05rem;
+}
+
+.page:hover {
+    background: #d9e9dc;
+    color: #2e7d32;
+    transition: 0.3s ease;
+}
+
+/* меню */
+.menu {
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-body .no-tasks{
+    color: #777;
+    font-style: italic;
+    text-align: center;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.02rem;
+}
+
+.menu ul li a:hover {
+    color: #008000;
+}

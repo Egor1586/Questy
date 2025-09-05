@@ -1,0 +1,51 @@
+{% extends "class.html" %}
+
+{% block calss_title %}
+    Create Test
+{% endblock %}
+
+{% block class_links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/class_page.css') }}">
+{% endblock %}
+
+{% block class_content %}
+        <div class="content">
+            <div class="card with-tasks">
+                <div class="card-header">Назва курсу <br><span>Автор</span></div>
+                <div class="card-body">
+                    <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                    <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                    <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                </div>
+
+                <div class="card-footer">
+                    <a href="/class_courses1">
+                        <button class="start-btn">Перейти до курсу</button>
+                    </a>
+                </div>
+            </div>
+
+            <!-- <div class="card no-tasks">
+                <div class="card-header">Назва курсу <br><span>Автор</span></div>
+                <div class="card-body">
+                    <p class="no-tasks">Вчитель ще не задав завдань. Зачекайте нових...</p>
+                </div>
+
+                <div class="card-footer">
+                    <button class="start-btn">Перейти до курсу</button>
+                </div>
+            </div>
+
+            <div class="card no-tasks">
+                <div class="card-header">Назва курсу <br><span>Автор</span></div>
+                <div class="card-body">
+                    <p class="no-tasks">Всі завдання виконані. Зачекайте нових...</p>
+                </div>
+
+                <div class="card-footer">
+                    <button class="start-btn">Перейти до курсу</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+{% endblock %}

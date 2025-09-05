@@ -19,8 +19,10 @@
 
             <nav class="nav-links">
                 <a href="/" class="{% if request.path == '/' %}active{% endif %}">HOME</a>
-                <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">PROFILE</a>         
-                <!-- <a href="/score" class="{% if request.path == '/score/' %}active{% endif %}">SCORE</a> -->
+                <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">PROFILE</a>      
+                {% if is_authorization %}
+                    <a href="/class_page" class="{% if request.path == '/class_page' %}active{% endif %}">CLASS</a>
+                {% endif %}   
                 {% if is_teacher %}
                     <a href="/quizzes" class="{% if request.path == '/quizzes/' %}active{% endif %}">QUIZ</a>
                 {% endif %}
