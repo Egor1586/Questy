@@ -182,7 +182,8 @@ hr {
 
 .test-card {
     display: block; 
-    width: 290px;
+    width: 13vw;
+    height: 32vh;
     border-radius: 15px;
     overflow: hidden;
     flex-shrink: 0;

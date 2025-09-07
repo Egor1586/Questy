@@ -7,8 +7,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable= False)
     email = db.Column(db.String(50), nullable= False)
     password = db.Column(db.String(20), nullable= False)
-    # зачем паспорт конфирм
-    password_confirmation = db.Column(db.String(20), nullable= False)
     is_teacher = db.Column(db.Boolean)
     is_admin= db.Column(db.Boolean, default= 0)
 
