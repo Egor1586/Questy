@@ -79,7 +79,6 @@ input[type="text"], input[type="file"] {
     margin-top: 10px;
 }
 
-
 .answer-input {
     display: flex;
     align-items: center;
@@ -90,7 +89,6 @@ input[type="text"], input[type="file"] {
 .answer-input input[type="text"] {
     flex: 1;
 }
-
 
 .add-answer {
     background-color: var(--green-main);

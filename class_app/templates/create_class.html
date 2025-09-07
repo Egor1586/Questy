@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+    New quiz
+{% endblock %}
+
+{% block links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/create_class.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Створіть вікторину за лічені хвилини за допомогою штучного інтелекту</h1>
+    <h3>Questy – це найпростіший спосіб зробити вікторини</h3>
+
+    <section class="create-test-page">
+        <h2 class="page-title">Створити новий тест</h2>
+
+        <form class="test-form" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="test-title">Class title</label>
+                <input type="text" id="class-title" name="title" placeholder="Введіть тему тесту" required>
+            </div>
+      
+            <div class="form-group">
+                <label for="test-description">Class description</label>
+                <textarea id="class-description" name="description" placeholder="Опишіть свій тест" rows="3"></textarea>
+            </div>
+        
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="test-description">Class color</label>
+                    <textarea id="class-color" name="description" placeholder="Опишіть свій тест" rows="3"></textarea>
+                </div>
+            </div>
+        
+            <button type="submit" class="submit-button">Create class</button>
+        </form>
+      </section>
+      
+{% endblock %}
