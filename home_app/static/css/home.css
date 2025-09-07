@@ -31,6 +31,7 @@ main {
 
     background-color: rgba(115, 159, 125, 0.51);
     width: 95vw;
+    height: 38vh;
     min-height: fit-content;
     border-radius: 5px; 
     box-shadow: 2px 5px 2px #080a082c;

@@ -9,8 +9,6 @@
 {% endblock %}
 
 {% block content %}
-<script src="{{ url_for('test_app.static', filename= 'js/build_test.js') }}"></script>
-
     <div class="container">
         <h1>Новий тест</h1>
         
@@ -32,4 +30,5 @@
     </div>
 
     <script src="{{ url_for('test_app.static', filename= 'js/create_question.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/build_test.js') }}"></script>
 {% endblock %}

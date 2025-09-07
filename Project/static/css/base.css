@@ -112,6 +112,14 @@ header{
     left: auto;
 }
 
+.active{
+    text-decoration: underline !important;
+    text-decoration-color: #333;
+    text-decoration-style: dotted;
+    text-underline-offset: 3.5px;
+    text-decoration-thickness: 5px;
+}
+
 .auth-buttons {
     display: flex;
     align-items: center;
