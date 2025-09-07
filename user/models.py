@@ -1,6 +1,12 @@
 from flask_login import UserMixin
 from Project.database import db
 
+class_user= db.Table(
+    "class_user",
+    db.Column("class_id", db.Integer, db.ForeignKey("classes.id")),
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"))
+)
+    
 class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key= True)
@@ -10,10 +16,11 @@ class User(db.Model, UserMixin):
     is_teacher = db.Column(db.Boolean)
     is_admin= db.Column(db.Boolean, default= 0)
 
+    classes= db.relationship('Classes', secondary= class_user, back_populates='users')
+
     def __repr__(self):
         return f'User: {self.username}'
     
-
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -31,3 +38,33 @@ class Score(db.Model):
 
     user= db.relationship('User', backref='scores')
     test= db.relationship('Test', backref='scores')
+
+class Classes(db.Model):
+    id = db.Column(db.Integer, primary_key= True)
+
+    title = db.Column(db.String(100), nullable= False)
+    description = db.Column(db.String(200), nullable= False)
+
+    class_code = db.Column(db.String(100), nullable= False)
+    created_date = db.Column(db.String(100), nullable= False)
+
+    class_color = db.Column(db.String(100), nullable= False)
+
+    teacher_id= db.relationship(db.Integer, db.ForeignKey("user.id"))
+    
+    tasks= db.relationship('Task', backref= 'classes', cascade= "all, delete-orphan")
+
+    users= db.relationship('User', secondary= class_user, back_populates= "classes")
+
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key= True)
+
+    title = db.Column(db.String(100), nullable= False)
+    description = db.Column(db.String(200), nullable= False)
+
+    class_id= db.Column(db.Integer, db.ForeignKey("classes.id"))
+    test_id= db.Column(db.Integer, db.ForeignKey("test.id"), nullable= True)
+    image= db.Column(db.Boolean, default= False)
+
+    test= db.relationship("Test", backref="tasks")

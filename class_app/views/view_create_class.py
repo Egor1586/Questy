@@ -2,7 +2,7 @@ import flask, random, datetime, string
 
 from flask_login import current_user
 from Project.database import db
-from ..models import Classes
+from user.models import Classes
 
 from Project.render_page import render_page
 
@@ -30,7 +30,7 @@ def render_create_class():
                 title= title,
                 description= description,
                 class_code = code,
-                author_name = current_user.username,
+                author_name = current_user.id,
                 created_date= datetime.date.today(),
                 class_color= color
             )
@@ -38,7 +38,7 @@ def render_create_class():
             db.session.add(CLASS)
             db.session.commit()
 
-            return flask.redirect(location = '/quizzes')
+            return flask.redirect(location = '/class_page')
 
     except Exception as error:
         print(error)
