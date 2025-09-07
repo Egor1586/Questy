@@ -38,7 +38,7 @@ def render_create_class():
             db.session.add(CLASS)
             db.session.commit()
 
-            return flask.redirect(location = '/quizzes')
+            return flask.redirect(location = '/class_page')
 
     except Exception as error:
         print(error)

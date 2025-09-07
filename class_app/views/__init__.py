@@ -1,3 +1,4 @@
 from .view_courses import render_class_courses
 from .view_class import render_class_page
 from .view_create_class import render_create_class
+from .view_join_class import render_join_class

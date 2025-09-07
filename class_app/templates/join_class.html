@@ -1,0 +1,18 @@
+{% extends "class.html" %}
+
+{% block calss_title %}
+    Join class
+{% endblock %}
+
+{% block class_links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/join_class.css') }}">
+{% endblock %}
+
+{% block class_content %}
+    join_class
+    <form action=""method = "POST">
+        <input type="text" name="code" placeholder="Введіть код">
+        <button type="submit">join class</button>
+    </form>
+    
+{% endblock %}
