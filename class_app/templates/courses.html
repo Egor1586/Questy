@@ -12,41 +12,26 @@
     <div class="container-classroom">
         <div class="classroom-content">
             <div class="course-header">
-                <h2>Course name</h2>
+                <h2>{{ class.title}}</h2>
             </div>
 
-
-            <div class="course-tasks">
-                <div class="task">
-                    <h3>Завдання 1</h3>
-                    <p>Опис завдання 1...</p>
+            {% for task in taskes_list %}
+                <div class="course-tasks">
+                    <div class="task">
+                        <h3>{{ task.title }}</h3>
+                        <p>{{ task.description }}</p>
+                        {% if username == class.teacher.username %}
+                            <a href="/result_task{{ task.test_id }}">   
+                                <p>Результати користувачів класу</p>
+                            </a>
+                        {% else %}
+                            <a href="/passing_test?test_id={{ task.test_id }}&question_number= 0">   
+                                <p>Пройти тест</p>
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
-
-                <div class="task">
-                    <h3>Завдання 1</h3>
-                    <p>Опис завдання 2...</p>
-                </div>
-
-                <div class="task">
-                    <h3>Завдання 1</h3>
-                    <p>Опис завдання 3...</p>
-                </div>
-
-                <div class="task">
-                    <h3>Завдання 1</h3>
-                    <p>Опис завдання 4...</p>
-                </div>
-
-                <div class="task">
-                    <h3>Завдання 1</h3>
-                    <p>Опис завдання 3...</p>
-                </div>
-
-                <div class="task">
-                    <h3>Завдання 1</h3>
-                    <p>Опис завдання 4...</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

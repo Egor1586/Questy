@@ -22,7 +22,8 @@ body {
 }
 
 .sidebar-classroom {
-    width: 220px;
+    width: 12vw;
+    min-width: 220px;
     background: #fff;
     padding: 20px;
     display: flex;

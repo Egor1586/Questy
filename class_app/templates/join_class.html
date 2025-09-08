@@ -1,0 +1,29 @@
+{% extends "class.html" %}
+
+{% block calss_title %}
+    Join class
+{% endblock %}
+
+{% block class_links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/join_class.css') }}">
+{% endblock %}
+
+{% block class_content %}
+    <div class="wraper">
+        <div class="container">
+            <div class="title-section-1">
+                <h2 class="title">Приєднуйтесь до класу</h2>
+                <p class="par-1">Ми надіслали код на вашу електронну пошту для підтвердження пароля</p>
+            </div>
+            <form action="" class="form" method="POST">
+                <div class="input-group">
+                    <input type="text" name="code" placeholder="Введіть код" required class="input-code">
+                </div>
+    
+                <div class="input-group">
+                    <button class="submit-btn" type="submit">Приєднатися до класу</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

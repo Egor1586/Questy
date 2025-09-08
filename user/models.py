@@ -50,7 +50,8 @@ class Classes(db.Model):
 
     class_color = db.Column(db.String(100), nullable= False)
 
-    teacher_id= db.relationship(db.Integer, db.ForeignKey("user.id"))
+    teacher_id= db.Column(db.Integer, db.ForeignKey("user.id"))
+    teacher= db.relationship("User", backref= "classes_created")
     
     tasks= db.relationship('Task', backref= 'classes', cascade= "all, delete-orphan")
 

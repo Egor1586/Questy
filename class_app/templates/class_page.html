@@ -10,42 +10,51 @@
 
 {% block class_content %}
         <div class="content">
-            <div class="card with-tasks">
-                <div class="card-header">Назва курсу <br><span>Автор</span></div>
-                <div class="card-body">
-                    <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
-                    <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
-                    <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
-                </div>
+            {% if is_teacher%}
+                <h2>Curated classes</h2>
+                
+                {% for class in my_classes_list %}             
+                    <div class="card with-tasks">
+                        <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span></div>
+                        <div class="card-body">
+                            <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                            <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                            <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                        </div>
+        
+                        <div class="card-footer">
+                            <a href="/class_courses{{ class.id }}">
+                                <button class="start-btn">Перейти до курсу</button>
+                            </a>
+                            <a href="/create_task{{ class.id }}">
+                                <button class="start-btn">Створити завдання</button>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
 
-                <div class="card-footer">
-                    <a href="/class_courses1">
-                        <button class="start-btn">Перейти до курсу</button>
-                    </a>
-                </div>
-            </div>
+                <br>
 
-            <!-- <div class="card no-tasks">
-                <div class="card-header">Назва курсу <br><span>Автор</span></div>
-                <div class="card-body">
-                    <p class="no-tasks">Вчитель ще не задав завдань. Зачекайте нових...</p>
-                </div>
+            {% endif %}
+                
+            <h2>My classes</h2>
 
-                <div class="card-footer">
-                    <button class="start-btn">Перейти до курсу</button>
+            {% for class in classes_list %}             
+                <div class="card with-tasks">
+                    <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span></div>
+                    <div class="card-body">
+                        <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                        <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                        <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                    </div>
+    
+                    <div class="card-footer">
+                        <a href="/class_courses{{ class.id }}">
+                            <button class="start-btn">Перейти до курсу</button>
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="card no-tasks">
-                <div class="card-header">Назва курсу <br><span>Автор</span></div>
-                <div class="card-body">
-                    <p class="no-tasks">Всі завдання виконані. Зачекайте нових...</p>
-                </div>
-
-                <div class="card-footer">
-                    <button class="start-btn">Перейти до курсу</button>
-                </div>
-            </div> -->
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

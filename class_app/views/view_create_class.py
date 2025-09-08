@@ -30,7 +30,7 @@ def render_create_class():
                 title= title,
                 description= description,
                 class_code = code,
-                author_name = current_user.id,
+                teacher_id = current_user.id,
                 created_date= datetime.date.today(),
                 class_color= color
             )
