@@ -1,6 +1,6 @@
 from Project.render_page import render_page
 
-from user.models import Classes, class_user, User
+from user.models import Classes, User
 from flask_login import current_user
 
 @render_page(template_name = 'class_page.html')

@@ -16,22 +16,34 @@
             </div>
 
             {% for task in taskes_list %}
+                {% set status = do_task[loop.index0] %}
                 <div class="course-tasks">
                     <div class="task">
                         <h3>{{ task.title }}</h3>
                         <p>{{ task.description }}</p>
                         {% if username == class.teacher.username %}
-                            <a href="/result_task{{ task.test_id }}">   
-                                <p>Результати користувачів класу</p>
+                            <a href="/result_task?class_id={{task.class_id}} &task_id= {{task.id}}">   
+                                <button>Результати користувачів класу</button>
                             </a>
                         {% else %}
-                            <a href="/passing_test?test_id={{ task.test_id }}&question_number= 0">   
-                                <p>Пройти тест</p>
-                            </a>
+                            {% if status %}
+                                <p>Test status do</p>
+                            {% else %}
+                                <a href="/passing_test?test_id={{ task.test_id }}&question_number= 0&back_to_class= {{ class.id }}">
+                                    <button onclick="passingTaskTest({{ task.test_id }})">Пройти тест</button>   
+                                </a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+
+    <script>
+        function passingTaskTest(test_id){
+            console.log(`passingTaskTest ${test_id}`)
+            document.cookie = `taskTestId= ${test_id}; path = /`  
+        }
+    </script>
 {% endblock %}

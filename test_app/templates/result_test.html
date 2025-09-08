@@ -10,30 +10,6 @@
 
 {% block content %}
     <div class="container">
-        <!-- {% if username %}
-            <div class="result-info">
-                <div class="test-info">
-                    <p><strong>{{ username }}</strong> ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
-        {% else %}
-                    <p>Ваш результат: {{ count_correct_answers }} з {{ total_questions }}</p>
-        {% endif %} -->
-                    <!-- <p>Точність правильних відповідей: <strong>{{ accuracy }}</strong></p> -->
-                        
-                    <!-- <button class="home-btn">
-                        <a class="home-btn" href="/">На головну</a>
-                    </button> -->
-                    <!-- <a class="home-btn" href="/">
-                        <button class="home-btn">На головну</button> 
-                    </a>
-                </div>
-                
-                <div class="answer-info">
-                    <p><strong class="green-answer">Зелений колір відповіді</strong> – правильна відповідь.</p>
-                    <p><strong class="yellow-answer">Жовтий колір відповіді</strong> - ваша неправильна відповідь.</p>
-                    <p><strong class="red-answer">Червоний колір відповіді</strong> – неправильний відповідь.</p>
-                </div>
-            </div> -->
-        
         <div class="result-info">
             <div class="test-info">
                 {% if username %}
@@ -43,10 +19,16 @@
                 {% endif %}
                 
                 <p>Точність правильних відповідей: <strong>{{ accuracy }}%</strong></p>
-
-                <a class="home-link" href="/">
-                    <button class="home-btn">На головну</button>
-                </a>
+                
+                {% if bask_to_class %}
+                    <a class="home-link" href="/class_courses{{ bask_to_class }}">
+                        <button class="home-btn">До класу</button>
+                    </a>
+                {% else %}
+                    <a class="home-link" href="/">
+                        <button class="home-btn">На головну</button>
+                    </a>
+                {% endif %}
             </div>
 
             <div class="answer-info">

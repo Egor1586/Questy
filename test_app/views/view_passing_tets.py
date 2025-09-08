@@ -10,6 +10,7 @@ def render_passing_test():
 
     test_id= flask.request.args.get("test_id")
     question_number= flask.request.args.get("question_number")
+    bask_to_class= flask.request.args.get("bask_to_class")
 
     test= Test.query.filter_by(id= test_id).first()
 
@@ -21,5 +22,6 @@ def render_passing_test():
         "test": test,
         "list_quiz": list_quiz,
         "list_answers": list_answers,
-        "question_number": int(question_number)
+        "question_number": int(question_number),
+        "bask_to_class": bask_to_class
     }

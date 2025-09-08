@@ -3,3 +3,4 @@ from .view_class import render_class_page
 from .view_create_class import render_create_class
 from .view_join_class import render_join_class
 from .view_create_task import render_create_task
+from .view_result_task import render_result_task

@@ -1,9 +1,9 @@
+import flask
+
 from Project.render_page import render_page
 
-from flask_login import current_user
-
-from ..models import Test, Room, Quiz
-from user.models import User, Score
+from ..models import Test, Quiz
+from user.models import Score
 
 @render_page(template_name = 'review_results.html')
 def render_review_results(id):
@@ -11,6 +11,7 @@ def render_review_results(id):
     user_answers_list = []
     count_correct_answers = 0
 
+    bask_to_class= flask.request.args.get("bask_to_class")
     SCORE = Score.query.filter_by(id = id).first()
     TEST = Test.query.filter_by(id= SCORE.test_id).first()
 
@@ -38,5 +39,6 @@ def render_review_results(id):
         "list_quiz": quizzes_list,
         "list_answers": list_answers,
         "user_answers": user_answers_list,
-        "count_correct_answers": count_correct_answers
+        "count_correct_answers": count_correct_answers,
+        "bask_to_class": bask_to_class
             }

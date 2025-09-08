@@ -11,11 +11,11 @@
 {% block class_content %}
         <div class="content">
             {% if is_teacher%}
-                <h2>Curated classes</h2>
+                <h2>Куровані</h2>
                 
                 {% for class in my_classes_list %}             
                     <div class="card with-tasks">
-                        <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span></div>
+                        <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span></div>
                         <div class="card-body">
                             <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
                             <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
@@ -37,7 +37,7 @@
 
             {% endif %}
                 
-            <h2>My classes</h2>
+            <h2>Мої класи</h2>
 
             {% for class in classes_list %}             
                 <div class="card with-tasks">

@@ -20,9 +20,15 @@
                 
                 <p>Точність правильних відповідей: <strong>{{ accuracy }}%</strong></p>
 
-                <a class="home-link" href="/profile">
-                    <button class="home-btn">До профiлю</button>
-                </a>
+                {% if bask_to_class %}
+                    <a class="home-link" href="/class_courses{{ bask_to_class }}">
+                        <button class="home-btn">До класу</button>
+                    </a>
+                {% else %}
+                    <a class="home-link" href="/profile">
+                        <button class="home-btn">До профiлю</button>
+                    </a>
+                {% endif %}
             </div>
 
             <div class="answer-info">

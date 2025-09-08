@@ -31,6 +31,8 @@ class Score(db.Model):
     date_complete = db.Column(db.String, nullable= False)
     time_complete = db.Column(db.String, nullable= False)
 
+    task_test_id= db.Column(db.Integer, db.ForeignKey("task.id"))
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable= False)
     user_name = db.Column(db.String, nullable= False)
 

@@ -50,3 +50,4 @@ class_app.add_url_rule(rule= "/class_courses<id>", view_func= render_class_cours
 class_app.add_url_rule(rule= "/create_class", view_func= render_create_class, methods = ['GET', 'POST'])
 class_app.add_url_rule(rule= "/join_class", view_func= render_join_class, methods = ['GET', 'POST'])
 class_app.add_url_rule(rule= "/create_task<id>", view_func= render_create_task, methods = ['GET', 'POST'])
+class_app.add_url_rule(rule= "/result_task", view_func= render_result_task, methods = ['GET', 'POST'])
