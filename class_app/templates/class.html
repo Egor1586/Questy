@@ -30,23 +30,16 @@
                         <a href="#">Список завдань</a>
                     </div>
                 </li>
-                <li>
-                    <div class="page">
-                        <i class='bx  bx-list-ul-square'></i> 
-                        <a href="/create_class">Створити клас</a>
-                    </div>
-                </li>
-                <li>
-                    <div class="page">
-                        <i class='bx  bx-list-ul-square'></i> 
-                        <a href="/join_class">Приєднуйтесь до класу</a>
-                    </div>
-                </li>
             </ul>
             </nav>
         </aside>
 
-    {% block class_content %}
+        {% block class_content %}
+
+        {% endblock %}
+    </div>
+
+    {% block class_modal %}
 
     {% endblock %}
 {% endblock %}

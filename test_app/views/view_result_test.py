@@ -13,14 +13,14 @@ def render_test_result():
     str_user_answers= ""
     
     test_id= flask.request.args.get("test_id")
-    bask_to_class= flask.request.args.get("bask_to_class")
 
     for quiz in Quiz.query.filter_by(test_id= test_id).all():
         quizzes_list= Quiz.query.filter_by(test_id= test_id).all()
         list_answers.append(quiz.answer_options.split("%$№"))
     
     user_answers_cookies = flask.request.cookies.get(key= 'user_answers')
-    task_test_id = flask.request.cookies.get(key= 'taskTestId')
+    task_test_id = flask.request.cookies.get(key= 'taskTestId') or None
+    class_id = flask.request.cookies.get(key= 'classId') or None
 
     if user_answers_cookies:
         user_answers = user_answers_cookies.split("|")
@@ -47,6 +47,7 @@ def render_test_result():
                 time_complete= datetime.datetime.now().strftime("%H:%M:%S"),
                 task_test_id= task_test_id or 0, 
                 test_id= test_id,
+                class_id= class_id,
                 user_id= current_user.id,
                 user_name= current_user.username
             )
@@ -62,7 +63,8 @@ def render_test_result():
             list_quiz=quizzes_list,
             list_answers=list_answers,
             user_anwsers=user_answers_list,
-            bask_to_class= bask_to_class,
+            task_test_id= task_test_id,
+            class_id= class_id,
             is_authorization = current_user.is_authenticated,
             username = current_user.username if current_user.is_authenticated else "", 
             is_teacher= current_user.is_teacher if current_user.is_authenticated else "",

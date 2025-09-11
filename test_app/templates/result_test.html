@@ -20,8 +20,8 @@
                 
                 <p>Точність правильних відповідей: <strong>{{ accuracy }}%</strong></p>
                 
-                {% if bask_to_class %}
-                    <a class="home-link" href="/class_courses{{ bask_to_class }}">
+                {% if task_test_id != "None" %}
+                    <a class="home-link" href="/class_courses{{ class_id }}">
                         <button class="home-btn">До класу</button>
                     </a>
                 {% else %}

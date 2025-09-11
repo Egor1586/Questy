@@ -12,11 +12,15 @@ def render_class_courses(id):
     taskes_list= CLASS.tasks
 
     for task in CLASS.tasks:
-        score= Score.query.filter_by(task_test_id= task.id, user_id= current_user.id).first()
+        print(task.id, CLASS.id, current_user.id)
+        score= Score.query.filter_by(test_id= task.test_id, class_id= CLASS.id, user_id= current_user.id).first()
+        print(score)
         if score:
             do_task.append(1)
+            print("1")
         else:
             do_task.append(0)
+            print("0")
 
     return {"class": CLASS,
             "taskes_list": taskes_list,

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3579640f6e33
+Revision ID: b311277ddde1
 Revises: 
-Create Date: 2025-09-08 21:56:38.549877
+Create Date: 2025-09-11 14:49:26.595339
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3579640f6e33'
+revision = 'b311277ddde1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -56,6 +56,7 @@ def upgrade():
     sa.Column('class_code', sa.String(length=100), nullable=False),
     sa.Column('created_date', sa.String(length=100), nullable=False),
     sa.Column('class_color', sa.String(length=100), nullable=False),
+    sa.Column('max_user_count', sa.Integer(), nullable=True),
     sa.Column('teacher_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['teacher_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -95,9 +96,11 @@ def upgrade():
     sa.Column('date_complete', sa.String(), nullable=False),
     sa.Column('time_complete', sa.String(), nullable=False),
     sa.Column('task_test_id', sa.Integer(), nullable=True),
+    sa.Column('class_id', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('user_name', sa.String(), nullable=False),
     sa.Column('test_code', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['class_id'], ['classes.id'], ),
     sa.ForeignKeyConstraint(['task_test_id'], ['task.id'], ),
     sa.ForeignKeyConstraint(['test_id'], ['test.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),

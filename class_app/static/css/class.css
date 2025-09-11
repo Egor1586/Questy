@@ -1,7 +1,7 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #e8fbe8;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #e8fbe8;
 }
 
 .main{
@@ -12,19 +12,15 @@ body {
 
 .container-classroom {
     display: flex;
-    width: 100vw;
-    height: 84vh;
+    width: 100%;
+    height: 100%;
 }
 
-.container-classroom {
-    display: flex;
-    height: 100vh;
-}
-
+/* Sidebar */
 .sidebar-classroom {
-    width: 12vw;
-    min-width: 220px;
-    background: #fff;
+    width: 220px;
+    background-color: #2f3b52;
+    color: #fff;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -38,15 +34,15 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #aaa;
-    color: #fff;
+    background-color: #4caf50;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 10px;
 }
+
 
 .classroom-username {
     font-weight: bold;
@@ -55,35 +51,8 @@ body {
 
 .classroom-email {
     font-size: 1em;
-    color: #777;
+    color: #ffffffc7;
     margin: 5px 0 20px 0;
-}
-
-.menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.page {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.page a {
-    text-decoration: none;
-    color: #000;
-    font-size: 1.05rem;
-}
-
-.page:hover {
-    background: #d9e9dc;
-    color: #2e7d32;
-    transition: 0.3s ease;
 }
 
 /* меню */
@@ -107,10 +76,38 @@ body {
 
 .menu ul li a {
     text-decoration: none;
-    color: #000;
+    color: #dcd7d7;
     font-size: 1.02rem;
 }
 
 .menu ul li a:hover {
-    color: #008000;
+    color: #dcd7d7;
+}
+
+.page{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+
+    padding: 10px;
+    border-radius: 8px;
+    border: transparent;
+
+    font-size: 1.5rem;
+}
+
+.page a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 1.5rem;
+}
+
+.page:hover{
+    background: #3a4457;
+    /* color: #2e7d32; */
+    /* transition: 1.3s ease; */
+    color: #dcd7d7;
+    /* background-color: #2f3b52; */
 }

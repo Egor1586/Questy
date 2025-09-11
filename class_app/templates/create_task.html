@@ -25,9 +25,19 @@
               
                     <div class="form-group">
                         <label for="test-description">Опис завдання</label>
-                        <textarea id="class-description" name="description" placeholder="Опишіть своє завдання" rows="3"></textarea>
+                        <textarea id="class-description" name="description" placeholder="Опишіть своє завдання" rows="3" required></textarea>
                     </div>
-                
+                    
+                    {% if test_list %}
+                        <select name="choice_test" id="choice" required>
+                            {% for test in test_list%}
+                                <option value="{{ test.id }}" selected>{{ test.title }} </option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <p>Немає тестів для завдання, перед додаванням створіть тест</p>
+                    {% endif %}
+
                     <button type="submit" class="submit-button">Створити завдання</button>
                 </form>
             </section>

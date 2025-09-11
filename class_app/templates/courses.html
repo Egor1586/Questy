@@ -30,7 +30,7 @@
                                 <p>Test status do</p>
                             {% else %}
                                 <a href="/passing_test?test_id={{ task.test_id }}&question_number= 0&back_to_class= {{ class.id }}">
-                                    <button onclick="passingTaskTest({{ task.test_id }})">Пройти тест</button>   
+                                    <button onclick="passingTaskTest({{ task.test_id }}, {{ class.id }})">Пройти тест</button>   
                                 </a>
                             {% endif %}
                         {% endif %}
@@ -41,9 +41,10 @@
     </div>
 
     <script>
-        function passingTaskTest(test_id){
-            console.log(`passingTaskTest ${test_id}`)
-            document.cookie = `taskTestId= ${test_id}; path = /`  
+        function passingTaskTest(testId, classId){
+            console.log(`passingTaskTest ${testId}`);
+            document.cookie = `taskTestId= ${testId}; path = /`; 
+            document.cookie = `classId= ${classId}; path = /`; 
         }
     </script>
 {% endblock %}
