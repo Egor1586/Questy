@@ -309,29 +309,31 @@
             document.cookie = `countCorrectAnswer= 0; path=/`;
             console.log(state)
 
-            if (number_of_question === total_question- 1) {
+            if (number_of_question == total_question- 1) {
                 console.log(`Кінець тесту ${number_of_question} === ${total_question- 1}`)
                 nextButton.textContent = 'Кінець тесту'
+                nextButton.removeEventListener("click", nextQuestion)
                 nextButton.addEventListener("click", testStop);
             }
-
             console.log("next question")
             document.cookie = `countUsersAnswer= 0; path=/`;
             
             const question_text = document.getElementById("author-question")
             question_text.textContent = `Питання:${list_quiz[Number(state.slice(-1))+1].question_text}`
-
+        
             const correct_answer = document.getElementById("author-correct-answer")
             correct_answer.textContent =`Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
             
             const newTime = document.getElementById("timer")
             newTime.textContent =`${list_quiz[Number(state.slice(-1))+1].time}`
+
+            
             
             console.log("clear chart")
             if (donatChart){
                 donatChart.destroy()
             }
-
+    
             socket.emit("next_question", {
                 room: room,
                 author_name: author_name

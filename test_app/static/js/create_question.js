@@ -1,38 +1,56 @@
 const createQuestionButton = document.querySelector(".button-create-question");
 const testQuestionDiv = document.querySelector(".test-question");
 
+let countQuestion= 0;
+
 createQuestionButton.addEventListener('click', function() {
     console.log("create question")
+    countQuestion++;
     
-    testQuestionDiv.innerHTML += 
-            `<div class="question-block">
+    const questionHTML= 
+            `<div class="question-block" id="q${countQuestion}">
                 <div class="question-header">
-                    <span>Питання 1</span>
+                    <span>Питання ${countQuestion}</span>
                     <button type="button" class="delete-question">Видалити питання?</button>
                 </div>
 
                 <label>Текст питання:</label>
                 <input type="text" name="question-text">
 
+                <label>Час для виконання</label>
+                <input type="text" name="question-time">
+
                 <div class="answers">
                     <label>Варіанти відповідей:</label>
                     <div class="answer-input">
                         <input type="text" placeholder="Відповідь 1">
-                        <input type="radio" name="correct-answer-1"> Правильна
+                        <input type="radio" name="correct-answer-q${countQuestion}"> Правильна
                     </div>
                 </div>
                 <button type="button" class="add-answer">Додати відповідь</button>
             </div>`
+
+    testQuestionDiv.insertAdjacentHTML("beforeend", questionHTML)
 });
 
 testQuestionDiv.addEventListener("click", function(event){
-    if (event.target.classList.contains("delete-quiz")){
+    if (event.target.classList.contains("delete-question")){
+        console.log("delete")
         event.target.closest(".question-block").remove(); 
     }
 
     if (event.target.classList.contains("add-answer")){
-        questionBlock= event.target.closest(".question-block")
-        questionText= questionBlock.querySelector(".question-text")
-        questionText.innerHTML += `<div class="test-title">Відповідь: <input type="text" placeholder="Введіть відповідь"></div>`
+        const questionBlock= event.target.closest(".question-block")
+        const answersBlock= questionBlock.querySelector(".answers")
+        const blockId = questionBlock.id
+        const answerCount= answersBlock.querySelectorAll(".answer-input").length + 1
+        
+        let newAnswer= document.createElement("div")
+        newAnswer.className= "answer-input"
+        newAnswer.innerHTML= `
+                            <input type="text" placeholder="Відповідь ${answerCount}">
+                            <input type="radio" name="correct-answer-${blockId}"> Правильна`
+
+        answersBlock.appendChild(newAnswer)
     }
 });

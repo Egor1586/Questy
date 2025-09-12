@@ -232,4 +232,3 @@ def render_profile():
         "list_tests_sort": list_tests_sort,
         "accuracy_sort": accuracy_sort
         }
-

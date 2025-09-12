@@ -81,20 +81,6 @@ function addUserAnswer(username, answer, authorname, totalAnswer) {
     })
 }
 
-function stopTest(){
-    console.log("stop test")
-
-    socket.emit("stop_test", {
-        room: room,
-        author_name: author_name
-    });
-
-    document.cookie = `state= author_result_test; path=/`;
-    console.log(`Stop test ${getCookie("state")}`);
-
-    renderAuthorResultTest(username, author_name, total_question);
-}
-
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

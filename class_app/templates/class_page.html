@@ -9,43 +9,188 @@
 {% endblock %}
 
 {% block class_content %}
-        <div class="content">
-            <div class="card with-tasks">
-                <div class="card-header">Назва курсу <br><span>Автор</span></div>
-                <div class="card-body">
-                    <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
-                    <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
-                    <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
-                </div>
-
-                <div class="card-footer">
-                    <a href="/class_courses1">
-                        <button class="start-btn">Перейти до курсу</button>
-                    </a>
+    <main class="content">
+        {% if is_teacher%}
+            <div class="class-div">
+                <h2>Куровані</h2>
+                
+                <div class="card-div">
+                    {% for class in my_classes_list %}             
+                        <div class="card with-tasks">
+                            <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span></div>
+                            <div class="card-body">
+                                <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                                <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                            </div>
+            
+                            <div class="card-footer">
+                                <a href="/class_courses{{ class.id }}">
+                                    <button class="start-btn">Перейти до курсу</button>
+                                </a>
+                                <a href="/create_task{{ class.id }}">
+                                    <button class="start-btn">Створити завдання</button>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-
-            <!-- <div class="card no-tasks">
-                <div class="card-header">Назва курсу <br><span>Автор</span></div>
-                <div class="card-body">
-                    <p class="no-tasks">Вчитель ще не задав завдань. Зачекайте нових...</p>
-                </div>
-
-                <div class="card-footer">
-                    <button class="start-btn">Перейти до курсу</button>
+        {% endif %}
+            
+        {% if classes_list%}
+            <div class="class-div">
+                <h2>Мої класи</h2>
+            
+                <div class="card-div">       
+                    {% for class in classes_list %}         
+                        <div class="card with-tasks">
+                            <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span></div>
+                            <div class="card-body">
+                                <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                                <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                            </div>
+                
+                            <div class="card-footer">
+                                <a href="/class_courses{{ class.id }}">
+                                    <button class="start-btn">Перейти до курсу</button>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
+        {% endif %}
+    </main>
+{% endblock %}
 
-            <div class="card no-tasks">
-                <div class="card-header">Назва курсу <br><span>Автор</span></div>
-                <div class="card-body">
-                    <p class="no-tasks">Всі завдання виконані. Зачекайте нових...</p>
-                </div>
+{% block class_modal %}
+    <!-- Кнопка + -->
+    <button class="add-btn">+</button>
+    <ul class="menu-options">
+        <li id="join-course-button">Приєднатися до курсу</li>
+        {% if is_teacher %}
+            <li id="create-course-button">Створити курс</li>
+        {% endif %}
+    </ul>
 
-                <div class="card-footer">
-                    <button class="start-btn">Перейти до курсу</button>
+    <!-- Форми -->
+    <!-- Приєднатись -->
+    <div class="modal-bg" id="modal-bg" style="display:none;">
+        <div class="modal" id="join-form">
+            <button class="back-btn" onclick="closeModal()">×</button>
+            
+            <form action="" class="form" method="POST">
+                <h2>Приєднатися до курсу</h2>
+                <div class="form-group">
+                    <label>Код курсу</label>
+                    <h3>Попросіть у свого викладача код курсу та введіть його тут.</h3>
+                    <input type="text" placeholder="Введіть код" name="code" required>
                 </div>
-            </div> -->
+                <div class="form-group">
+                    <label>Вимоги до входу за допомогою коду курсу:</label>
+                        <ul>
+                            <li>Використовуйте авторизований обліковий запис</li>
+                            <li>Код курсу має містити лише літери або цифри (5–8) і не включати пробіли й спеціальні символи</li>
+                        </ul>
+                </div>
+    
+                <div class="bottom-button">
+                    <button type="submit" class="join-course-btn">Приєднатися</button>
+                </div>
+            </form>
         </div>
+
+        <!-- Створити -->
+        <div class="modal" id="create-form" style="display:none;">
+            <button class="back-btn" onclick="closeModal()">×</button>
+            
+            <form class="test-form" method="POST">
+                <h2>Створити курс</h2>
+                <div class="form-group">
+                    <label>Назва курсу:</label>
+                    <input type="text" placeholder="Введіть назву курсу" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Назва уроку:</label>
+                    <input type="text" placeholder="Введіть назву уроку" name="lesson" required>
+                </div>
+                <div class="form-group">
+                    <label>Колір курсу:</label>
+                    <select id="color-type">
+                        <option value="single">Монотонний</option>
+                        <option value="gradient">Градієнт</option>
+                    </select>
+                </div>
+        
+                <div class="form-group color-group" id="color-single">
+                    <input type="color" value="#ff0000" name="color-m" required>
+                </div>
+                <div class="form-group color-group" id="color-gradient" style="display:none;">
+                    <input type="color" value="#ff0000" name="color-g" required>
+                    <input type="color" value="#0000ff" name="color-g" required>
+                </div>
+        
+                <div class="form-group">
+                    <label>Максимальна кількість учнів:</label>
+                    <input type="number" placeholder="Введіть число" name="max-count" required>
+                </div>
+        
+                <button class="join-course-btn" type="submit">Створити курс</button>
+            </div>
+        </form>
     </div>
+
+    <script>
+        const is_teacher = "{{ is_teacher | tojson }}"
+        console.log(is_teacher)
+
+        // Відкриття меню +
+        const addBtn = document.querySelector('.add-btn')
+
+        const menuOptions = document.querySelector('.menu-options')
+
+        addBtn.addEventListener('click', () => {
+            menuOptions.style.display = menuOptions.style.display === 'flex' ? 'none' : 'flex'
+        })
+
+        // Показ форми
+        const modalBg = document.getElementById('modal-bg')
+        const joinForm = document.getElementById('join-form')
+        const createForm = document.getElementById('create-form')
+
+        document.getElementById('join-course-button').addEventListener('click', () => {
+            joinForm.style.display = 'block'
+            createForm.style.display = 'none'
+            modalBg.style.display = 'flex'
+            menuOptions.style.display = 'none'
+        })
+
+        if (is_teacher){
+            document.getElementById('create-course-button').addEventListener('click', () => {
+                createForm.style.display = 'block'
+                joinForm.style.display = 'none'
+                modalBg.style.display = 'flex'
+                menuOptions.style.display = 'none'
+            })
+        }
+
+        // Закриття модалки
+        function closeModal() {
+            modalBg.style.display = 'none'
+        }
+
+        // Зміна вибору кольору
+        const colorType = document.getElementById('color-type')
+        colorType.addEventListener('change', () => {
+            if (colorType.value === 'single') {
+                document.getElementById('color-single').style.display = 'flex'
+                document.getElementById('color-gradient').style.display = 'none'
+            } else {
+                document.getElementById('color-single').style.display = 'none'
+                document.getElementById('color-gradient').style.display = 'flex'
+            }
+        })
+    </script>      
 {% endblock %}

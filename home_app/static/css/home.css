@@ -31,6 +31,7 @@ main {
 
     background-color: rgba(115, 159, 125, 0.51);
     width: 95vw;
+    height: 38vh;
     min-height: fit-content;
     border-radius: 5px; 
     box-shadow: 2px 5px 2px #080a082c;
@@ -182,7 +183,10 @@ hr {
 
 .test-card {
     display: block; 
-    width: 290px;
+    width: 13vw;
+    height: 27vh;
+    min-width: 350px;
+    min-height: 400px;
     border-radius: 15px;
     overflow: hidden;
     flex-shrink: 0;
