@@ -21,7 +21,6 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'User: {self.username}'
     
-
 class Classes(db.Model):
     id = db.Column(db.Integer, primary_key= True)
 
@@ -31,7 +30,8 @@ class Classes(db.Model):
     class_code = db.Column(db.String(100), nullable= False)
     created_date = db.Column(db.String(100), nullable= False)
 
-    class_color = db.Column(db.String(100), nullable= False)
+    class_color1 = db.Column(db.String(100), nullable= True)
+    class_color2 = db.Column(db.String(100), nullable= True)
 
     max_user_count= db.Column(db.Integer, nullable= True)
 
@@ -47,7 +47,7 @@ class Score(db.Model):
 
     user_answer = db.Column(db.String, nullable = False)
     accuracy = db.Column(db.Integer, nullable = False)
-    test_id= db.Column(db.Integer, db.ForeignKey('test.id'), nullable= False)
+    test_id= db.Column(db.Integer, db.ForeignKey('test.id'))
 
     date_complete = db.Column(db.String, nullable= False)
     time_complete = db.Column(db.String, nullable= False)

@@ -311,15 +311,26 @@ def handle_message(data):
             room_get_result_data[user]= correct_answers_list
 
     print(room_get_result_data)
+    BEST_SCORE= None
+    best_accuracy= 0
+    averega_accuracy= 0
+    averega_score= 0
 
-    # best_score_data= {
-    #     "user_name": BEST_SCORE.user_name,
-    #     "accurasy": BEST_SCORE.accurasy,
-    # }
-    # emit("add_info_result_room", {"avg_accurasy": averega_score,
-    #                               "best_score": best_score_data}, to= user_sid)
+    for score in SCORE_LIST:
+        averega_accuracy =+ score.accuracy
+        if score.accuracy > best_accuracy:
+            BEST_SCORE= score
+
+    averega_score= averega_accuracy//len(SCORE_LIST)
+
+    best_score_data= {
+        "user_name": BEST_SCORE.user_name,
+        "accuracy": BEST_SCORE.accuracy,
+    }
    
-    emit("room_get_result_data", room_get_result_data, to= user_sid)
+    emit("room_get_result_data", {"room_get_result_data": room_get_result_data,
+                                  "best_score_data": best_score_data,
+                                  "averega_score": averega_score}, to= user_sid)
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):

@@ -16,9 +16,12 @@ def render_class_page():
         try:
             title = flask.request.form['title']
             description = flask.request.form['lesson']
+            color_g1= ""
+            color_g2= ""
             
             try:
-                color_m = flask.request.form['color-m']
+                color_g1 = flask.request.form['color-m']
+                color_g2= None
             except Exception as error:
                 color_g1 = flask.request.form['color-g1']
                 color_g2 = flask.request.form['color-g2']
@@ -38,7 +41,8 @@ def render_class_page():
                 class_code = code,
                 teacher_id = current_user.id,
                 created_date= datetime.date.today(),
-                class_color= color_m,
+                class_color1= color_g1,
+                class_color2= color_g2,
                 max_user_count= max_count
             )
 

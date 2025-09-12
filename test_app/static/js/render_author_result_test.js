@@ -128,10 +128,16 @@ function renderAuthorResultTest(username, author_name, total_question) {
         });
     }, 100); 
 
+    console.log("alo")
+
     let accurancyArray= []
     
     socket.once('room_get_result_data', function(data) {  
         console.log(data)
+
+        const resultData= data.room_get_result_data
+        const best_score_data= data.best_score_data
+        const averega_score= data.averega_score
 
         const header = document.createElement('div');
         header.className = 'results-header-block';
@@ -175,7 +181,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
         headerTitle3.textContent = "Підсумок";  
 
         //
-        let allAnswersArray= Object.values(data)
+        let allAnswersArray= Object.values(resultData)
         const userCount = Object.keys(allAnswersArray).length;
 
         let answersArray= []
@@ -205,14 +211,16 @@ function renderAuthorResultTest(username, author_name, total_question) {
         // посчитать средний результат 
         const resultsInfoBoxText = document.createElement('p')
         resultsInfoBoxText.id= "results-info-box-text"
+        resultsInfoBoxText.innerHTML= `<p><strong>Середний результат: </strong>${averega_score}</p>`;
 
         // найти лучший результат
         const resultsInfoBoxText2 = document.createElement('p');
         resultsInfoBoxText2.id= "results-info-box-text2"
+        resultsInfoBoxText2.innerHTML = `<p><strong>Найкращий результат:</strong>${best_score_data.user_name} (${best_score_data.accuracy})</p>`;
 
         resultsInfoBox.appendChild(headerTitle3);
-        resultsInfoBox.appendChild(resultsInfoBoxText);
         resultsInfoBox.appendChild(resultsInfoBoxText2);
+        resultsInfoBox.appendChild(resultsInfoBoxText);
         container.appendChild(resultsInfoBox);
 
         const resultTable = document.createElement('div');
@@ -246,8 +254,8 @@ function renderAuthorResultTest(username, author_name, total_question) {
         resultHeader.appendChild(headerAccyracy);
         resultTable.appendChild(resultHeader);
         
-        for (const username in data) {
-            answersArray = data[username]; 
+        for (const username in resultData) {
+            answersArray = resultData[username]; 
             appendResultRow(resultTable, username, answersArray);
         }  
 
@@ -281,12 +289,4 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         renderAccuracyChart('authorAccuracyChart', accuracy_aquestions);
     });
-
-    // socket.once('add_info_result_room', function(data){
-    //     console.log("add_info_result_room")
-    //     const resultsInfoBoxText = document.getElementById("results-info-box-text");
-    //     resultsInfoBoxText.textContent= `<p><strong>Середний результат:</strong>${data['avg_accurasy']}</p>`;
-    //     const resultsInfoBoxText2 = document.getElementById("results-info-box-text2");
-    //     resultsInfoBoxText2.innerHTML = `<p><strong>Найкращий результат:</strong>${data['best_score'].user_name} (${data['best_score'].accuracy})</p>`;
-    // });
 }
