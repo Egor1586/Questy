@@ -23,6 +23,8 @@ def bubble_sort(list):
 def render_profile():
     accuracy = []
     accuracy_sort = []
+    time_complete = []
+    date_complete = []
     dates_complete = []
     count_cmpl_quiz= []
     scores= None
@@ -35,7 +37,6 @@ def render_profile():
     scores_count= 0
     user= None
 
-    fig, axes = plt.subplots()
     buffer = io.BytesIO()
     if current_user.is_authenticated:
         user = User.query.filter_by(id=current_user.id).first()
@@ -47,6 +48,8 @@ def render_profile():
         print(tests_count, scores_count)
         for score in scores:
             accuracy.append(score.accuracy)
+            date_complete.append(score.date_complete)
+            time_complete.append(score.time_complete)
             accuracy_sort.append([score.accuracy, score.id, score.test_id, score.date_complete, score.time_complete])
             dates_complete.append(score.date_complete)
             if Test.query.filter_by(id= score.test_id).first() not in list_tests:
@@ -71,6 +74,33 @@ def render_profile():
     
         dates_complete.sort()
 
+        if selected_option[0] == 'graph_active1':
+                print(f'========================{count_cmpl_quiz}')
+                
+                count_cmpl_quiz.extend([2,3,4,1,6,5,12,5,21])
+                print(count_cmpl_quiz)
+                time_complete[1] = '11:11:11'
+                time_complete[2] = '13:11:11'
+                time_complete[3] = '14:11:11'
+
+                return {
+                "scores": scores,
+                "scores_count": scores_count,
+                "tests_count": tests_count,
+                "dates_complete": dates_complete,
+                'accuracy': accuracy or [],
+                'date_complete': date_complete or [],
+                'time_complete': time_complete or [],
+                'list_tests': list_tests,
+                "selected_option": selected_option,
+                "selected_option_test": selected_option_test,
+                'wt_graph': '1_active',
+                'count_cmpl_quiz': count_cmpl_quiz or [],
+                'user': user,
+                "list_tests_sort": list_tests_sort,
+                "accuracy_sort": accuracy_sort
+            }
+
         if selected_option[0] == 'graph_1':
             dates_complete = ['2025-07-20', '2025-07-21', '2025-07-22']
             accuracy = [13, 25, 66]
@@ -81,6 +111,8 @@ def render_profile():
                 "tests_count": tests_count,
                 "dates_complete": dates_complete,
                 'accuracy': accuracy or [],
+                'date_complete': date_complete or [],
+                'time_complete': time_complete or [],
                 'list_tests': list_tests,
                 "selected_option": selected_option,
                 "selected_option_test": selected_option_test,
@@ -90,6 +122,8 @@ def render_profile():
                 "list_tests_sort": list_tests_sort,
                 "accuracy_sort": accuracy_sort
             }
+        
+        
         
         elif selected_option[0] == 'graph_2':  
             for date in dates_complete:
@@ -108,6 +142,8 @@ def render_profile():
                 'wt_graph': 'd_cmpl',
                 'count_cmpl_quiz': count_cmpl_quiz or [],
                 'accuracy': accuracy or [],
+                'date_complete': date_complete or [],
+                'time_complete': time_complete or [],
                 "selected_option": selected_option,
                 "selected_option_test": selected_option_test,
                 'user': user,
@@ -132,6 +168,8 @@ def render_profile():
                     'message': message,
                     'flag_graph': 'flag_graph',
                     'dates_complete': dates_complete,
+                    'date_complete': date_complete or [],
+                    'time_complete': time_complete or [],
                     'accuracy': accuracy or [],
                     'list_tests': list_tests,
                     "selected_option": selected_option,
@@ -162,6 +200,8 @@ def render_profile():
                 'dates_complete': dates_complete,
                 'accuracy': accuracy or [],
                 'list_tests': list_tests,
+                'date_complete': date_complete or [],
+                'time_complete': time_complete or [],
                 "selected_option": selected_option,
                 "selected_option_test": selected_option_test,
                 'count_cmpl_quiz': count_cmpl_quiz or [],
@@ -185,6 +225,8 @@ def render_profile():
         'user': user,
         'list_tests': list_tests,
         "scores": scores,
+        'date_complete': date_complete or [],
+        'time_complete': time_complete or [],
         "selected_option": selected_option,
         "selected_option_test": selected_option_test,
         "list_tests_sort": list_tests_sort,
