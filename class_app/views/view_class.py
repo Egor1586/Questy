@@ -20,14 +20,16 @@ def render_class_page():
             color_g2= ""
             
             try:
-                color_g1 = flask.request.form['color-m']
-                color_g2= None
-            except Exception as error:
                 color_g1 = flask.request.form['color-g1']
                 color_g2 = flask.request.form['color-g2']
+            except Exception as error:
+                color_g1 = flask.request.form['color-m']
+                color_g2= None
             
             max_count= flask.request.form['max-count']
-            
+            due_time= flask.request.form['due-time']
+
+            print(due_time)      
             while True: 
                 code = generate_code(7)
                 db_class_code = Classes.query.filter_by(class_code= code).first()
@@ -43,6 +45,7 @@ def render_class_page():
                 created_date= datetime.date.today(),
                 class_color1= color_g1,
                 class_color2= color_g2,
+                due_time= due_time,
                 max_user_count= max_count
             )
 
@@ -76,4 +79,13 @@ def render_class_page():
         classes_list.append(Classes.query.filter_by(id= id).first())
     
     return {"classes_list": classes_list,
-            "my_classes_list": my_classes_list}
+            "my_classes_list": my_classes_list
+}
+
+def delete_class(class_id):
+    CLASS = Classes.query.filter_by(id = class_id).first()
+    if current_user.id ==  CLASS.teacher_id:
+        db.session.delete(CLASS)
+        db.session.commit()
+
+    return flask.redirect("/class_page")
