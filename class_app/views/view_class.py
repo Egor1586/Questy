@@ -1,9 +1,11 @@
-import flask, string, random, datetime
+import flask, string, random
 
 from Project.render_page import render_page
-from user.models import Classes, User
+from user.models import Classes, User, Task
 from flask_login import current_user
 from Project.database import db
+
+from datetime import date
 
 def generate_code(length):
   characters = string.ascii_letters + string.digits
@@ -27,9 +29,7 @@ def render_class_page():
                 color_g2= None
             
             max_count= flask.request.form['max-count']
-            due_time= flask.request.form['due-time']
-
-            print(due_time)      
+            
             while True: 
                 code = generate_code(7)
                 db_class_code = Classes.query.filter_by(class_code= code).first()
@@ -42,10 +42,9 @@ def render_class_page():
                 description= description,
                 class_code = code,
                 teacher_id = current_user.id,
-                created_date= datetime.date.today(),
+                created_date= date.today(),
                 class_color1= color_g1,
                 class_color2= color_g2,
-                due_time= due_time,
                 max_user_count= max_count
             )
 
@@ -59,12 +58,12 @@ def render_class_page():
                 code = flask.request.form.get('code')
                 CLASS = Classes.query.filter_by(class_code = code).first()
 
-                if current_user not in CLASS.users and current_user.id is not CLASS.teacher_id and len(CLASS.users) < CLASS.max_user_count:
+                if CLASS and current_user not in CLASS.users and current_user.id is not CLASS.teacher_id and len(CLASS.users) < CLASS.max_user_count:
                     CLASS.users.append(current_user)
                     db.session.commit()
 
-                    return flask.redirect(location = '/class_page')
-
+                return flask.redirect(location = '/class_page')
+    
     my_classes_list= []
     classes_list= []
     classes_id= []
@@ -89,3 +88,26 @@ def delete_class(class_id):
         db.session.commit()
 
     return flask.redirect("/class_page")
+
+def delete_task(task_id):
+    TAKS = Task.query.filter_by(id = task_id).first()
+    CLASS = Classes.query.filter_by(id = TAKS.class_id).first()
+    if current_user.id ==  CLASS.teacher_id:
+        db.session.delete(TAKS)
+        db.session.commit()
+
+    return flask.redirect(f"/class_courses{CLASS.id}")
+
+def delete_user():
+    class_id= flask.request.args.get("class_id")
+    user_id= flask.request.args.get("user_id")
+
+    CLASS = Classes.query.filter_by(id = class_id).first()
+    USER = User.query.filter_by(id = user_id).first()
+
+    if USER in CLASS.users and current_user.id == CLASS.teacher_id:
+        CLASS.users.remove(USER)
+        db.session.commit()
+
+    return flask.redirect(f"/class_information{CLASS.id}")
+

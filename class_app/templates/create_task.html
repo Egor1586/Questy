@@ -27,7 +27,17 @@
                         <label for="test-description">Опис завдання</label>
                         <textarea id="class-description" name="description" placeholder="Опишіть своє завдання" rows="3" required></textarea>
                     </div>
-                    
+
+                    <div class="radio-button-box">
+                        <label >Can done after due time</label>               
+                        <input type="checkbox" name="done-after-due-time">
+                    </div> 
+
+                    <div class="form-group">
+                        <label>Час до кінця скоро стачі завдання</label>
+                        <input type="datetime-local" placeholder="Введіть число" name="due-time">
+                    </div>
+
                     {% if test_list %}
                         <select name="choice_test" id="choice" required>
                             {% for test in test_list%}

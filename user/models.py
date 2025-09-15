@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from Project.database import db
+from datetime import datetime
 
 class_user= db.Table(
     "class_user",
@@ -70,7 +71,9 @@ class Task(db.Model):
     title = db.Column(db.String(100), nullable= False)
     description = db.Column(db.String(200), nullable= False)
 
-    due_time = db.Column(db.String, nullable= False)
+    due_time = db.Column(db.DateTime, nullable= False)
+
+    work_after_time= db.Column(db.Boolean, default= False)
 
     class_id= db.Column(db.Integer, db.ForeignKey("classes.id"))
     test_id= db.Column(db.Integer, db.ForeignKey("test.id"), nullable= True)

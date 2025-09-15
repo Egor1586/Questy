@@ -5,6 +5,7 @@ from Project.database import db
 from flask_login import current_user
 from user.models import Task
 from test_app.models import Test
+from datetime import datetime
 
 
 @render_page(template_name = 'create_task.html')
@@ -25,12 +26,20 @@ def render_create_task(id):
             title = flask.request.form['title']
             description = flask.request.form['description']
             test_id = flask.request.form['choice_test']
+            due_time= flask.request.form['due-time']
+            done_after_due_time= flask.request.form.get('done-after-due-time')
+
+            print(done_after_due_time)
+
+            print("True") if done_after_due_time == "on" else print("False")
             
             TASK = Task(
                 title= title,
                 description= description,
                 class_id = id,
                 test_id= test_id,
+                due_time= datetime.strptime(due_time, "%Y-%m-%dT%H:%M"),
+                work_after_time= True if done_after_due_time == "on" else False
             )
 
             db.session.add(TASK)
