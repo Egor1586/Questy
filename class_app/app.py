@@ -7,3 +7,6 @@ class_app = flask.Blueprint(
     static_url_path= '/class_app/static',
     template_folder= 'templates'
 )
+
+
+

@@ -32,22 +32,11 @@ h1 {
     margin-bottom: 20px;
 }
 
-<<<<<<< HEAD
-h1{
-    margin-top: 3vh;
-}
-
-.test-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-=======
 label {
     font-weight: 600;
     display: block;
     margin: 10px 0 6px;
 }
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3
 
 input[type="text"], input[type="file"] {
     width: 100%;
@@ -62,73 +51,12 @@ input[type="text"], input[type="file"] {
     background-color: var(--bg-aside);
     border: 1px solid var(--green-light);
     border-radius: 10px;
-<<<<<<< HEAD
-    margin-top: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px var(--shadow);
-    
-    width: 25vw;
-    min-height: 12vh;
-}
-
-.test-details {
-    flex-grow: 1;
-}
-.test-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-.test-description {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 10px;
-}
-.edit-btn {
-    background-color: white;
-    color: var(--green-dark);
-    border: 1px solid var(--green-main);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    height: fit-content;
-}
-
-.edit-btn a{
-     all: unset;
-}
-
-.edit-btn:hover {
-    background-color: var(--green-light);
-}
-
-.test-question{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.question-block {
-    background-color: white;
-    border: 1px solid var(--green-light);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px var(--shadow);
-
-    width: 25vw;
-    min-height: 15vh;
-}
-=======
     padding: 15px;
 
     margin-top: 20px;
     box-shadow: 0 2px 5px var(--shadow);
 }
 
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3
 .question-header {
     display: flex;
     justify-content: space-between;
@@ -138,15 +66,9 @@ input[type="text"], input[type="file"] {
     color: var(--green-dark);
 }
 
-<<<<<<< HEAD
-
-.delete-quiz {
-    background-color: white;
-=======
 .delete-question {
     background: none;
     border: none;
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3
     color: rgb(233, 96, 96);
     cursor: pointer;
     font-size: 14px;
@@ -156,7 +78,6 @@ input[type="text"], input[type="file"] {
 .answers {
     margin-top: 10px;
 }
-
 
 .answer-input {
     display: flex;
@@ -168,7 +89,6 @@ input[type="text"], input[type="file"] {
 .answer-input input[type="text"] {
     flex: 1;
 }
-
 
 .add-answer {
     background-color: var(--green-main);
@@ -204,39 +124,6 @@ input[type="text"], input[type="file"] {
 
 .button-create-question:hover,
 .submit-button:hover {
-<<<<<<< HEAD
-    background-color: var(--accent-color);
-}
-
-.load-img{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.button-create-question{
-background-color: #3a803a;
-    border: none;
-    height: 25%;
-    width: 100%;
-    padding: 14px 36px;
-    color: white;
-    font-weight: 700;
-    font-size: 17px;
-    border-radius: 30px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease, transform 0.15s ease;
-    margin-top: 1vh;
-    margin-bottom: 3vh;
-}
-
-.button-create-question:hover {
-    background-color: #4caf50;
-    transform: translateY(-1px);
-}
-=======
     background-color: var(--green-main);
     transform: translateY(-2px);
 }
->>>>>>> a588940606dcbcc2c774722489872e51750c39f3

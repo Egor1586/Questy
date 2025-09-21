@@ -1,0 +1,75 @@
+/* Контент */
+.classroom-content {
+  flex: 1;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.course-header {
+  /* background: linear-gradient(135deg, #66bb9f, #4393a0); */
+  color: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.course-tasks {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px;
+    margin-top: 10px;
+
+    max-height: calc(100vh - 200px); 
+    overflow-y: auto;  
+    padding-right: 10px;
+}
+
+.course-tasks::-webkit-scrollbar {
+    width: 6px; 
+}
+
+.course-tasks::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.course-tasks::-webkit-scrollbar-thumb {
+    background-color: #a5d6a7; 
+    border-radius: 4px;
+}
+
+.course-tasks::-webkit-scrollbar-thumb:hover {
+    background-color: #81c784; 
+}
+
+.task {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task:hover {
+    /* transfor: translateY(-2px); */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.task h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    color: #2e7d32;
+}
+
+.task p {
+    margin: 0 0 15px 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.start-btn {
+    all: unset;
+    cursor: pointer;
+}
