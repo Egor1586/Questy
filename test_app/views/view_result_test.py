@@ -5,6 +5,9 @@ from Project.database import db
 from flask_login import current_user
 from Project.clear_cookie import clear_cookies
 from user.models import Score
+from jinja2 import Environment
+
+jinja_env = Environment(extensions=['jinja2.ext.loopcontrols'])
 
 def render_test_result():
     list_answers= []
@@ -14,30 +17,40 @@ def render_test_result():
     
     test_id= flask.request.args.get("test_id")
 
-    for quiz in Quiz.query.filter_by(test_id= test_id).all():
-        quizzes_list= Quiz.query.filter_by(test_id= test_id).all()
-        list_answers.append(quiz.answer_options.split("%$№"))
-    
+    # NEW_TYPE
+    test = Test.query.filter_by(id= test_id).first()
+    quizzes_list= Quiz.query.filter_by(test_id= test_id).all()
+
+    for quiz in quizzes_list:
+        if quiz.question_type == "choice":
+            list_answers.append(quiz.answer_options.split("%$№"))
+        elif quiz.question_type == "input":
+            list_answers.append(quiz.correct_answer)
+        elif quiz.question_type == "multiple_choice":
+            list_answers.append(quiz.answer_options.split("%$№"))
+            
     user_answers_cookies = flask.request.cookies.get(key= 'user_answers')
     task_test_id = flask.request.cookies.get(key= 'taskTestId') or None
     class_id = flask.request.cookies.get(key= 'classId') or None
 
+    print(task_test_id)
     if user_answers_cookies:
-        user_answers = user_answers_cookies.split("|")
+        user_answers_list = user_answers_cookies.split("|")
 
-        for answer in user_answers:
-            if answer != "":
-                user_answers_list.append(answer)
-        
         for number, quiz in enumerate(quizzes_list):
             str_user_answers += f"|{user_answers_list[number]}|"
-            
-            print(quiz.correct_answer, user_answers_list[number])
-            if quiz.correct_answer == user_answers_list[number]:
-                count_correct_answers += 1
 
-            
-        test = Test.query.filter_by(id= test_id).first()
+        for index, quiz in enumerate(quizzes_list):
+            if quiz.question_type == "multiple_choice":
+                user_answers_list[index]=  user_answers_list[index].split("$$$")
+        
+        for number, quiz in enumerate(quizzes_list):     
+            print(type(quiz.correct_answer), quiz.correct_answer, type(user_answers_list[number]), user_answers_list[number])
+            if (quiz.question_type == "choice" or quiz.question_type == "input") and quiz.correct_answer == user_answers_list[number]:
+                count_correct_answers += 1
+            if quiz.question_type == "multiple_choice":    
+                if sorted(quiz.correct_answer.split("%$№")) == sorted(user_answers_list[number]):
+                    count_correct_answers += 1
 
         if current_user.is_authenticated:
             score = Score(
@@ -55,14 +68,16 @@ def render_test_result():
             db.session.add(score)
             db.session.commit()
 
+        print(user_answers_list)
+
         result_test_page = flask.render_template(
             'result_test.html',
             total_questions=test.total_questions,
             accuracy=count_correct_answers / len(quizzes_list) * 100 // 1,
             count_correct_answers=count_correct_answers,
-            list_quiz=quizzes_list,
-            list_answers=list_answers,
-            user_anwsers=user_answers_list,
+            list_quiz= quizzes_list,
+            list_answers= list_answers,
+            user_answers= user_answers_list,
             task_test_id= task_test_id,
             class_id= class_id,
             is_authorization = current_user.is_authenticated,

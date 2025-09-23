@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2c19fd516b2e
+Revision ID: 00a5c5a3696c
 Revises: 
-Create Date: 2025-09-14 12:01:33.447817
+Create Date: 2025-09-19 18:57:37.668712
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2c19fd516b2e'
+revision = '00a5c5a3696c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -64,8 +64,9 @@ def upgrade():
     )
     op.create_table('quiz',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('question_type', sa.String(length=50), nullable=False),
     sa.Column('question_text', sa.String(length=100), nullable=False),
-    sa.Column('answer_options', sa.String(length=300), nullable=True),
+    sa.Column('answer_options', sa.String(length=300), nullable=False),
     sa.Column('correct_answer', sa.String(length=100), nullable=True),
     sa.Column('time', sa.Integer(), nullable=True),
     sa.Column('test_id', sa.Integer(), nullable=True),
@@ -82,6 +83,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
     sa.Column('description', sa.String(length=200), nullable=False),
+    sa.Column('due_time', sa.DateTime(), nullable=False),
+    sa.Column('work_after_time', sa.Boolean(), nullable=True),
     sa.Column('class_id', sa.Integer(), nullable=True),
     sa.Column('test_id', sa.Integer(), nullable=True),
     sa.Column('image', sa.Boolean(), nullable=True),

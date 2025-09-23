@@ -20,6 +20,7 @@ class Test(db.Model):
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key= True)
 
+    question_type = db.Column(db.String(50), nullable= False)
     question_text = db.Column(db.String(100), nullable= False)
     answer_options = db.Column(db.String(300), nullable= True)
     correct_answer = db.Column(db.String(100), nullable= True)

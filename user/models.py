@@ -1,6 +1,5 @@
 from flask_login import UserMixin
 from Project.database import db
-from datetime import datetime
 
 class_user= db.Table(
     "class_user",
