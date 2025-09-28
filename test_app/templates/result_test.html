@@ -10,29 +10,35 @@
 
 {% block content %}
     <div class="container">
-        {% if username %}
-            <div class="result-info">
-                <div class="test-info">
-                    <p><strong>{{ username }}</strong> ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
-        {% else %}
-                    <p>Ваш результат: {{ count_correct_answers }} з {{ total_questions }}</p>
-        {% endif %}
-                    <p>Точність правильних відповідей: <strong>{{ accuracy }}</strong></p>
-                        
-                    <!-- <button class="home-btn">
-                        <a class="home-btn" href="/">На головну</a>
-                    </button> -->
-                    <a class="home-btn" href="/">
-                        <button class="home-btn">На головну</button> 
-                    </a>
-                </div>
+        <div class="result-info">
+            <div class="test-info">
+                {% if username %}
+                    <p><strong>{{ username }}</strong>, ваш результат: <strong>{{ count_correct_answers }} </strong>/ {{ total_questions }}</p>
+                {% else %}
+                    <p>Ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
+                {% endif %}
                 
-                <div class="answer-info">
-                    <p><strong class="green-answer">Зелений колір відповіді</strong> – правильна відповідь.</p>
-                    <p><strong class="yellow-answer">Жовтий колір відповіді</strong> - ваша неправильна відповідь.</p>
-                    <p><strong class="red-answer">Червоний колір відповіді</strong> – неправильний відповідь.</p>
-                </div>
+                <p>Точність правильних відповідей: <strong>{{ accuracy }}%</strong></p>
+                
+                {% if task_test_id != "None" %}
+                    <a class="home-link" href="/class_courses{{ class_id }}">
+                        <button class="home-btn">До класу</button>
+                    </a>
+                {% else %}
+                    <a class="home-link" href="/">
+                        <button class="home-btn">На головну</button>
+                    </a>
+                {% endif %}
             </div>
+
+            <div class="answer-info">
+                <ul>
+                    <li><span class="color-dot color-green"></span>Правильна відповідь (зелений)</li>
+                    <li><span class="color-dot color-yellow"></span>Ваша неправильна відповідь (жовтий)</li>
+                    <li><span class="color-dot color-red"></span>Неправильна відповідь (червоний)</li>
+                </ul>
+            </div>
+        </div>
 
             
         {% if not username %}
@@ -62,7 +68,10 @@
                 </div>
                 {% for answer in answers %}
                     {% if answer != question.correct_answer and answer != user_answer%}
-                        <div class="answer incorrect">✗ {{answer}}</div>                 
+                        <div class="answer incorrect">✗ {{answer}}</div>   
+                    {% elif user_answer != question.correct_answer and user_answer == "not_answer" %}      
+                        <!-- Якщо неправильна відповідь -->
+                        <div class="answer no-answer">Відповідь відсутня</div>
                     {% elif user_answer != question.correct_answer and answer == user_answer %}
                         <div class="answer user_answers">✗ {{answer}}</div>
                     {% else %}

@@ -1,0 +1,15 @@
+{% extends "class.html" %}
+
+{% block calss_title %}
+    Task page
+{% endblock %}
+
+{% block class_links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/task_page.css') }}">
+{% endblock %}
+
+{% block class_content %}
+    <div class="wrapper">
+        <p>task page</p>
+    </div>
+{% endblock %}

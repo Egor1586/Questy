@@ -14,7 +14,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-
 }
 
   
@@ -26,16 +25,17 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+::-webkit-scrollbar{
+    display: none;
+}
+
 main {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* overflow-y: auto; */
     /* width: 100%; */
-}
-
-::-webkit-scrollbar{
-    display: none;
 }
 
 
@@ -112,6 +112,14 @@ header{
     left: auto;
 }
 
+.active{
+    text-decoration: underline !important;
+    text-decoration-color: #333;
+    text-decoration-style: dotted;
+    text-underline-offset: 3.5px;
+    text-decoration-thickness: 5px;
+}
+
 .auth-buttons {
     display: flex;
     align-items: center;
@@ -183,4 +191,20 @@ footer a {
     text-decoration: none;
     font-size: 16px;
     margin: 0 10px;
+}
+
+/* scroll */
+/* Для будь-якого скролу в браузерах з підтримкою webkit */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* щоб і горизонтальний скрол був тонкий */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--green-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #eef6ee;
 }

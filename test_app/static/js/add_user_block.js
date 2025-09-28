@@ -1,5 +1,10 @@
 function createUserBlock(username, author_name, block_username) {    
     const userListDiv = document.getElementById("user-list")
+    const emptyUserBlock= document.getElementById("emty-users-list")
+
+    if (emptyUserBlock){
+        emptyUserBlock.remove();
+    }
     
     let checkingUserBlock= document.getElementById(`${block_username}`)
     
@@ -33,9 +38,10 @@ function createUserBlock(username, author_name, block_username) {
         userBlock.appendChild(userActions);
     }
     
-    userListDiv.appendChild(userBlock);
+    if (userListDiv){
+        userListDiv.appendChild(userBlock);
+        return userListDiv;
+    }
 
-    return userListDiv;
- 
+    return
 }
-

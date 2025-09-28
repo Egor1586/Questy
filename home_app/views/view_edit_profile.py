@@ -13,10 +13,9 @@ def render_edit_profile(user_id):
     user = User.query.filter_by(id= user_id).first()
 
     if flask.request.method == "POST":
-        if flask.request.form["name"]:
-            user.username = flask.request.form["name"]
+        if flask.request.form.get("name"):
+            user.username = flask.request.form.get("name")
+            db.session.commit()
             return flask.redirect("/profile")
-
-    db.session.commit()
     
     return { }

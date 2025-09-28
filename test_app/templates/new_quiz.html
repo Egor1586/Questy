@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Створіть чудову вікторину за лічені хвилини за допомогою штучного інтелекту</h1>
+    <h1>Створіть вікторину за лічені хвилини за допомогою штучного інтелекту</h1>
     <h3>Questy – це найпростіший спосіб зробити вікторини</h3>
 
     <section class="create-test-page">
@@ -34,6 +34,11 @@
               <div class="form-group">
                     <label for="correct-answers">Кількість відповідей на питання</label>
                     <input type="number" id="correct-answers" name="answers_per_question" min="4" placeholder="За замовчуванням - 4">
+              </div>
+
+              <div class="form-group">
+                    <label for="time">Кількість часу на відповідь</label>
+                    <input type="number" id="time" name="time" min="20" placeholder="За замовчуванням - 20">
               </div>
 
               <div class="load-img">

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% block calss_title %}{% endblock %}
+{% endblock %}
+
+{% block links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/class.css') }}">
+    {% block class_links %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-classroom">
+        <aside class="sidebar-classroom">
+            <div class="classroom-avatar">{{ username }}</div>
+            <p class="classroom-username">{{ username }}</p>
+            <p class="classroom-email">{{ email }}</p>
+
+            <nav class="menu">
+            <ul>
+                <li>
+                    <div class="page">
+                        <i class='bx  bx-home'></i> 
+                        <a href="/class_page">Головна</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="page">
+                        <i class='bx  bx-list-ul-square'></i> 
+                        <a href="task_page">Список завдань</a>
+                    </div>
+                </li>
+            </ul>
+            </nav>
+        </aside>
+
+        {% block class_content %}
+
+        {% endblock %}
+    </div>
+
+    {% block class_modal %}
+
+    {% endblock %}
+{% endblock %}

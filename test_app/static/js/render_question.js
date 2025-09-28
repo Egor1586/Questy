@@ -8,8 +8,18 @@ function getCookie(name) {
 function renderWaiteQuestion() {
     const roomContent = document.getElementById("room-content");
     roomContent.innerHTML = ""; 
-    roomContent.className = "wait-content"; 
-    roomContent.textContent= "Зачекайте на наступне питання..."
+    roomContent.className = 'waite-next-question'
+
+    roomContent.innerHTML = `
+        <div class="blur-overlay">
+            <div class="wait-content">
+                <div class="waiting-message">
+                    Будь ласка, зачекайте, поки інші учасники відповідають...
+                </div>
+            </div>
+        </div>
+    `
+    console.log("waite next question")
 }
 
 function renderQuestion(questionNumber, list_quiz, list_answers, room, author_name) {
@@ -28,6 +38,11 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
     const question = document.createElement("p");
     question.textContent = list_quiz[questionNumber].question_text;
     questionBlock.appendChild(question);
+
+    const timer = document.createElement("p");
+    timer.id= "timer"
+    timer.textContent = list_quiz[questionNumber].time;
+    questionBlock.appendChild(timer);
 
     const answersDiv = document.createElement("div");
     answersDiv.className = "answers";
@@ -72,8 +87,8 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
                     cookie= cookie + `|${button.id}|`
                     document.cookie = `user_answers = ${cookie}; path= /`
                 }   
-                
-                console.log(button.id)
+
+                renderWaiteQuestion();
                 
                 socket.emit("user_answer", {
                     room: room,
@@ -81,11 +96,20 @@ function renderQuestion(questionNumber, list_quiz, list_answers, room, author_na
                     username: username,
                     answer: button.id
                 });
-                
-                renderWaiteQuestion();
             }
         )
     }
+
+    const timerText= document.getElementById("timer")
+    
+    const coundown= setInterval(() =>{
+        time= parseInt(timerText.textContent);
+        timerText.textContent= --time;
+
+        if (time <= 0){
+            clearInterval(coundown);
+            timerText.textContent = "Час закінчений"
+        }
+
+    }, 1000);
 }
-
-

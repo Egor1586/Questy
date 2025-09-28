@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Test
+{% endblock %}
+
+{% block links %}
+    <link rel = "stylesheet" href = "{{ url_for('test_app.static', filename='css/create_test.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Новий тест</h1>
+        
+        <label for="test-title">Назва тесту:</label>
+        <input type="text" id="test-title" name="test-title">
+
+        <label for="test-description">Опис:</label>
+        <input type="text" id="test-description" name="test-description">
+
+        <label for="test-image">Зображення (необов'язково):</label>
+        <input type="file" id="test-image" name="test-image" accept="image/*">
+
+        <div class="test-question">
+
+        </div>
+ 
+        <button type="button" class="button-create-question">Створити ще одне питання</button>
+        <button type="submit" class="submit-button">Завершити створення тесту</button>
+    </div>
+
+    <script src="{{ url_for('test_app.static', filename= 'js/create_question.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/build_test.js') }}"></script>
+{% endblock %}

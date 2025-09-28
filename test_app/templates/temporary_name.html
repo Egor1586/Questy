@@ -9,9 +9,23 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-        <input class="temp_input" type="text" name="temporary-name" placeholder="Enter your name to take the test" required>
-        <button type="button" class="temp_button" data-value="">Next</button>
+    <div class="wrapper">
+        <div class="container">
+            <div class="title-section-1">
+                <h2 class="title">Анонімний користувач</h2>
+                <p class="par-1">Введіть анонімне ім’я, яке буде використовуватись під час проходження тесту</p>
+            </div>
+
+            <div class="input-group">
+                <input class="input-name" type="text" name="temporary-name" placeholder="Введіть ім'я" required>
+            </div>
+    
+            <div class="input-group">
+                <button type="button" class="submit-btn" data-value="">Продовжити</button>
+            </div>
+
+            <br>
+        </div>
     </div>
 
     <script>

@@ -58,13 +58,17 @@ function renderResultTest(username, author_name, total_question, answers_per_que
   const info2 = document.createElement('p');
   info2.innerHTML = `Точність правильних відповідей: <strong>${accuracy.toFixed(1)}%</strong>`;
 
+  const leaveLink = document.createElement('a');
+  leaveLink.className = 'home-link';
+
   const leaveButton = document.createElement('button');
-  leaveButton.className = 'leave-btn';
+  leaveButton.className = 'home-btn';
   leaveButton.textContent = 'Покинути тест';
   leaveButton.addEventListener("click", userLeaveTest);
 
   testInfo.appendChild(info1);
   testInfo.appendChild(info2);
+  leaveLink.appendChild(leaveButton);
   testInfo.appendChild(leaveButton);
 
   resultInfo.appendChild(testInfo);
@@ -72,9 +76,11 @@ function renderResultTest(username, author_name, total_question, answers_per_que
   const answerInfo = document.createElement('div');
   answerInfo.className = 'answer-info';
   answerInfo.innerHTML = `
-      <p><strong class="green-answer">Зелений колір відповіді</strong> – правильна відповідь.</p>
-      <p><strong class="yellow-answer">Жовтий колір відповіді</strong> - ваша неправильна відповідь.</p>
-      <p><strong class="red-answer">Червоний колір відповіді</strong> – неправильний відповідь.</p>
+      <ul>
+        <li><span class="color-dot color-green"></span>Правильна відповідь (зелений)</li>
+        <li><span class="color-dot color-yellow"></span>Ваша неправильна відповідь (жовтий)</li>
+        <li><span class="color-dot color-red"></span>Неправильна відповідь (червоний)</li>
+      </ul>
   `;
 
   resultInfo.appendChild(answerInfo);
@@ -134,7 +140,7 @@ function renderResultTest(username, author_name, total_question, answers_per_que
     questionText.className = 'question-text';
     questionBlock.appendChild(questionText);
 
-    for (let answer_number = 0; answer_number < answers_per_question; answer_number++) {
+    for (let answer_number = 0; answer_number < list_answers[quiz_number].length; answer_number++) {
       const answerText = list_answers[quiz_number][answer_number];
 
       if (
@@ -164,3 +170,4 @@ function renderResultTest(username, author_name, total_question, answers_per_que
     resultContainer.appendChild(questionBlock);
   }
 }
+

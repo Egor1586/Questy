@@ -1,5 +1,4 @@
 import flask, random
-from flask_login import current_user
 
 from Project.database import db
 from ..models import Test, Quiz

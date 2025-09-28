@@ -5,57 +5,52 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>Ё
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="//cdn.socket.io/4.0.0/socket.io.min.js"></script>
         <title>{% block title %} {% endblock %}</title>
         {% block links %} {% endblock %}
     </head>
     <body>
 
-    <header class="navbar">
-        <div class="logo">
-            <img alt="Qusty logo" src="{{ url_for('static', filename='images/logo.svg') }}">
-        </div>
-
-        <nav class="nav-links">
-            <a href="/" class="{% if request.path == '/' %}active{% endif %}">HOME</a>
-            <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">PROFILE</a>         
-            <a href="/score" class="{% if request.path == '/score/' %}active{% endif %}">SCORE</a>
-            {% if is_teacher %}
-                <a href="/quizzes" class="{% if request.path == '/quizzes/' %}active{% endif %}">QUIZ</a>
-            {% endif %}
-        </nav>
-
-        <div class="user-actions">
-            {% if is_authorization %}
-                <h2 class="username">{{ username }}</h2>
-                <form action="/logout">
-                    <button class="logout">Log out</button>
-                </form>
-            {% else %}
-                <div class="auth-buttons">
-                    <a href="/sign_up">SIGN UP</a>
-                    <a href="/login">LOGIN</a>
-                </div>
-            {% endif %}
-        </div>
-    </header>
-
-    <main id="main">
-        {% block content %}
-
-        {% endblock %}
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-text">© 2025 Questy. All rights reserved.</div>
-            <div class="social-media">
-                <a href="#"><i class='bx bxl-facebook'></i></a>
-                <a href="#"><i class='bx bxl-instagram'></i></a>
-                <a href="#"><i class='bx bxl-twitter'></i></a>
+        <header class="navbar">
+            <div class="logo">
+                <img alt="Qusty logo" src="{{ url_for('static', filename='images/logo.svg') }}">
             </div>
-        </div>
-    </footer>
+
+            <nav class="nav-links">
+                <a href="/" class="{% if request.path == '/' %}active{% endif %}">HOME</a>
+                <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">PROFILE</a>      
+                {% if is_authorization %}
+                    <a href="/class_page" class="{% if request.path == '/class_page' %}active{% endif %}">CLASS</a>
+                {% endif %}   
+                {% if is_teacher %}
+                    <a href="/quizzes" class="{% if request.path == '/quizzes/' %}active{% endif %}">QUIZ</a>
+                {% endif %}
+            </nav>
+
+            <div class="user-actions">
+                {% if is_authorization %}
+                    <h2 class="username">{{ username }}</h2>
+                    <form action="/logout">
+                        <button class="logout">Log out</button>
+                    </form>
+                {% else %}
+                    <div class="auth-buttons">
+                        <a href="/sign_up">SIGN UP</a>
+                        <a href="/login">LOGIN</a>
+                    </div>
+                {% endif %}
+            </div>
+        </header>
+
+        <main id="main">
+            {% block content %}
+
+            {% endblock %}
+        </main>
+
+        {% block footer %}
+        
+        {% endblock %}
     </body>
 </html>

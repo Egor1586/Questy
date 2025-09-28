@@ -1,9 +1,7 @@
 import flask
+
 from ..models import Test
-
 from Project.database import db
-
-from flask_login import current_user
 from Project.render_page import render_page
 
 @render_page(template_name = 'edit_head_test.html')

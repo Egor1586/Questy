@@ -1,6 +1,5 @@
-import flask, Project, random, datetime
+import flask, Project, datetime
 
-from flask_login import current_user
 from flask_socketio import join_room, emit, disconnect
 from Project.render_page import render_page
 from Project.database import db
@@ -8,10 +7,6 @@ from ..models import Test, Room, Quiz
 from user.models import User, Score
 
 users= {}
-
-# user_answer
-# get_room_size
-# stop_test
 
 def get_sid(username):
     for sid, name in users.items():
@@ -51,7 +46,7 @@ def handle_join(data):
         new_user = f'|{username}|'
         if new_user not in ROOM.user_list:
             ROOM.user_list += new_user
-            if username != test.author_name:
+            if username != test.author_name and username not in ROOM.all_members:
                 print(f"new user{username}")
                 ROOM.all_members += new_user
 
@@ -77,9 +72,11 @@ def handle_disconnect():
         
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
+    print("NTNTNTNNTEST END")
     room = data['room']
-    print(f";oaehgp['oae] {room}")
-    TEST = Test.query.filter_by(test_code = room).first()
+    ROOM = Room.query.filter_by(test_code= room).first()
+    ROOM.active = 0
+    TEST = Test.query.filter_by(test_code= room).first()
     TEST.test_code = 0  
     db.session.commit()
     
@@ -88,7 +85,6 @@ def handle_kick_user(data):
     username = data['user']
     room = data['room']
     
-  
     kick_sid = get_sid(username)
 
     if kick_sid:
@@ -119,8 +115,6 @@ def handle_send_usernames(data):
 
     print(clean_users_in_room)
     emit("get_usernames", clean_users_in_room, room= author_sid)
-
-
 
 @Project.settings.socketio.on('user_answers')
 def handle_message(data):
@@ -156,6 +150,7 @@ def handle_message(data):
         accuracy= accuracy,
         test_id= TEST.id,
         date_complete = datetime.date.today(),
+        time_complete= datetime.datetime.now().strftime("%H:%M:%S"),
         user_id= USER.id if USER else 0,
         user_name= user_name,
         test_code= room
@@ -223,7 +218,22 @@ def handle_message(data):
 
 @Project.settings.socketio.on('new_user')
 def handle_message(data):
-    emit("create_user_block", f"{data['username']}", include_self= False, to= data['room'])
+    room= data['room']
+    username= data['username']
+    author_name= data["author_name"]
+    user_sid = get_sid(username)
+
+    ROOM= Room.query.filter_by(test_code= room).first()
+
+    users_string= ROOM.user_list.replace(f"|{username}|", "")
+    
+    if username != author_name:
+        users_string= users_string.replace(f"|{author_name}|", "")
+
+    print(users_string)
+
+    emit("create_user_block", f"{username}", include_self= False, to= room)
+    emit("create_all_user_blocks", users_string, to= user_sid)
 
 @Project.settings.socketio.on('next_question')
 def handle_message(data):
@@ -233,6 +243,10 @@ def handle_message(data):
 def handle_message(data):
     emit("result_test", f"Stop test {data['room']} result_test page author {data['author_name']}", include_self= False, to= data['room'])
 
+@Project.settings.socketio.on('end_test')
+def handle_message(data):
+    room= data["room"]
+    emit("kicked", room, include_self= False, to= room)
 
 @Project.settings.socketio.on('room_get_result')
 def handle_message(data):
@@ -260,7 +274,7 @@ def handle_message(data):
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
- 
+
     print(USER_LIST)
     print(SCORE_LIST)
 
@@ -287,6 +301,8 @@ def handle_message(data):
             print(quiz.correct_answer, answers_list[index])
             if quiz.correct_answer == answers_list[index]:
                 correct_answers_list.append(1)
+            elif answers_list[index] == "not_answer":
+                correct_answers_list.append(2)
             else:
                 correct_answers_list.append(0)
         try:
@@ -295,8 +311,26 @@ def handle_message(data):
             room_get_result_data[user]= correct_answers_list
 
     print(room_get_result_data)
+    BEST_SCORE= None
+    best_accuracy= 0
+    averega_accuracy= 0
+    averega_score= 0
 
-    emit("room_get_result_data", room_get_result_data, to= user_sid)
+    for score in SCORE_LIST:
+        averega_accuracy =+ score.accuracy
+        if score.accuracy > best_accuracy:
+            BEST_SCORE= score
+
+    averega_score= averega_accuracy//len(SCORE_LIST)
+
+    best_score_data= {
+        "user_name": BEST_SCORE.user_name,
+        "accuracy": BEST_SCORE.accuracy,
+    }
+   
+    emit("room_get_result_data", {"room_get_result_data": room_get_result_data,
+                                  "best_score_data": best_score_data,
+                                  "averega_score": averega_score}, to= user_sid)
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):
@@ -304,6 +338,10 @@ def render_room(test_code):
     list_quiz = []
 
     test = Test.query.filter_by(test_code= test_code).first()
+
+    if not test:
+        return flask.redirect("/")
+
     quizzes_list = Quiz.query.filter_by(test_id= test.id).all()
 
     for quiz in quizzes_list:

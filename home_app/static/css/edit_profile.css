@@ -1,0 +1,148 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+main {
+    display: flex;
+}
+
+.wrapper{
+    /* background-color: rgba(113, 145, 107, 1); */
+    width: 100vw;
+    height: 84vh;
+
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    /* flex-direction: column; */
+}
+
+.container{
+    width: 485px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 30px;
+    border-radius: 14px;
+    background-color: rgba(0, 0, 0, 0.8) 0px 4px 12px;
+}
+
+.title-section{
+   margin-bottom: 30px; 
+}
+
+.title-section-1{
+    margin-bottom: 0px; 
+}
+ 
+
+.title-section h2{
+    font-weight: 600;
+ }
+ 
+
+.title{
+    color: black;
+    font-size: 25px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+.par{
+    color: #484d54ce;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.par-1{
+    color: #484d54ce;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+
+.input-group{
+    position: relative;
+}
+
+.input-group .label-title{
+    color: #38475a;
+    text-transform: capitalize;
+    margin-bottom: 11px;
+    font-size: 14px;
+    display: block;
+    font-weight: 500;
+}
+
+.input-email{
+    width: 100%;
+    background-color: none;
+    color: #38475a;
+    font-size: 16px;
+    font-weight: 300;
+    border: 1px solid #EAECF0;
+    padding: 9px 18px 9px 52px;
+    outline: none;
+    border-radius: 8px;
+    margin-bottom: 17px;
+}
+
+.input-code{
+    width: 100%;
+    background-color: none;
+    color: #38475a;
+    font-size: 16px;
+    font-weight: 300;
+    border: 1px solid #EAECF0;
+    padding: 9px;
+    outline: none;
+    border-radius: 8px;
+    margin-bottom: 17px;
+}
+
+.input-group input::placeholder{
+    color: #484d54ce;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.input-group input::placeholder::before{
+    opacity: 0.30;
+    color: red;
+}
+
+.input-group .icon{
+    position: absolute;
+    align-items: center;
+    color: #38475a;
+    left: 13px;
+    top: calc(50% - 12px);
+    text-align: center;
+    font-size: 23px;
+}
+
+.submit-btn{
+    width: 100%;
+    background-color: rgb(29, 36, 27);
+    border: 1px solid transparent;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 13px 24px ;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.submit-btn:hover{
+    opacity: 0.90;
+}

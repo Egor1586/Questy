@@ -1,0 +1,129 @@
+:root {
+    --green-main: #4CAF50;
+    --green-dark: #3e8641;
+    --green-light: #aad8af;
+    --bg-light: #f9fdf9;
+    --bg-aside: #f0f7f0;
+    --text-dark: #2f2f2f;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    /* background-color: var(--bg-light); */
+    background-color: hwb(120 82% 11% / 0.877);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow);
+}
+
+h1 {
+    text-align: center;
+    color: var(--green-dark);
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 600;
+    display: block;
+    margin: 10px 0 6px;
+}
+
+input[type="text"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    
+    border: 1px solid var(--green-light);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.question-block {
+    background-color: var(--bg-aside);
+    border: 1px solid var(--green-light);
+    border-radius: 10px;
+    padding: 15px;
+
+    margin-top: 20px;
+    box-shadow: 0 2px 5px var(--shadow);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--green-dark);
+}
+
+.delete-question {
+    background: none;
+    border: none;
+    color: rgb(233, 96, 96);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.answers {
+    margin-top: 10px;
+}
+
+.answer-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.answer-input input[type="text"] {
+    flex: 1;
+}
+
+.add-answer {
+    background-color: var(--green-main);
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.add-answer:hover {
+    background-color: var(--green-dark);
+}
+
+.button-create-question,
+.submit-button {
+    background-color: var(--green-dark);
+    border: none;
+    width: 100%;
+    padding: 14px 36px;
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    margin-top: 20px;
+}
+
+
+.button-create-question:hover,
+.submit-button:hover {
+    background-color: var(--green-main);
+    transform: translateY(-2px);
+}

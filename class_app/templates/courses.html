@@ -1,0 +1,71 @@
+{% extends "class.html" %}
+
+{% block calss_title %}
+    Create Test
+{% endblock %}
+
+{% block class_links %}
+    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/courses.css') }}">
+{% endblock %}
+
+{% block class_content %}
+    <div class="container-classroom">
+        <div class="classroom-content">
+            {% if class.class_color2 == None %}
+                <div class="course-header"  style="background: {{ class.class_color1 }};">
+                    <h2>{{ class.title}}</h2>
+                </div>
+            {% else %}
+                <div class="course-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
+                    <h2>{{ class.title}}</h2>
+                </div>
+            {% endif %}
+
+            {% for task in taskes_list %}
+                {% set status = do_task[loop.index0] %}
+                {% set due_time = due_time_list[loop.index0] %}
+                {% set can_do = can_do_task[loop.index0] %}
+                <div class="course-tasks">
+                    <div class="task">
+                        <h3>{{ task.title }}</h3>
+                        <p>{{ task.description }}</p>
+                        {% if username == class.teacher.username %}
+                            <a href="/result_task?class_id={{task.class_id}} &task_id= {{task.id}}">   
+                                <button>Результати користувачів класу</button>
+                            </a>
+
+                            <a href="/delete_task{{task.id}}">   
+                                <button>Delete task</button>
+                            </a>
+                        {% else %}
+                            {% if can_do%}
+                                {% if status%}
+                                    <p>Test status do</p>
+                                {% else %}
+                                    <a href="/passing_test?test_id={{ task.test_id }}&question_number= 0&back_to_class= {{ class.id }}">
+                                        <button onclick="passingTaskTest({{ task.test_id }}, {{ class.id }})">Пройти тест</button>   
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <p>Due time over, you miss this task</p>
+                            {% endif %}
+                        {% endif %}
+
+                        <div>
+                            <p>Due time</p>
+                            <p>Still {{ due_time[0] }} {{ due_time[1] }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function passingTaskTest(testId, classId){
+            console.log(`passingTaskTest ${testId}`);
+            document.cookie = `taskTestId= ${testId}; path = /`; 
+            document.cookie = `classId= ${classId}; path = /`; 
+        }
+    </script>
+{% endblock %}
