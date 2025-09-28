@@ -12,5 +12,6 @@ def send_code(user_email: str, code: int, type: str):
         recipients=[user_email]
     )
     
+    print(code)
     message.body = f"Це ваш код: {code}"
     mail.send(message)

@@ -7,34 +7,75 @@
 {% block class_links %}
     <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/class_page.css') }}">
 {% endblock %}
-
 {% block class_content %}
     <main class="content">
         {% if is_teacher%}
             <div class="class-div">
-                <h2>Куровані</h2>
-                
-                <div class="card-div">
-                    {% for class in my_classes_list %}             
-                        <div class="card with-tasks">
-                            <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span></div>
-                            <div class="card-body">
-                                <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
-                                <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
-                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
-                            </div>
-            
-                            <div class="card-footer">
-                                <a href="/class_courses{{ class.id }}">
-                                    <button class="start-btn">Перейти до курсу</button>
+                {% if my_classes_list%}
+                    <h2>Куровані</h2>
+                    
+                    <div class="card-div">
+                        {% for class in my_classes_list %}             
+                            <div class="card with-tasks">
+                                {% if class.class_color2 == None %}
+                                    <div class="card-header" style="background: {{ class.class_color1 }};">
+                                        Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                    </div>
+                                {% else %}
+                                    <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
+                                        Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                    </div>
+                                {% endif %}
+
+                                <form action="/delete_class{{ class.id }}" >
+                                    <button>
+                                        Видалити клас
+                                    </button>
+                                </form>
+
+                                <a href="/class_information{{ class.id }}">
+                                    <button>
+                                        Class information
+                                    </button>
                                 </a>
-                                <a href="/create_task{{ class.id }}">
-                                    <button class="start-btn">Створити завдання</button>
-                                </a>
+
+
+                                <div class="card-body">
+                                    <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                                    <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                                    <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                                </div>
+                                {% if class.class_color2 == None %}
+                                    <div class="card-footer">
+                                        <a href="/class_courses{{ class.id }}">
+                                            <button class="start-btn" style="background: {{ class.class_color1 }};">
+                                                Перейти до курсу
+                                            </button>
+                                        </a>
+                                        <a href="/create_task{{ class.id }}">
+                                            <button class="start-btn" style="background: {{ class.class_color1 }};">
+                                                Створити завдання
+                                            </button>
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div class="card-footer">
+                                        <a href="/class_courses{{ class.id }}">
+                                            <button class="start-btn" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
+                                                Перейти до курсу
+                                            </button>
+                                        </a>
+                                        <a href="/create_task{{ class.id }}">
+                                            <button class="start-btn" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
+                                                Створити завдання
+                                            </button>
+                                        </a>
+                                    </div>
+                                {% endif %}
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
             
@@ -45,7 +86,15 @@
                 <div class="card-div">       
                     {% for class in classes_list %}         
                         <div class="card with-tasks">
-                            <div class="card-header">Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span></div>
+                            {% if class.class_color2 == None %}
+                                <div class="card-header" style="background: {{ class.class_color1 }};">
+                                    Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span>
+                                </div>
+                            {% else %}
+                                <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
+                                    Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span>
+                                </div>
+                            {% endif %}
                             <div class="card-body">
                                 <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
                                 <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
@@ -54,7 +103,15 @@
                 
                             <div class="card-footer">
                                 <a href="/class_courses{{ class.id }}">
-                                    <button class="start-btn">Перейти до курсу</button>
+                                    {% if class.class_color2 == None %}
+                                        <button class="start-btn" style="background: {{ class.class_color1 }};">
+                                            Перейти до курсу
+                                        </button>
+                                    {% else %}
+                                        <button class="start-btn" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
+                                            Перейти до курсу
+                                        </button>
+                                    {% endif %}
                                 </a>
                             </div>
                         </div>
@@ -128,8 +185,8 @@
                     <input type="color" value="#ff0000" name="color-m" required>
                 </div>
                 <div class="form-group color-group" id="color-gradient" style="display:none;">
-                    <input type="color" value="#ff0000" name="color-g" required>
-                    <input type="color" value="#0000ff" name="color-g" required>
+                    <input type="color" value="#ff0000" name="color-g1" required>
+                    <input type="color" value="#0000ff" name="color-g2" required>
                 </div>
         
                 <div class="form-group">

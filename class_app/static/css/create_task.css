@@ -28,8 +28,8 @@ footer {
 }
   
 .create-test-page {
-    width: 30vw;
-    height: 30vh;
+    width: auto;
+    height: auto;
     margin: 15px auto;
     padding: 24px;
 

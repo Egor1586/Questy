@@ -26,6 +26,7 @@
     height: auto;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: left;
     align-items: flex-start;
 }
@@ -60,7 +61,7 @@
 }
 
 .card-header {
-    background: linear-gradient(135deg, #66bb6a, #43a047);
+    /* background: linear-gradient(135deg, #66bb6a, #43a047); */
     color: #fff;
     padding: 14px;
     font-size: 15px;
@@ -89,7 +90,7 @@
 }
 
 .start-btn{
-    background: linear-gradient(135deg, #66bb9f, #4393a0);
+    /* background: linear-gradient(135deg, #66bb9f, #4393a0); */
     border: none;
     color: #fff;
     font-weight: 600;
@@ -101,7 +102,8 @@
 
 .start-btn:hover {
     transition: 0.5s ease;
-    background: linear-gradient(135deg, #5ba88e, #387c87);
+    filter: brightness(92%);
+    /* background: linear-gradient(135deg, #5ba88e, #387c87); */
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
