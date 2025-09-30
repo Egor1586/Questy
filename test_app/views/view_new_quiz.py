@@ -142,7 +142,7 @@ def render_new_quiz():
         ]
     }   
 
-    dataMultipleChoice = {
+    dataImage = {
         "topic": "Основи Python",
         "description": "Тест на базові знання Python для початківців.",
         "questions": [
@@ -161,8 +161,9 @@ def render_new_quiz():
                 "time": 60
             },
             {
-                "question_type": "choice",
+                "question_type": "image",
                 "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
+                "image_name": "quiz_image", 
                 "options": [
                     "float",
                     "str"
@@ -235,18 +236,24 @@ def render_new_quiz():
                 image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}.png")))
 
             # NEW_TYPE
-            for quizzes in dataMultipleChoice["questions"]:
+            for quizzes in dataImage["questions"]:
                 answers_list = quizzes["options"].copy()
+                image_name= quizzes.get("image_name")
                 random.shuffle(answers_list)
                 quiz = Quiz(
                     question_type = quizzes["question_type"],
                     question_text = quizzes["question_text"],
+                    image_name= image_name if image_name else None,
                     answer_options = "%$№".join(answers_list),
                     correct_answer = quizzes["correct_answer"],
                     time= quizzes["time"],
                     test_id = test.id             
                 )
                 db.session.add(quiz)
+
+                if quiz.image_name:
+                    print("quiz image path")
+                    # image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{image_name}.png")))
                         
             db.session.commit()
                 

@@ -20,11 +20,9 @@ def render_review_results(id):
     # NEW TYPE
 
     for quiz in quizzes_list:
-        if quiz.question_type == "choice":
-            list_answers.append(quiz.answer_options.split("%$№"))
-        elif quiz.question_type == "input":
+        if quiz.question_type == "input":
             list_answers.append(quiz.correct_answer)
-        elif quiz.question_type == "multiple_choice":
+        else :
             list_answers.append(quiz.answer_options.split("%$№"))
 
     user_answers_db = SCORE.user_answer
@@ -36,8 +34,6 @@ def render_review_results(id):
 
     for index, quiz in enumerate(quizzes_list):
         if quiz.question_type == "multiple_choice":
-            print("multiple_choice", user_answers_list[index])
-            print("multiple_choice", user_answers_list[index].split("$$$"))
             user_answers_list[index]=  user_answers_list[index].split("$$$")
 
     print(user_answers_list)

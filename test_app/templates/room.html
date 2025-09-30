@@ -16,7 +16,6 @@
     </div>
     
     <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
-    
     <script src="{{ url_for('test_app.static', filename= 'js/render_waite_page.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_question.js') }}"></script>
@@ -70,14 +69,14 @@
             renderAuthorResultTest(username, author_name, total_question);
         } 
         else if (state === "result_test") {
-            renderResultTest(username, author_name, total_question, answers_per_question, list_quiz, list_answers);
+            renderResultTest(username, total_question, list_quiz, list_answers);
         } 
         else if (state && state=== "author_leave"){
             let currentURL = window.location.href;
             let roomCode = currentURL.split('room')[1]
 
-            console.log(currentURL)
-            console.log(`Это код теста: ${roomCode}`)
+            //console.log(currentURL)
+            //console.log(`Это код теста: ${roomCode}`)
             
             socket.emit("test_end", {
                 room: roomCode
@@ -91,7 +90,7 @@
             window.location.href = '/';  
         }
         else if (state && state.includes("question")) {
-            renderQuestion(state.slice(-1), list_quiz, list_answers, room, author_name);
+            renderQuestion(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
         } 
         else if (state && state.includes("waite")) {
             renderWaiteQuestion();
@@ -130,10 +129,9 @@
         });
 
         socket.on("create_all_user_blocks", function(data) {
-            console.log(data)
             let temp_user_list= data.slice(1, -1);
             temp_user_list= temp_user_list.split('||')
-            console.log(temp_user_list)
+            //console.log(temp_user_list)
 
             temp_user_list.forEach(function(username) {
                 if (username.trim() !== ""){
@@ -162,7 +160,7 @@
             let countUsersAnswer= getCookie("countUsersAnswer");
             countUsersAnswer = Number(countUsersAnswer) + 1  
             document.cookie = `countUsersAnswer= ${countUsersAnswer}; path=/`;
-            console.log(countUsersAnswer)
+            //console.log(countUsersAnswer)
             
             addUserAnswer(data["username"], answer, author_name, answers_per_question);
             
@@ -178,8 +176,8 @@
             let countUsersAnswer= getCookie("countUsersAnswer");
             
             state = getCookie("state");
-            console.log(state)
-            console.log(`Checking ${Number(state.slice(-1))} and ${total_question -1}`)
+            //console.log(state)
+            //console.log(`Checking ${Number(state.slice(-1))} and ${total_question -1}`)
         });
 
         socket.on("next_question", function(data) {  
@@ -188,19 +186,19 @@
             checkAnswers();
   
             if (state != "author_result_test") {
-                console.log(state);
+                //console.log(state);
                 let number_of_question= Number(state.slice(-1));
+                console.log("Номер вопроса")
+                console.log(Number(state.slice(-1)))
                 if (number_of_question != total_question - 1) {
-                    console.log(number_of_question);
+                    //console.log(number_of_question);
                     document.cookie = `state= question${number_of_question + 1}; path=/`;
-                    state= getCookie("state");
-                    console.log(state);
-                    
-                    renderQuestion(state.slice(-1), list_quiz, list_answers, room, author_name);
+                    //console.log(state);
+                    renderQuestion(list_quiz[number_of_question + 1], list_answers[number_of_question + 1], room, author_name);
                 }
                 else {
-                    console.log("stop test skip last question")
-                    console.log(`${number_of_question} and ${total_question - 1}`)
+                    //console.log("stop test skip last question")
+                    //console.log(`${number_of_question} and ${total_question - 1}`)
                 
                     socket.emit("stop_test", {
                         room: room,
@@ -208,7 +206,7 @@
                     });
                     
                     document.cookie = `state= author_result_test; path=/`;
-                    console.log(`Stop test ${getCookie("state")}`);
+                    //console.log(`Stop test ${getCookie("state")}`);
 
                     renderAuthorResultTest(username, author_name, total_question);
                 }
@@ -219,10 +217,10 @@
             
             checkAnswers();
 
-            renderResultTest(username, author_name, total_question, answers_per_question, list_quiz, list_answers);
+            renderResultTest(username, total_question, list_quiz, list_answers);
 
             userAnswers= getCookie("user_answers");
-            console.log(userAnswers);
+            //console.log(userAnswers);
 
             socket.emit("user_answers", {
                     room: room,
@@ -232,11 +230,11 @@
                 });
 
             document.cookie = `state= result_test; path=/`;
-            console.log(`Stop test ${getCookie("state")}`);
+            //console.log(`Stop test ${getCookie("state")}`);
         });
 
         socket.on("create_user_block", function(data) {  
-            console.log(data) ; 
+            //console.log(data) ; 
             if (!state){          
                 createUserBlock(username, author_name, data);
             }
@@ -248,7 +246,7 @@
         });
 
         socket.on('room_get_result_data', function(data) {          
-            console.log(data);
+            //console.log(data);
         });
 
         socket.on('user_disconnected', function(data) {  
@@ -278,7 +276,7 @@
             let messages = document.getElementById("messages");
             messages.innerHTML += `<p>Start ${data["room"]}</p>`;
             if (username === data["author_name"]) {
-                console.log("Вы начали тест");              
+                // console.log("Вы начали тест");              
                 document.cookie = "state= author_start0; path=/";
                 document.cookie = "countUsersAnswer= 0; path=/";
                 document.cookie = `countCorrectAnswer= 0; path=/`;
@@ -287,7 +285,7 @@
             else {
                 console.log("Тест начат");
                 document.cookie = "state= question0; path=/";
-                renderQuestion(0, list_quiz, list_answers, room, author_name);
+                renderQuestion(list_quiz[state], list_answers[state], room, author_name);
 
             }
         });
@@ -304,20 +302,22 @@
             countAnswer.textContent= 0;
              
             let number_of_question= Number(state.slice(-1)) + 1;
-            console.log(state)
+            //console.log(state)
             document.cookie = `state= author_start${number_of_question}; path=/`;
             document.cookie = `countCorrectAnswer= 0; path=/`;
-            console.log(state)
+            //console.log(state)
 
             if (number_of_question == total_question- 1) {
-                console.log(`Кінець тесту ${number_of_question} === ${total_question- 1}`)
+                //console.log(`Кінець тесту ${number_of_question} === ${total_question- 1}`)
                 nextButton.textContent = 'Кінець тесту'
                 nextButton.removeEventListener("click", nextQuestion)
                 nextButton.addEventListener("click", testStop);
             }
-            console.log("next question")
+            //console.log("next question")
             document.cookie = `countUsersAnswer= 0; path=/`;
             
+            console.log("Вопрос")
+            console.log(Number(state.slice(-1))+1)
             const question_text = document.getElementById("author-question")
             question_text.textContent = `Питання:${list_quiz[Number(state.slice(-1))+1].question_text}`
         
@@ -329,7 +329,7 @@
 
             
             
-            console.log("clear chart")
+            //console.log("clear chart")
             if (donatChart){
                 donatChart.destroy()
             }
@@ -373,7 +373,7 @@
         }
 
         function testStop(){
-            console.log("stop test")
+            //console.log("stop test")
             
             socket.emit("stop_test", {
                 room: room,
@@ -381,7 +381,7 @@
             });
 
             document.cookie = `state= author_result_test; path=/`;
-            console.log(`Stop test ${getCookie("state")}`);
+            //console.log(`Stop test ${getCookie("state")}`);
             
             renderAuthorResultTest(username, author_name, total_question);
         }
@@ -405,8 +405,8 @@
                     }
                 }
                 
-                console.log(user_answers_list)
-                console.log(user_answers_list.length, Number(state.slice(-1)) + 1)
+                //console.log(user_answers_list)
+                //console.log(user_answers_list.length, Number(state.slice(-1)) + 1)
                 
                 if (user_answers_list.length !== Number(state.slice(-1)) + 1) {
     
@@ -415,7 +415,7 @@
                 }
             }
             else {
-                console.log("нет куков")
+                //console.log("нет куков")
                 document.cookie = `user_answers= |not_answer|; path=/`;
             }
         }
@@ -441,6 +441,5 @@
         }
 
         </script>
-    
     
 {% endblock %}

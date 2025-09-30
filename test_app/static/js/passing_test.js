@@ -1,8 +1,8 @@
 const arreyButton = document.querySelectorAll(".answer")
 const arreyMultipleChoiceButton= document.querySelectorAll(".multiple-answer")
 
-const InputButton = document.querySelector(".input-answer")
-const MultipleChoiceButton = document.querySelector(".multiple-choice-answer")
+const inputButton = document.querySelector(".input-answer")
+const multipleChoiceButton = document.querySelector(".multiple-choice-answer")
 
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
@@ -13,9 +13,9 @@ function getCookie(name) {
 
 // NEW_TYPE
 
-if (InputButton) {
-    InputButton.addEventListener("click", function(event) {
-        let currentAnswers= getCookie("user_answers");
+if (inputButton) {
+    inputButton.addEventListener("click", function(event) {
+        let user_answer= getCookie("user_answers");
         let answerValue= document.querySelector(".input-with-answer").value
 
         console.log(answerValue)
@@ -23,19 +23,18 @@ if (InputButton) {
         if (!answerValue){
             answerValue= "not_answer"
         }
-        
-        if (!currentAnswers){
+            
+        if (!user_answer){
             document.cookie = `user_answers=${answerValue}; path = /`     
         }
         else{
-            user_answer = getCookie("user_answers");
             document.cookie = `user_answers=${user_answer}|${answerValue}; path= /`
         }       
     })
 }
 
-if (MultipleChoiceButton){
-    MultipleChoiceButton.addEventListener("click", function(event) {
+if (multipleChoiceButton){
+    multipleChoiceButton.addEventListener("click", function(event) {
         let answerValue= ""
         let currentAnswers= getCookie("user_answers");
 

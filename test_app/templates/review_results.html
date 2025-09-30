@@ -74,8 +74,14 @@
                 <div class="question-header">
                     <div>{{ question.question_text }}</div>
                 </div>
+
+                {% if question.question_type == "image" %}
+                    <div>
+                        <img src="/test_app/static/images/{{ question.image_name }}.png" alt="quiz image">
+                    </div>
+                {% endif %}
                 
-                {% if question.question_type == "choice" %}
+                {% if question.question_type == "choice" or question.question_type == "image" %}
                     <div class="question-text">
                         Ваш правильний варіант.
                     </div>

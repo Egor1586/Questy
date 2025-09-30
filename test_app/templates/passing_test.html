@@ -13,10 +13,15 @@
         <div class="question">
             <p>{{  list_quiz[question_number].question_text }}</p>
         </div>
+        {% if list_quiz[question_number].question_type == "image" %}
+            <div>
+                <img src="/test_app/static/images/{{ list_quiz[question_number].image_name }}.png" alt="quiz image">
+            </div>
+        {% endif %}
         
         <!-- NEW_TYPE -->
         <div class="answers">
-            {% if list_quiz[question_number].question_type == "choice" %}
+            {% if list_quiz[question_number].question_type == "choice" or list_quiz[question_number].question_type == "image" %}
                 {% if question_number + 1 != test.total_questions %}
                     {% for answer in list_answers[question_number] %}         
                         <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">

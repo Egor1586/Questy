@@ -15,7 +15,7 @@ def render_passing_test():
 
     # NEW_TYPE
     for quiz in Quiz.query.filter_by(test_id= test_id).all():
-        if quiz.question_type == "choice":
+        if quiz.question_type == "choice" or quiz.question_type == "image":
             list_answers.append(quiz.answer_options.split("%$№"))
         elif quiz.question_type == "input":
             list_answers.append(quiz.correct_answer)

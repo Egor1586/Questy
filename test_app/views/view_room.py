@@ -311,6 +311,7 @@ def handle_message(data):
             room_get_result_data[user]= correct_answers_list
 
     print(room_get_result_data)
+    
     BEST_SCORE= None
     best_accuracy= 0
     averega_accuracy= 0
@@ -323,10 +324,19 @@ def handle_message(data):
 
     averega_score= averega_accuracy//len(SCORE_LIST)
 
-    best_score_data= {
-        "user_name": BEST_SCORE.user_name,
-        "accuracy": BEST_SCORE.accuracy,
-    }
+    print(SCORE_LIST)
+    print(BEST_SCORE)
+
+    if BEST_SCORE:
+        best_score_data= {
+            "user_name": BEST_SCORE.user_name,
+            "accuracy": BEST_SCORE.accuracy,
+        }
+    elif len(SCORE_LIST) == 1:
+        best_score_data= {
+            "user_name": SCORE_LIST[0].user_name,
+            "accuracy": SCORE_LIST[0].accuracy,
+        }
    
     emit("room_get_result_data", {"room_get_result_data": room_get_result_data,
                                   "best_score_data": best_score_data,
@@ -345,8 +355,12 @@ def render_room(test_code):
     quizzes_list = Quiz.query.filter_by(test_id= test.id).all()
 
     for quiz in quizzes_list:
-        list_answers.append(quiz.answer_options.split("%$№"))
-        list_quiz.append(quiz.dict()) 
+        if quiz.question_type == "input":
+            list_answers.append(quiz.correct_answer)
+            list_quiz.append(quiz.dict())
+        else :
+            list_answers.append(quiz.answer_options.split("%$№"))
+            list_quiz.append(quiz.dict()) 
 
     test = Test.query.filter_by(test_code= test_code).first()
     

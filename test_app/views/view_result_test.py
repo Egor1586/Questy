@@ -20,13 +20,11 @@ def render_test_result():
     # NEW_TYPE
     test = Test.query.filter_by(id= test_id).first()
     quizzes_list= Quiz.query.filter_by(test_id= test_id).all()
-
+        
     for quiz in quizzes_list:
-        if quiz.question_type == "choice":
-            list_answers.append(quiz.answer_options.split("%$№"))
-        elif quiz.question_type == "input":
+        if quiz.question_type == "input":
             list_answers.append(quiz.correct_answer)
-        elif quiz.question_type == "multiple_choice":
+        else :
             list_answers.append(quiz.answer_options.split("%$№"))
             
     user_answers_cookies = flask.request.cookies.get(key= 'user_answers')

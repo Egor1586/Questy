@@ -22,6 +22,7 @@ class Quiz(db.Model):
 
     question_type = db.Column(db.String(50), nullable= False)
     question_text = db.Column(db.String(100), nullable= False)
+    image_name = db.Column(db.String(200), nullable= True)
     answer_options = db.Column(db.String(300), nullable= True)
     correct_answer = db.Column(db.String(100), nullable= True)
     time= db.Column(db.Integer, nullable= True)
@@ -31,7 +32,9 @@ class Quiz(db.Model):
     def dict(self):
         return {
             "id": self.id,
+            "question_type": self.question_type,
             "question_text": self.question_text,
+            "image_name": self.image_name,
             "answer_options": self.answer_options,
             "correct_answer": self.correct_answer,
             "time": self.time,
