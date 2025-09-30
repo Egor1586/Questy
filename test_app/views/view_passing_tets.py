@@ -13,10 +13,17 @@ def render_passing_test():
 
     test= Test.query.filter_by(id= test_id).first()
 
+    # NEW_TYPE
     for quiz in Quiz.query.filter_by(test_id= test_id).all():
-        list_answers.append(quiz.answer_options.split("%$№"))
+        if quiz.question_type == "choice" or quiz.question_type == "image":
+            list_answers.append(quiz.answer_options.split("%$№"))
+        elif quiz.question_type == "input":
+            list_answers.append(quiz.correct_answer)
+        elif quiz.question_type == "multiple_choice":
+            list_answers.append(quiz.answer_options.split("%$№"))
+            
         list_quiz.append(quiz)
-                
+
     return {
         "test": test,
         "list_quiz": list_quiz,

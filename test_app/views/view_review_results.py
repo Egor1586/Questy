@@ -15,9 +15,15 @@ def render_review_results(id):
     SCORE = Score.query.filter_by(id = id).first()
     TEST = Test.query.filter_by(id= SCORE.test_id).first()
 
-    for quiz in Quiz.query.filter_by(test_id= SCORE.test_id).all():
-        quizzes_list= Quiz.query.filter_by(test_id= SCORE.test_id).all()
-        list_answers.append(quiz.answer_options.split("%$№"))
+    quizzes_list= Quiz.query.filter_by(test_id= SCORE.test_id).all()
+    
+    # NEW TYPE
+
+    for quiz in quizzes_list:
+        if quiz.question_type == "input":
+            list_answers.append(quiz.correct_answer)
+        else :
+            list_answers.append(quiz.answer_options.split("%$№"))
 
     user_answers_db = SCORE.user_answer
     user_answers = user_answers_db.split("|")
@@ -26,12 +32,15 @@ def render_review_results(id):
         if answer != "":
             user_answers_list.append(answer)
 
+    for index, quiz in enumerate(quizzes_list):
+        if quiz.question_type == "multiple_choice":
+            user_answers_list[index]=  user_answers_list[index].split("$$$")
+
     print(user_answers_list)
+    
     for number, quiz in enumerate(quizzes_list):
         if quiz.correct_answer == user_answers_list[number]:
             count_correct_answers += 1
-
-    # count_correct_answers= TEST.total_questions * SCORE.accuracy // 100
 
     return {
         "total_question": TEST.total_questions,
