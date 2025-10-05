@@ -15,16 +15,17 @@ createQuestionButton.addEventListener('click', function() {
                 </div>
 
                 <label>Текст питання:</label>
-                <input type="text" name="question-text">
+                <input type="text" class="question-text" name="question-text">
 
                 <label>Час для виконання</label>
-                <input type="text" name="question-time">
+                <input type="text" class="question-time" name="question-time">
 
                 <div class="answers">
                     <label>Варіанти відповідей:</label>
                     <div class="answer-input">
-                        <input type="text" placeholder="Відповідь 1">
-                        <input type="radio" name="correct-answer-q${countQuestion}"> Правильна
+                        <input type="text" class="answer-text" placeholder="Відповідь 1">
+                        <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна
+                    
                     </div>
                 </div>
                 <button type="button" class="add-answer">Додати відповідь</button>
@@ -48,8 +49,8 @@ testQuestionDiv.addEventListener("click", function(event){
         let newAnswer= document.createElement("div")
         newAnswer.className= "answer-input"
         newAnswer.innerHTML= `
-                            <input type="text" placeholder="Відповідь ${answerCount}">
-                            <input type="radio" name="correct-answer-${blockId}"> Правильна`
+                            <input type="text" class="answer-text" placeholder="Відповідь ${answerCount}">
+                            <input type="radio" class="question-radio" name="correct-answer-${blockId}"> Правильна`
 
         answersBlock.appendChild(newAnswer)
     }
