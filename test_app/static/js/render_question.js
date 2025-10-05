@@ -121,14 +121,15 @@ function renderQuestion(quiz, answers, room, author_name) {
         inputAnswer.className = "input-with-answer";
 
         const inputButton = document.createElement("button");
+        inputButton.className= "multiple-choice-answer"
         inputButton.textContent= "Відповісти на питання"
 
-        answersDiv.appendChild(inputAnswer);
-        answersDiv.appendChild(inputButton);
+        answersDiv.appendChild(inputAnswer)
 
         if (roomContent != null ) {
             roomContent.appendChild(questionBlock);
             roomContent.appendChild(answersDiv);
+            roomContent.appendChild(inputButton);
         }
         
         inputButton.addEventListener("click", function(event) {
@@ -183,11 +184,10 @@ function renderQuestion(quiz, answers, room, author_name) {
         answerButton.className = "multiple-choice-answer";
         answerButton.textContent = "Відповісти на запитання";
 
-        answersDiv.appendChild(answerButton)
-
         if (roomContent != null ) { 
             roomContent.appendChild(questionBlock);
             roomContent.appendChild(answersDiv);
+            roomContent.appendChild(answerButton);
         }
 
         const multipleChoiceButton = document.querySelector(".multiple-choice-answer")
