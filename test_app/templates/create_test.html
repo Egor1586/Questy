@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" id="container">
         <h1>Новий тест</h1>
         
         <label for="test-title">Назва тесту:</label>
@@ -35,6 +35,7 @@
         <button type="submit" class="submit-button">Завершити створення тесту</button>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/create_question.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/build_test.js') }}"></script>
 {% endblock %}

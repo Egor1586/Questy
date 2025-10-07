@@ -1,13 +1,19 @@
-import flask
+import flask, random, datetime, os
+
+from flask_login import current_user
+from Project.database import db
+from ..models import Test, Quiz
+from ..generat_test import generate_test
+
 from Project.render_page import render_page
 
-@render_page(template_name = 'create_test.html')
-def render_create_test():
+
+def create_test():
 
     data = flask.request.get_json()
     print(data)
 
-    return flask.redirect(location = '/quizzes')
+    return flask.redirect("/quizzes")
 
     # try:
     #     title = flask.request.form['title']
@@ -20,7 +26,7 @@ def render_create_test():
     #     total_questions = total_questions or 10
     #     answers_per_question = answers_per_question or 4
     #     time= time or 20
-    
+        
     #     test = Test(
     #         title= title,
     #         description= description,
@@ -57,10 +63,12 @@ def render_create_test():
     #         if quiz.image_name:
     #             print("quiz image path")
     #             image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{image_name}.png")))
-
-    #     db.session.commit()  
+                    
+    #     db.session.commit()
+            
+    #     return flask.redirect(location = '/quizzes')
 
     # except Exception as error:
     #     print(error)
-   
-    return {}
+
+    # return { }

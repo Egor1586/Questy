@@ -253,7 +253,7 @@ def render_new_quiz():
 
                 if quiz.image_name:
                     print("quiz image path")
-                    # image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{image_name}.png")))
+                    image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{image_name}.png")))
                         
             db.session.commit()
                 
