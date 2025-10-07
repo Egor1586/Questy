@@ -1,4 +1,4 @@
-const contaiter = document.querySelector(".container");
+console.log("jQuery версия:", $.fn.jquery);
 
 function buildTest(){
     data = {
@@ -75,8 +75,8 @@ function buildTest(){
                 }
             
         })
+    
     if(data["description"] != "" && data["topic"] != "" && flagError == false){
-        // console.log(data);
         correctData = data
         console.log(correctData)
     }else{
@@ -86,10 +86,20 @@ function buildTest(){
     console.log(flagError)
     console.log(messageError)
     
+    return data
 }
 
-contaiter.addEventListener("click", function(event){
-    if (event.target.classList.contains("submit-button")){
-        buildTest()
-    }
-});
+$("#submit-button").click(function () {
+    $.ajax({
+        url: "/build_test",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(buildTest()),
+        success: function (data) {
+            console.log(data)
+        }
+    })
+})
+
+
+

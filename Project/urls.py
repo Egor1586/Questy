@@ -45,6 +45,9 @@ test_app.add_url_rule(rule = '/create_code<test_id>', view_func = created_test, 
 test_app.add_url_rule(rule = '/review_results<id>', view_func = render_review_results, methods = ['GET', 'POST'])
 test_app.add_url_rule(rule = "/temporary_name<code>", view_func= render_temporary_name, methods = ['GET', 'POST'])
 
+test_app.add_url_rule(rule = "/build_test", view_func= create_test, methods = ['GET', 'POST'])
+
+# 
 class_app.add_url_rule(rule= '/class_page', view_func= render_class_page, methods= ['GET', 'POST'])
 class_app.add_url_rule(rule= "/class_courses<id>", view_func= render_class_courses, methods = ['GET', 'POST'])
 class_app.add_url_rule(rule= "/create_task<id>", view_func= render_create_task, methods = ['GET', 'POST'])
