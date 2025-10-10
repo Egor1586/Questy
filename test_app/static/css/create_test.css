@@ -105,6 +105,11 @@ input[type="text"], input[type="file"] {
     background-color: var(--green-dark);
 }
 
+.create-question-block {
+    display: flex;
+    flex-direction: row;
+}
+
 .button-create-question,
 .submit-button {
     background-color: var(--green-dark);

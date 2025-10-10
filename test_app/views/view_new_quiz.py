@@ -10,7 +10,7 @@ from Project.render_page import render_page
 # "question_type": "choice",
 # "question_type": "input",
 # "question_type": "multiple_choice",
-# "question_type": "picture",
+# "question_type": "image",
 
 @render_page(template_name = 'new_quiz.html')
 def render_new_quiz():

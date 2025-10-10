@@ -1,13 +1,60 @@
-const createQuestionButton = document.querySelector(".button-create-question");
-const testQuestionDiv = document.querySelector(".test-question");
+const createQuestionButtonDiv = document.querySelector(".create-question-block")
+const testQuestion =document.querySelector(".test-question")
 
 let countQuestion= 0;
 
-createQuestionButton.addEventListener('click', function() {
-    console.log("create question")
+const testQuestionDiv = document.querySelector(".container")
+
+createQuestionButtonDiv.addEventListener('click', function(event) {
+    const questionType= event.target.id
+    console.log(questionType)
+
     countQuestion++;
-    
-    const questionHTML= 
+
+    const choiceQuestion = `                
+            <div class="answers">
+                <label>Варіанти відповідей:</label>
+                <div class="answer-input">
+                    <input type="text" class="answer-text" placeholder="Відповідь 1">
+                    <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна
+                
+                </div>
+            </div>
+            <button type="button" class="add-answer">Додати відповідь</button>
+        `
+    const inputQuestion = `                
+            <div class="answers">
+                <label>Варіанти відповідей:</label>
+                <div class="answer-input">
+                    <input type="text" class="answer-text" placeholder="Відповідь ">
+                
+                </div>
+            </div>
+        `
+    const multiChoiceQuestion = `                
+            <div class="answers">
+                <label>Варіанти відповідей:</label>
+                <div class="answer-input">
+                    <input type="text" class="answer-text" placeholder="Відповідь 1">
+                    <input type="radio" class="checkbox" name="correct-answer-q${countQuestion}"> Правильна
+                
+                </div>
+            </div>
+            <button type="button" class="add-mutlti-answer">Додати відповідь</button>
+        `
+    const imageQuestion = `                
+        <div class="answers">
+            <label>Варіанти відповідей:</label>
+            <div class="answer-input">
+                <input type="text" class="answer-text" placeholder="Відповідь 1">
+                <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна
+            
+            </div>
+        </div>
+        <button type="button" class="add-answer">Додати відповідь</button>
+    `
+
+    let questionHTML= 
             `<div class="question-block" id="q${countQuestion}">
                 <div class="question-header">
                     <span>Питання ${countQuestion}</span>
@@ -19,19 +66,24 @@ createQuestionButton.addEventListener('click', function() {
 
                 <label>Час для виконання</label>
                 <input type="text" class="question-time" name="question-time">
+            `
 
-                <div class="answers">
-                    <label>Варіанти відповідей:</label>
-                    <div class="answer-input">
-                        <input type="text" class="answer-text" placeholder="Відповідь 1">
-                        <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна
-                    
-                    </div>
-                </div>
-                <button type="button" class="add-answer">Додати відповідь</button>
-            </div>`
 
-    testQuestionDiv.insertAdjacentHTML("beforeend", questionHTML)
+    if (questionType == "choice"){
+        questionHTML += (choiceQuestion)
+    }
+    else if (questionType == "input"){
+        questionHTML += (inputQuestion)
+    }
+    else if (questionType == "multiple-choice"){
+        questionHTML += (multiChoiceQuestion)
+    }
+    else if (questionType == "image"){
+        questionHTML += (imageQuestion)
+    }
+    questionHTML += "</div>"
+
+    testQuestion.insertAdjacentHTML("beforeend", questionHTML)
 });
 
 testQuestionDiv.addEventListener("click", function(event){
