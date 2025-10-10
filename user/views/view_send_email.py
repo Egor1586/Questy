@@ -15,7 +15,7 @@ def render_send_email():
         code = random.randint(100000, 999999)
         flask.session["password_code"]= code
         flask.session["email"]= email
-        
+
 
         with project.app_context():
             send_code(user_email= email, code= code, type= "reset")

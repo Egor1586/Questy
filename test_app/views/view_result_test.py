@@ -7,8 +7,6 @@ from Project.clear_cookie import clear_cookies
 from user.models import Score
 from jinja2 import Environment
 
-jinja_env = Environment(extensions=['jinja2.ext.loopcontrols'])
-
 def render_test_result():
     list_answers= []
     count_correct_answers= 0

@@ -151,11 +151,15 @@ body {
     transform: scale(0.97);
 }
 
-.multiple-choice-answer{
-    width: 80%;
+.next-btn{
+    width: 40%;
     height: 8vh;
+}
+
+.multiple-choice-answer{
+    width: 100%;
+    height: 100%;
     background-color: var(--green-main);
-    align-self: center;
     border: none;
     border-radius: 16px;
     font-size: 3rem;
@@ -164,9 +168,8 @@ body {
 }
 
 .input-with-answer {
-    width: 80%;
-    max-width: 800px;
-    height: 20%;
+    width: 100%;
+    height: 25%;
     max-height: 200px;
     padding: 1.5rem 2rem;
     font-size: 3rem;

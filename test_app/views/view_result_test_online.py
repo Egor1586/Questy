@@ -38,10 +38,6 @@ def render_result_test_online(id):
             if quiz.correct_answer == user_answers_list[number]:
                 count_correct_answers += 1
 
-  
-
-
-
     return {
         "total_question": test.total_questions,
         "accuracy": scores.accuracy,
