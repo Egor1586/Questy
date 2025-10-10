@@ -7,13 +7,19 @@ from ..generat_test import generate_test
 
 from Project.render_page import render_page
 
+# "question_type": "choice",
+# "question_type": "input",
+# "question_type": "multiple_choice",
+# "question_type": "picture",
+
 @render_page(template_name = 'new_quiz.html')
 def render_new_quiz():
-    data = {
+    dataChoice = {
         "topic": "Основи Python",
         "description": "Тест на базові знання Python для початківців.",
         "questions": [
-            {
+            {   
+                "question_type": "choice",
                 "question_text": "Яка правильна команда для виводу тексту на екран у Python?",
                 "options": [
                     "echo('Hello World')",
@@ -25,6 +31,7 @@ def render_new_quiz():
                 "time": 60
             },
             {
+                "question_type": "choice",
                 "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
                 "options": [
                     "float",
@@ -36,6 +43,7 @@ def render_new_quiz():
                 "time": 60
             },
             {
+                "question_type": "choice",
                 "question_text": "Як позначається початок коментаря в Python?",
                 "options": [
                     "//",
@@ -47,6 +55,7 @@ def render_new_quiz():
                 "time": 60
             },
             {
+                "question_type": "choice",
                 "question_text": "Який з наведених варіантів створює список у Python?",
                 "options": [
                     "(1, 2, 3)",
@@ -58,6 +67,7 @@ def render_new_quiz():
                 "time": 60
             },
             {
+                "question_type": "choice",
                 "question_text": "Як можна отримати довжину списку у Python?",
                 "options": [
                     "length(list)",
@@ -71,62 +81,129 @@ def render_new_quiz():
         ]
     }
     
-    data1= {
+    dataInput = {
         "topic": "Основи Python",
         "description": "Тест на базові знання Python для початківців.",
         "questions": [
             {
-            "question_text": "Яка правильна команда для виводу тексту на екран у Python?",
-            "options": [
-                "echo('Hello World')",
-                "console.log('Hello World')",
-                "printf('Hello World')",
-                "print('Hello World')", 
-                "print('Hello World')2",
-                "print('Hello World')3"
-            ],
-            "correct_answer": "print('Hello World')"
+                "question_type": "choice",
+                "question_text": "Яка правильна команда для виводу тексту на екран у Python?",
+                "options": [
+                    "echo('Hello World')",
+                    "console.log('Hello World')",
+                    "printf('Hello World')",
+                    "print('Hello World')", 
+                    "print('Hello World')2",
+                    "print('Hello World')3"
+                ],
+                "correct_answer": "print('Hello World')",
+                "time": 60
             },
             {
-            "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
-            "options": [
-                "float",
-                "str"
-            ],
-            "correct_answer": "int"
+                "question_type": "choice",
+                "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
+                "options": [
+                    "float",
+                    "str"
+                ],
+                "correct_answer": "int",
+                "time": 60
             },
             {
-            "question_text": "Як позначається початок коментаря в Python?",
-            "options": [
-                "//",
-                "<!-- -->",
-                "/* */"
-            ],
-            "correct_answer": "#"
+                "question_type": "choice",
+                "question_text": "Як позначається початок коментаря в Python?",
+                "options": [
+                    "//",
+                    "<!-- -->",
+                    "/* */"
+                ],
+                "correct_answer": "#",
+                "time": 60
             },
             {
-            "question_text": "Який з наведених варіантів створює список у Python?",
-            "options": [
-                "(1, 2, 3)",
-                "{1, 2, 3}",
-                "<1, 2, 3>",
-                "[1, 2, 3]"
-            ],
-            "correct_answer": "[1, 2, 3]"
+                "question_type": "input",
+                "question_text": "Як можна отримати довжину списку у Python?",
+                "options": [],
+                "correct_answer": "len(list)",
+                "time": 60
             },
             {
-            "question_text": "Як можна отримати довжину списку у Python?",
-            "options": [
-                "length(list)",
-                "count(list)",
-                "size(list)",
-                "len(list)",
-                "len(list)2"
-            ],
-            "correct_answer": "len(list)"
+                "question_type": "choice",
+                "question_text": "Який з наведених варіантів створює список у Python?",
+                "options": [
+                    "(1, 2, 3)",
+                    "{1, 2, 3}",
+                    "<1, 2, 3>",
+                    "[1, 2, 3]"
+                ],
+                "correct_answer": "[1, 2, 3]",
+                "time": 60
             }
         ]
-        }
+    }   
+
+    dataImage = {
+        "topic": "Основи Python",
+        "description": "Тест на базові знання Python для початківців.",
+        "questions": [
+            {
+                "question_type": "choice",
+                "question_text": "Яка правильна команда для виводу тексту на екран у Python?",
+                "options": [
+                    "echo('Hello World')",
+                    "console.log('Hello World')",
+                    "printf('Hello World')",
+                    "print('Hello World')", 
+                    "print('Hello World')2",
+                    "print('Hello World')3"
+                ],
+                "correct_answer": "print('Hello World')",
+                "time": 60
+            },
+            {
+                "question_type": "image",
+                "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
+                "image_name": "quiz_image", 
+                "options": [
+                    "float",
+                    "str"
+                ],
+                "correct_answer": "int",
+                "time": 60
+            },
+            {
+                "question_type": "multiple_choice",
+                "question_text": "Як позначається початок коментаря в Python?",
+                "options": [
+                    "//",
+                    "<!-- -->",
+                    "/* */",
+                    "!!!"
+                ],
+                "correct_answer": "/* */%$№//",
+                "time": 60
+            },
+            {
+                "question_type": "input",
+                "question_text": "Як можна отримати довжину списку у Python?",
+                "options": [],
+                "correct_answer": "len(list)",
+                "time": 60
+            },
+            {
+                "question_type": "choice",
+                "question_text": "Який з наведених варіантів створює список у Python?",
+                "options": [
+                    "(1, 2, 3)",
+                    "{1, 2, 3}",
+                    "<1, 2, 3>",
+                    "[1, 2, 3]"
+                ],
+                "correct_answer": "[1, 2, 3]",
+                "time": 60
+            }
+        ]
+    }
     
     if flask.request.method == "POST":   
         try:
@@ -140,13 +217,6 @@ def render_new_quiz():
             total_questions = total_questions or 10
             answers_per_question = answers_per_question or 4
             time= time or 20
-            
-            while True: 
-                test_code= random.randint(1000, 9999)
-                db_test_code = Test.query.filter_by(test_code= test_code).first()
-                
-                if db_test_code is None:
-                    break
             
             test = Test(
                 title= title,
@@ -164,18 +234,26 @@ def render_new_quiz():
 
             if test.image:
                 image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}.png")))
-     
-            for quizzes in data["questions"]:
+
+            # NEW_TYPE
+            for quizzes in dataImage["questions"]:
                 answers_list = quizzes["options"].copy()
+                image_name= quizzes.get("image_name")
                 random.shuffle(answers_list)
                 quiz = Quiz(
+                    question_type = quizzes["question_type"],
                     question_text = quizzes["question_text"],
+                    image_name= image_name if image_name else None,
                     answer_options = "%$№".join(answers_list),
                     correct_answer = quizzes["correct_answer"],
                     time= quizzes["time"],
                     test_id = test.id             
                 )
                 db.session.add(quiz)
+
+                if quiz.image_name:
+                    print("quiz image path")
+                    # image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{image_name}.png")))
                         
             db.session.commit()
                 

@@ -1,14 +1,114 @@
 {% extends "class.html" %}
 
-{% block calss_title %}
+{% block class_title %}
     Create Test
 {% endblock %}
 
 {% block class_links %}
-    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/result_task.css') }}">
+    <link rel="stylesheet" href="{{ url_for('class_app.static', filename='css/result_task.css') }}">
 {% endblock %}
 
 {% block class_content %}
+
+    <div class="class-avg-accuracy-graph-div">                          
+        <canvas id="classAvgAccuracyGraph"></canvas>
+    </div>
+    
+    <div class="class-member-accuracy-graph-div">                          
+        <canvas id="classMemberAccuracyGraph"></canvas>
+    </div>
+
+    <script>
+        function graphs(ctx, xCor, yCor, label, text, type) {
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: xCor,
+                    datasets: [{
+                        label: label,
+                        data: yCor,
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                        borderWidth: 2,
+                        tension: 0.2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: text
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function multiLineGraph(ctx, users, accuracy, dates) {
+            const datasets = users.map((user, index) => {
+                return {
+                    label: user,
+                    data: accuracy[index],  
+                    fill: false,
+                    borderColor: `hsl(${index * 50}, 70%, 50%)`,
+                    borderWidth: 2,
+                    tension: 0.2,
+                    pointBackgroundColor: `hsl(${index * 50}, 70%, 40%)`,
+                    pointRadius: 4
+                };
+            });
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Графік точності користувачів'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+
+        const date_complete = {{ date_complete | tojson }};
+        const average_accuracy = {{ average_accuracy | tojson }};
+        const total_questions = {{ total_questions | tojson }};
+        const accuracy = {{ accuracy | tojson }};   
+        const users = {{ users | tojson }};       
+
+        const classActivityGraph = document.getElementById('classAvgAccuracyGraph');
+        if (classActivityGraph) {
+            const ctx1 = classActivityGraph.getContext('2d');
+            graphs(ctx1, total_questions, average_accuracy, 'Точність (%)', 'Графік середньої точності', 'line');
+        }
+
+        const classMemberAccuracyGraph = document.getElementById('classMemberAccuracyGraph');
+        if (classMemberAccuracyGraph) {
+            const ctx2 = classMemberAccuracyGraph.getContext('2d');
+            multiLineGraph(ctx2, users, accuracy, date_complete);
+        }
+    </script>
+    
     <div class="wrapper">
         <div class="content">
             {% if do_user_list %}
@@ -21,7 +121,7 @@
                             <p>{{ score.accuracy }}</p>
                             <p>{{ score.date_complete }}</p>
         
-                            <a href="/review_results{{ score.id }}?bask_to_class= {{ class.id }}">
+                            <a href="/review_results{{ score.id }}?bask_to_class={{ class.id }}">
                                 <button>Переглянути</button>
                             </a>
                         </div>
@@ -45,4 +145,5 @@
             <button>Назад до курсу</button>
         </a>
     </div>
+    
 {% endblock %}

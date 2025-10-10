@@ -9,26 +9,30 @@
 {% endblock %}
 
 {% block class_content %}
-    <div class="wrapper">
-        <p>class information</p>
+    <div class="teacher-course-page">
+        <h1 class="course-title">Курс: {{ class.title }}</h1>
 
-        <div class="content">
-            {% if class.users %}
-                <h2>Користувачі in class</h2>
-                {% for user in class.users %}
-                    <div>
-                        <h3>{{ user.username }}</h3>
-        
-                        <a href="/delete_user?class_id={{class.id}} &user_id= {{user.id}}">
-                            <button>Delete user</button>
-                        </a>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+        {% if class.users %}
+            <div class="students-section">
+                <h2>Учні, які приєднались</h2>
+                <div class="students-grid">
+                    {% for user in class.users %}
+                        <div class="student-card">
+                            <!-- <img src="https://img.icons8.com/?size=100&id=ySlxp1kiKsJH&format=png&color=4D4D4D" alt="Аватар Івана" class="student-avatar"> -->
+                            <span class="student-name">user.username</span>
+                            <a href="/delete_user?class_id={{class.id}} &user_id= {{user.id}}">
+                                <button class="delete-student-btn" title="Видалити">
+                                    &times;
+                                </button>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
-        <a href="/class_courses{{ class.id }}">
-            <button>Назад до курсу</button>
+        <a href="/class_page">
+            <button>Назад до класів</button>
         </a>
     </div>
 {% endblock %}

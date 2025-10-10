@@ -41,6 +41,14 @@ body {
     width: 100%;
 }
 
+.multiple-answer{
+    color: aqua;
+}
+
+.active-multiple-answer{
+    color: red;
+}
+
 .answers {
     flex: 1;
     display: grid;

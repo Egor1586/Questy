@@ -5,5 +5,5 @@ test_app = flask.Blueprint(
     import_name= 'test_app',
     template_folder= 'templates',
     static_folder= 'static',
-    static_url_path= '/test/static'
+    static_url_path= '/test_app/static'
 )
