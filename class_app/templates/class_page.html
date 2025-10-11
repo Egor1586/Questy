@@ -12,22 +12,45 @@
         {% if is_teacher%}
             <div class="class-div">
                 {% if my_classes_list%}
-                    <h2>Куровані</h2>
+                    <h2>Доступні класи</h2>
                     
                     <div class="card-div">
                         {% for class in my_classes_list %}             
                             <div class="card with-tasks">
                                 {% if class.class_color2 == None %}
                                     <div class="card-header" style="background: {{ class.class_color1 }};">
-                                        Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                        <div class="h-left-info">
+                                            Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                        </div>
+
+                                        <button class="more-class-actions">
+                                            <p>...</p>
+                                        </button>
                                     </div>
                                 {% else %}
                                     <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
-                                        Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                        <div class="h-left-info">
+                                            Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                        </div>
+
+                                        <div class="class-actions">
+                                            <button class="more-class-actions">⋮</button>
+                                            
+                                            <div class="dropdown">
+                                                <form action="/delete_class{{ class.id }}" method="post">
+                                                    <button type="submit" class="dropdown-btn d">Видалити клас</button>
+                                                </form>
+
+                                                <a href="/class_information{{ class.id }}" class="dropdown-btn i">
+                                                    Інформація про клас
+                                                </a>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 {% endif %}
 
-                                <form action="/delete_class{{ class.id }}" >
+                                <!-- <form action="/delete_class{{ class.id }}" >
                                     <button>
                                         Видалити клас
                                     </button>
@@ -37,7 +60,7 @@
                                     <button>
                                         Class information
                                     </button>
-                                </a>
+                                </a> -->
 
 
                                 <div class="card-body">
@@ -56,6 +79,7 @@
                                             <button class="start-btn" style="background: {{ class.class_color1 }};">
                                                 Створити завдання
                                             </button>
+
                                         </a>
                                     </div>
                                 {% else %}
@@ -249,5 +273,19 @@
                 document.getElementById('color-gradient').style.display = 'flex'
             }
         })
+
+        // Класи та їх видалення
+        document.addEventListener("click", function(e) {
+            const actions = e.target.closest(".class-actions")
+
+            document.querySelectorAll(".class-actions").forEach(el => {
+                el.classList.remove("show");
+            })
+
+            if (actions && e.target.closest(".more-class-actions")) {
+                actions.classList.toggle("show")
+            }
+        });
+
     </script>      
 {% endblock %}

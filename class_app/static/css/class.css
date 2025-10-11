@@ -18,7 +18,8 @@ body {
 
 /* Sidebar */
 .sidebar-classroom {
-    width: 220px;
+    /* min-width: 220px; */
+    width: fit-content;
     background-color: #2f3b52;
     color: #fff;
     padding: 20px;

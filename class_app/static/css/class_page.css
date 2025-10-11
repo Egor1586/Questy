@@ -1,7 +1,7 @@
 /* --- Контент --- */
 .content {
     flex: 1;
-    padding: 30px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -29,6 +29,7 @@
     flex-wrap: wrap;
     justify-content: left;
     align-items: flex-start;
+    gap: 30px;
 }
 
 .card {
@@ -42,9 +43,14 @@
     flex-shrink: 0;
 
     margin-top: 2vh;
-    margin-left: 1vw;
+    /* margin-left: 1vw; */
     display: flex;           
     flex-direction: column;  
+    justify-content: space-between;
+    align-items: stretch;
+    cursor: pointer;
+    gap: 10px;
+
 }
 
 .card .with-tasks{
@@ -63,10 +69,34 @@
 .card-header {
     /* background: linear-gradient(135deg, #66bb6a, #43a047); */
     color: #fff;
-    padding: 14px;
+    padding: 12px;
     font-size: 15px;
     font-weight: 600;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
 }
+
+.h-left-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.more-class-actions{
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+
 
 .card-header span {
     font-weight: normal;
@@ -91,6 +121,7 @@
 
 .start-btn{
     /* background: linear-gradient(135deg, #66bb9f, #4393a0); */
+    background: #979595;
     border: none;
     color: #fff;
     font-weight: 600;
@@ -383,4 +414,77 @@
     height: 40px;
     padding: 0;
     border: none;
+}
+
+
+/* class actions*/
+.class-actions {
+    position: relative;
+    display: inline-block;
+}
+
+.more-class-actions {
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.more-class-actions:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+/* Випадаюче меню */
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 180px;
+    /* padding: 8px 0; */
+    z-index: 100;
+}
+
+/* Кнопки всередині */
+.dropdown-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--dark_grey);
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-btn:hover {
+    background: var(--lite_green);
+    color: var(--black);
+    transition: background 0.2s ease, color 0.2s ease;
+    /* border-radius: 10px 10px 0 0 ; */
+}
+
+.dropdown-btn.d:hover {
+    border-radius: 10px 10px 0 0 ;
+    /* border: 1px solid black; */
+}
+
+.dropdown-btn.i:hover:last-child {
+    border-radius: 0 0 10px 10px ;
+    /* border: 1px solid red; */
+}
+
+.class-actions.show .dropdown {
+    display: block;
 }

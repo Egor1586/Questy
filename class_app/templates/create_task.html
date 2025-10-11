@@ -29,23 +29,24 @@
                     </div>
 
                     <div class="radio-button-box">
-                        <label >Can done after due time</label>               
-                        <input type="checkbox" name="done-after-due-time">
-                    </div> 
+                        <label for="done-after-due-time">Можна здати після дедлайну?</label>               
+                        <input type="checkbox" id="done-after-due-time" name="done-after-due-time">
+                    </div>
+
 
                     <div class="form-group">
-                        <label>Час до кінця скоро стачі завдання</label>
+                        <label>Термін здачі завдання</label>
                         <input type="datetime-local" placeholder="Введіть число" name="due-time">
                     </div>
 
                     {% if test_list %}
-                        <select name="choice_test" id="choice" required>
+                        <select name="choice_test" id="choice" class="select-test">
                             {% for test in test_list%}
                                 <option value="{{ test.id }}" selected>{{ test.title }} </option>
                             {% endfor %}
                         </select>
                     {% else %}
-                        <p>Немає тестів для завдання, перед додаванням створіть тест</p>
+                        <p class="no-test-for-task">Немає тестів для завдання, перед додаванням створіть тест</p>
                     {% endif %}
 
                     <button type="submit" class="submit-button">Створити завдання</button>
@@ -53,5 +54,9 @@
             </section>
         </div> 
     </div>
+
+    <button class="home-circle-btn" onclick="window.location.href='/class_page'">
+        <i class='bx  bx-home'></i>
+    </button>
 
 {% endblock %}
