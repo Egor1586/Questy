@@ -13,6 +13,7 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
 
     const choiceQuestion = `                
             <div class="answers">
+                <p id =></p>
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
@@ -36,11 +37,11 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
-                    <input type="radio" class="checkbox" name="correct-answer-q${countQuestion}"> Правильна
+                    <input type="checkbox" class="checkbox" name="correct-answer-q${countQuestion}"> Правильна
                 
                 </div>
             </div>
-            <button type="button" class="add-mutlti-answer">Додати відповідь</button>
+            <button type="button" class="add-answer">Додати відповідь</button>
         `
     const imageQuestion = `                
         <div class="answers">
@@ -103,6 +104,20 @@ testQuestionDiv.addEventListener("click", function(event){
         newAnswer.innerHTML= `
                             <input type="text" class="answer-text" placeholder="Відповідь ${answerCount}">
                             <input type="radio" class="question-radio" name="correct-answer-${blockId}"> Правильна`
+
+        answersBlock.appendChild(newAnswer)
+    }
+    if (event.target.classList.contains("add-mutlti-answer")){
+        const questionBlock= event.target.closest(".question-block")
+        const answersBlock= questionBlock.querySelector(".answers")
+        const blockId = questionBlock.id
+        const answerCountMulti= answersBlock.querySelectorAll(".answer-input").length + 1
+        
+        let newAnswer= document.createElement("div")
+        newAnswer.className= "answer-input"
+        newAnswer.innerHTML= `
+                            <input type="text" class="answer-text" placeholder="Відповідь ${answerCountMulti}">
+                            <input type="checkbox" class="checkbox" name="correct-answer-${blockId}"> Правильна`
 
         answersBlock.appendChild(newAnswer)
     }
