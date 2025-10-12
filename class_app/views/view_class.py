@@ -18,13 +18,14 @@ def render_class_page():
         try:
             title = flask.request.form['title']
             description = flask.request.form['lesson']
+            color_type = flask.request.form['color-type']
             color_g1= ""
             color_g2= ""
             
-            try:
+            if color_type == "gradient":
                 color_g1 = flask.request.form['color-g1']
                 color_g2 = flask.request.form['color-g2']
-            except Exception as error:
+            else: 
                 color_g1 = flask.request.form['color-m']
                 color_g2= None
             

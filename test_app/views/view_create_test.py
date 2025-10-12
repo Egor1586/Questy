@@ -8,6 +8,12 @@ from ..generat_test import generate_test
 from Project.render_page import render_page
 
 
+@render_page(template_name = 'create_test.html')
+def render_create_test():
+
+    return {}
+
+
 def create_test():
 
     data = flask.request.get_json()

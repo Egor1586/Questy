@@ -23,9 +23,19 @@
                                             Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
                                         </div>
 
-                                        <button class="more-class-actions">
-                                            <p>...</p>
-                                        </button>
+                                        <div class="class-actions">
+                                            <button class="more-class-actions">⋮</button>
+                                            
+                                            <div class="dropdown">
+                                                <form action="/delete_class{{ class.id }}" method="post">
+                                                    <button type="submit" class="dropdown-btn d">Видалити клас</button>
+                                                </form>
+
+                                                <a href="/class_information{{ class.id }}" class="dropdown-btn i">
+                                                    Інформація про клас
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 {% else %}
                                     <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
