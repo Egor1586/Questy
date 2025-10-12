@@ -12,8 +12,7 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
     countQuestion++;
 
     const choiceQuestion = `                
-            <div class="answers">
-                <p id =></p>
+            <div class="answers" id="choice">
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
@@ -24,16 +23,15 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
             <button type="button" class="add-answer">Додати відповідь</button>
         `
     const inputQuestion = `                
-            <div class="answers">
+            <div class="answers" id="input">
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
-                    <input type="text" class="answer-text" placeholder="Відповідь ">
-                
+                    <input type="text" class="answer-text" placeholder="Відповідь">
                 </div>
             </div>
         `
     const multiChoiceQuestion = `                
-            <div class="answers">
+            <div class="answers" id="multiple_choice">
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
@@ -41,10 +39,10 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                 
                 </div>
             </div>
-            <button type="button" class="add-answer">Додати відповідь</button>
+            <button type="button" class="add-mutlti-answer">Додати відповідь</button>
         `
     const imageQuestion = `                
-        <div class="answers">
+        <div class="answers" id="image">
             <label>Варіанти відповідей:</label>
             <div class="answer-input">
                 <input type="text" class="answer-text" placeholder="Відповідь 1">
