@@ -58,3 +58,5 @@ class_app.add_url_rule(rule = '/delete_user', view_func = delete_user, methods =
 
 class_app.add_url_rule(rule = '/delete_class<class_id>', view_func = delete_class, methods = ['GET', 'POST'])
 class_app.add_url_rule(rule = '/delete_task<task_id>', view_func = delete_task, methods = ['GET', 'POST'])
+
+class_app.add_url_rule(rule = '/task_page/sorte', view_func = sorte_task, methods = ['GET', 'POST', "PUT"])

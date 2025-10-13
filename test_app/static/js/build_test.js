@@ -1,5 +1,3 @@
-console.log("jQuery версия:", $.fn.jquery);
-
 function buildTest(){
     data = {
         "topic": "",

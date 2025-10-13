@@ -38,7 +38,7 @@ def render_create_task(id):
                 description= description,
                 class_id = id,
                 test_id= test_id,
-                due_time= datetime.strptime(due_time, "%Y-%m-%dT%H:%M"),
+                due_time= datetime.strptime(due_time, "%Y-%m-%dT%H:%M") if due_time else None,
                 work_after_time= True if done_after_due_time == "on" else False
             )
 

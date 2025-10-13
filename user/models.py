@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask_login import UserMixin
 from Project.database import db
 
@@ -8,8 +9,8 @@ class_user= db.Table(
 )
     
 class User(db.Model, UserMixin):
-
     id = db.Column(db.Integer, primary_key= True)
+
     username = db.Column(db.String(20), nullable= False)
     email = db.Column(db.String(50), nullable= False)
     password = db.Column(db.String(20), nullable= False)
@@ -42,6 +43,12 @@ class Classes(db.Model):
 
     users= db.relationship('User', secondary= class_user, back_populates= "classes")
 
+    def dict(self):
+        return {
+            "id": self.id,
+            "title": self.title
+        }
+
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -58,19 +65,13 @@ class Score(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable= False)
     user_name = db.Column(db.String, nullable= False)
 
-    test_code= db.Column(db.Integer, nullable= True)
-
-    user= db.relationship('User', backref='scores')
-    test= db.relationship('Test', backref='scores')
-
-
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key= True)
 
     title = db.Column(db.String(100), nullable= False)
     description = db.Column(db.String(200), nullable= False)
 
-    due_time = db.Column(db.DateTime, nullable= False)
+    due_time = db.Column(db.DateTime, nullable= True)
 
     work_after_time= db.Column(db.Boolean, default= False)
 
@@ -79,3 +80,13 @@ class Task(db.Model):
     image= db.Column(db.Boolean, default= False)
 
     test= db.relationship("Test", backref="tasks")
+    
+    def dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "due_time": self.due_time.strftime("%Y-%m-%d %H:%M:%S") if self.due_time else None,
+            "work_after_time": self.work_after_time
+        }
+

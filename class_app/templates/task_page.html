@@ -17,81 +17,99 @@
             <label for="course">Оберіть курс: </label>
             <select id="course">
                 <option value="all">Усі курси</option>
-                <!-- {% for class in classes %}          
+                {% for class in classes %}          
                     <option value="{{ class.id }}">{{ class.title }}</option>
-                {% endfor %} -->
+                {% endfor %}
             </select>
         </div>
     
         <div id="tasks">   
-            <div class="category" data-course="math">
+            <div class="category" data-course="all">
                 <h3>На цей тиждень</h3>
-                <details>
-                    <summary>Завдання 3 <span class="arrow"></span></summary>
-                    <div class="task-details">
-                        Опис: немає<br>
-                        Дедлайн: пʼятниця.
-                    </div>
-                </details>
+                {% if cur_week_task_list %}      
+                    {% for task in cur_week_task_list %}
+                        {% set task_number = loop.index0 + 1 %}
+                        <details>
+                            <summary>Завдання {{ task_number }} <span class="arrow"></span></summary>
+                            <div class="task-details">
+                                Назва: {{ task.title }}. <br>
+                                Опис: {{ task.description }}. <br>
+                                Дедлайн: {{ task.due_time }}.
+                            </div>
+                        </details>
+                        {% endfor %}
+                {% else %}
+                    <details>
+                        <summary> Немає завдань <span class="arrow"></span></summary>
+                    </details>
+                {% endif %}
             </div>
     
-            <div class="category" data-course="ukrainian">
+            <div class="category" data-course="all">
                 <h3>Наступний тиждень</h3>
-                <details>
-                    <summary>Завдання 4 <span class="arrow"></span></summary>
-                    <div class="task-details">
-                        Опис: немає.<br>
-                        Дедлайн: середа.
-                    </div>
-                </details>
+                {% if next_week_task_list %}      
+                    {% for task in next_week_task_list %}
+                        {% set task_number = loop.index0 + 1 %}
+                        <details>
+                            <summary>Завдання {{ task_number }} <span class="arrow"></span></summary>
+                            <div class="task-details">
+                                Назва: {{ task.title }}. <br>
+                                Опис: {{ task.description }}. <br>
+                                Дедлайн: {{ task.due_time }}.
+                            </div>
+                        </details>
+                    {% endfor %}
+                {% else %}
+                    <details>
+                        <summary> Немає завдань <span class="arrow"></span></summary>
+                    </details>
+                {% endif %}
             </div>
-    
-        </div>
 
-        <div class="category" data-course="geography">
+            <div class="category" data-course="all">
                 <h3>Без терміну</h3>
-                <details>
-                    <summary>Завдання 2 <span class="arrow"></span></summary>
-                    <!-- {% for task in due_time_list_all %}
-                        <div class="task-details">
-                            Назва: {{ task.title}}. <br>
-                            Опис: {{ task.description}}. <br>
-                            Дедлайн: {{ task.due_time}}.
-                        </div>
-                    {% endfor %} -->
-                </details>
+                {% if duetime_task_list %}      
+                    {% for task in duetime_task_list %}
+                        {% set task_number = loop.index0 + 1 %}
+                            <details>
+                                <summary>Завдання {{ task_number }} <span class="arrow"></span></summary>
+                                <div class="task-details">
+                                    Назва: {{ task.title }}. <br>
+                                    Опис: {{ task.description }}. <br>
+                                    Дедлайн: {{ task.due_time }}.
+                                </div>
+                            </details>
+                        {% endfor %}
+                    {% else %}
+                        <details>
+                            <summary> Немає завдань <span class="arrow"></span></summary>
+                        </details>
+                    {% endif %}
             </div>
-            
-            <div class="category" data-course="informatics">
+                
+            <div class="category" data-course="all">
                 <h3>Термін здачі пропущено</h3>
                 
-                <details>
-                    <summary>Завдання 1 <span class="arrow"></span></summary>
-                    <!-- {% for task in can_do_task_all %}
-                        <div class="task-details">
-                            Назва: {{ task.title}}. <br>
-                            Опис: {{ task.description}}. <br>
-                            Дедлайн: {{ task.due_time}}.
-                        </div>
-                    {% endfor %} -->
-                </details>
+                {% if overdue_task_list %}  
+                    {% for task in overdue_task_list %}
+                    {% set task_number = loop.index0 + 1 %}
+                        <details>
+                            <summary>Завдання {{ task_number }} <span class="arrow"></span></summary>
+                            <div class="task-details">
+                                Назва: {{ task.title}}. <br>
+                                Опис: {{ task.description}}. <br>
+                                Дедлайн: {{ task.due_time }}.
+                            </div>
+                        </details>
+                        {% endfor %}
+                    {% else %}
+                        <details>
+                            <summary> Немає таких завдань <span class="arrow"></span></summary>
+                        </details>
+                    {% endif %}
             </div>
+        </div>
     </div>
 
-    <script>
-        const courseSelect = document.getElementById("course")
-        const categories = document.querySelectorAll(".category")
-
-        courseSelect.addEventListener("change", () => {
-            const selected = courseSelect.value
-
-            categories.forEach(cat => {
-                if (selected === "all" || cat.dataset.course === selected) {
-                    cat.style.display = "block"
-                } else {
-                    cat.style.display = "none"
-                }
-            })
-        })  
-    </script>
+    <script src="{{ url_for('class_app.static', filename='js/sorteTask.js')}}"></script>
 {% endblock %}
