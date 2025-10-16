@@ -17,17 +17,26 @@ def render_create_test():
 def create_test():
 
     data = flask.request.get_json()
-    print(data)
+    print(1, data)
 
     
 
     try:
-        title = flask.request.form['title']
-        description = flask.request.form['description']
-        total_questions = flask.request.form['total_questions']
-        answers_per_question= flask.request.form["answers_per_question"]
-        time= flask.request.form["time"]
-        image_form = flask.request.files.get('image', None)
+        # title = flask.request.form['title']
+        # description = flask.request.form['description']
+        # total_questions = flask.request.form['total_questions']
+        # answers_per_question= flask.request.form["answers_per_question"]
+        # time= flask.request.form["time"]
+        # image_form = flask.request.files.get('image', None)
+
+        title = data.get("topic")
+        description = data.get("description")
+        total_questions = data.get('total_questions')
+        answers_per_question= data.get('answers_per_question')
+        time= data.get('time')
+        image_form = data.get("image")
+
+        print(title, description, total_questions, answers_per_question, time, image_form)
 
         total_questions = total_questions or 10
         answers_per_question = answers_per_question or 4
