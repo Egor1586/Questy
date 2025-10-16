@@ -90,6 +90,7 @@ input[type="text"], input[type="file"] {
     flex: 1;
 }
 
+.add-mutlti,
 .add-answer {
     background-color: var(--green-main);
     border: none;
@@ -108,9 +109,25 @@ input[type="text"], input[type="file"] {
 .create-question-block {
     display: flex;
     flex-direction: row;
+    
+    justify-content: space-between;
 }
 
-.button-create-question,
+.button-create-question {
+    background-color: var(--green-dark);
+    border: none;
+    width: 24%;
+    padding: 14px 36px;
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    margin-top: 20px;
+}
+
 .submit-button {
     background-color: var(--green-dark);
     border: none;

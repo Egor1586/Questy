@@ -58,7 +58,8 @@ function buildTest(){
                             questionInformation["correct_answer"] = answerText.value
                             answerRadioFlag = true
                     }
-                    }else{
+                    }
+                    else{
                         flagError = true
                         messageError = "Ви не ввели текст відповіді"
                     }
@@ -70,7 +71,8 @@ function buildTest(){
                         countAnswers = countAnswers + 2
                         answerRadioFlag = true
                         questionInformation["correct_answer"] = answerText.value
-                    }else{
+                    }
+                    else{
                         flagError = true
                         messageError = "Ви не ввели текст відповіді"
                     }
@@ -89,7 +91,8 @@ function buildTest(){
                             questionInformation["correct_answer"] += answerText.value + "%$№" 
                             answerRadioFlag = true
                     }
-                    }else{
+                    }
+                    else{
                         flagError = true
                         messageError = "Ви не ввели текст відповіді"
                     }
@@ -108,7 +111,8 @@ function buildTest(){
                             questionInformation["correct_answer"] = answerText.value
                             answerRadioFlag = true
                     }
-                    }else{
+                    }
+                    else{
                         flagError = true
                         messageError = "Ви не ввели текст відповіді"
                     }
@@ -117,16 +121,19 @@ function buildTest(){
             })
             if(answerRadioFlag && countAnswers >= 2){
                 data["questions"].push(questionInformation)
-            }else{
-                    flagError = true
-                    messageError = "Ви не вибрали правильну відповідь або ввели мало питань"
-                }
-        }else{
-                    flagError = true
-                    messageError = "Ви неправильно ввели текст питання чи час"
-                }
+            }
+            else{
+                flagError = true
+                messageError = "Ви не вибрали правильну відповідь або ввели мало питань"
+            }
+        }
+        else{
+            flagError = true
+            messageError = "Ви неправильно ввели текст питання чи час"
+        }
             
-        }else{
+        }
+        else{
             flagError = true
             if(messageError == "")(messageError = "Ви не задали назву тесту або опис")
         }})
@@ -136,7 +143,7 @@ function buildTest(){
         console.log(correctData)
     }
     console.log(flagError)
-    console.log(messageError)
+    // console.log(messageError)
     
     return correctData
 }
@@ -149,6 +156,8 @@ $("#submit-button").click(function () {
         data: JSON.stringify(buildTest()),
         success: function (data) {
             console.log(data)
+
+            window.location.href = "/quizzes/"
         }
     })
 })

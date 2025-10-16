@@ -39,7 +39,7 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                 
                 </div>
             </div>
-            <button type="button" class="add-mutlti-answer">Додати відповідь</button>
+            <button type="button" class="add-mutlti add-mutlti-answer">Додати відповідь</button>
         `
     const imageQuestion = `                
         <div class="answers" id="image">

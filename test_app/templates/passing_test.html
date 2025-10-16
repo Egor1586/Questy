@@ -22,7 +22,7 @@
         <!-- NEW_TYPE -->
         <div class="answers">
             {% if list_quiz[question_number].question_type == "choice" or list_quiz[question_number].question_type == "image" %}
-                {% if question_number + 1 != test.total_questions %}
+                {% if question_number + 1 != list_quiz|length %}
                     {% for answer in list_answers[question_number] %}         
                         <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
                             <div class="answer" id="{{ answer }}">
@@ -40,21 +40,23 @@
                     {% endfor %}
                 {% endif %}
             {% elif list_quiz[question_number].question_type == "input" %}
-                {% if question_number + 1 != test.total_questions %}
+                {% if question_number + 1 != list_quiz|length %}
                     <input type="text" placeholder="Введіть відповідь на запитання" class="input-with-answer">
                     
                     <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                        <!-- {{ question_number }} "+ 1 !=" {{ list_quiz|length }} -->
                         <button class="input-answer">Відповісти на запитання</button>
                     </a>
                 {% else %}
                     <input type="text" placeholder="Введіть відповідь на запитання" class="input-with-answer">
                     
                     <a class="answer-link" href="/result_test?test_id= {{ test.id }}">
+                        <!-- <p>RESULT</p> -->
                         <button class="input-answer">Відповісти на запитання</button>
                     </a>  
                 {% endif %}
             {% elif list_quiz[question_number].question_type == "multiple_choice" %}
-                {% if question_number + 1 != test.total_questions %}
+                {% if question_number + 1 != list_quiz|length %}
                     {% for answer in list_answers[question_number] %}         
                         <div>
                             <button class="multiple-answer" id="{{ answer }}">
@@ -63,9 +65,10 @@
                         </div>
                     {% endfor %}
                     
-                    <!-- <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                    <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
+                        <!-- <p>{{ question_number }} "+ 1 !=" {{ list_quiz|length }}</p> -->
                         <button class="multiple-choice-answer">Відповісти на запитання</button>
-                    </a> -->
+                    </a>
                 {% else %}
                     {% for answer in list_answers[question_number] %}    
                         <div>
@@ -75,14 +78,15 @@
                         </div>   
                     {% endfor %}
                     
-                    <!-- <a class="answer-link" href="/result_test?test_id= {{ test.id }}">
+                    <a class="answer-link" href="/result_test?test_id= {{ test.id }}">
+                        <!-- <p>RESULT</p> -->
                         <button class="multiple-choice-answer">Відповісти на запитання</button>
-                    </a>   -->
+                    </a>  
                 {% endif %} 
             {% endif %}
         </div>
 
-        {% if list_quiz[question_number].question_type == "multiple_choice" %}
+        <!-- {% if list_quiz[question_number].question_type == "multiple_choice" %}
             {% if question_number + 1 != test.total_questions %}
                 <a class="next-btn" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
                     <button class="multiple-choice-answer">Відповісти на запитання</button>
@@ -92,7 +96,7 @@
                     <button class="multiple-choice-answer">Відповісти на запитання</button>
                 </a>  
             {% endif %}
-        {% endif %}
+        {% endif %} -->
     </div>
                 
     <script src="{{ url_for('test_app.static', filename = 'js/passing_test.js') }}"></script>
