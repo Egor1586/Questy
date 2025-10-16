@@ -8,10 +8,11 @@ const testQuestionDiv = document.querySelector(".container")
 createQuestionButtonDiv.addEventListener('click', function(event) {
     const questionType= event.target.id
     console.log(questionType)
+
     countQuestion++;
 
     const choiceQuestion = `                
-            <div class="answers">
+            <div class="answers" id="choice">
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
@@ -22,27 +23,26 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
             <button type="button" class="add-answer">Додати відповідь</button>
         `
     const inputQuestion = `                
-            <div class="answers">
+            <div class="answers" id="input">
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
-                    <input type="text" class="answer-text" placeholder="Відповідь ">
-                
+                    <input type="text" class="answer-text" placeholder="Відповідь">
                 </div>
             </div>
         `
     const multiChoiceQuestion = `                
-            <div class="answers">
+            <div class="answers" id="multiple_choice">
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
-                    <input type="radio" class="checkbox" name="correct-answer-q${countQuestion}"> Правильна
+                    <input type="checkbox" class="checkbox" name="correct-answer-q${countQuestion}"> Правильна
                 
                 </div>
             </div>
             <button type="button" class="add-mutlti-answer">Додати відповідь</button>
         `
     const imageQuestion = `                
-        <div class="answers">
+        <div class="answers" id="image">
             <label>Варіанти відповідей:</label>
             <div class="answer-input">
                 <input type="text" class="answer-text" placeholder="Відповідь 1">
@@ -52,8 +52,8 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
         </div>
         <button type="button" class="add-answer">Додати відповідь</button>
     `
-    
-    const questionHTML= 
+
+    let questionHTML= 
             `<div class="question-block" id="q${countQuestion}">
                 <div class="question-header">
                     <span>Питання ${countQuestion}</span>
@@ -66,6 +66,7 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                 <label>Час для виконання</label>
                 <input type="text" class="question-time" name="question-time">
             `
+
 
     if (questionType == "choice"){
         questionHTML += (choiceQuestion)
@@ -101,6 +102,20 @@ testQuestionDiv.addEventListener("click", function(event){
         newAnswer.innerHTML= `
                             <input type="text" class="answer-text" placeholder="Відповідь ${answerCount}">
                             <input type="radio" class="question-radio" name="correct-answer-${blockId}"> Правильна`
+
+        answersBlock.appendChild(newAnswer)
+    }
+    if (event.target.classList.contains("add-mutlti-answer")){
+        const questionBlock= event.target.closest(".question-block")
+        const answersBlock= questionBlock.querySelector(".answers")
+        const blockId = questionBlock.id
+        const answerCountMulti= answersBlock.querySelectorAll(".answer-input").length + 1
+        
+        let newAnswer= document.createElement("div")
+        newAnswer.className= "answer-input"
+        newAnswer.innerHTML= `
+                            <input type="text" class="answer-text" placeholder="Відповідь ${answerCountMulti}">
+                            <input type="checkbox" class="checkbox" name="correct-answer-${blockId}"> Правильна`
 
         answersBlock.appendChild(newAnswer)
     }
