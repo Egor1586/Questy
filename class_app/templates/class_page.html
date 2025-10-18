@@ -9,6 +9,7 @@
 {% endblock %}
 {% block class_content %}
     <main class="content">
+        
         {% if is_teacher%}
             <div class="class-div">
                 {% if my_classes_list%}
@@ -78,6 +79,7 @@
                                     <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
                                     <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
                                 </div>
+
                                 {% if class.class_color2 == None %}
                                     <div class="card-footer">
                                         <a href="/class_courses{{ class.id }}">
@@ -130,9 +132,9 @@
                                 </div>
                             {% endif %}
                             <div class="card-body">
-                                <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                                <li>Завдання 1 <span class="done">- заверешено</span></li>
                                 <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
-                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li>
                             </div>
                 
                             <div class="card-footer">

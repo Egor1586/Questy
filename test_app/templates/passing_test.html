@@ -14,10 +14,11 @@
             <p>{{  list_quiz[question_number].question_text }}</p>
         </div>
         {% if list_quiz[question_number].question_type == "image" %}
-            <div>
+            <div class="image-container">
                 <img src="/test_app/static/images/{{ list_quiz[question_number].image_name }}.png" alt="quiz image">
             </div>
         {% endif %}
+
         
         <!-- NEW_TYPE -->
         <div class="answers">

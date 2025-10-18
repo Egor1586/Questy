@@ -16,7 +16,10 @@ def render_class_courses(id):
     taskes_list= CLASS.tasks
 
     for task in taskes_list:
-        due_time_list.append([str(task.due_time)[0:10], str(task.due_time)[11:16]])
+        if task.due_time:
+            due_time_list.append([str(task.due_time)[0:10], str(task.due_time)[11:16]])
+        else:
+            due_time_list.append([None, None])
 
     date_time_now= str(datetime.now())
     date_now= date_time_now[0:10]
@@ -32,8 +35,14 @@ def render_class_courses(id):
     task_time_now_list= []
     for index, due in enumerate(due_time_list):
         task= taskes_list[index]
+
+        if due[0] == None:
+            can_do_task.append(1)
+            continue
+
         task_date_now_list= due[0].split("-")
         task_time_now_list= due[1].split(":")
+
 
         if task.work_after_time:
             can_do_task.append(1)

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block class_links %}
-    <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/class_information.css') }}">
+    <link rel="stylesheet" href="{{ url_for('class_app.static', filename='css/class_information.css') }}">
 {% endblock %}
 
 {% block class_content %}
@@ -15,24 +15,29 @@
         {% if class.users %}
             <div class="students-section">
                 <h2>Учні, які приєднались</h2>
+                
                 <div class="students-grid">
                     {% for user in class.users %}
                         <div class="student-card">
-                            <!-- <img src="https://img.icons8.com/?size=100&id=ySlxp1kiKsJH&format=png&color=4D4D4D" alt="Аватар Івана" class="student-avatar"> -->
-                            <span class="student-name">user.username</span>
-                            <a href="/delete_user?class_id={{class.id}} &user_id= {{user.id}}">
-                                <button class="delete-student-btn" title="Видалити">
-                                    &times;
-                                </button>
+                            <img src="https://img.icons8.com/?size=100&id=12437&format=png&color=4D4D4D" alt="Аватар" class="student-avatar">
+                            
+                            <!-- Ім'я -->
+                            <span class="student-name">{{ user.username }}</span>
+
+                            <a href="/delete_user?class_id={{class.id}}&user_id={{user.id}}" class="delete-tick">
+                                <button class="delete-student-btn" title="Видалити">&times;</button>
                             </a>
                         </div>
                     {% endfor %}
                 </div>
             </div>
         {% endif %}
-
-        <a href="/class_page">
-            <button>Назад до класів</button>
-        </a>
     </div>
+
+    <!-- Кнопка додому -->
+    <a href="/class_page" title="Повернутись до класів">
+        <button class="home-button">
+            <i class='bx  bx-home'></i>
+        </button>
+    </a>
 {% endblock %}
