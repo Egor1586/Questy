@@ -44,10 +44,13 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
     const imageQuestion = `                
         <div class="answers" id="image">
             <label>Варіанти відповідей:</label>
+            <div class="load-img">
+                <label for="image">Зображення</label>
+                <input type="file" name="image" class="answer-image" accept="image/*">
+            </div>
             <div class="answer-input">
                 <input type="text" class="answer-text" placeholder="Відповідь 1">
-                <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна
-            
+                <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна     
             </div>
         </div>
         <button type="button" class="add-answer">Додати відповідь</button>

@@ -55,6 +55,8 @@ def render_class_page():
             return flask.redirect(location = '/class_page')
 
         except Exception as error:
+            print(error)
+
             if flask.request.method == 'POST':
                 code = flask.request.form.get('code')
                 CLASS = Classes.query.filter_by(class_code = code).first()
@@ -66,6 +68,8 @@ def render_class_page():
                 return flask.redirect(location = '/class_page')
     
     my_classes_list= []
+    tasks_class_user_list = []
+    tasks_class_teacher_list = []
     classes_list= []
     classes_id= []
 
@@ -75,12 +79,30 @@ def render_class_page():
     for clas in user.classes:
         classes_id.append(clas.id)
 
+        tasks_list= []
+
+        for index, task in  enumerate(clas.tasks):
+            if index <= 3:
+                tasks_list.append(task)
+        
+        tasks_class_user_list.append(tasks_list)
+
     for id in classes_id:
         classes_list.append(Classes.query.filter_by(id= id).first())
+
+    for clas in my_classes_list:
+        tasks_list= []
+
+        for index, task in  enumerate(clas.tasks):
+            if index <= 3:
+                tasks_list.append(task)
+        
+        tasks_class_teacher_list.append(tasks_list)
     
     return {"classes_list": classes_list,
-            "my_classes_list": my_classes_list
-}
+            "my_classes_list": my_classes_list,
+            "tasks_class_user_list": tasks_class_user_list,
+            "tasks_class_teacher_list": tasks_class_teacher_list}
 
 def delete_class(class_id):
     CLASS = Classes.query.filter_by(id = class_id).first()

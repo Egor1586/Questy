@@ -30,9 +30,9 @@
 
                         <div class="task-header">
                             <h3>{{ task.title }}</h3>
-                            {% if can_do and not status %}
+                            {% if can_do and not status and username != class.teacher.username%}
                                 <a href="/passing_test?test_id={{ task.test_id }}&question_number=0&back_to_class={{ class.id }}">
-                                    <button>Пройти тест</button>
+                                    <button onclick="passingTaskTest({{ task.test_id }}, {{ class.id }})">Пройти тест</button>
                                 </a>
                             {% endif %}
                         </div>
@@ -40,8 +40,12 @@
                         <div class="task-main">
                             <p>{{ task.description }}</p>
                             <div class="task-deadline">
-                                <p><strong>Дедлайн:</strong> {{ due_time[0] }}</p>
-                                <p>Залишилось: {{ due_time[1] }}</p>
+                                {% if due_time[0] %}    
+                                    <p><strong>Дедлайн:</strong> {{ due_time[0] }}</p>
+                                    <p>Залишилось: {{ due_time[1] }}</p>
+                                {% else %}
+                                    <p><strong>Дедлайн:</strong> Немає терміну здачі </p>
+                                {% endif %}
                             </div>
                         </div>
 

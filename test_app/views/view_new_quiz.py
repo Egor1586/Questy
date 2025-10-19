@@ -232,6 +232,8 @@ def render_new_quiz():
             db.session.add(test)
             db.session.commit()
 
+            image_folder_path = os.path.abspath(os.path.join(__file__, "..", "..","..","test_app","static","images", f"{test.id}"))
+
             if test.image:
                 image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}.png")))
 
@@ -253,7 +255,8 @@ def render_new_quiz():
 
                 if quiz.image_name:
                     print("quiz image path")
-                    image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{image_name}.png")))
+                    os.makedirs(image_folder_path, exist_ok= True)
+                    image_form.save(os.path.abspath(os.path.join(image_folder_path, f"{image_name}.png")))
                         
             db.session.commit()
                 

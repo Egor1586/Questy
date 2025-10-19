@@ -45,6 +45,7 @@ input[type="text"], input[type="file"] {
     border: 1px solid var(--green-light);
     border-radius: 8px;
     font-size: 15px;
+    margin: 2px 0px;
 }
 
 .question-block {

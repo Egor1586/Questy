@@ -15,7 +15,7 @@
         </div>
         {% if list_quiz[question_number].question_type == "image" %}
             <div class="image-container">
-                <img src="/test_app/static/images/{{ list_quiz[question_number].image_name }}.png" alt="quiz image">
+                <img src="/test_app/static/images/{{ test.id }}/{{ list_quiz[question_number].image_name }}.png" alt="quiz image">
             </div>
         {% endif %}
 
@@ -86,18 +86,6 @@
                 {% endif %} 
             {% endif %}
         </div>
-
-        <!-- {% if list_quiz[question_number].question_type == "multiple_choice" %}
-            {% if question_number + 1 != test.total_questions %}
-                <a class="next-btn" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
-                    <button class="multiple-choice-answer">Відповісти на запитання</button>
-                </a>
-            {% else %}
-                <a class="next-btn" href="/result_test?test_id= {{ test.id }}">
-                    <button class="multiple-choice-answer">Відповісти на запитання</button>
-                </a>  
-            {% endif %}
-        {% endif %} -->
     </div>
                 
     <script src="{{ url_for('test_app.static', filename = 'js/passing_test.js') }}"></script>

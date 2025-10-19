@@ -7,7 +7,6 @@ from flask_login import current_user
 
 @render_page(template_name = 'courses.html')
 def render_class_courses(id):
-
     do_task= []
     due_time_list= []
     can_do_task= []
@@ -27,9 +26,6 @@ def render_class_courses(id):
 
     date_now_list= date_now.split("-")
     time_now_list= time_now.split(":")
-    print("TIME AND DATE NOW")
-    print(date_now, time_now)
-    print(date_now_list, time_now_list)
     
     task_date_now_list= []
     task_time_now_list= []

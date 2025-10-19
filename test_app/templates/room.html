@@ -90,7 +90,7 @@
             window.location.href = '/';  
         }
         else if (state && state.includes("question")) {
-            renderQuestion(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
+            renderQuestion(Number("{{ test.id }}"), list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
         } 
         else if (state && state.includes("waite")) {
             renderWaiteQuestion();
@@ -194,7 +194,7 @@
                     //console.log(number_of_question);
                     document.cookie = `state= question${number_of_question + 1}; path=/`;
                     //console.log(state);
-                    renderQuestion(list_quiz[number_of_question + 1], list_answers[number_of_question + 1], room, author_name);
+                    renderQuestion(Number("{{ test.id }}"), list_quiz[number_of_question + 1], list_answers[number_of_question + 1], room, author_name);
                 }
                 else {
                     //console.log("stop test skip last question")
@@ -285,7 +285,7 @@
             else {
                 console.log("Тест начат");
                 document.cookie = "state= question0; path=/";
-                renderQuestion(list_quiz[state], list_answers[state], room, author_name);
+                renderQuestion(Number("{{ test.id }}"), list_quiz[state], list_answers[state], room, author_name);
 
             }
         });

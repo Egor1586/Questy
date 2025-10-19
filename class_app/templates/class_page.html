@@ -16,7 +16,8 @@
                     <h2>Доступні класи</h2>
                     
                     <div class="card-div">
-                        {% for class in my_classes_list %}             
+                        {% for class in my_classes_list %} 
+                            {% set tasks = tasks_class_teacher_list[loop.index0] %}
                             <div class="card with-tasks">
                                 {% if class.class_color2 == None %}
                                     <div class="card-header" style="background: {{ class.class_color1 }};">
@@ -61,20 +62,10 @@
                                     </div>
                                 {% endif %}
 
-                                <!-- <form action="/delete_class{{ class.id }}" >
-                                    <button>
-                                        Видалити клас
-                                    </button>
-                                </form>
-
-                                <a href="/class_information{{ class.id }}">
-                                    <button>
-                                        Class information
-                                    </button>
-                                </a> -->
-
-
                                 <div class="card-body">
+                                {% for task in tasks %} 
+                                    <li>{{ task.title }}</li>
+                                {% endfor %}
                                     <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
                                     <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
                                     <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
@@ -120,7 +111,9 @@
                 <h2>Мої класи</h2>
             
                 <div class="card-div">       
-                    {% for class in classes_list %}         
+                    {% for class in classes_list %}       
+                        {% set tasks = tasks_class_user_list[loop.index0] %}
+                          
                         <div class="card with-tasks">
                             {% if class.class_color2 == None %}
                                 <div class="card-header" style="background: {{ class.class_color1 }};">
@@ -132,9 +125,12 @@
                                 </div>
                             {% endif %}
                             <div class="card-body">
-                                <li>Завдання 1 <span class="done">- заверешено</span></li>
+                                {% for task in tasks %} 
+                                    <li>{{ task.title }}</li>
+                                {% endfor %}
+                                <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
                                 <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
-                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li>
+                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
                             </div>
                 
                             <div class="card-footer">
@@ -174,7 +170,7 @@
         <div class="modal" id="join-form">
             <button class="back-btn" onclick="closeModal()">×</button>
             
-            <form action="" class="form" method="POST">
+            <form class="form" method="POST">
                 <h2>Приєднатися до курсу</h2>
                 <div class="form-group">
                     <label>Код курсу</label>
@@ -211,7 +207,7 @@
                 </div>
                 <div class="form-group">
                     <label>Колір курсу:</label>
-                    <select id="color-type">
+                    <select id="color-type" name="color-type">
                         <option value="single">Монотонний</option>
                         <option value="gradient">Градієнт</option>
                     </select>

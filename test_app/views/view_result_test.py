@@ -63,8 +63,9 @@ def render_test_result():
 
             db.session.add(score)
             db.session.commit()
+            
+            print(user_answers_list)
 
-        print(user_answers_list)
 
         result_test_page = flask.render_template(
             'result_test.html',

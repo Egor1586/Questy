@@ -22,7 +22,7 @@ function renderWaiteQuestion() {
     console.log("waite next question")
 }
 
-function renderQuestion(quiz, answers, room, author_name) {
+function renderQuestion(testId, quiz, answers, room, author_name) {
     const roomContent = document.getElementById("room-content");
 
     if (roomContent != null) {
@@ -71,7 +71,7 @@ function renderQuestion(quiz, answers, room, author_name) {
                 imageDiv.className = "image-div";
 
                 const image = document.createElement("img");
-                image.src = `/test_app/static/images/${quiz.image_name}.png`;
+                image.src = `/test_app/static/images/${testId}/${quiz.image_name}.png`;
                 image.alt= "quiz image";
 
                 imageDiv.appendChild(image)

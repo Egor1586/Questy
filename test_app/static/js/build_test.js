@@ -143,7 +143,7 @@ function buildTest(){
         console.log(correctData)
     }
     console.log(flagError)
-    // console.log(messageError)
+    console.log(messageError)
     
     return correctData
 }
