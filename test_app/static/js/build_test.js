@@ -30,6 +30,7 @@ function buildTest(){
        
         let answerRadioFlag = false
         let countAnswers = 0
+        let countCorrectAnswers = 0
         let correctData = ""
 
 
@@ -101,25 +102,31 @@ function buildTest(){
                             questionInformation["options"].push(answerText.value)
                             countAnswers = countAnswers + 1
 
-                            if (answerRadio.checked){
-                                questionInformation["correct_answer"] += answerText.value + "%$№" 
-                                answerRadioFlag = true
+                        if (answerRadio.checked && countCorrectAnswers >= 1){
+                            questionInformation["correct_answer"] += "%$№" + answerText.value   
+                            answerRadioFlag = true
+                            countCorrectAnswers += 1
                         }
+                        else if(answerRadio.checked){
+                            questionInformation["correct_answer"] += answerText.value   
+                            answerRadioFlag = true
+                            countCorrectAnswers += 1
                         }
-                        else{
-                            flagError = true
-                            messageError = "Ви не ввели текст відповіді"
-                        }
-                        
                     }
-                    if(questionBlock.querySelector(".answers").id == "image"){
-                        
-                        let answerText = answerInput.querySelector(".answer-text")
-                        let answerRadio = answerInput.querySelector(".question-radio")
-                        
-                        if (answerText.value != ""){
-                            questionInformation["options"].push(answerText.value)
-                            countAnswers = countAnswers + 1
+                    else{
+                        flagError = true
+                        messageError = "Ви не ввели текст відповіді"
+                    }
+                    
+                }
+                if(questionBlock.querySelector(".answers").id == "image"){
+                    
+                    let answerText = answerInput.querySelector(".answer-text")
+                    let answerRadio = answerInput.querySelector(".question-radio")
+                    
+                    if (answerText.value != ""){
+                        questionInformation["options"].push(answerText.value)
+                        countAnswers = countAnswers + 1
 
                             if (answerRadio.checked){
                                 questionInformation["correct_answer"] = answerText.value

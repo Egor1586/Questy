@@ -31,12 +31,13 @@ def render_confirm_account():
                 is_teacher = bool(user_data['is_teacher'])
             )                   
             
-            login_user(user)
+            
             
             Project.db.session.add(user)
             Project.db.session.commit()
 
-            
+            login_user(user)
+
             return flask.redirect(location = '/../')
     
     if not current_user.is_authenticated:
