@@ -13,7 +13,6 @@ def render_passing_test():
 
     test= Test.query.filter_by(id= test_id).first()
 
-    # NEW_TYPE
     for quiz in Quiz.query.filter_by(test_id= test_id).all():
         if quiz.question_type == "choice" or quiz.question_type == "image":
             list_answers.append(quiz.answer_options.split("%$№"))

@@ -13,9 +13,9 @@
         <div class="result-info">
             <div class="test-info">
                 {% if username %}
-                    <p><strong>{{ username }}</strong>, ваш результат: <strong>{{ count_correct_answers }} </strong>/ {{ total_questions }}</p>
+                    <p><strong>{{ username }}</strong>, ваш результат: <strong>{{ count_correct_answers }} </strong>/ {{ list_quiz|length }}</p>
                 {% else %}
-                    <p>Ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ total_questions }}</p>
+                    <p>Ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ list_quiz|length }}</p>
                 {% endif %}
                 
                 <p>Точність правильних відповідей: <strong>{{ accuracy }}%</strong></p>
@@ -50,7 +50,7 @@
         
                 <div class="auth-block">
                     <p>Якщо у вас вже є аккаунт - авторизуйтесь</p>
-                    <a href="login" class="auth-btn">Авторизація</a>
+                    <a href="/login" class="auth-btn">Авторизація</a>
                 </div>
             </div>
         {% endif %}
@@ -58,16 +58,15 @@
         <!-- NEW TYPE -->
 
         {% for question in list_quiz %}
-            {% if question.question_type == "choice" or question.question_type == "multiple_choice" %}
+            {% if question.question_type == "choice" or question.question_type == "image" %}
                 {% set answers = list_answers[loop.index0] %}
-            {% elif question.question_type == "input" %} 
-                {% set answer = list_answers[loop.index0] %}
-            {% endif %}
-            
-            {% if question.question_type == "choice" or question.question_type == "input" %}
                 {% set user_answer = user_answers[loop.index0] %}
+            {% elif question.question_type == "input" %} 
+                {% set user_answer = user_answers[loop.index0] %}
+                {% set answer = list_answers[loop.index0] %}
             {% elif question.question_type == "multiple_choice" %} 
-                {% set multiple_answers = user_answers[loop.index0] %}
+                {% set answers = list_answers[loop.index0] %}
+                {% set user_answers = user_answers[loop.index0] %}
             {% endif %}
 
             <div class="question-block">
@@ -76,12 +75,12 @@
                 </div>
                 
                 {% if question.question_type == "image" %}
-                    <div>
-                        <img src="/test_app/static/images/{{ question.image_name }}.png" alt="quiz image">
+                    <div class="img-div">
+                        <img src="/test_app/static/images/{{ test.id }}/{{ question.image_name }}" alt="quiz image">
                     </div>
                 {% endif %}
                 
-                {% if question.question_type == "choice" or question.question_type == "image" %}
+                {% if question.question_type == "choice" or question.question_type == "image"%}
                     <div class="question-text">
                         Ваш правильний варіант.
                     </div>
@@ -90,7 +89,6 @@
                         {% if answer != question.correct_answer and answer != user_answer%}
                             <div class="answer incorrect">✗ {{answer}}</div>   
                         {% elif user_answer == "not_answer" %}      
-                            <!-- Якщо неправильна відповідь -->
                             <div class="answer no-answer">Відповідь відсутня</div>
                         {% elif user_answer != question.correct_answer and answer == user_answer %}
                             <div class="answer user_answers">✗ {{answer}}</div>
@@ -98,7 +96,6 @@
                             <div class="answer correct">✓ {{ answer }}</div>
                         {% endif %}
                     {% endfor %}
-                
                 {% elif question.question_type == "input" %} 
                     <div class="question-text">
                         Ваш варіант.
@@ -116,25 +113,24 @@
                     {% else %}
                         <div class="answer correct">✓ {{ user_answer }}</div>
                     {% endif %}
-                {% elif question.question_type == "multiple_choice" %} 
+                {% elif question.question_type == "multiple_choice" %}         
+                    {% set correct_answer_list = question.correct_answer.split("%$№") %}
+                
                     <div class="question-text">
                         Ваш правильний варіант.
                     </div>
                     
-                    {% set correct_answer_list = question.correct_answer.split("%$№") %}
+                    {% if "not_answer" in user_answers %}
+                        <div class="answer no-answer">Відповідь відсутня</div>
+                    {% endif %}
                     
-                    {% for answer in answers %}    
-                        {% set multiple_answer = multiple_answers[loop.index0] %}
-                        
-                        {% if answer in correct_answer_list and answer != multiple_answer%}
-                            <div class="answer incorrect">✗ {{answer}}</div>   
-                        {% elif multiple_answer == "not_answer" %}      
-                            <!-- Якщо неправильна відповідь -->
-                            <div class="answer no-answer">Відповідь відсутня</div>
-                        {% elif multiple_answer in correct_answer_list and answer == multiple_answer %}
+                    {% for answer in answers %}                                      
+                        {% if answer in correct_answer_list%}
+                            <div class="answer correct">✗ {{answer}}</div>   
+                        {% elif answer not in correct_answer_list and answer in user_answers %}
                             <div class="answer user_answers">✗ {{answer}}</div>
                         {% else %}
-                            <div class="answer correct">✓ {{ answer }}</div>
+                            <div class="answer incorrect">✓ {{ answer }}</div>
                         {% endif %}
 
                     {% endfor %}

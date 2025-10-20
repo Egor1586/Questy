@@ -35,15 +35,13 @@ def render_review_results(id):
     for index, quiz in enumerate(quizzes_list):
         if quiz.question_type == "multiple_choice":
             user_answers_list[index]=  user_answers_list[index].split("$$$")
-
-    print(user_answers_list)
     
     for number, quiz in enumerate(quizzes_list):
         if quiz.correct_answer == user_answers_list[number]:
             count_correct_answers += 1
 
     return {
-        "total_question": TEST.total_questions,
+        "test": TEST,
         "accuracy": SCORE.accuracy,
         "list_quiz": quizzes_list,
         "list_answers": list_answers,

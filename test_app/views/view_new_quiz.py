@@ -104,7 +104,8 @@ def render_new_quiz():
                 "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
                 "options": [
                     "float",
-                    "str"
+                    "str",
+                    "int"
                 ],
                 "correct_answer": "int",
                 "time": 60
@@ -163,10 +164,11 @@ def render_new_quiz():
             {
                 "question_type": "image",
                 "question_text": "Який тип даних використовується для зберігання цілих чисел у Python?",
-                "image_name": "quiz_image", 
+                "image_name": "quiz_image.png", 
                 "options": [
                     "float",
-                    "str"
+                    "str",
+                    "int"
                 ],
                 "correct_answer": "int",
                 "time": 60
@@ -235,9 +237,8 @@ def render_new_quiz():
             image_folder_path = os.path.abspath(os.path.join(__file__, "..", "..","..","test_app","static","images", f"{test.id}"))
 
             if test.image:
-                image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}.png")))
+                image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}")))
 
-            # NEW_TYPE
             for quizzes in dataImage["questions"]:
                 answers_list = quizzes["options"].copy()
                 image_name= quizzes.get("image_name")
@@ -256,7 +257,7 @@ def render_new_quiz():
                 if quiz.image_name:
                     print("quiz image path")
                     os.makedirs(image_folder_path, exist_ok= True)
-                    image_form.save(os.path.abspath(os.path.join(image_folder_path, f"{image_name}.png")))
+                    image_form.save(os.path.abspath(os.path.join(image_folder_path, f"{image_name}")))
                         
             db.session.commit()
                 

@@ -71,7 +71,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 imageDiv.className = "image-div";
 
                 const image = document.createElement("img");
-                image.src = `/test_app/static/images/${testId}/${quiz.image_name}.png`;
+                image.src = `/test_app/static/images/${testId}/${quiz.image_name}`;
                 image.alt= "quiz image";
 
                 imageDiv.appendChild(image)

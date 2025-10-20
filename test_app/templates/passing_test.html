@@ -15,12 +15,11 @@
         </div>
         {% if list_quiz[question_number].question_type == "image" %}
             <div class="image-container">
-                <img src="/test_app/static/images/{{ test.id }}/{{ list_quiz[question_number].image_name }}.png" alt="quiz image">
+                <img src="/test_app/static/images/{{ test.id }}/{{ list_quiz[question_number].image_name }}" alt="quiz image">
             </div>
         {% endif %}
 
         
-        <!-- NEW_TYPE -->
         <div class="answers">
             {% if list_quiz[question_number].question_type == "choice" or list_quiz[question_number].question_type == "image" %}
                 {% if question_number + 1 != list_quiz|length %}
@@ -45,14 +44,12 @@
                     <input type="text" placeholder="Введіть відповідь на запитання" class="input-with-answer">
                     
                     <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
-                        <!-- {{ question_number }} "+ 1 !=" {{ list_quiz|length }} -->
                         <button class="input-answer">Відповісти на запитання</button>
                     </a>
                 {% else %}
                     <input type="text" placeholder="Введіть відповідь на запитання" class="input-with-answer">
                     
                     <a class="answer-link" href="/result_test?test_id= {{ test.id }}">
-                        <!-- <p>RESULT</p> -->
                         <button class="input-answer">Відповісти на запитання</button>
                     </a>  
                 {% endif %}
@@ -67,7 +64,6 @@
                     {% endfor %}
                     
                     <a class="answer-link" href="/passing_test?test_id={{ test.id }}&question_number= {{ question_number + 1}}">
-                        <!-- <p>{{ question_number }} "+ 1 !=" {{ list_quiz|length }}</p> -->
                         <button class="multiple-choice-answer">Відповісти на запитання</button>
                     </a>
                 {% else %}
@@ -80,7 +76,6 @@
                     {% endfor %}
                     
                     <a class="answer-link" href="/result_test?test_id= {{ test.id }}">
-                        <!-- <p>RESULT</p> -->
                         <button class="multiple-choice-answer">Відповісти на запитання</button>
                     </a>  
                 {% endif %} 

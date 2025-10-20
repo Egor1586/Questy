@@ -171,7 +171,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers) {
             imageDiv.className = "image-div";
 
             const image = document.createElement("img");
-            image.src = `/test_app/static/images/${quiz.image_name}.png`;
+            image.src = `/test_app/static/images/${quiz.image_name}`;
             image.alt= "quiz image";
 
             imageDiv.appendChild(image)

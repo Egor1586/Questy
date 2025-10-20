@@ -15,7 +15,6 @@ def render_test_result():
     
     test_id= flask.request.args.get("test_id")
 
-    # NEW_TYPE
     test = Test.query.filter_by(id= test_id).first()
     quizzes_list= Quiz.query.filter_by(test_id= test_id).all()
         
@@ -29,7 +28,6 @@ def render_test_result():
     task_test_id = flask.request.cookies.get(key= 'taskTestId') or None
     class_id = flask.request.cookies.get(key= 'classId') or None
 
-    print(task_test_id)
     if user_answers_cookies:
         user_answers_list = user_answers_cookies.split("|")
 
@@ -41,8 +39,7 @@ def render_test_result():
                 user_answers_list[index]=  user_answers_list[index].split("$$$")
         
         for number, quiz in enumerate(quizzes_list):     
-            print(type(quiz.correct_answer), quiz.correct_answer, type(user_answers_list[number]), user_answers_list[number])
-            if (quiz.question_type == "choice" or quiz.question_type == "input") and quiz.correct_answer == user_answers_list[number]:
+            if (quiz.question_type == "choice" or quiz.question_type == "input" or quiz.question_type == "image") and quiz.correct_answer == user_answers_list[number]:
                 count_correct_answers += 1
             if quiz.question_type == "multiple_choice":    
                 if sorted(quiz.correct_answer.split("%$№")) == sorted(user_answers_list[number]):
@@ -63,13 +60,10 @@ def render_test_result():
 
             db.session.add(score)
             db.session.commit()
-            
-            print(user_answers_list)
-
 
         result_test_page = flask.render_template(
             'result_test.html',
-            total_questions=test.total_questions,
+            test = test,
             accuracy=count_correct_answers / len(quizzes_list) * 100 // 1,
             count_correct_answers=count_correct_answers,
             list_quiz= quizzes_list,

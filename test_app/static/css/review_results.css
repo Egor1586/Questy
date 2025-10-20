@@ -291,3 +291,16 @@ main {
     color: #555; 
     font-style: italic;
 }
+
+.img-div {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+

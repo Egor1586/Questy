@@ -42,96 +42,109 @@ function buildTest(){
             questionInformation["question_type"] = questionBlock.querySelector(".answers").id
 
             if (data["description"] != "" && data["topic"] != ""){
-            let arrayAnswersInput = questionBlock.querySelector(".answers").querySelectorAll(".answer-input")
-            arrayAnswersInput.forEach(answerInput => {
-                console.log(questionBlock.querySelector(".answers").id)
-                if(questionBlock.querySelector(".answers").id == "choice"){
-                    
-                    let answerText = answerInput.querySelector(".answer-text")
-                    let answerRadio = answerInput.querySelector(".question-radio")
-                    
-                    if (answerText.value != ""){
-                        questionInformation["options"].push(answerText.value)
-                        countAnswers = countAnswers + 1
+                let arrayAnswersInput = questionBlock.querySelector(".answers").querySelectorAll(".answer-input")
+                let imageInputArray = questionBlock.querySelectorAll(".answers .load-img")
 
-                        if (answerRadio.checked){
+                imageInputArray.forEach(imageInput => {
+                    let imageName = imageInput.querySelector(".answer-image")
+                    
+                    if(imageName && imageName.files.length > 0){
+                        questionInformation["image_name"] = imageName.files[0].name
+                    }
+                    else {
+                        flagError= true
+                        messageError = "Ви не вказали зображення для питання"
+                    }
+                })
+                
+                arrayAnswersInput.forEach(answerInput => {
+                    console.log(questionBlock.querySelector(".answers").id)
+                    if(questionBlock.querySelector(".answers").id == "choice"){
+                        
+                        let answerText = answerInput.querySelector(".answer-text")
+                        let answerRadio = answerInput.querySelector(".question-radio")
+                        
+                        if (answerText.value != ""){
+                            questionInformation["options"].push(answerText.value)
+                            countAnswers = countAnswers + 1
+
+                            if (answerRadio.checked){
+                                questionInformation["correct_answer"] = answerText.value
+                                answerRadioFlag = true
+                        }
+                        }
+                        else{
+                            flagError = true
+                            messageError = "Ви не ввели текст відповіді"
+                        }
+                        
+                    }
+                    if(questionBlock.querySelector(".answers").id == "input"){
+                        let answerText = answerInput.querySelector(".answer-text")
+                        if (answerText.value != ""){
+                            countAnswers = countAnswers + 2
+                            answerRadioFlag = true
                             questionInformation["correct_answer"] = answerText.value
-                            answerRadioFlag = true
+                        }
+                        else{
+                            flagError = true
+                            messageError = "Ви не ввели текст відповіді"
+                        }
+                        
                     }
-                    }
-                    else{
-                        flagError = true
-                        messageError = "Ви не ввели текст відповіді"
-                    }
-                    
-                }
-                if(questionBlock.querySelector(".answers").id == "input"){
-                    let answerText = answerInput.querySelector(".answer-text")
-                    if (answerText.value != ""){
-                        countAnswers = countAnswers + 2
-                        answerRadioFlag = true
-                        questionInformation["correct_answer"] = answerText.value
-                    }
-                    else{
-                        flagError = true
-                        messageError = "Ви не ввели текст відповіді"
-                    }
-                    
-                }
-                if(questionBlock.querySelector(".answers").id == "multiple_choice"){
-                    
-                    let answerText = answerInput.querySelector(".answer-text")
-                    let answerRadio = answerInput.querySelector(".checkbox")
-                    
-                    if (answerText.value != ""){
-                        questionInformation["options"].push(answerText.value)
-                        countAnswers = countAnswers + 1
+                    if(questionBlock.querySelector(".answers").id == "multiple_choice"){
+                        
+                        let answerText = answerInput.querySelector(".answer-text")
+                        let answerRadio = answerInput.querySelector(".checkbox")
+                        
+                        if (answerText.value != ""){
+                            questionInformation["options"].push(answerText.value)
+                            countAnswers = countAnswers + 1
 
-                        if (answerRadio.checked){
-                            questionInformation["correct_answer"] += answerText.value + "%$№" 
-                            answerRadioFlag = true
+                            if (answerRadio.checked){
+                                questionInformation["correct_answer"] += answerText.value + "%$№" 
+                                answerRadioFlag = true
+                        }
+                        }
+                        else{
+                            flagError = true
+                            messageError = "Ви не ввели текст відповіді"
+                        }
+                        
                     }
-                    }
-                    else{
-                        flagError = true
-                        messageError = "Ви не ввели текст відповіді"
-                    }
-                    
-                }
-                if(questionBlock.querySelector(".answers").id == "image"){
-                    
-                    let answerText = answerInput.querySelector(".answer-text")
-                    let answerRadio = answerInput.querySelector(".question-radio")
-                    
-                    if (answerText.value != ""){
-                        questionInformation["options"].push(answerText.value)
-                        countAnswers = countAnswers + 1
+                    if(questionBlock.querySelector(".answers").id == "image"){
+                        
+                        let answerText = answerInput.querySelector(".answer-text")
+                        let answerRadio = answerInput.querySelector(".question-radio")
+                        
+                        if (answerText.value != ""){
+                            questionInformation["options"].push(answerText.value)
+                            countAnswers = countAnswers + 1
 
-                        if (answerRadio.checked){
-                            questionInformation["correct_answer"] = answerText.value
-                            answerRadioFlag = true
+                            if (answerRadio.checked){
+                                questionInformation["correct_answer"] = answerText.value
+                                answerRadioFlag = true
+                        }
+                        }
+                        else{
+                            flagError = true
+                            messageError = "Ви не ввели текст відповіді"
+                        }
+                        
                     }
-                    }
-                    else{
-                        flagError = true
-                        messageError = "Ви не ввели текст відповіді"
-                    }
-                    
+                })
+                if(answerRadioFlag && countAnswers >= 2){
+                    data["questions"].push(questionInformation)
                 }
-            })
-            if(answerRadioFlag && countAnswers >= 2){
-                data["questions"].push(questionInformation)
+                else{
+                    flagError = true
+                    messageError = "Ви не вибрали правильну відповідь або ввели мало питань"
+                }
             }
             else{
                 flagError = true
-                messageError = "Ви не вибрали правильну відповідь або ввели мало питань"
-            }
-        }
-        else{
-            flagError = true
-            messageError = "Ви неправильно ввели текст питання чи час"
-        }
-            
+                messageError = "Ви неправильно ввели текст питання чи час"
+            }         
         }
         else{
             flagError = true
@@ -149,15 +162,30 @@ function buildTest(){
 }
 
 $("#submit-button").click(function () {
+    const jsonData = buildTest()
+    const imageData = new FormData
+
+    imageData.append('data', JSON.stringify(jsonData))
+
+    document.querySelectorAll(".answer-image").forEach((image) => {
+        if (image.files.length > 0){
+            const file = image.files[0]
+            imageData.append(file.name, file)
+        }
+    })
     $.ajax({
         url: "/build_test",
         type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(buildTest()),
+        data: imageData,
+        processData: false,
+        contentType: false,
         success: function (data) {
             console.log(data)
 
             window.location.href = "/quizzes/"
+        },
+        error: function (xhr){
+            console.log('error')
         }
     })
 })

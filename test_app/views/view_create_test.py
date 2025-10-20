@@ -1,4 +1,4 @@
-import flask, random, datetime, os
+import flask, random, datetime, os, json
 
 from flask_login import current_user
 from Project.database import db
@@ -15,13 +15,10 @@ def render_create_test():
 
 
 def create_test():
-
-    data = flask.request.get_json()
-    print(1, data)
-
-    
-
     try:
+        data = json.loads(flask.request.form.get('data'))
+        images = flask.request.files
+
         title = data.get("topic")
         description = data.get("description")
         total_questions = data.get('total_questions')
@@ -49,11 +46,12 @@ def create_test():
         db.session.add(test)
         db.session.commit()
 
-        if test.image:
-            image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}.png")))
+        IMAGES_DIR = os.path.abspath(os.path.join(__file__, "..", "..","..","test_app","static","images", f"{test.id}"))
+        os.makedirs(IMAGES_DIR, exist_ok= True)
 
-        # NEW_TYPE
         for quizzes in data["questions"]:
+            image_name= quizzes.get('image_name')
+
             answers_list = quizzes["options"].copy()
             image_name= quizzes.get("image_name")
             random.shuffle(answers_list)
@@ -68,15 +66,14 @@ def create_test():
             )
             db.session.add(quiz)
 
-            if quiz.image_name:
-                print("quiz image path")
-                image_form.save(os.path.abspath(os.path.join(__file__, "..", "..","..","test_app","static","images", f"{test.id}", f"{image_name}.png")))
-                    
+            if image_name and image_name in images:
+                image= flask.request.files[image_name]
+                image.save(os.path.abspath(os.path.join(IMAGES_DIR, f"{image_name}")))
+                       
         db.session.commit()
-            
-        return flask.redirect(location = '/quizzes')
 
     except Exception as error:
         print(error)
 
     return {}
+

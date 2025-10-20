@@ -11,8 +11,6 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-// NEW_TYPE
-
 if (inputButton) {
     inputButton.addEventListener("click", function(event) {
         let user_answer= getCookie("user_answers");
