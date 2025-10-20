@@ -54,8 +54,6 @@
                 </div>
             </div>
         {% endif %}
-            
-        <!-- NEW TYPE -->
 
         {% for question in list_quiz %}
             {% if question.question_type == "choice" or question.question_type == "image" %}
@@ -82,7 +80,7 @@
                 
                 {% if question.question_type == "choice" or question.question_type == "image"%}
                     <div class="question-text">
-                        Ваш правильний варіант.
+                        Варіант відповідей.
                     </div>
                     
                     {% for answer in answers %}
@@ -98,7 +96,7 @@
                     {% endfor %}
                 {% elif question.question_type == "input" %} 
                     <div class="question-text">
-                        Ваш варіант.
+                        Варіант відповідей.
                     </div>
                     
                     {% if user_answer == "not_answer"%}
@@ -117,7 +115,7 @@
                     {% set correct_answer_list = question.correct_answer.split("%$№") %}
                 
                     <div class="question-text">
-                        Ваш правильний варіант.
+                        Варіант відповідей.
                     </div>
                     
                     {% if "not_answer" in user_answers %}

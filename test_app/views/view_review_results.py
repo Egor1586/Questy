@@ -17,8 +17,6 @@ def render_review_results(id):
 
     quizzes_list= Quiz.query.filter_by(test_id= SCORE.test_id).all()
     
-    # NEW TYPE
-
     for quiz in quizzes_list:
         if quiz.question_type == "input":
             list_answers.append(quiz.correct_answer)
