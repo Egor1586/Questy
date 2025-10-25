@@ -55,8 +55,6 @@ def render_class_page():
             return flask.redirect(location = '/class_page')
 
         except Exception as error:
-            print(error)
-
             if flask.request.method == 'POST':
                 code = flask.request.form.get('code')
                 CLASS = Classes.query.filter_by(class_code = code).first()

@@ -28,10 +28,6 @@ def render_create_task(id):
             test_id = flask.request.form['choice_test']
             due_time= flask.request.form['due-time']
             done_after_due_time= flask.request.form.get('done-after-due-time')
-
-            print(done_after_due_time)
-
-            print("True") if done_after_due_time == "on" else print("False")
             
             TASK = Task(
                 title= title,

@@ -14,8 +14,6 @@ def get_codes():
     for room in list_room:
         if room.test_code != 0 and not room.active_test:
             code_list.append(str(room.test_code))
-
-    print(code_list)
     
     return flask.jsonify(code_list)
 

@@ -72,7 +72,6 @@ def handle_disconnect():
         
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
-    print("NTNTNTNNTEST END")
     room = data['room']
     ROOM = Room.query.filter_by(test_code= room).first()
     ROOM.active = 0
@@ -274,10 +273,7 @@ def handle_message(data):
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
-
-    print(USER_LIST)
-    print(SCORE_LIST)
-
+    
     for user in USER_LIST:
         answers_list= []
         answers_str= ""

@@ -255,7 +255,6 @@ def render_new_quiz():
                 db.session.add(quiz)
 
                 if quiz.image_name:
-                    print("quiz image path")
                     os.makedirs(image_folder_path, exist_ok= True)
                     image_form.save(os.path.abspath(os.path.join(image_folder_path, f"{image_name}")))
                         

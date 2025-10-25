@@ -26,8 +26,6 @@ def create_test():
         time= data.get('time')
         image_form = data.get("image")
 
-        print(title, description, total_questions, answers_per_question, time, image_form)
-
         total_questions = total_questions or len(data["questions"])
         answers_per_question = answers_per_question or 4
         time= time or 20

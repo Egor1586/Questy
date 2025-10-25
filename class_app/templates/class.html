@@ -12,7 +12,11 @@
 {% block content %}
     <div class="container-classroom">
         <aside class="sidebar-classroom">
-            <div class="classroom-avatar">{{ username }}</div>
+            {% if username|length <= 5 %}            
+                <div class="classroom-avatar">{{ username }}</div>
+            {% else %}
+                <div class="classroom-avatar">{{ username[:2]|upper }}</div>
+            {% endif %}
             <p class="classroom-username">{{ username }}</p>
             <p class="classroom-email">{{ email }}</p>
 

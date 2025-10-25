@@ -8,7 +8,6 @@ def load_env():
     if os.path.exists(ENV_PATH):
         dotenv.load_dotenv(dotenv_path= ENV_PATH)
     if not os.path.exists(os.path.join(PATH, "Project", "migrations")):
-        print(os.path.join(PATH, "Project", "migrations"))
         os.system(os.environ["INIT_COMMAND"])
     
     os.system(os.environ["MIGRATE_COMMAND"])

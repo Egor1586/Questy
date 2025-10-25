@@ -11,20 +11,12 @@ def render_result_test_online(id):
     user_answers_list = []
     count_correct_answers = 0
 
-
     scores = Score.query.filter_by(id = id).first()
-    print(scores)
-
     test = Test.query.filter_by(id= scores.test_id).first()
-    print(test)
 
     for quiz in Quiz.query.filter_by(test_id= scores.test_id).all():
         quizzes_list= Quiz.query.filter_by(test_id= scores.test_id).all()
         list_answers.append(quiz.answer_options.split("%$№"))
-
-    print(quizzes_list)
-    print(list_answers)
-
 
     user_answers_db = scores.user_answer
     user_answers = user_answers_db.split("|")
@@ -45,6 +37,4 @@ def render_result_test_online(id):
         "list_answers": list_answers,
         "user_answers": user_answers_list,
         "count_correct_answers":count_correct_answers
-        # "is_authorization": current_user.is_authenticated,
-        # "username": current_user.username
             }

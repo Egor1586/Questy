@@ -21,8 +21,6 @@ def render_quizzes():
         else:
             start_button.append(0)
     
-    print(start_button)
-    
     return{
     "list_tests": list_tests,
     "start_button": start_button,

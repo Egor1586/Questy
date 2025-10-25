@@ -43,7 +43,6 @@ def allCoursesData(user):
                         overdue_task_list.append(task.dict())
             except Exception as error:
                 print(error)
-
                 continue
 
     return cur_week_task_list, next_week_task_list, duetime_task_list, overdue_task_list
@@ -84,7 +83,7 @@ def sorte_task():
         class_id = int(data['sortytype'])
         CLASS = Classes.query.filter_by(id= class_id).first()
 
-        print(CLASS)
+
         class_dict = CLASS.dict()
 
         for task in CLASS.tasks:
