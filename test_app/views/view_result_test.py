@@ -5,7 +5,6 @@ from Project.database import db
 from flask_login import current_user
 from Project.clear_cookie import clear_cookies
 from user.models import Score
-from jinja2 import Environment
 
 def render_test_result():
     list_answers= []

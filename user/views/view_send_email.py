@@ -16,7 +16,6 @@ def render_send_email():
         flask.session["password_code"]= code
         flask.session["email"]= email
 
-
         with project.app_context():
             send_code(user_email= email, code= code, type= "reset")
         
