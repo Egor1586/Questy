@@ -2,6 +2,7 @@ import flask, Project
 from ..models import User
 
 from Project.render_page import render_page
+from werkzeug.security import generate_password_hash
 
 @render_page(template_name= 'new_password.html')
 def render_new_password():
@@ -13,8 +14,8 @@ def render_new_password():
 
         for user in User.query.filter_by(email = email):
             if user and new_password == conf_password:
-                user.password = str(new_password)
-                user.password_confirmation = str(new_password)
+                user.password = generate_password_hash(new_password)
+                # user.password_confirmation = str(new_password)
                 Project.db.session.commit()
                 
                 return flask.redirect(location = '/../login')

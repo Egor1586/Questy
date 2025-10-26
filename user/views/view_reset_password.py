@@ -1,7 +1,12 @@
 import flask
 
 from flask_login import current_user, login_user
+<<<<<<< HEAD
 from ..models import User, UnconfirmedUser
+=======
+from ..models import User
+from werkzeug.security import generate_password_hash
+>>>>>>> origin/sviatoslav
 
 from Project.render_page import render_page
 from Project.database import db

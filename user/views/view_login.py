@@ -2,6 +2,7 @@ import flask
 
 from flask_login import login_user, current_user
 from ..models import User
+from werkzeug.security import check_password_hash
 
 from Project.render_page import render_page
 
@@ -13,7 +14,7 @@ def render_login_app():
         
         user = User.query.filter_by(email= email).first()
         
-        if user and user.email == email and user.password == password: 
+        if user and user.email == email and check_password_hash(user.password, password): 
             login_user(user)
                 
     if not current_user.is_authenticated:
