@@ -3,6 +3,7 @@ import flask, Project
 from .view_sing_up import user_data
 from flask_login import current_user, login_user
 from ..models import User
+from werkzeug.security import generate_password_hash
 
 from Project.render_page import render_page
 
@@ -27,7 +28,7 @@ def render_confirm_account():
             user = User(
                 username = user_data['name'],
                 email = user_data["email"],
-                password = user_data['password'],
+                password = generate_password_hash(user_data['password']),
                 is_teacher = bool(user_data['is_teacher'])
             )                   
             
