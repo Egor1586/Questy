@@ -21,7 +21,8 @@ def get_codes():
 def render_home():
     list_room= []
     list_tests= []
-    
+
+
     try:
         list_room = Room.query.all()
         list_tests= Test.query.all()

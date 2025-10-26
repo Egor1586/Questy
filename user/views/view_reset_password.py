@@ -1,6 +1,7 @@
 import flask
 
 from flask_login import current_user, login_user
+from werkzeug.security import generate_password_hash
 from ..models import User, UnconfirmedUser
 
 from Project.render_page import render_page
@@ -29,7 +30,7 @@ def render_confirm_account():
             user = User(
                 username = ucconfirmed_user.username,
                 email = ucconfirmed_user.email,
-                password = ucconfirmed_user.password,
+                password= generate_password_hash(ucconfirmed_user.password),
                 is_teacher = ucconfirmed_user.is_teacher
             )   
 

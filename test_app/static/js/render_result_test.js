@@ -14,7 +14,7 @@ function userLeaveTest() {
     window.location.href = '/';
 }
 
-function renderResultTest(username, total_question, list_quiz, list_answers) {
+function renderResultTest(username, total_question, list_quiz, list_answers, test_id) {
     let answersStr = getCookie("user_answers");
     let answers_list = answersStr.split("|");
     let user_answers = [];
@@ -168,10 +168,10 @@ function renderResultTest(username, total_question, list_quiz, list_answers) {
 
         if (quiz.question_type == "image"){
             const imageDiv = document.createElement("div");
-            imageDiv.className = "image-div";
+            imageDiv.className = "image-result-div";
 
             const image = document.createElement("img");
-            image.src = `/test_app/static/images/${quiz.image_name}`;
+            image.src = `/test_app/static/images/${test_id}/${quiz.image_name}`;
             image.alt= "quiz image";
 
             imageDiv.appendChild(image)

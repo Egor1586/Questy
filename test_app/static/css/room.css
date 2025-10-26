@@ -391,6 +391,21 @@ main {
 .image-div {
     display: flex;
     align-self: center;
+
+    height: 40vh;
+}
+
+
+.image-result-div {
+    display: flex;
+    align-self: center;
+
+    height: 35vh;
+} 
+
+.image-div img {
+    width: auto;
+    height: auto;
 }
 
 .multiple-div {

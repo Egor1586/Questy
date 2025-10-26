@@ -128,8 +128,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
         });
     }, 100); 
 
-    console.log("alo")
-
     let accurancyArray= []
     
     socket.once('room_get_result_data', function(data) {  

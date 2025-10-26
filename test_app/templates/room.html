@@ -36,6 +36,7 @@
         
         const socket= io();
         const total_question = Number("{{ test.total_questions }}");
+        const test_id = Number("{{ test.id }}");
         const answers_per_question = Number("{{ test.answers_per_question }}");
         const author_name = "{{ test.author_name }}";
 
@@ -69,7 +70,7 @@
             renderAuthorResultTest(username, author_name, total_question);
         } 
         else if (state === "result_test") {
-            renderResultTest(username, total_question, list_quiz, list_answers);
+            renderResultTest(username, total_question, list_quiz, list_answers, test_id);
         } 
         else if (state && state=== "author_leave"){
             let currentURL = window.location.href;
@@ -217,7 +218,7 @@
             
             checkAnswers();
 
-            renderResultTest(username, total_question, list_quiz, list_answers);
+            renderResultTest(username, total_question, list_quiz, list_answers, test_id);
 
             userAnswers= getCookie("user_answers");
             //console.log(userAnswers);

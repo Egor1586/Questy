@@ -84,6 +84,8 @@ class Score(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable= False)
     user_name = db.Column(db.String, nullable= False)
 
+    test_code= db.Column(db.Integer, nullable= True)
+
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key= True)
 

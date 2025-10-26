@@ -9,51 +9,47 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "about-questy">
-        <div class="description">
-            <h1 class="start-t">ПОЧАТИ ТЕСТ</h1>
-            <p class= "text-d">Платформа Questy дозволяє створювати інтерактивні тести, 
-                ділитися ними за допомогою унікального коду та проходити їх у режимі реального часу. 
-                Ви можете налаштувати питання, часові обмеження, кількість учасників, та формат відповідей. 
-                Підходить як для навчання, так і для розважальних вікторин у компанії.
-            </p>
-            <div class= "enter-code">
-                <div class="search-input">
-                    <i class='bx bx-search'></i>
-                    <input placeholder="Введіть код тесту" class= "input_code" id="room">
-                    <div class="fake-input-border"></div>
-                </div>
-                <button type="button" class= "search-btn" onclick="emitUser()">ПІДКЛЮЧИТИСЬ</button>
-            </div>
-        </div>
-    </div>
+    <aside class="info">
+        <h1 class="start-t">ПРО НАС</h1>
+        <p class="text-d">
+            Платформа Questy дозволяє створювати інтерактивні тести, 
+            ділитися ними за допомогою унікального коду та проходити їх у режимі реального часу. 
+            Ви можете налаштувати питання, часові обмеження, кількість учасників, та формат відповідей. 
+            Підходить як для навчання, так і для розважальних вікторин у компанії.
+        </p>
 
-    <hr>
+        <div class= "enter-code">
+            <div class="search-input">
+                <i class='bx bx-search'></i>
+                <input placeholder="Введіть код тесту" class= "input_code" id="room">
+                <div class="fake-input-border"></div>
+            </div>
+            <button type="button" class= "search-btn" onclick="emitUser()">ПІДКЛЮЧИТИСЬ</button>
+        </div>
+    </aside>
 
         {% if list_tests %}
-            <div class="aval-t">
-                <h1 class="av-t">Доступні тести</h1>
-            </div>
-        
-            <div class="tests">
-                {% for test in list_tests %}
-                    <a href="/passing_test?test_id={{ test.id }}&question_number= 0" class="test-card">
-                        <div class="test-content">
-                            {% if test.image %}
-                                <img src="/home_app/static/images/media/{{ test.id }}" alt="" class="test-img">
-                            {% else %}
-                                <img src="/home_app/static/images/media/0.png" alt=""  class="test-img">
-                            {% endif %}
-                            <span class="test-questions">{{ test.total_questions }} питання</span>
-                            <h3 class="test-title">{{ test.title }}</h3>
-                            <p class="test-description">{{ test.description }}</p>
-                            <div class="test-accuracy">100% точність</div>
+            <section class="tests">
+                <h2>Тести</h2>
+                <div class="tests-scroll">
+                    {% for test in list_tests %}
+                        <div class="test-card">
+                            <a href="/passing_test?test_id={{ test.id }}&question_number= 0">
+                                {% if test.image %}
+                                    <img src="/home_app/static/images/media/{{ test.id }}" alt="" class="test-img">
+                                {% else %}
+                                    <img src="/home_app/static/images/media/0.png" alt=""  class="test-img">
+                                {% endif %}
+                                <div class="test-info">
+                                    <h3>{{ test.title }}</h3>
+                                    <p>Автор: {{ test.author }}</p>
+                                    <p>{{ test.total_questions }} питань</p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                {% endfor %}
-            </div>
-            
-            <hr>
+                    {% endfor %}
+                    </div>
+            </section>      
         {% endif %}
 
      <script>
