@@ -41,8 +41,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
         if (list_quiz[count].question_type == "multiple_choice"){
             arrayCorrectAnswers= list_quiz[count].correct_answer.split("%$№")
             arrayUserAnswers= answersArrey[count].split("$$$")
-            // console.log("multiple_choice check")
-            // console.log(arrayCorrectAnswers.sort(), arrayUserAnswers.sort())
             let correctAnswerAccept= true
             if (arrayCorrectAnswers.length === arrayUserAnswers.length){
                 for (let answerIndex = 0; answerIndex < arrayCorrectAnswers.length; answerIndex++){
@@ -58,7 +56,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
 
             if (correctAnswerAccept){
                 correctAnswer++;
-                // console.log("PLUS", correctAnswer)
             }
         }
         else {
@@ -261,10 +258,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             let answers= answersArrey[quiz_number].split("$$$");
             let correct_answer_list= quiz.correct_answer.split("%$№");
 
-            console.log(answerText)
-            console.log(answers)
-            console.log(correct_answer_list)
-
             if (answers == "not_answer"){
                 const notAnswerDiv = document.createElement('div');
                 notAnswerDiv.className = 'answer no-answe';
@@ -290,29 +283,30 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             else{
                 for (let answer_number = 0; answer_number < answerText.length; answer_number++){
                     let answer= answerText[answer_number];
-                    let multiple_answer= answers[answer_number];
-    
+                    
+                    console.log("multiple_choice question")
                     console.log(answer)
                     console.log(multiple_answer)
                     console.log(correct_answer_list)
+                    console.log("multiple_choice question")
     
-                    if (correct_answer_list.includes(answer) && answer != multiple_answer){
+                    if (correct_answer_list.includes(answer)){
+                        const answerCorrect = document.createElement('div');
+                        answerCorrect.className = 'answer correct';
+                        answerCorrect.textContent = `✓ ${answer}`;
+                        questionBlock.appendChild(answerCorrect);
+                    }
+                    else if (answers.includes(answer)){
                         const answerIncorrect = document.createElement('div');
                         answerIncorrect.className = 'answer user_answers';
                         answerIncorrect.textContent = `✗ ${answer}`;
                         questionBlock.appendChild(answerIncorrect);
                     }
-                    else if (correct_answer_list.includes(multiple_answer) && answer == multiple_answer){
+                    else {
                         const answerIncorrect = document.createElement('div');
                         answerIncorrect.className = 'answer incorrect';
                         answerIncorrect.textContent = `✗ ${answer}`;
                         questionBlock.appendChild(answerIncorrect);
-                    }
-                    else {
-                        const answerCorrect = document.createElement('div');
-                        answerCorrect.className = 'answer correct';
-                        answerCorrect.textContent = `✓ ${answer}`;
-                        questionBlock.appendChild(answerCorrect);
                     }
                 }
             }

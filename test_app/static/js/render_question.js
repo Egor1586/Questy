@@ -41,9 +41,15 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     timer.id= "timer"
     timer.textContent = quiz.time;
     questionBlock.appendChild(timer);
-
+ 
     const answersDiv = document.createElement("div");
-    answersDiv.className = "answers";
+    
+    if (quiz.question_type == "input"){
+        answersDiv.className = "answers-input";
+    }
+    else{
+        answersDiv.className = "answers";
+    }
 
     console.log(quiz.time)
 
@@ -146,7 +152,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             }
             
             if (typeof user_answer === "undefined"){
-                document.cookie = `user_answers=${answerValue}; path = /`     
+                document.cookie = `user_answers=|${answerValue}|; path = /`     
             }
             else{
                 cookie= user_answer + `|${answerValue}|`

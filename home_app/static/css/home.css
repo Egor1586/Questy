@@ -29,14 +29,14 @@ body {
 
 /* Макет */
 main {
-    width: 100vw;
+    width: 97vw;
     height: 84vh;
 
     display: flex;
     flex-direction: row;
     grid-template-columns: 1.2fr 2.8fr;
-    gap: 20px;
-    padding: 20px;
+    gap: 1.5vw;
+    padding: 1.5vw;
     flex-grow: 1;
     height: calc(100vh - 60px); 
     overflow: hidden; 
@@ -52,7 +52,8 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 30vw;
+    width: 16vw;
+    min-width: 300px;
 }
 
 .info h2 {
@@ -76,7 +77,7 @@ main {
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 67vw;
+    width: 81vw;
     overflow: hidden; 
 }
 
@@ -222,7 +223,7 @@ main {
 }
 
 .info .text-d {
-    font-size: 24px;
+    font-size: 19px;
     color: #3c3c3c;
     line-height: 1.6;
     margin: 0;

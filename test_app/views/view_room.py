@@ -155,6 +155,9 @@ def handle_message(data):
         test_code= room
     )
 
+    print("SCORE SCORE SCORE")
+    print(data["user_answers"], accuracy, TEST.id)
+
     db.session.add(SCORE)
     db.session.commit()
 
@@ -288,19 +291,35 @@ def handle_message(data):
                 if score.user_name == user:
                     answers_str= score.user_answer
                     break
-
+        
+        print(answers_str)
         answers_list= answers_str.strip('|').split('||')
-
+        print("Answer list")
         print(answers_list)
 
         for index, quiz in enumerate(QUIZ_LIST):
             print(quiz.correct_answer, answers_list[index])
-            if quiz.correct_answer == answers_list[index]:
-                correct_answers_list.append(1)
-            elif answers_list[index] == "not_answer":
+            print(quiz.question_type)
+            if answers_list[index] == "not_answer":
                 correct_answers_list.append(2)
+                continue
+            
+            if quiz.question_type  == "multiple_choice":
+                multi_choice_correct= quiz.correct_answer.split("%$№")
+                multi_choice_answer= answers_list[index].split("$$$")
+                print(multi_choice_correct, multi_choice_answer)
+                sorted_multi_choice_correct= sorted(multi_choice_correct)
+                sorted_multi_choice_answer= sorted(multi_choice_answer)
+                print(sorted_multi_choice_correct, sorted_multi_choice_answer)
+                if sorted_multi_choice_correct == sorted_multi_choice_answer:
+                    correct_answers_list.append(1)
+                else:
+                    correct_answers_list.append(0)
             else:
-                correct_answers_list.append(0)
+                if quiz.correct_answer == answers_list[index]:
+                    correct_answers_list.append(1)
+                else:
+                    correct_answers_list.append(0)
         try:
             room_get_result_data[user.username]= correct_answers_list
         except:
