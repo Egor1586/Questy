@@ -17,9 +17,11 @@
     <body>
 
         <header class="navbar">
-            <div class="logo">
-                <img alt="Qusty logo" src="{{ url_for('static', filename='images/logo.svg') }}">
-            </div>
+            <button class="logo-btn-hidden" onclick="window.location.href='/'">
+                <div class="logo">
+                    <img alt="Qusty logo" src="{{ url_for('static', filename='images/logo.svg') }}" >
+                </div>
+            </button>
 
             <nav class="nav-links">
                 <a href="/" class="{% if request.path == '/' %}active{% endif %}">HOME</a>

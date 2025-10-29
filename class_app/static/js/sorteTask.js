@@ -80,29 +80,3 @@ $(document).ready(function () {
         })
     })
 })
-
-
-{/* <div class="category" data-course="all"><h3>На цей тиждень</h3>
-<summary>Завдання <span class="arrow"></span></summary>
-<div class="task-details">
-    Назва: task1. <br>
-    Опис: desc. <br>
-    Дедлайн: 2025-10-15 16:06:00.
-</div></div> */}
-
-{/* <div class="category" data-course="all">
-                <h3>На цей тиждень</h3>
-                <details>
-                          
-                        
-                            
-                            <summary>Завдання 1 <span class="arrow"></span></summary>
-                            <div class="task-details">
-                                Назва: task1. <br>
-                                Опис: desc. <br>
-                                Дедлайн: 2025-10-15 16:06:00.
-                            </div>
-                        
-                    
-                </details>
-            </div> */}

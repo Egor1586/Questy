@@ -28,32 +28,27 @@
         </div>
     </aside>
 
-        {% if list_tests %}
-            <section class="tests">
-                <h2>Тести</h2>
-                <div class="tests-scroll">
-                    {% for test in list_tests %}
-                        <div class="test-card">
-                            <a href="/passing_test?test_id={{ test.id }}&question_number= 0">
-                                {% if test.image %}
-                                    <img src="/home_app/static/images/media/{{ test.id }}" alt="" class="test-img">
-                                {% else %}
-                                    <img src="/home_app/static/images/media/0.png" alt=""  class="test-img">
-                                {% endif %}
-                                <div class="test-info">
-                                    <h3>{{ test.title }}</h3>
-                                    <p>Автор: {{ test.author }}</p>
-                                    <p>{{ test.total_questions }} питань</p>
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                    </div>
-            </section>      
-        {% endif %}
+    {% if list_tests %}
+        <section class="tests">
+            <h2>Доступні тести</h2>
+            <div class="tests-scroll">
+                {% for test in list_tests %}
+                <a href="/passing_test?test_id={{ test.id }}&question_number=0">
+                    <div class="test-card" style="background-image: url({% if test.image %}/home_app/static/images/media/{{ test.id }}{% else %}/home_app/static/images/media/4.png{% endif %});">
+                            <div class="test-info">
+                                <h3>{{ test.title }}</h3>
+                                <p>Автор: {{ test.author_name }}</p>
 
-     <script>
-        
+                                <p>{{ test.total_questions }} питань</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+                </div>
+        </section>      
+    {% endif %}
+
+    <script>    
         const username = "{{ username }}"
         const test_list = "{{ list_tests }}"
         let currentCodes = [];

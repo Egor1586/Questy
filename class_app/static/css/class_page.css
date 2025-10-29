@@ -9,8 +9,8 @@
     align-items: flex-start;
     justify-items: flex-start;
 
-    height: fit-content;
     width: 100%;
+    height: 100%;
 }
 
 .class-div{
@@ -77,6 +77,20 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 5px;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.left-info{
+    display: flex;
+    flex-direction: row;
+}
+
+.left-info span{
+    margin-left: 10px;
 }
 
 .h-left-info{
@@ -183,7 +197,7 @@
 
 .container-classroom {
     display: flex;
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 
 /* btn + */
@@ -490,4 +504,18 @@
 
 .class-actions.show .dropdown {
     display: block;
+}
+
+/*  */
+
+li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    display: flex;         
+}
+.due-time-p {
+    font-size: 1rem;
+    color: #8e8282;
+    font-style: italic;
+    margin-left: 5px; 
 }

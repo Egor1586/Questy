@@ -20,6 +20,7 @@ body {
 .sidebar-classroom {
     /* min-width: 220px; */
     width: fit-content;
+    height: 100%;
     background-color: #2f3b52;
     color: #fff;
     padding: 20px;

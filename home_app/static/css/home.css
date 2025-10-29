@@ -15,6 +15,12 @@ a {
     text-decoration: none;
 }
 
+
+::-webkit-scrollbar{
+    display: block;
+}
+
+
 body {
     height: 100vh;
     display: flex;
@@ -23,14 +29,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-::-webkit-scrollbar{
-    display: none;
-}
-
 /* Макет */
 main {
     width: 97vw;
-    height: 84vh;
+    height: 82.5vh;
 
     display: flex;
     flex-direction: row;
@@ -40,6 +42,10 @@ main {
     flex-grow: 1;
     height: calc(100vh - 60px); 
     overflow: hidden; 
+}
+
+header {
+    height: 9.5vh;
 }
 
 /* Про нас блок */
@@ -223,7 +229,7 @@ main {
 }
 
 .info .text-d {
-    font-size: 19px;
+    font-size: 15px;
     color: #3c3c3c;
     line-height: 1.6;
     margin: 0;
@@ -309,3 +315,150 @@ main {
 
 
 
+/*  */
+
+/* ===============================
+   Блок тестів та скрол
+=============================== */
+.tests {
+    position: relative;
+    background: linear-gradient(135deg, #f0f5f1 0%, #d9f0e2 100%);
+    border-radius: 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 81vw;
+    overflow: hidden; 
+}
+
+.tests h2 {
+    color: #2d6a4f;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Скрол всередині блоку тестів */
+.tests-scroll {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    overflow-y: auto;
+    padding-right: 12px;
+}
+
+
+/* Стиль видимого скролу */
+.tests-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tests-scroll::-webkit-scrollbar-track {
+    background: #e5f6ea;
+    border-radius: 10px;
+}
+
+.tests-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #3da35d, #2d6a4f);
+    border-radius: 10px;
+}
+
+.tests-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #2f8b52, #276b45);
+}
+
+/* ===============================
+   Картки тестів
+=============================== */
+.test-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* текст внизу */
+    align-items: flex-start;   /* текст ліворуч */
+    padding: 15px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.test-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(45, 106, 79, 0.85), rgba(61, 163, 93, 0.3));
+    border-radius: 18px;
+    transition: background 0.3s ease;
+}
+
+.test-card:hover {
+    /* transform: translateY(-6px) scale(1.02); */
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.18);
+}
+
+.test-card:hover::after {
+    background: linear-gradient(to top, rgba(45, 106, 79, 0.95), rgba(61, 163, 93, 0.4));
+}
+
+/* Текст всередині картки */
+.test-info {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: left;
+    /* width: 100%; */
+    /* backdrop-filter: blur(4px); */
+    border-radius: 12px;
+    padding: 10px 12px;
+    /* background: rgba(0, 0, 0, 0.25); */
+    /* box-shadow: 0 2px 6px rgba(0,0,0,0.3); */
+}
+
+.test-info h3 {
+    margin: 0 0 4px 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.test-info p {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+
+/*  */
+.test-info h3, 
+.test-info p {
+    word-wrap: break-word;       /* Переносить довгі слова */
+    overflow-wrap: break-word;   /* Сучасний аналог */
+    white-space: normal;         /* Дозволяє тексту переноситись */
+    text-overflow: ellipsis;     /* Якщо обмеження ширини — додає "..." */
+    display: block;              /* Гарантує, що елементи поводяться як блоки */
+    max-width: 100%;             /* Не виходить за межі картки */
+}
+
+.test-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 15px;
+    flex-wrap: wrap;          /* Дозволяє елементам переноситися */
+    text-align: left;
+}
+.test-info h3, 
+.test-info p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

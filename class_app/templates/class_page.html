@@ -8,8 +8,7 @@
     <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/class_page.css') }}">
 {% endblock %}
 {% block class_content %}
-    <main class="content">
-        
+    <div class="content">  
         {% if is_teacher%}
             <div class="class-div">
                 {% if my_classes_list%}
@@ -18,11 +17,16 @@
                     <div class="card-div">
                         {% for class in my_classes_list %} 
                             {% set tasks = tasks_class_teacher_list[loop.index0] %}
-                            <div class="card with-tasks">
+                            <div class="card with-tasks" id="{{tasks.title}}">
                                 {% if class.class_color2 == None %}
                                     <div class="card-header" style="background: {{ class.class_color1 }};">
-                                        <div class="h-left-info">
-                                            Назва класу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                        <div class="card-info">
+                                            <div class="left-info">
+                                                Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
+                                            </div>
+                                            <div class="h-left-info">
+                                                <span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                            </div>
                                         </div>
 
                                         <div class="class-actions">
@@ -41,8 +45,13 @@
                                     </div>
                                 {% else %}
                                     <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
-                                        <div class="h-left-info">
-                                            Назва класу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                        <div class="card-info">
+                                            <div class="left-info">
+                                                Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
+                                            </div>
+                                            <div class="h-left-info">
+                                                <span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
+                                            </div>
                                         </div>
 
                                         <div class="class-actions">
@@ -63,12 +72,20 @@
                                 {% endif %}
 
                                 <div class="card-body">
-                                {% for task in tasks %} 
-                                    <li>{{ task.title }}</li>
-                                {% endfor %}
-                                    <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
-                                    <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
-                                    <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
+                                    <ul>
+                                        {% for task in tasks %} 
+                                            <li>
+                                                {{ task.title }}
+                                                <span class="due-time-p">
+                                                    {% if task.due_time %}
+                                                        - здати до {{ task.due_time.strftime('%d.%m.%Y %H:%M') }}
+                                                    {% else %}
+                                                        без дедлайну
+                                                    {% endif %}
+                                                </span>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
                                 </div>
 
                                 {% if class.class_color2 == None %}
@@ -117,20 +134,33 @@
                         <div class="card with-tasks">
                             {% if class.class_color2 == None %}
                                 <div class="card-header" style="background: {{ class.class_color1 }};">
-                                    Назва класу: {{ class.title }}<br>  Урок: {{ class.lesson }}<br><span>Автор: {{ class.teacher.username }}</span>
+                                    <div class="h-left-info">
+                                        Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
+                                    </div>
+                                    <span>Автор: {{ class.teacher.username }}</span>
                                 </div>
                             {% else %}
                                 <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
-                                    Назва класу: {{ class.title }}<br>  Урок: {{ class.lesson }}<br><span>Автор: {{ class.teacher.username }}</span>
+                                    <div class="h-left-info">
+                                        Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
+                                    </div>
+                                    <span>Автор: {{ class.teacher.username }}</span>
                                 </div>
                             {% endif %}
+
                             <div class="card-body">
                                 {% for task in tasks %} 
-                                    <li>{{ task.title }}</li>
+                                    <li>
+                                        {{ task.title }}
+                                        <span class="due-time-p">
+                                            {% if task.due_time %}
+                                                - здати до {{ task.due_time.strftime('%d.%m.%Y %H:%M') }}
+                                            {% else %}
+                                                без дедлайну
+                                            {% endif %}
+                                        </span>
+                                    </li>
                                 {% endfor %}
-                                <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
-                                <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
-                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
                             </div>
                 
                             <div class="card-footer">
@@ -151,7 +181,7 @@
                 </div>
             </div>
         {% endif %}
-    </main>
+        </div>
 {% endblock %}
 
 {% block class_modal %}

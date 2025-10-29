@@ -47,7 +47,7 @@
                                 window.onload = LoadSelectionChart;
                             </script>
 
-                            <input type="submit" value="Send">
+                            <input type="submit" value="Send" class="send-btn-profile">
                         </form>
 
                         <div class="chart-container">
@@ -117,11 +117,11 @@
                                     });
                                 }
 
-                                const dates_complete = {{ dates_complete | tojson }};
-                                const accuracy = {{ accuracy | tojson }};
-                                const count_cmpl_quiz = {{ count_cmpl_quiz | tojson }};
-                                const date_complete = {{ date_complete | tojson }};
-                                const time_complete = {{ time_complete | tojson }};
+                                const dates_complete = {{ dates_complete | default([]) | tojson }};
+                                const accuracy = {{ accuracy | default([]) | tojson }};
+                                const count_cmpl_quiz = {{ count_cmpl_quiz | default([]) | tojson }};
+                                const date_complete = {{ date_complete | default([]) | tojson }};
+                                const time_complete = {{ time_complete | default([]) | tojson }};
 
                                 const accuracyCanvas = document.getElementById('accuracyChart');
                                 if (accuracyCanvas) {
@@ -161,7 +161,7 @@
 
                 <div class="profile-section">
                     <div class="profile-content">
-                        <img src="/home_app/static/images/default-profile.jpg" alt="avatar" class="avatar">
+                        <img src="/home_app/static/images/default-profile1.jpg" alt="avatar" class="avatar">
                         <h3>{{ username }}</h3>
 
                         <div class="edit-profile-btns">
@@ -186,7 +186,7 @@
                         <option value="accuracy">По точностi</option>
                     </select>
             
-                    <input type="submit" value="Send">
+                    <input type="submit" value="Send" class="send-btn-profile">
                     <script>
                         const selectElementTest = document.getElementById("choice_test");
 

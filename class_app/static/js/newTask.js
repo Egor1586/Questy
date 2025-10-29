@@ -6,7 +6,19 @@ function newTask(){
         method: "GET",
         dataType: "json",
         success: function (data) {
-            console.log(JSON.stringify(data["new_taks_count"]))
+            data1=data["class_online_task"]
+            console.log("STOP")     
+            console.log(data1)       
+
+            for (let element= 0; element < data1.length; element++){
+                const classCard = $(`#${data1[element][0]}`)
+
+                console.log(data1[element][0])
+                console.log(data1[element][1])
+                console.log(classCard)
+
+                
+            }
         },
         error: function(thx) {
             console.log(thx)

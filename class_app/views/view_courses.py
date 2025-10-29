@@ -60,27 +60,17 @@ def render_class_courses(id):
 
         if task.work_after_time:
             can_do_task.append(1)
-            print(task)
-            print("can_do_task.append(1)")
         elif int(task_date_now_list[0]) > int(date_now_list[0]) and int(task_date_now_list[1]) > int(date_now_list[1]) and int(task_date_now_list[2]) > int(date_now_list[2]) and int(task_time_now_list[0]) > int(time_now_list[0]) and int(task_time_now_list[1]) > int(time_now_list[1]):
             can_do_task.append(1)
-            print(task)
-            print("can_do_task.append(1)")
         else:
             can_do_task.append(0)
-            print(task)
-            print("can_do_task.append(0)")
 
     for task in CLASS.tasks:
         score= Score.query.filter_by(test_id= task.test_id, class_id= CLASS.id, user_id= current_user.id).first()
         if score:
             do_task.append(1)
-            print(task)
-            print("do_task.append(1)")
         else:
             do_task.append(0)
-            print(task)
-            print("do_task.append(0)")
 
     return {"class": CLASS,
             "taskes_list": taskes_list,

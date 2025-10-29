@@ -58,20 +58,23 @@ def render_task_page():
             "duetime_task_list": duetime_task_list,
             "overdue_task_list": overdue_task_list}
 
-
 def new_task():
     USER= User.query.filter_by(id= current_user.id).first()
-    online_task= []
+    class_online_task= []
 
     for CLASS in USER.classes:
+        class_online_task= []
+        online_task= []
         for task in CLASS.tasks:
             if task.online:
                 online_task.append(task)
                 print(task)
 
-    print(f"new_taks_count {len(online_task)}")
+        class_online_task.append((CLASS.title, len(online_task)))
 
-    return json.dumps({ "new_taks_count": len(online_task)})
+    print(f"class_online_task {class_online_task}")
+
+    return json.dumps({ "class_online_task": class_online_task})
 
 
 def sorte_task():
