@@ -27,10 +27,9 @@ def allCoursesData(user):
 
                 if not due_time:
                     duetime_task_list.append(task.dict())
-
                     continue
 
-                if due_time < today:
+                if due_time < today and not task.work_after_time:
                     overdue_task_list.append(task.dict())
                 elif start_of_week <= due_time.date() <= end_of_week:
                     cur_week_task_list.append(task.dict())
@@ -60,8 +59,22 @@ def render_task_page():
             "overdue_task_list": overdue_task_list}
 
 
-def sorte_task():
+def new_task():
+    USER= User.query.filter_by(id= current_user.id).first()
+    online_task= []
 
+    for CLASS in USER.classes:
+        for task in CLASS.tasks:
+            if task.online:
+                online_task.append(task)
+                print(task)
+
+    print(f"new_taks_count {len(online_task)}")
+
+    return json.dumps({ "new_taks_count": len(online_task)})
+
+
+def sorte_task():
     data = flask.request.get_json()
 
     USER= User.query.filter_by(id= current_user.id).first()

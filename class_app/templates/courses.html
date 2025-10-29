@@ -14,10 +14,12 @@
             {% if class.class_color2 == None %}
                 <div class="course-header"  style="background: {{ class.class_color1 }};">
                     <h2>{{ class.title}}</h2>
+                    <h4>{{ class.lesson }}</h4>
                 </div>
             {% else %}
                 <div class="course-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
                     <h2>{{ class.title}}</h2>
+                    <h4>{{ class.lesson }}</h4>
                 </div>
             {% endif %}
 
@@ -25,6 +27,8 @@
                 {% set status = do_task[loop.index0] %}
                 {% set due_time = due_time_list[loop.index0] %}
                 {% set can_do = can_do_task[loop.index0] %}
+                {% set test = online_tasks[loop.index0] %}
+                {% set can_start = start_button[loop.index0] %}    
                 <div class="course-tasks">
                     <div class="task">
 
@@ -33,6 +37,10 @@
                             {% if can_do and not status and username != class.teacher.username%}
                                 <a href="/passing_test?test_id={{ task.test_id }}&question_number=0&back_to_class={{ class.id }}">
                                     <button onclick="passingTaskTest({{ task.test_id }}, {{ class.id }})">Пройти тест</button>
+                                </a>
+                            {% elif test.test_code %}
+                                <a href= "/room{{ test.test_code }}">
+                                    <button>Пройти онлайн тест</button>
                                 </a>
                             {% endif %}
                         </div>
@@ -57,6 +65,28 @@
                                 <a href="/delete_task{{task.id}}">
                                     <button>Видалити завдання</button>
                                 </a>
+
+                                {% if task.online %}       
+                                    {% if test.test_code != 0 %}
+                                        <form action="/reset_test{{ test.id }}" >
+                                            <button class="btn">
+                                                Скинути тест
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
+                                    {% if test.test_code != 0 and not can_start %}
+                                        <a href="/room{{ test.test_code }}" class="btn">
+                                            <button class="start" type="button">Почати</button>
+                                        </a>
+                                    {% endif %}
+                                    
+                                    {% if test.test_code == 0 %}
+                                        <a href="/create_code{{ test.id }}" class="btn">
+                                            <button class="edit">Створити код</button>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         {% endif %}
                         </div>

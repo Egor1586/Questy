@@ -44,6 +44,7 @@
         const list_answers = {{ list_answers | tojson }};
         
         let state = getCookie("state");
+        let timerPaused= false;
 
         window.addEventListener('beforeunload', function(){
             state = getCookie("state");
@@ -132,7 +133,6 @@
         socket.on("create_all_user_blocks", function(data) {
             let temp_user_list= data.slice(1, -1);
             temp_user_list= temp_user_list.split('||')
-            //console.log(temp_user_list)
 
             temp_user_list.forEach(function(username) {
                 if (username.trim() !== ""){
@@ -161,9 +161,9 @@
             let countUsersAnswer= getCookie("countUsersAnswer");
             countUsersAnswer = Number(countUsersAnswer) + 1  
             document.cookie = `countUsersAnswer= ${countUsersAnswer}; path=/`;
-            //console.log(countUsersAnswer)
-            
-            addUserAnswer(data["username"], answer, author_name, answers_per_question);
+
+            state = getCookie("state");    
+            addUserAnswer(data["username"], answer, author_name, list_quiz[Number(state.slice(-1))]);
             
             socket.emit("get_room_size", {
                 room: room,
@@ -177,8 +177,6 @@
             let countUsersAnswer= getCookie("countUsersAnswer");
             
             state = getCookie("state");
-            //console.log(state)
-            //console.log(`Checking ${Number(state.slice(-1))} and ${total_question -1}`)
         });
 
         socket.on("next_question", function(data) {  
@@ -235,7 +233,6 @@
         });
 
         socket.on("create_user_block", function(data) {  
-            //console.log(data) ; 
             if (!state){          
                 createUserBlock(username, author_name, data);
             }
@@ -246,8 +243,25 @@
             window.location.href = '/'; 
         });
 
-        socket.on('room_get_result_data', function(data) {          
-            //console.log(data);
+        socket.on('plus_time', function(data) {          
+            const timerText= document.getElementById("timer")
+            let plusTime= 15
+            if (timerText.textContent != "Час закінчений"){
+                let curr_time= timerText.textContent
+                timerText.textContent = parseInt(curr_time) + plusTime
+            }
+        });
+
+        socket.on('change_time', function(data) {          
+            const playBtn= document.getElementById("play-btn")
+            timerPaused= !timerPaused
+
+            if (timerPaused){
+                playBtn.textContent= "Play"
+            }
+            else{
+                playBtn.textContent= "Stop"
+            }
         });
 
         socket.on('user_disconnected', function(data) {  
@@ -303,18 +317,14 @@
             countAnswer.textContent= 0;
              
             let number_of_question= Number(state.slice(-1)) + 1;
-            //console.log(state)
             document.cookie = `state= author_start${number_of_question}; path=/`;
             document.cookie = `countCorrectAnswer= 0; path=/`;
-            //console.log(state)
 
             if (number_of_question == total_question- 1) {
-                //console.log(`Кінець тесту ${number_of_question} === ${total_question- 1}`)
                 nextButton.textContent = 'Кінець тесту'
                 nextButton.removeEventListener("click", nextQuestion)
                 nextButton.addEventListener("click", testStop);
             }
-            //console.log("next question")
             document.cookie = `countUsersAnswer= 0; path=/`;
             
             console.log("Вопрос")
@@ -323,14 +333,19 @@
             question_text.textContent = `Питання:${list_quiz[Number(state.slice(-1))+1].question_text}`
         
             const correct_answer = document.getElementById("author-correct-answer")
-            correct_answer.textContent =`Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
+
+            if (list_quiz[Number(state.slice(-1))+1].question_type == "multiple_choice"){
+                correct_answer.textContent= `Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer.replace("%$№", " та ")}`
+                console.log(list_quiz[Number(state.slice(-1))+1].correct_answer.replace("%$№", " та "))
+            }
+            else{
+                correct_answer.textContent= `Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
+            }
             
             const newTime = document.getElementById("timer")
             newTime.textContent =`${list_quiz[Number(state.slice(-1))+1].time}`
 
             
-            
-            //console.log("clear chart")
             if (donatChart){
                 donatChart.destroy()
             }

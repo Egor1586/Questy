@@ -1,7 +1,5 @@
-import flask
-
 from Project.render_page import render_page
-from user.models import Classes, Score, Task
+from user.models import Classes
 
 @render_page(template_name = 'class_information.html')
 def render_class_information(class_id):

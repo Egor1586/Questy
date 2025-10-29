@@ -357,6 +357,15 @@ def handle_message(data):
                                   "best_score_data": best_score_data,
                                   "averega_score": averega_score}, to= user_sid)
 
+
+@Project.settings.socketio.on('plus_time')
+def handle_message(data):
+    emit("plus_time", to= data['room'])
+
+@Project.settings.socketio.on('change_time')
+def handle_message(data):
+    emit("change_time", to= data['room'])
+
 @render_page(template_name = 'room.html')
 def render_room(test_code):
     list_answers = []

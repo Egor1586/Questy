@@ -40,7 +40,7 @@ function renderDoughnutChart(canvasId, totalAnswer, correctCount){
     });
 }
 
-function addUserAnswer(username, answer, authorname, totalAnswer) {
+function addUserAnswer(username, answer, authorname, quiz) {
     console.log("add user answer")
     
     const userAnswers = document.getElementById("user-answers");
@@ -52,22 +52,29 @@ function addUserAnswer(username, answer, authorname, totalAnswer) {
     let correctAnswer= correctAnswerDiv.textContent.split(":")[1].trim()
 
     console.log(typeof correctAnswer, correctAnswer, typeof answer, answer)
+
     if (answer == correctAnswer){
         countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
-        document.cookie = `countCorrectAnswer= ${countCorrect}; path=/`;
+        document.cookie = `countCorrectAnswer=${countCorrect}; path=/`;
     }
+
+    if (quiz.question_type){
+        answer= answer.replace("$$$", " та ")
+    }
+
     userAnswers.innerHTML += `
         <div class="user-answer">
             <div class="user-name">${username}</div>
             <div class="answer-text">${answer}</div>
         </div>
     `
+
     socket.emit("get_usernames", {
         room: room,
         authorname: authorname
     });
 
-    socket.on('get_usernames', function(data){
+    socket.once('get_usernames', function(data){
         let userArrey = data;
         lengthArrey = userArrey.length
 
@@ -88,13 +95,26 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+function plusTime(){
+    socket.emit("plus_time", {
+        room: room,
+        author_name: author_name
+    });
+}
+
+function stopTime(){
+    socket.emit("change_time", {
+        room: room,
+        author_name: author_name
+    });
+}
+
 function renderAuthorStart(quiz, answers, room, authorname, state, total_question) {
     const waiteContent = document.getElementById("room-content");
     waiteContent.innerHTML = ""; 
     waiteContent.id = 'container-question'
     waiteContent.className = 'container-question'
 
-    // Нижній контейнер
     const headerBar = document.createElement('div')
     headerBar.className = 'header-bar'
 
@@ -106,7 +126,15 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     const correct_answer = document.createElement('div')
     correct_answer.id = 'author-correct-answer'
     correct_answer.className = 'author-correct-answer'
-    correct_answer.textContent= `Правильна відповідь: ${quiz.correct_answer}`
+
+    if (quiz.question_type == "multiple_choice"){
+        correct_answer.textContent= `Правильна відповідь: ${quiz.correct_answer.replace("%$№", " ")}`
+        console.log(quiz.correct_answer.replace("%$№", " "))
+    }
+    else{
+        console.log(quiz.correct_answer.replace("%$№", " "))
+        correct_answer.textContent= `Правильна відповідь: ${quiz.correct_answer}`
+    }
 
     const nextButton = document.createElement('button')
     nextButton.id = 'next-q'
@@ -127,8 +155,7 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     const userAnswers = document.createElement('div')
     userAnswers.id = 'user-answers'
     userAnswers.className = 'user-answers'
-
-    
+ 
     userBlock.appendChild(userAnswers)
     
     const userInfo = document.createElement('div')
@@ -171,20 +198,23 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
                 <li>Список користувачів: <strong>${lengthArrey}</strong></li>
                 <li>Всього учнів: <strong></strong>${lengthArrey}</li>
             </ul>
+            <button onclick="plusTime()">Plus +15</button>
+            <button onclick="stopTime()" id="play-btn">Stop</button>
             <p id="timer">${quiz.time}</p>
             `
         const timerText= document.getElementById("timer")
-        
 
         if (timerText){
             const coundown= setInterval(() =>{
-                time= parseInt(timerText.textContent);
-                timerText.textContent= --time;
-            
-                if (time <= 0){
-                    clearInterval(coundown);
-                    timerText.textContent = "Час закінчений"
-                }        
+                if (!timerPaused){
+                    time= parseInt(timerText.textContent);
+                    timerText.textContent= --time;
+                
+                    if (time <= 0){
+                        clearInterval(coundown);
+                        timerText.textContent = "Час закінчений"
+                    }        
+                }
             }, 1000);
         }
     });

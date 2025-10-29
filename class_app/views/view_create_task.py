@@ -1,10 +1,10 @@
-import flask
+import flask, random
 
 from Project.render_page import render_page
 from Project.database import db
 from flask_login import current_user
 from user.models import Task
-from test_app.models import Test
+from test_app.models import Test, Room
 from datetime import datetime
 
 
@@ -28,6 +28,9 @@ def render_create_task(id):
             test_id = flask.request.form['choice_test']
             due_time= flask.request.form['due-time']
             done_after_due_time= flask.request.form.get('done-after-due-time')
+            online_test= flask.request.form.get('online-test')
+
+            print(online_test)
             
             TASK = Task(
                 title= title,
@@ -35,11 +38,22 @@ def render_create_task(id):
                 class_id = id,
                 test_id= test_id,
                 due_time= datetime.strptime(due_time, "%Y-%m-%dT%H:%M") if due_time else None,
-                work_after_time= True if done_after_due_time == "on" else False
+                work_after_time= True if done_after_due_time == "on" else False,
+                online= True if online_test == "on" else False
             )
 
             db.session.add(TASK)
             db.session.commit()
+
+            if TASK.online == "on":
+                while True:
+                    code = random.randint(1000, 9999)
+                    room_code = Room.query.filter_by(test_code= code).first()
+                    if room_code == None:
+                        break
+                    
+                TASK.test_code= code
+                db.session.commit()
 
             return flask.redirect(location = '/class_page')
 

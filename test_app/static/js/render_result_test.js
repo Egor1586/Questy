@@ -35,7 +35,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
     let correctAnswer = 0;
 
     for (let count = 0; count < list_quiz.length; count++) {
-        // console.log(list_quiz[count].correct_answer, answersArrey[count])
         let arrayCorrectAnswers= []
         let arrayUserAnswers= []
         if (list_quiz[count].question_type == "multiple_choice"){
@@ -286,7 +285,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
                     
                     console.log("multiple_choice question")
                     console.log(answer)
-                    console.log(multiple_answer)
                     console.log(correct_answer_list)
                     console.log("multiple_choice question")
     

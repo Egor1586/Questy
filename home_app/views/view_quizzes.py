@@ -38,7 +38,8 @@ def created_test(test_id):
     test.test_code= code
     Project.database.db.session.commit()
 
-    return flask.redirect("/quizzes/")
+    last_page= flask.request.referrer
+    return flask.redirect(last_page or "/")
     
 
 def delete_test(test_id):
@@ -52,11 +53,13 @@ def delete_test(test_id):
         
     db.session.commit()
 
-    return flask.redirect("/quizzes/")
+    last_page= flask.request.referrer
+    return flask.redirect(last_page or "/")
 
 def reset_test(test_id):
     test = Test.query.filter_by(id = test_id).first()
     test.test_code = 0
     db.session.commit()
 
-    return flask.redirect("/quizzes/")
+    last_page= flask.request.referrer
+    return flask.redirect(last_page or "/")
