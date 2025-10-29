@@ -76,9 +76,6 @@
         else if (state && state=== "author_leave"){
             let currentURL = window.location.href;
             let roomCode = currentURL.split('room')[1]
-
-            //console.log(currentURL)
-            //console.log(`Это код теста: ${roomCode}`)
             
             socket.emit("test_end", {
                 room: roomCode
@@ -246,21 +243,24 @@
         socket.on('plus_time', function(data) {          
             const timerText= document.getElementById("timer")
             let plusTime= 15
-            if (timerText.textContent != "Час закінчений"){
+            if (timerText && timerText.textContent != "Час закінчений"){
                 let curr_time= timerText.textContent
                 timerText.textContent = parseInt(curr_time) + plusTime
             }
         });
 
         socket.on('change_time', function(data) {          
-            const playBtn= document.getElementById("play-btn")
             timerPaused= !timerPaused
+            console.log(timerPaused)
+            const playBtn= document.getElementById("play-btn")
 
-            if (timerPaused){
-                playBtn.textContent= "Play"
-            }
-            else{
-                playBtn.textContent= "Stop"
+            if (playBtn){
+                if (timerPaused){
+                    playBtn.textContent= "Play"
+                }
+                else{
+                    playBtn.textContent= "Stop"
+                }
             }
         });
 

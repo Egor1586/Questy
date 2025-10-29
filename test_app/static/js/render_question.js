@@ -261,14 +261,21 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
 
     const timerText= document.getElementById("timer")
     
-    const coundown= setInterval(() =>{
-        time= parseInt(timerText.textContent);
-        timerText.textContent= --time;
+    if (timerText){
+        const coundown= setInterval(() =>{
+            if (!timerPaused){
+                time= parseInt(timerText.textContent);
+                timerText.textContent= --time;
+            
+                if (time <= 0){
+                    clearInterval(coundown);
+                    timerText.textContent = "Час закінчений"
 
-        if (time <= 0){
-            clearInterval(coundown);
-            timerText.textContent = "Час закінчений"
-        }
-
-    }, 1000);
+                    // setInterval(() => {
+                    //     renderWaiteQuestion();
+                    // }, 2000)
+                }        
+            }
+        }, 1000);
+    }
 }

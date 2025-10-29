@@ -79,6 +79,24 @@
     gap: 5px;
 }
 
+.new-task-count {
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: red;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    border-radius: 50%;
+    display: flex;
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
 .card-info {
     display: flex;
     flex-direction: column;

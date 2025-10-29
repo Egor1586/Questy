@@ -198,8 +198,8 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
                 <li>Список користувачів: <strong>${lengthArrey}</strong></li>
                 <li>Всього учнів: <strong></strong>${lengthArrey}</li>
             </ul>
-            <button onclick="plusTime()">Plus +15</button>
-            <button onclick="stopTime()" id="play-btn">Stop</button>
+            <button onclick="plusTime()" class="timer-btn">Plus +15</button>
+            <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
             <p id="timer">${quiz.time}</p>
             `
         const timerText= document.getElementById("timer")

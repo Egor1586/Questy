@@ -1,9 +1,10 @@
 import flask, json
 
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 
 from Project.render_page import render_page
-from user.models import Classes, Score, User
+from user.models import Classes, User
+from test_app.models import Test
 from datetime import datetime
 from flask_login import current_user
 
@@ -66,7 +67,8 @@ def new_task():
         class_online_task= []
         online_task= []
         for task in CLASS.tasks:
-            if task.online:
+            test= Test.query.filter_by(id= task.test_id).first()
+            if task.online and test.test_code:
                 online_task.append(task)
                 print(task)
 
@@ -98,7 +100,6 @@ def sorte_task():
     else:
         class_id = int(data['sortytype'])
         CLASS = Classes.query.filter_by(id= class_id).first()
-
 
         class_dict = CLASS.dict()
 

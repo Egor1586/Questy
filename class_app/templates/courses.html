@@ -74,7 +74,7 @@
                                     {% endif %}
 
                                     {% if test.test_code != 0 and not can_start %}
-                                        <a href="/room{{ test.test_code }}">
+                                        <a href="/room{{ test.test_code }}?online_test='{{ task.id }}'">
                                             <button class="start" type="button">Почати</button>
                                         </a>
                                     {% endif %}

@@ -6,19 +6,20 @@ function newTask(){
         method: "GET",
         dataType: "json",
         success: function (data) {
-            data1=data["class_online_task"]
-            console.log("STOP")     
-            console.log(data1)       
+            class_new_task= data["class_online_task"]    
 
-            for (let element= 0; element < data1.length; element++){
-                const classCard = $(`#${data1[element][0]}`)
+            for (let element= 0; element < class_new_task.length; element++){
+                const classCard = $(`#${class_new_task[element][0]}`)
+                const cardHeader = classCard.find(".card-header")
 
-                console.log(data1[element][0])
-                console.log(data1[element][1])
-                console.log(classCard)
-
-                
-            }
+                if (class_new_task[element][1]){
+                    cardHeader.find('.new-task-count').remove()
+                    cardHeader.append(`<div class="new-task-count">${class_new_task[element][1]}</div>`)
+                }
+                else {
+                    cardHeader.find('.new-task-count').remove()
+                }
+            }     
         },
         error: function(thx) {
             console.log(thx)
