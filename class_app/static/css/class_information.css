@@ -133,6 +133,15 @@ a{
     transform: scale(0.95);
 }
 
+/*  */
+.no-stud-yet{
+    text-decoration: none;
+    font-size: 1.01rem;
+    color: #8e8282;
+    font-style: italic;
+    text-align: center;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }

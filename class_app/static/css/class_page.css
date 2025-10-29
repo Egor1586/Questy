@@ -183,7 +183,7 @@
 
 .container-classroom {
     display: flex;
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 
 /* btn + */
@@ -490,4 +490,18 @@
 
 .class-actions.show .dropdown {
     display: block;
+}
+
+/*  */
+
+li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    display: flex;         
+}
+.due-time-p {
+    font-size: 1rem;
+    color: #8e8282;
+    font-style: italic;
+    margin-left: 5px; 
 }

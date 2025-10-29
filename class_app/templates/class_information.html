@@ -10,7 +10,7 @@
 
 {% block class_content %}
     <div class="teacher-course-page">
-        <h1 class="course-title">Курс: {{ class.title }}</h1>
+        <h1 class="course-title">Курс: {{ class.description }}</h1>
 
         {% if class.users %}
             <div class="students-section">
@@ -31,6 +31,9 @@
                     {% endfor %}
                 </div>
             </div>
+
+        {% else %}
+            <p class="no-stud-yet">Поки що учні не приєдналися. Запросіть їх до курсу, поділившись унікальним кодом!</p>
         {% endif %}
     </div>
 
