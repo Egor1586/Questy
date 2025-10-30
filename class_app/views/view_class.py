@@ -17,7 +17,7 @@ def render_class_page():
     if flask.request.method == "POST":   
         try:
             title = flask.request.form['title']
-            description = flask.request.form['lesson']
+            lesson = flask.request.form['lesson']
             color_type = flask.request.form['color-type']
             color_g1= ""
             color_g2= ""
@@ -40,7 +40,7 @@ def render_class_page():
             
             CLASS = Classes(
                 title= title,
-                description= description,
+                lesson= lesson,
                 class_code = code,
                 teacher_id = current_user.id,
                 created_date= date.today(),

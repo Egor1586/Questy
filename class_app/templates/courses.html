@@ -16,11 +16,23 @@
                     <h2>{{ class.title}}</h2>
                     <h4>{{ class.lesson }}</h4>
                 </div>
+
+                <a href="/create_task{{ class.id }}">
+                    <button class="start-btn" style="background: {{ class.class_color1 }};">
+                        Створити завдання
+                    </button>
+                </a>
             {% else %}
                 <div class="course-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
                     <h2>{{ class.title}}</h2>
                     <h4>{{ class.lesson }}</h4>
                 </div>
+
+                <a href="/create_task{{ class.id }}">
+                    <button class="start-btn" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
+                        Створити завдання
+                    </button>
+                </a>
             {% endif %}
 
             {% for task in taskes_list %}
@@ -34,7 +46,7 @@
 
                         <div class="task-header">
                             <h3>{{ task.title }}</h3>
-                            {% if can_do and not status and username != class.teacher.username%}
+                            {% if can_do and not status and username != class.teacher.username and not test.test_code %}
                                 <a href="/passing_test?test_id={{ task.test_id }}&question_number=0&back_to_class={{ class.id }}">
                                     <button onclick="passingTaskTest({{ task.test_id }}, {{ class.id }})">Пройти тест</button>
                                 </a>

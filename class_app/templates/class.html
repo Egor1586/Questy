@@ -17,7 +17,6 @@
             {% else %}
                 <div class="classroom-avatar">{{ username[:2]|upper }}</div>
             {% endif %}
-            <p class="classroom-username">{{ username }}</p>
             <p class="classroom-email">{{ email }}</p>
 
             <nav class="menu">
@@ -38,6 +37,8 @@
             </nav>
         </aside>
 
+        <button class="hide-btn">Hide</button>
+
         {% block class_content %}
 
         {% endblock %}
@@ -46,4 +47,6 @@
     {% block class_modal %}
 
     {% endblock %}
+
+    <script src="/class_app/static/js/hideAside.js"></script>
 {% endblock %}

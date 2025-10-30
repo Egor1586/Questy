@@ -217,11 +217,13 @@ footer {
 /*  */
 .home-circle-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 1vw;
+    right: 1vw;
 
-    width: 56px;
-    height: 56px;
+    width: 4vw;
+    height: 4vw;
+    min-width: 56px;
+    min-height: 56px;
     border-radius: 50%;
     border: none;
 

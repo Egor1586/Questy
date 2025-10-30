@@ -1,5 +1,3 @@
-console.log("jQuery версия:", $.fn.jquery);
-
 $(document).ready(function () {
     $('#course').on('change', function (){
         const selectedValue = $(this).val()

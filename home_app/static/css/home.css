@@ -40,7 +40,7 @@ main {
     gap: 1.5vw;
     padding: 1.5vw;
     flex-grow: 1;
-    height: calc(100vh - 60px); 
+    height: 95vh;
     overflow: hidden; 
 }
 
@@ -51,7 +51,7 @@ header {
 /* Про нас блок */
 .info {
     background: linear-gradient(145deg, #ffffff, #e8f8ec);
-    padding: 25px;
+    padding: 2vw;
     border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     border-left: 6px solid #3da35d;
@@ -62,12 +62,7 @@ header {
     min-width: 300px;
 }
 
-.info h2 {
-    color: #2d6a4f;
-    margin: 0 0 10px 0;
-}
-
-.info p {
+.info-text p {
     color: #3c3c3c;
     font-size: 1.2rem;
     margin: 0;
@@ -78,8 +73,8 @@ header {
     position: relative;
     background: linear-gradient(135deg, #ffffff 60%, #e8f9ee);
     border-radius: 24px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    padding: 30px;
+    box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.06);
+    padding: 3vw;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -114,7 +109,7 @@ header {
 
 .tests h2 {
     color: #2d6a4f;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
     position: relative;
     z-index: 2;
 }
@@ -125,7 +120,7 @@ header {
     gap: 20px; 
     overflow-y: auto; 
     overflow-x: hidden; 
-    padding-right: 12px; 
+    padding-right: 1vw; 
     flex-grow: 1;
     position: relative;
     z-index: 2;
@@ -136,7 +131,7 @@ header {
 
 /* Стиль для скрол-бару */
 .tests-scroll::-webkit-scrollbar {
-    width: 6px;
+    width: 1vw;
 }
 
 .tests-scroll::-webkit-scrollbar-track {
@@ -160,7 +155,7 @@ header {
     background-position: center;
     border-radius: 14px;
     color: #fff;
-    padding: 12px;
+    padding: 1vw;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -197,12 +192,12 @@ header {
 
 .test-info h3 {
     margin: 0 0 3px 0;
-    font-size: 14px;
+    font-size: 1.2vh;
 }
 
 .test-info p {
     margin: 0;
-    font-size: 12px;
+    font-size: 1vh;
 }
 
 /* Про нас блок */
@@ -210,16 +205,15 @@ header {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 20px; 
-    /* width: 100%; */
-    /* max-width: 500px; */
+    justify-content: space-between;
+    gap: 2vw; 
     background: linear-gradient(145deg, #ffffff, #e8f8ec);
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    padding: 30px;
+    padding: 2vw;
 }
 
-.info .start-t {
+.start-t {
     font-size: 36px;
     font-weight: 700;
     color: #2d6a4f;
@@ -228,7 +222,7 @@ header {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
 }
 
-.info .text-d {
+.text-d {
     font-size: 15px;
     color: #3c3c3c;
     line-height: 1.6;
@@ -306,16 +300,15 @@ header {
 }
 
 /* Адаптивність */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .info {
         width: 95%;
         padding: 25px 20px;
     }
 }
 
+ */
 
-
-/*  */
 
 /* ===============================
    Блок тестів та скрол

@@ -181,6 +181,25 @@
     justify-content: center;
 }
 
+.start-btn{
+    /* background: linear-gradient(135deg, #66bb9f, #4393a0); */
+    background: #979595;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 1.5vh 1.5vw;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.start-btn:hover {
+    transition: 0.5s ease;
+    filter: brightness(92%);
+    /* background: linear-gradient(135deg, #5ba88e, #387c87); */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
 .home-button:hover {
     transform: scale(1.1);
     background: linear-gradient(135deg, #66bb6a, #43a047);

@@ -12,7 +12,7 @@
         {% if is_teacher%}
             <div class="class-div">
                 {% if my_classes_list%}
-                    <h2>Доступні класи</h2>
+                    <h2 class="course-name">Доступні класи</h2>
                     
                     <div class="card-div">
                         {% for class in my_classes_list %} 
@@ -73,14 +73,14 @@
 
                                 <div class="card-body">
                                     <ul>
-                                        {% for task in tasks %} 
+                                        {% for task in tasks[:2] %} 
                                             <li>
                                                 {{ task.title }}
                                                 <span class="due-time-p">
                                                     {% if task.due_time %}
                                                         - здати до {{ task.due_time.strftime('%d.%m.%Y %H:%M') }}
                                                     {% else %}
-                                                        без дедлайну
+                                                        - без дедлайну
                                                     {% endif %}
                                                 </span>
                                             </li>
@@ -99,7 +99,6 @@
                                             <button class="start-btn" style="background: {{ class.class_color1 }};">
                                                 Створити завдання
                                             </button>
-
                                         </a>
                                     </div>
                                 {% else %}
@@ -125,13 +124,13 @@
             
         {% if classes_list%}
             <div class="class-div">
-                <h2>Мої класи</h2>
+                <h2 class="course-name">Мої класи</h2>
             
                 <div class="card-div">       
                     {% for class in classes_list %}       
                         {% set tasks = tasks_class_user_list[loop.index0] %}
                           
-                        <div class="card with-tasks" id="{{class.title}}">
+                        <div class="card with-tasks" id="{{class.class_code}}">
                             {% if class.class_color2 == None %}
                                 <div class="card-header" style="background: {{ class.class_color1 }};">
                                     <div class="h-left-info">
@@ -149,14 +148,14 @@
                             {% endif %}
 
                             <div class="card-body">
-                                {% for task in tasks %} 
+                                {% for task in tasks[:2] %} 
                                     <li>
                                         {{ task.title }}
                                         <span class="due-time-p">
                                             {% if task.due_time %}
                                                 - здати до {{ task.due_time.strftime('%d.%m.%Y %H:%M') }}
                                             {% else %}
-                                                без дедлайну
+                                                - без дедлайну
                                             {% endif %}
                                         </span>
                                     </li>
