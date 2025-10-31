@@ -44,17 +44,40 @@ body {
 .hide-btn {
     position: absolute;
     top: 8vh;
-    left: 150px;
+    left: 165px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0.7vh;
     width: 3vh;
     height: 2.5vh;
+
+    font-size: 3vh;
+    color: rgb(131, 129, 129);
     transition: left 0.45s ease;
+}
+
+.hide-btn:hover {
+    color: rgb(151, 147, 147);
+}
+
+.hide-btn i {
+    transition: transition 0.3s ease;
 }
 
 .hide-btn.move-left {
     right: auto;
     left: 10px;
 }
+
+.hide-btn.rotate i {
+    transform: rotate(180deg);
+}
+
 
 .classroom-avatar {
     width: 60px;

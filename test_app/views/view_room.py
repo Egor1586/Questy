@@ -216,7 +216,7 @@ def handle_start_test(data):
 
 @Project.settings.socketio.on('message_to_chat')
 def handle_message(data):
-    emit("listening_to_messages", f"{data['username']}: {data['message']}", to= data['room'])
+    emit("listening_to_messages", f"{data['username']}: {data['message']}", include_self= False, to= data['room'])
 
 @Project.settings.socketio.on('new_user')
 def handle_message(data):

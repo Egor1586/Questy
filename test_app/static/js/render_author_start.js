@@ -136,15 +136,15 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
         correct_answer.textContent= `Правильна відповідь: ${quiz.correct_answer}`
     }
 
-    const nextButton = document.createElement('button')
-    nextButton.id = 'next-q'
-    nextButton.className = 'next-q'
-    nextButton.textContent = 'Наступне питання'
-    nextButton.addEventListener("click", nextQuestion);
+    // const nextButton = document.createElement('button')
+    // nextButton.id = 'next-q'
+    // nextButton.className = 'next-q'
+    // nextButton.textContent = 'Наступне питання'
+    // nextButton.addEventListener("click", nextQuestion);
 
     headerBar.appendChild(question)
     headerBar.appendChild(correct_answer)
-    headerBar.appendChild(nextButton)
+    // headerBar.appendChild(nextButton)
     
     waiteContent.appendChild(headerBar)
 
@@ -166,6 +166,27 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     studInfoBox.id = 'stud-info-box'
     studInfoBox.className = 'stud-info-box'
 
+    // const studButttons = document.createElement('div')
+    // studButttons.id = 'stud-button-box'
+    // studButttons.className = 'stud-button-box'
+
+    // const plusButton = document.createElement('button')
+    // plusButton.className= "timer-btn"
+    // plusButton.textContent= "Плюс + 15"
+    // plusButton.onclick= plusTime
+
+    // const stopButton = document.createElement('button')
+    // stopButton.className= "timer-btn"
+    // stopButton.id= "play-btn"
+    // stopButton.textContent= "Stop"
+    // stopButton.onclick= stopTime
+
+    // studButttons.appendChild(plusButton)
+    // studButttons.appendChild(stopButton)
+
+    // <button onclick="plusTime()" class="timer-btn">Plus +15</button>
+    // <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
+
     const chartDiv = document.createElement('div')
     chartDiv.id = 'chart-div'
     chartDiv.className = 'chart-div'
@@ -174,6 +195,7 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     chartCanvas.id = 'donat-chart'
     chartCanvas.className = 'donat-chart'
     
+    // userInfo.appendChild(studButttons)
     userInfo.appendChild(studInfoBox)
 
     chartDiv.appendChild(chartCanvas)
@@ -192,15 +214,23 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
         let userArrey = data;
         lengthArrey = userArrey.length
         studInfoBox.innerHTML = `
-            <h3>Інформація для вчителя</h3>
-            <ul>
-                <li>Відповіли: <strong><span id="count-answer-span">0</span></strong></li>
-                <li>Список користувачів: <strong>${lengthArrey}</strong></li>
-                <li>Всього учнів: <strong></strong>${lengthArrey}</li>
-            </ul>
-            <button onclick="plusTime()" class="timer-btn">Plus +15</button>
-            <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
-            <p id="timer">${quiz.time}</p>
+            <div> 
+                <h3>Інформація для вчителя</h3>
+                <ul>
+                    <li>Всього учнів: <strong></strong>${lengthArrey}</li>
+                    <li>Відповіли: <strong><span id="count-answer-span">0</span></strong></li>
+                </ul>
+            </div>
+            <button id="next-q" class="next-q" onclick="nextQuestion()">Наступне питання</button>
+            <div class="test-nav-btn"> 
+                <div class="test-time-btn"> 
+                    <p id="timer">${quiz.time}</p>
+                    <div class="test-nav-btn"> 
+                        <button onclick="plusTime()" class="timer-btn">Plus +15</button>
+                        <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
+                    </div>
+                </div>
+            </div>
             `
         const timerText= document.getElementById("timer")
 

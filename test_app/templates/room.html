@@ -142,7 +142,7 @@
             let messages = document.getElementById("messages");
 
             if (messages != "") {
-                messages.innerHTML += `<p>${data}</p>`;  
+                messages.innerHTML += `<p class="other-msg">${data}</p>`;  
             };
 
             if (messages && messages.children.length != 1){
@@ -258,7 +258,7 @@
             
             let messages = document.getElementById("messages");
             if (messages) {
-                messages.innerHTML += `<p>${data['msg']}</p>`;  
+                messages.innerHTML += `<p class="other-msg">${data['msg']}</p>`;  
             }  
 
             if (messages && messages.children.length != 1){
@@ -297,6 +297,9 @@
 
         function nextQuestion(){
             const nextButton = document.getElementById("next-q");
+
+            console.log(nextButton)
+            console.log("FLJLFLFLFL")
             let countUsersAnswer= getCookie("countUsersAnswer");
             state = getCookie("state");
 
@@ -348,9 +351,21 @@
 
         function sendMessage() {
             let msgInput = document.getElementById("msg");
+            let messages = document.getElementById("messages");
             let message = msgInput.value;
 
             if (message != ""){
+                let messages = document.getElementById("messages");
+
+                messages.innerHTML += `<p class="my-msg">${username}: ${msgInput.value}</p>`;  
+
+                if (messages && messages.children.length != 1){
+                    const emptyMessages= document.getElementById("no-messages");
+                    if (emptyMessages){
+                        emptyMessages.remove()
+                    }
+                }
+
                 socket.emit("message_to_chat", {
                     message: message,
                     room: room,         
