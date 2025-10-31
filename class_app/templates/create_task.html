@@ -1,14 +1,14 @@
-{% extends "class.html" %}
+{% extends "base.html" %}
 
-{% block calss_title %}
+{% block title %}
     Create Test
 {% endblock %}
 
-{% block class_links %}
+{% block links %}
     <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/create_task.css') }}">
 {% endblock %}
 
-{% block class_content %}
+{% block content %}
     <div class="wraper">
         <div class="container">
             <h1>Створіть завдання для свого класу</h1>

@@ -19,7 +19,7 @@ body {
 /* Sidebar */
 .sidebar-classroom {
     width: fit-content;
-    min-width: 10vw;
+    min-width: 210px;
     height: 100%;
     background-color: #2f3b52;
     color: #fff;
@@ -44,7 +44,7 @@ body {
 .hide-btn {
     position: absolute;
     top: 8vh;
-    left: 7.5vw;
+    left: 150px;
     margin: 0.7vh;
     width: 3vh;
     height: 2.5vh;
@@ -72,7 +72,7 @@ body {
 .classroom-email {
     font-size: 1em;
     color: #ffffffc7;
-    margin: 5px 0 20px 0;
+    margin: 0.5vw 0.2vw 1vw 0.2vw;
 }
 
 /* меню */

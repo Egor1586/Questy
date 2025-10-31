@@ -102,9 +102,9 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
     answerInfo.className = 'answer-info';
     answerInfo.innerHTML = `
         <ul>
-        <li><span class="color-dot color-green"></span>Правильна відповідь (зелений)</li>
-        <li><span class="color-dot color-yellow"></span>Ваша неправильна відповідь (жовтий)</li>
-        <li><span class="color-dot color-red"></span>Неправильна відповідь (червоний)</li>
+            <li><span class="color-dot color-green"></span>Правильна відповідь (зелений)</li>
+            <li><span class="color-dot color-yellow"></span>Ваша неправильна відповідь (жовтий)</li>
+            <li><span class="color-dot color-red"></span>Неправильна відповідь (червоний)</li>
         </ul>
     `;
 

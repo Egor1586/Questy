@@ -46,22 +46,22 @@
         let state = getCookie("state");
         let timerPaused= false;
 
-        window.addEventListener('beforeunload', function(){
-            state = getCookie("state");
-            if (state && state === "author_result_test") {
-                document.cookie = `state= author_leave; max-age=3; path=/;`;
-                document.cookie = `user_answers=; max-age=0; path=/;`;
-                document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-                document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
-            }
-            else if (state && state=== "result_test"){
-                document.cookie = `state= user_leave; max-age=3; path=/;`;
-                document.cookie = `user_answers=; max-age=0; path=/;`;
-                document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-                document.cookie = `temporary_name=; max-age=0; path=/;`;
-            }
-            
-        });
+        //window.addEventListener('beforeunload', function(){
+        //    state = getCookie("state");
+        //    if (state && state === "author_result_test") {
+        //        document.cookie = `state= author_leave; max-age=3; path=/;`;
+        //        document.cookie = `user_answers=; max-age=0; path=/;`;
+        //        document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
+        //        document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
+        //    }
+        //    else if (state && state=== "result_test"){
+        //        document.cookie = `state= user_leave; max-age=3; path=/;`;
+        //        document.cookie = `user_answers=; max-age=0; path=/;`;
+        //        document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
+        //        document.cookie = `temporary_name=; max-age=0; path=/;`;
+        //    }
+        //    
+        //});
 
         if (state && state.includes("author_start")) {
             state= getCookie("state")
@@ -182,41 +182,32 @@
             checkAnswers();
   
             if (state != "author_result_test") {
-                //console.log(state);
                 let number_of_question= Number(state.slice(-1));
                 console.log("Номер вопроса")
                 console.log(Number(state.slice(-1)))
                 if (number_of_question != total_question - 1) {
-                    //console.log(number_of_question);
                     document.cookie = `state= question${number_of_question + 1}; path=/`;
-                    //console.log(state);
                     renderQuestion(Number("{{ test.id }}"), list_quiz[number_of_question + 1], list_answers[number_of_question + 1], room, author_name);
                 }
                 else {
-                    //console.log("stop test skip last question")
-                    //console.log(`${number_of_question} and ${total_question - 1}`)
-                
                     socket.emit("stop_test", {
                         room: room,
                         author_name: author_name
                     });
                     
                     document.cookie = `state= author_result_test; path=/`;
-                    //console.log(`Stop test ${getCookie("state")}`);
 
                     renderAuthorResultTest(username, author_name, total_question);
                 }
             }
         });
 
-        socket.on("result_test", function(data) { 
-            
+        socket.on("result_test", function(data) {      
             checkAnswers();
 
             renderResultTest(username, total_question, list_quiz, list_answers, test_id);
 
             userAnswers= getCookie("user_answers");
-            //console.log(userAnswers);
 
             socket.emit("user_answers", {
                     room: room,
@@ -226,7 +217,6 @@
                 });
 
             document.cookie = `state= result_test; path=/`;
-            //console.log(`Stop test ${getCookie("state")}`);
         });
 
         socket.on("create_user_block", function(data) {  
@@ -421,9 +411,6 @@
                     }
                 }
                 
-                //console.log(user_answers_list)
-                //console.log(user_answers_list.length, Number(state.slice(-1)) + 1)
-                
                 if (user_answers_list.length !== Number(state.slice(-1)) + 1) {
     
                     answers += "|not_answer|"
@@ -431,7 +418,6 @@
                 }
             }
             else {
-                //console.log("нет куков")
                 document.cookie = `user_answers= |not_answer|; path=/`;
             }
         }

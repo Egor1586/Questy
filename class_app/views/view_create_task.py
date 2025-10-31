@@ -12,14 +12,14 @@ from datetime import datetime
 def render_create_task(id):
 
     test_list= Test.query.filter_by(author_name= current_user.username).all()
+    back_course = flask.request.args.get("back_course")
+    # filter_test_list= []
+    # for test in test_list:
+    #     task_in_class= Task.query.filter_by(test_id= test.id, class_id= id).first()
+    #     if not task_in_class:
+    #         filter_test_list.append(test)
 
-    filter_test_list= []
-    for test in test_list:
-        task_in_class= Task.query.filter_by(test_id= test.id, class_id= id).first()
-        if not task_in_class:
-            filter_test_list.append(test)
-
-    test_list= filter_test_list
+    # test_list= filter_test_list
 
     if flask.request.method == "POST":   
         try:
@@ -55,6 +55,9 @@ def render_create_task(id):
                 TASK.test_code= code
                 db.session.commit()
 
+            if back_course:
+                return flask.redirect(location = f'/class_courses{back_course}')
+            
             return flask.redirect(location = '/class_page')
 
         except Exception as error:

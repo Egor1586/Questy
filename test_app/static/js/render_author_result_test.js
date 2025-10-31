@@ -116,7 +116,13 @@ function renderAccuracyChart(canvasId, accuracy_aquestions){
 
 function renderAuthorResultTest(username, author_name, total_question) {
 
-    const container = document.getElementById("container-question");
+    let container = document.getElementById("container-question");
+
+    if (container == null){
+        console.log("NULLLL")
+        container = document.getElementsByClassName("wrapper-author-results-container");
+        console.log(container)
+    }
     container.innerHTML= "";
     container.className= 'wrapper-author-results-container';
 
