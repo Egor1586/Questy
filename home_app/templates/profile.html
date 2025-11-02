@@ -117,11 +117,11 @@
                                     });
                                 }
 
-                                const dates_complete = {{ dates_complete | tojson }};
-                                const accuracy = {{ accuracy | tojson }};
-                                const count_cmpl_quiz = {{ count_cmpl_quiz | tojson }};
-                                const date_complete = {{ date_complete | tojson }};
-                                const time_complete = {{ time_complete | tojson }};
+                                const dates_complete = {{ dates_complete | default([]) | tojson }};
+                                const accuracy = {{ accuracy | default([]) | tojson }};
+                                const count_cmpl_quiz = {{ count_cmpl_quiz | default([]) | tojson }};
+                                const date_complete = {{ date_complete | default([]) | tojson }};
+                                const time_complete = {{ time_complete | default([]) | tojson }};
 
                                 const accuracyCanvas = document.getElementById('accuracyChart');
                                 if (accuracyCanvas) {
