@@ -11,18 +11,48 @@
 {% block content %}
     <form action="" method="post" class="edit-question-form">
         <h1>Редагувати питання</h1>
-        {% for number in range(test.answers_per_question) %}
-            
-            {% if list_answers[number] != correct_answer %}
-                <p class="incorrect-answer-p">{{ list_answers[number] }}</p>
-                <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь">
+        <h2>{{ question_text }}</h2>
+        {% if quiz.question_type == "choice" %}
+            {% for number in range(count_answers) %}
+                
+                {% if list_answers[number] != correct_answer %}
+                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}" class="incorrect-answer-p">
 
-            {% else %}
-                <p class="correct-answer-p">{{ list_answers[number] }}</p>
-                <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь">
-            
-            {% endif %}
-        {% endfor %}
+                {% else %}
+                    <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}" class="correct-answer-p">
+                
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if quiz.question_type == "input" %}
+            <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ correct_answer }}" class="correct-answer-p">
+        {% endif %}
+
+        {% if quiz.question_type == "multiple_choice" %}
+            {% for number in range(count_answers) %}
+                {% if list_answers[number] in correct_answer %}
+                    <input type="text" name="correct_answer{{ number }}" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}" class="correct-answer-p">
+
+                 {% else %}
+                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}" class="incorrect-answer-p">
+
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if quiz.question_type == "image" %}
+            {% for number in range(count_answers) %}
+                
+                {% if list_answers[number] != correct_answer %}
+                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}" class="incorrect-answer-p">
+
+                {% else %}
+                    <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}" class="correct-answer-p">
+                
+                {% endif %}
+            {% endfor %}
+        {% endif %}
 
         <button type="submit">Редагувати питання</button>
     </form>
