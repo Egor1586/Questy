@@ -65,6 +65,8 @@
 
         if (state && state.includes("author_start")) {
             state= getCookie("state")
+            let time= getCookie("time")
+            console.log(`RELOAD ${time}`)
             renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
         } 
         else if (state === "author_result_test") {
@@ -89,6 +91,8 @@
             window.location.href = '/';  
         }
         else if (state && state.includes("question")) {
+            let time= getCookie("time")
+            console.log(`RELOAD ${time}`)
             renderQuestion(Number("{{ test.id }}"), list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
         } 
         else if (state && state.includes("waite")) {
@@ -178,11 +182,12 @@
 
         socket.on("next_question", function(data) {  
             state = getCookie("state");
-            
             checkAnswers();
-  
+            
             if (state != "author_result_test") {
                 let number_of_question= Number(state.slice(-1));
+                document.cookie= `time=${list_quiz[number_of_question + 1].time}; path=/`
+                console.log(`NEW TIME ${list_quiz[number_of_question + 1].time}`)
                 console.log("Номер вопроса")
                 console.log(Number(state.slice(-1)))
                 if (number_of_question != total_question - 1) {
@@ -280,8 +285,9 @@
             let state= stateCookies ? Number(stateCookies.slice(-1)) : 0;
             let messages = document.getElementById("messages");
             messages.innerHTML += `<p>Start ${data["room"]}</p>`;
-            if (username === data["author_name"]) {
-                // console.log("Вы начали тест");              
+            console.log(`COOKIES TIME ${list_quiz[state].time} ::: ${state}`)
+            document.cookie= `time= ${list_quiz[0].time}; path=/`
+            if (username === data["author_name"]) {          
                 document.cookie = "state= author_start0; path=/";
                 document.cookie = "countUsersAnswer= 0; path=/";
                 document.cookie = `countCorrectAnswer= 0; path=/`;
@@ -323,16 +329,16 @@
             console.log("Вопрос")
             console.log(Number(state.slice(-1))+1)
             const question_text = document.getElementById("author-question")
-            question_text.textContent = `Питання:${list_quiz[Number(state.slice(-1))+1].question_text}`
+            question_text.textContent = `${list_quiz[Number(state.slice(-1))+1].question_text}`
         
             const correct_answer = document.getElementById("author-correct-answer")
 
             if (list_quiz[Number(state.slice(-1))+1].question_type == "multiple_choice"){
-                correct_answer.textContent= `Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer.replace("%$№", " та ")}`
+                correct_answer.textContent= `${list_quiz[Number(state.slice(-1))+1].correct_answer.replace("%$№", " та ")}`
                 console.log(list_quiz[Number(state.slice(-1))+1].correct_answer.replace("%$№", " та "))
             }
             else{
-                correct_answer.textContent= `Правильна відповідь: ${list_quiz[Number(state.slice(-1))+1].correct_answer}`
+                correct_answer.textContent= `${list_quiz[Number(state.slice(-1))+1].correct_answer}`
             }
             
             const newTime = document.getElementById("timer")

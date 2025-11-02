@@ -1,5 +1,6 @@
 import flask, datetime
 
+from urllib.parse import unquote
 from ..models import Test, Quiz
 from Project.database import db
 from flask_login import current_user
@@ -28,7 +29,11 @@ def render_test_result():
     class_id = flask.request.cookies.get(key= 'classId') or None
 
     if user_answers_cookies:
-        user_answers_list = user_answers_cookies.split("|")
+        user_answers_cookies = unquote(user_answers_cookies)
+        user_answers_cookies= user_answers_cookies.encode('latin1').decode('utf-8')
+        user_answers_list= user_answers_cookies.split("|")
+
+        print(user_answers_list)
 
         for number, quiz in enumerate(quizzes_list):
             str_user_answers += f"|{user_answers_list[number]}|"

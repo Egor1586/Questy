@@ -13,6 +13,7 @@ function authorLeaveTest(){
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
     document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
+    document.cookie = `time=; max-age=0; path=/;`;
 
     window.location.href = '/'; 
 }
@@ -119,7 +120,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
     let container = document.getElementById("container-question");
 
     if (container == null){
-        console.log("NULLLL")
         container = document.getElementsByClassName("wrapper-author-results-container");
         console.log(container)
     }

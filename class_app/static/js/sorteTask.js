@@ -53,23 +53,26 @@ $(document).ready(function () {
                     }
                 }   
                 else {
-                    let allTasks = $('<div>')
-                        .addClass("category")
-                        .attr("data-course", data.class["id"])
-
-                    for (let task of data.task_list) {
-                        let taskHTML = `<details>
-                            <summary>Завдання <span class="arrow"></span></summary>
-                            <div class="task-details">
-                                Назва: ${ task.title }. <br>
-                                Опис: ${ task.description }. <br>
-                                Дедлайн: ${ task.due_time }.
-                            </div>
-                        </details>`
-                        
-                        allTasks.append(taskHTML)
+                    if (data.task_list.length){
+                        let allTasks = $('<div>').addClass("category").attr("data-course", data.class["id"])
+    
+                        for (let task of data.task_list) {
+                            let taskHTML = `<details>
+                                <summary>Завдання <span class="arrow"></span></summary>
+                                <div class="task-details">
+                                    Назва: ${ task.title }. <br>
+                                    Опис: ${ task.description }. <br>
+                                    Дедлайн: ${ task.due_time }.
+                                </div>
+                            </details>`
+                            
+                            allTasks.append(taskHTML)
+                        }
+                        $("#tasks").append(allTasks)
                     }
-                    $("#tasks").append(allTasks)
+                    else {
+                        $("#tasks").append($("<h2 class='title-tasks'>Немає завдань у класі</h2>"))
+                    }
                 }
             },
             error: function (xhr, status, error) {

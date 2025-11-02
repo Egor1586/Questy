@@ -10,6 +10,7 @@ function userLeaveTest() {
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
     document.cookie = `temporary_name=; max-age=0; path=/;`;
+    document.cookie = `time=; max-age=0; path=/;`;
 
     window.location.href = '/';
 }

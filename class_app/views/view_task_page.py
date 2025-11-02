@@ -66,15 +66,13 @@ def new_task():
     for CLASS in USER.classes:
         online_task= []
         for task in CLASS.tasks:
-            # test= Test.query.filter_by(id= task.test_id).first()
-            # if task.online and test.test_code:
-            if task.online:
+            test= Test.query.filter_by(id= task.test_id).first()
+            if task.online and test.test_code:
+            # if task.online:
                 online_task.append(task)
                 print(task)
 
         class_online_task.append((CLASS.class_code , len(online_task)))
-
-    print(f"class_online_task {class_online_task}")
 
     return json.dumps({ "class_online_task": class_online_task})
 

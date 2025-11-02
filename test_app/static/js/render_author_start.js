@@ -49,7 +49,15 @@ function addUserAnswer(username, answer, authorname, quiz) {
     countAnswerSpan.textContent= `${parseInt(countAnswerSpan.textContent) + 1}`;
 
     let correctAnswerDiv  = document.getElementById("author-correct-answer");
-    let correctAnswer= correctAnswerDiv.textContent.split(":")[1].trim()
+    console.log(correctAnswerDiv.textContent)
+
+    let correctAnswer= ''
+    if (correctAnswerDiv.textContent.includes(':')){
+        correctAnswer= correctAnswerDiv.textContent.split(":")[1].trim()
+    }
+    else{
+        correctAnswer= correctAnswerDiv.textContent.trim()
+    }
 
     console.log(typeof correctAnswer, correctAnswer, typeof answer, answer)
 
@@ -118,33 +126,40 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     const headerBar = document.createElement('div')
     headerBar.className = 'header-bar'
 
-    const question = document.createElement('div')
-    question.id = 'author-question'
-    question.className = 'author-question'
-    question.textContent= `Питання: ${quiz.question_text}`
+    const questionTable= document.createElement('table')
+    questionTable.className= 'question-table'
 
-    const correct_answer = document.createElement('div')
-    correct_answer.id = 'author-correct-answer'
-    correct_answer.className = 'author-correct-answer'
+    const headerRow= document.createElement('tr')
+    const questionHeader= document.createElement('th')
+    questionHeader.textContent= "Питання:"
+    const answerHeader= document.createElement('th')
+    answerHeader.textContent= "Правильна відповідь:"
 
+    headerRow.appendChild(questionHeader)
+    headerRow.appendChild(answerHeader)
+
+    const infoRow= document.createElement('tr')
+    const questionInfo= document.createElement('td')
+    questionInfo.id= 'author-question'
+    questionInfo.className= 'author-question'
+    questionInfo.textContent= quiz.question_text
+
+    const correctAnswer= document.createElement('td')
+    correctAnswer.id= 'author-correct-answer'
+    correctAnswer.className= 'author-correct-answer'
     if (quiz.question_type == "multiple_choice"){
-        correct_answer.textContent= `Правильна відповідь: ${quiz.correct_answer.replace("%$№", " ")}`
-        console.log(quiz.correct_answer.replace("%$№", " "))
+        correctAnswer.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
     }
     else{
-        console.log(quiz.correct_answer.replace("%$№", " "))
-        correct_answer.textContent= `Правильна відповідь: ${quiz.correct_answer}`
+        correctAnswer.textContent= `${quiz.correct_answer}`
     }
 
-    // const nextButton = document.createElement('button')
-    // nextButton.id = 'next-q'
-    // nextButton.className = 'next-q'
-    // nextButton.textContent = 'Наступне питання'
-    // nextButton.addEventListener("click", nextQuestion);
+    infoRow.appendChild(questionInfo)
+    infoRow.appendChild(correctAnswer)
 
-    headerBar.appendChild(question)
-    headerBar.appendChild(correct_answer)
-    // headerBar.appendChild(nextButton)
+    questionTable.appendChild(headerRow)
+    questionTable.appendChild(infoRow)
+    headerBar.appendChild(questionTable)
     
     waiteContent.appendChild(headerBar)
 
@@ -165,27 +180,6 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     const studInfoBox = document.createElement('div')
     studInfoBox.id = 'stud-info-box'
     studInfoBox.className = 'stud-info-box'
-
-    // const studButttons = document.createElement('div')
-    // studButttons.id = 'stud-button-box'
-    // studButttons.className = 'stud-button-box'
-
-    // const plusButton = document.createElement('button')
-    // plusButton.className= "timer-btn"
-    // plusButton.textContent= "Плюс + 15"
-    // plusButton.onclick= plusTime
-
-    // const stopButton = document.createElement('button')
-    // stopButton.className= "timer-btn"
-    // stopButton.id= "play-btn"
-    // stopButton.textContent= "Stop"
-    // stopButton.onclick= stopTime
-
-    // studButttons.appendChild(plusButton)
-    // studButttons.appendChild(stopButton)
-
-    // <button onclick="plusTime()" class="timer-btn">Plus +15</button>
-    // <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
 
     const chartDiv = document.createElement('div')
     chartDiv.id = 'chart-div'
@@ -210,6 +204,8 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
         authorname: authorname
     });
 
+    let quizTime= getCookie("time");
+
     socket.once('get_usernames', function(data){
         let userArrey = data;
         lengthArrey = userArrey.length
@@ -221,14 +217,12 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
                     <li>Відповіли: <strong><span id="count-answer-span">0</span></strong></li>
                 </ul>
             </div>
-            <button id="next-q" class="next-q" onclick="nextQuestion()">Наступне питання</button>
             <div class="test-nav-btn"> 
+                <button id="next-q" class="next-q" onclick="nextQuestion()">Наступне питання</button>
                 <div class="test-time-btn"> 
-                    <p id="timer">${quiz.time}</p>
-                    <div class="test-nav-btn"> 
-                        <button onclick="plusTime()" class="timer-btn">Plus +15</button>
-                        <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
-                    </div>
+                    <button onclick="plusTime()" class="timer-btn">Plus +15</button>
+                    <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
+                    <p id="timer">${quizTime}</p>
                 </div>
             </div>
             `
@@ -237,8 +231,9 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
         if (timerText){
             const coundown= setInterval(() =>{
                 if (!timerPaused){
-                    time= parseInt(timerText.textContent);
-                    timerText.textContent= --time;
+                    time= parseInt(timerText.textContent) - 1;
+                    timerText.textContent= time;
+                    document.cookie = `time= ${time}; path=/;`;
                 
                     if (time <= 0){
                         clearInterval(coundown);
