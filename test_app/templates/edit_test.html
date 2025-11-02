@@ -40,7 +40,9 @@
                     Виберіть правильний варіант із запропонованих нижче.
                 </div>
                 {% for answer in answers %}
-                    {% if answer != question.correct_answer %}
+                    {% if answer in list_answers_multiple_choice %}
+                        <div class="answer correct">✓ {{ answer }}</div>
+                    {% elif answer != question.correct_answer %}
                         <div class="answer incorrect">✗ {{answer}}</div>                 
                         
                     {% else %}
