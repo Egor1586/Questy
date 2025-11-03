@@ -34,7 +34,8 @@
             }
         }
         
-        const socket= io();
+        const socket= io({reconnection: true});
+
         const total_question = Number("{{ test.total_questions }}");
         const test_id = Number("{{ test.id }}");
         const answers_per_question = Number("{{ test.answers_per_question }}");
@@ -45,6 +46,7 @@
         
         let state = getCookie("state");
         let timerPaused= false;
+        let plusAnswerTime= 0
 
         //window.addEventListener('beforeunload', function(){
         //    state = getCookie("state");
@@ -66,7 +68,6 @@
         if (state && state.includes("author_start")) {
             state= getCookie("state")
             let time= getCookie("time")
-            console.log(`RELOAD ${time}`)
             renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
         } 
         else if (state === "author_result_test") {
@@ -92,7 +93,6 @@
         }
         else if (state && state.includes("question")) {
             let time= getCookie("time")
-            console.log(`RELOAD ${time}`)
             renderQuestion(Number("{{ test.id }}"), list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
         } 
         else if (state && state.includes("waite")) {
@@ -131,17 +131,6 @@
             }
         });
 
-        socket.on("create_all_user_blocks", function(data) {
-            let temp_user_list= data.slice(1, -1);
-            temp_user_list= temp_user_list.split('||')
-
-            temp_user_list.forEach(function(username) {
-                if (username.trim() !== ""){
-                    createUserBlock(username, author_name, username)
-                }
-            })
-        });
-        
         socket.on("listening_to_messages", function(data) {
             let messages = document.getElementById("messages");
 
@@ -238,6 +227,7 @@
         socket.on('plus_time', function(data) {          
             const timerText= document.getElementById("timer")
             let plusTime= 15
+            plusAnswerTime += 15
             if (timerText && timerText.textContent != "Час закінчений"){
                 let curr_time= timerText.textContent
                 timerText.textContent = parseInt(curr_time) + plusTime
@@ -303,9 +293,8 @@
 
         function nextQuestion(){
             const nextButton = document.getElementById("next-q");
+            plusAnswerTime= 0
 
-            console.log(nextButton)
-            console.log("FLJLFLFLFL")
             let countUsersAnswer= getCookie("countUsersAnswer");
             state = getCookie("state");
 
@@ -344,7 +333,6 @@
             const newTime = document.getElementById("timer")
             newTime.textContent =`${list_quiz[Number(state.slice(-1))+1].time}`
 
-            
             if (donatChart){
                 donatChart.destroy()
             }

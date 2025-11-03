@@ -41,8 +41,6 @@ function renderDoughnutChart(canvasId, totalAnswer, correctCount){
 }
 
 function addUserAnswer(username, answer, authorname, quiz) {
-    console.log("add user answer")
-    
     const userAnswers = document.getElementById("user-answers");
     const countAnswerSpan  = document.getElementById("count-answer-span");
 
@@ -73,7 +71,10 @@ function addUserAnswer(username, answer, authorname, quiz) {
     userAnswers.innerHTML += `
         <div class="user-answer">
             <div class="user-name">${username}</div>
-            <div class="answer-text">${answer}</div>
+            <div class="answer-text">
+                <p>${answer}</p>
+                <p>Час витрачений на відповідь: ${parseInt(quiz.time)- parseInt(getCookie('time')) + plusAnswerTime} сек.</p>
+            </div>
         </div>
     `
 
@@ -145,14 +146,38 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     questionInfo.textContent= quiz.question_text
 
     const correctAnswer= document.createElement('td')
-    correctAnswer.id= 'author-correct-answer'
-    correctAnswer.className= 'author-correct-answer'
+
+    const answerSpan= document.createElement('span')
+    answerSpan.style.display= "none"
+    answerSpan.id= 'author-correct-answer'
+    answerSpan.className= 'author-correct-answer'
+    
     if (quiz.question_type == "multiple_choice"){
-        correctAnswer.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
+        answerSpan.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
     }
     else{
-        correctAnswer.textContent= `${quiz.correct_answer}`
+        answerSpan.textContent= `${quiz.correct_answer}`
     }
+
+    const eyeIcon= document.createElement('span')
+    eyeIcon.textContent= "👁";
+    eyeIcon.className= 'eye-icon'
+    eyeIcon.cursor= 'pointer'
+    eyeIcon.title= "Показати / Приховати правильну відповідь";
+
+    eyeIcon.addEventListener('click', () => {
+        if (answerSpan.style.display === "none"){
+            answerSpan.style.display= 'inline'
+            eyeIcon.textContent= "👁"
+        }
+        else{
+            answerSpan.style.display= 'none'
+            eyeIcon.textContent=  "👁"
+        }
+    })
+
+    correctAnswer.appendChild(answerSpan)
+    correctAnswer.appendChild(eyeIcon)
 
     infoRow.appendChild(questionInfo)
     infoRow.appendChild(correctAnswer)
