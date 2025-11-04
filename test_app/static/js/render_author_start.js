@@ -230,6 +230,18 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
     });
 
     let quizTime= getCookie("time");
+    
+    // let number_of_question= state.slice(-1)
+
+    // console.log(`LAST QUESTION ${number_of_question} ${total_question- 1}`)
+    // let nextQuestionButton= `
+    //     <button id="next-q" class="next-q" onclick="nextQuestion()">Наступне питання</button>
+    //     `
+    // if (number_of_question == total_question- 1) {
+    //     nextButton.textContent = 'Кінець тесту'
+    //     nextButton.removeEventListener("click", nextQuestion)
+    //     nextButton.addEventListener("click", testStop);
+    // }
 
     socket.once('get_usernames', function(data){
         let userArrey = data;
