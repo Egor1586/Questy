@@ -21,28 +21,28 @@ main{
     flex: 1;
     overflow-y: auto;
     display: flex;
-    gap: 20px;
+    gap: 1vw;
 }
 
 aside {
     width: 18vw;
     height: 92vh;
     background-color: var(--bg-aside);
-    padding: 15px 30px 30px 30px;
-    box-shadow: 0 0 15px var(--shadow);
+    padding: 1.5vh 3.3vh 3.3vh 3.3vh;
+    box-shadow: 0 0 1.5vh var(--shadow);
 }
 
 .create-btn {
     width: 100%;
-    padding: 15px;
-    font-size: 16px;
+    padding: 1.5vh;
+    font-size: 1.6vh;
     background-color: var(--green-main);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 1vh;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 10px var(--shadow);
+    box-shadow: 0 0.5vh 1vh var(--shadow);
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -63,37 +63,37 @@ aside {
 
 .create-btn:hover {
     background-color: var(--green-dark);
-    transform: translateY(-3px);
+    transform: translateY(-0.3vh);
 }
 
 .library {
-    width: 220px;
+    width: 11.5vw;
     /* padding: 20px; */
 }
 
 .library h2 {
-    margin-bottom: 10px;
-    margin-top: 15px;
+    margin-bottom: 1vh;
+    margin-top: 1.5vh;
 }
 
 .quiz-card {
     width: 12vw;
-    padding: 15px;
-    margin-bottom: 12px;
+    padding: 1.5vh;
+    margin-bottom: 1.2vh;
     background-color: var(--bg-light);
-    border-radius: 8px;
-    box-shadow: 0 2px 5px var(--shadow);
+    border-radius: 1vh;
+    box-shadow: 0 0.2vh 0.5vh var(--shadow);
     transition: background-color 0.3s, transform 0.3s;
 }
 
 .quiz-card:hover {
     background-color: #e0f0e5;
-    transform: translateY(-4px);
+    transform: translateY(-0.4vh);
 }
 
 .quiz-list {
     flex: 1;
-    padding: 20px;
+    padding: 2.1vh;
 
     width: 82vw;
     height: 92vh;
@@ -108,17 +108,17 @@ aside {
 }
 
 .quiz-list h2 {
-    margin-bottom: 15px;
+    margin-bottom: 1.5vh;
 
-    font-size: 20px;
+    font-size: 2.1vh;
 }
 
 .quiz-item {
     background-color: var(--bg-light);
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px var(--shadow);
+    padding: 1.5vh;
+    margin-bottom: 1.5vh;
+    border-radius: 1vh;
+    box-shadow: 0 0.2vh 0.5vh var(--shadow);
     transition: transform 0.3s ease;
 
     display: flex;
@@ -128,24 +128,24 @@ aside {
 }
 
 .quiz-item:hover {
-    transform: translateY(-1px);
+    transform: translateY(-0.1vh);
 }
 
 .quiz-item p {
     margin: 0;
-    font-size: 15px;
+    font-size: 1.5vh;
     color: var(--text-dark);
 }
 
 .actions {
-    margin-top: 8px;
+    margin-top: 0.8vh;
 }
 
 .actions button {
-    padding: 7px 14px;
-    margin-right: 10px;
+    padding: 0.7vh 1.4vh;
+    margin-right: 1vh;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.5vh;
     font-weight: 600;
     cursor: pointer;
     background: linear-gradient(135deg, #66bb75, #43a060);
@@ -156,11 +156,11 @@ aside {
 .actions button:hover {
     background-color: var(--green-main);
     color: white;
-    transform: translateY(-1px);
+    transform: translateY(-0.1vh);
 }
 
 .date{
-    font-size: 7px;
+    font-size: 0.7vh;
 }
 
 
@@ -169,53 +169,53 @@ aside {
     justify-content: space-between;
     align-items: flex-start;
     background-color: var(--bg-light);
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px var(--shadow);
+    padding: 2vh;
+    margin-bottom: 1.5vh;
+    border-radius: 1vh;
+    box-shadow: 0 0.2vh 0.8vh var(--shadow);
     transition: transform 0.3s ease;
-    gap: 20px;
+    gap: 2vh;
     flex-wrap: wrap;
 }
 
 .quiz-item:hover {
-    transform: translateY(-1px);
+    transform: translateY(-0.1vh);
 }
 
 .quiz-item .info {
     flex: 1;
-    min-width: 200px;
+    min-width: 11.5vw;
 }
 
 .quiz-item .info strong {
     display: block;
-    font-size: 16px;
+    font-size: 1.6vh;
     color:  var(--text-dark);
-    margin-bottom: 5px;
+    margin-bottom: 0.5vh;
 }
 
 .quiz-item .info p {
-    margin: 3px 0;
+    margin: 0.3vh 0;
     color: #555;
-    font-size: 14px;
+    font-size: 1.4vh;
 }
 
 .quiz-item .info .date {
-    font-size: 13px;
+    font-size: 1.3vh;
     color: #777;
 }
 
 .actions {
     display: flex;
-    gap: 10px;
+    gap: 1vh;
     align-items: center;
     flex-shrink: 0;
 }
 
 .actions button {
-    padding: 8px 14px;
+    padding: 0.8vh 1.4vh;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.5vh;
     background-color: #e0eee2;
     color: #2f2f2f;
     font-weight: bold;
@@ -226,7 +226,7 @@ aside {
 .actions button:hover {
     background-color: var(--green-main);
     color: white;
-    transform: translateY(-1px);
+    transform: translateY(-0.1vh);
 }
 
 header{
@@ -239,7 +239,7 @@ header{
     justify-content: left;
     align-items: left;
 
-    gap: 10px;
+    gap: 1vh;
 }
 
 /*  */
@@ -249,5 +249,5 @@ header{
     color: #606974ce;
     line-height: 1.5;
     text-align: center;
-    margin: 5px 0;
+    margin: 0.5vh 0;
 }
