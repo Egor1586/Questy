@@ -301,20 +301,6 @@ header {
     background-color: #276b45;
 }
 
-/* Адаптивність */
-/* @media (max-width: 768px) {
-    .info {
-        width: 95%;
-        padding: 25px 20px;
-    }
-}
-
- */
-
-
-/* ===============================
-   Блок тестів та скрол
-=============================== */
 .tests {
     position: relative;
     background: linear-gradient(135deg, #f0f5f1 0%, #d9f0e2 100%);
@@ -364,9 +350,7 @@ header {
     background: linear-gradient(180deg, #2f8b52, #276b45);
 }
 
-/* ===============================
-   Картки тестів
-=============================== */
+
 .test-card {
     position: relative;
     background-size: cover;
@@ -479,7 +463,7 @@ header {
     gap: 2vh;
 }
 
-/* Заголовок */
+/* саме повідомлення */
 .empty-content h2 {
     font-size: 2.85vh;
     font-weight: 600;
