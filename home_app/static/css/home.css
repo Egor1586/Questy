@@ -4,7 +4,7 @@ body, main{
 }
 
 .test-img{
-    border-radius: 10px;
+    border-radius: 1.2vh;
     border: 1px solid #ccc;
     width: 100%;
     height: auto;
@@ -24,6 +24,7 @@ a {
 
 body {
     height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     background-color: var(--lite_green);
@@ -46,6 +47,7 @@ main {
 }
 
 header {
+    width: 100%;
     height: 9.5vh;
 }
 
@@ -89,13 +91,13 @@ header {
 .tests {
     position: relative;
     background: linear-gradient(135deg, #ffffff 60%, #e8f9ee);
-    border-radius: 24px;
+    border-radius: 2.5vh;
     box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.06);
     padding: 3vw;
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 81vw;
+    width: 80vw;
     overflow: hidden; 
 }
 
@@ -134,7 +136,7 @@ header {
 .tests-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap: 20px; 
+    gap: 1.5vw; 
     overflow-y: auto; 
     overflow-x: hidden; 
     padding-right: 1vw; 
@@ -153,12 +155,12 @@ header {
 
 .tests-scroll::-webkit-scrollbar-track {
     background: #e5f6ea;
-    border-radius: 10px;
+    border-radius: 1.2vh;
 }
 
 .tests-scroll::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #3da35d, #2d6a4f);
-    border-radius: 10px;
+    border-radius: 1.2vh;
 }
 
 .tests-scroll::-webkit-scrollbar-thumb:hover {
@@ -216,7 +218,7 @@ header {
 }
 
 .test-info h3 {
-    margin: 0 0 3px 0;
+    margin: 0 0 0.5vh 0;
     font-size: 1.2vh;
 }
 
@@ -237,7 +239,7 @@ header {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 12px;
+    gap: 1vh;
     }
 
 .info .search-input {
@@ -345,12 +347,12 @@ header {
 
 .tests-scroll::-webkit-scrollbar-track {
     background: #e5f6ea;
-    border-radius: 10px;
+    border-radius: 1.2vh;
 }
 
 .tests-scroll::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #3da35d, #2d6a4f);
-    border-radius: 10px;
+    border-radius: 1.2vh;
 }
 
 .tests-scroll::-webkit-scrollbar-thumb:hover {
@@ -385,7 +387,7 @@ header {
     position: absolute;
     inset: 0;
     background: linear-gradient(to top, rgba(45, 106, 79, 0.85), rgba(61, 163, 93, 0.3));
-    border-radius: 18px;
+    border-radius: 1.5vh;
     transition: background 0.3s ease;
 }
 
@@ -412,7 +414,7 @@ header {
 }
 
 .test-info h3 {
-    margin: 0 0 4px 0;
+    margin: 0 0 0.5vh 0;
     font-size: 2vh;
     font-weight: 600;
     line-height: 1.2;
