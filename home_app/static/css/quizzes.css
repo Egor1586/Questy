@@ -78,11 +78,11 @@ aside {
 
 .quiz-card {
     width: 12vw;
-    padding: 15px;
-    margin-bottom: 12px;
-    background-color: var(--bg-light);
-    border-radius: 8px;
-    box-shadow: 0 2px 5px var(--shadow);
+    padding: 1.5vh;
+    margin-bottom: 1.2vh;
+    background-color: var(--green-light);
+    border-radius: 1vh;
+    box-shadow: 0 0.2vh 0.5vh var(--shadow);
     transition: background-color 0.3s, transform 0.3s;
 }
 

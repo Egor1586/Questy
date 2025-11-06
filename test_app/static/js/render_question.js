@@ -270,7 +270,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             
                 if (time <= 0){
                     clearInterval(coundown);
-                    timerText.textContent = "Час закінчений"
+                    timerText.textContent = "Час закінчився"
 
                     setTimeout(() => {
                         renderWaiteQuestion();

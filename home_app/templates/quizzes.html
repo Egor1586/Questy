@@ -44,35 +44,35 @@
                         <div class="info-code">
                             
                             <div class="actions">
-                                <a href="/test_app?test_id={{ test.id }}">
-                                    <button class="edit">Редагувати</button>
-                                </a>
-                                
                                 {% if test.test_code != 0 %}
                                     <form action="/reset_test{{ test.id }}" >
                                         <button class="btn">
                                             Скинути тест
                                         </button>
                                     </form>
-                                {% endif %}
-                                
-                                <form action="/delete_test{{ test.id }}" >
-                                    <button class="delete">
-                                        Видалити тест
-                                    </button>
-                                </form>
 
-                                {% if test.test_code != 0 and not can_start %}
-                                    <a href="/room{{ test.test_code }}" class="btn">
-                                        <button class="start" type="button">Почати</button>
+                                    {% if test.test_code != 0 and not can_start %}
+                                        <a href="/room{{ test.test_code }}" class="btn">
+                                            <button class="start" type="button">Почати</button>
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="/test_app?test_id={{ test.id }}">
+                                        <button class="edit">Редагувати</button>
                                     </a>
-                                {% endif %}
-                                
-                                {% if test.test_code == 0 %}
-                                    <a href="/create_code{{ test.id }}" class="btn">
-                                        <button class="edit">Створити код</button>
-                                    </a>
-                                {% endif %}
+                                    
+                                    <form action="/delete_test{{ test.id }}" >
+                                        <button class="delete">
+                                            Видалити тест
+                                        </button>
+                                    </form>
+                                    
+                                    {% if test.test_code == 0 %}
+                                        <a href="/create_code{{ test.id }}" class="btn">
+                                            <button class="edit">Створити код</button>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}                    
                             </div>
                             {% if test.test_code != 0 %}
                                 <p class="code-p"><strong>Код: </strong>{{test.test_code}}</p>

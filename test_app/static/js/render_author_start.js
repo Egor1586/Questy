@@ -73,7 +73,10 @@ function addUserAnswer(username, answer, authorname, quiz) {
     userAnswers.innerHTML += `
         <div class="user-answer">
             <div class="user-name">${username}</div>
-            <div class="answer-text">${answer}</div>
+            <div class="answer-text">
+                <p>${answer}</p>
+                <p>Витрачено часу на відповідь: ${parseInt(quiz.time)- parseInt(getCookie('time')) + plusAnswerTime} сек.</p>
+            </div>
         </div>
     `
 
@@ -237,7 +240,7 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
                 
                     if (time <= 0){
                         clearInterval(coundown);
-                        timerText.textContent = "Час закінчений"
+                        timerText.textContent = "Час закінчився"
                     }        
                 }
             }, 1000);
