@@ -52,22 +52,38 @@ header {
 /* Про нас блок */
 .info {
     background: linear-gradient(145deg, #ffffff, #e8f8ec);
-    padding: 2vw;
-    border-radius: 20px;
+    padding: 1vw;
+    border-radius: 2vh;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border-left: 6px solid #3da35d;
+    border-left: 0.3vw solid #3da35d;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    width: 16vw;
-    min-width: 300px;
+    justify-content: space-between;
+    width: 18vw;
+    /* min-width: 300px; */
 }
 
-.info-text p {
+/* .info {
+     width: 16vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+
+    gap: 2vw; 
+    background: linear-gradient(145deg, #ffffff, #e8f8ec);
+    border-radius: 2vh;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    padding: 2vw;
+} */
+
+
+/* .info-text p {
     color: #3c3c3c;
     font-size: 1.2rem;
     margin: 0;
-}
+} */
 
 /* Блок тестів */
 .tests {
@@ -150,7 +166,7 @@ header {
 }
 
 /* Картки тестів */
-.test-card {
+/* .test-card {
     position: relative;
     background-size: cover;
     background-position: center;
@@ -165,7 +181,7 @@ header {
     cursor: pointer;
     overflow: hidden;
     width: 250px;
-    height: 270px; 
+    height: 270px;
 }
 
 .test-card::after {
@@ -178,12 +194,20 @@ header {
 }
 
 .test-card:hover {
-    /* transform: translateY(-4px); */
     box-shadow: 0 8px 14px rgba(0, 0, 0, 0.12);
 }
 
 .test-card:hover::after {
     background: rgba(45, 106, 79, 0.75);
+} */
+
+.start-t {
+    font-size: 4.5vh;
+    font-weight: 700;
+    color: #2d6a4f;
+    margin: 0;
+    text-align: left;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
 }
 
 .test-info {
@@ -201,30 +225,8 @@ header {
     font-size: 1vh;
 }
 
-/* Про нас блок */
-.info {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: 2vw; 
-    background: linear-gradient(145deg, #ffffff, #e8f8ec);
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    padding: 2vw;
-}
-
-.start-t {
-    font-size: 36px;
-    font-weight: 700;
-    color: #2d6a4f;
-    margin: 0;
-    text-align: left;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
-}
-
 .text-d {
-    font-size: 15px;
+    font-size: 2vh;
     color: #3c3c3c;
     line-height: 1.6;
     margin: 0;
@@ -245,19 +247,19 @@ header {
 
 .info .search-input i {
     position: absolute;
-    left: 12px;
-    top: 50%;
+    left: 0.5vw;
+    top: 52%;
     transform: translateY(-50%);
-    font-size: 18px;
+    font-size: 1.5vh;
     color: #3da35d;
 }
 
 .info .search-input input {
     width: 100%;
-    padding: 12px 16px 12px 40px;
-    border: 2px solid #7B9F7D;
-    border-radius: 12px;
-    font-size: 16px;
+    padding: 1vh 1.5vw 1vh 1.5vw;
+    border: 0.4vh solid #7B9F7D;
+    border-radius: 1.2vh;
+    font-size: 1.7vh;
     background: #f9fff8;
     color: #2f3b32;
     transition: all 0.3s ease;
@@ -265,30 +267,30 @@ header {
 
 .info .search-input input:hover {
     border-color: #5fb374;
-    border-radius: 12px;
+    border-radius: 1.2vh;
 }
 
 .info .search-input input:focus {
     outline: none;
-    border-image: linear-gradient(90deg, #3da35d, #2d6a4f) 1;
-    box-shadow: 0 0 12px rgba(61,163,93,0.25), inset 0 2px 6px rgba(0,0,0,0.05);
-    border-radius: 12px;
+    border-radius: 1.2vh;
+    /* border-image: linear-gradient(90deg, #3da35d, #2d6a4f) 1; */
+    box-shadow: 0 0 1.2vh rgba(61,163,93,0.25), inset 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .info .search-input input::placeholder {
     color: #7b9f7d;
     font-style: italic;
-    border-radius: 12px;
+    border-radius: 1.2vh;
 }
 
 /* Кнопка */
 .info .search-btn {
     background-color: #3da35d;
-    border-radius: 12px;
-    padding: 16px 20px;
+    border-radius: 1.2vh;
     color: white;
     width: 100%;
-    font-size: 16px;
+    height: 4vh;
+    font-size: 1.5vh;
     font-weight: 600;
     border: none;
     cursor: pointer;
@@ -298,17 +300,8 @@ header {
 
 .info .search-btn:hover {
     background-color: #276b45;
+    border-radius: 1.2vh;
 }
-
-/* Адаптивність */
-/* @media (max-width: 768px) {
-    .info {
-        width: 95%;
-        padding: 25px 20px;
-    }
-}
-
- */
 
 
 /* ===============================
@@ -317,9 +310,9 @@ header {
 .tests {
     position: relative;
     background: linear-gradient(135deg, #f0f5f1 0%, #d9f0e2 100%);
-    border-radius: 24px;
+    border-radius: 2vh;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    padding: 30px;
+    padding: 2vw;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -329,7 +322,8 @@ header {
 
 .tests h2 {
     color: #2d6a4f;
-    margin-bottom: 20px;
+    font-size: 4.5vh;
+    margin-bottom: 2vh;
     position: relative;
     z-index: 2;
 }
@@ -338,15 +332,15 @@ header {
 .tests-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 2vw;
     overflow-y: auto;
-    padding-right: 12px;
+    padding-right: 1.5vw;
 }
 
 
 /* Стиль видимого скролу */
 .tests-scroll::-webkit-scrollbar {
-    width: 8px;
+    width: 1vw;
 }
 
 .tests-scroll::-webkit-scrollbar-track {
@@ -370,15 +364,18 @@ header {
     position: relative;
     background-size: cover;
     background-position: center;
-    border-radius: 18px;
+    border-radius: 2vh;
     overflow: hidden;
     cursor: pointer;
-    height: 220px;
+    height: 100%;
+    width: 100%;
+    min-width: 280px;
+    min-height: 220px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* текст внизу */
-    align-items: flex-start;   /* текст ліворуч */
-    padding: 15px;
+    justify-content: flex-end; 
+    align-items: flex-start;   
+    padding: 1.5vh;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
@@ -393,7 +390,6 @@ header {
 }
 
 .test-card:hover {
-    /* transform: translateY(-6px) scale(1.02); */
     box-shadow: 0 12px 22px rgba(0, 0, 0, 0.18);
 }
 
@@ -409,22 +405,22 @@ header {
     text-align: left;
     /* width: 100%; */
     /* backdrop-filter: blur(4px); */
-    border-radius: 12px;
-    padding: 10px 12px;
+    border-radius: 1.2vh;
+    padding: 1vw 1vh;
     /* background: rgba(0, 0, 0, 0.25); */
     /* box-shadow: 0 2px 6px rgba(0,0,0,0.3); */
 }
 
 .test-info h3 {
     margin: 0 0 4px 0;
-    font-size: 17px;
+    font-size: 2vh;
     font-weight: 600;
     line-height: 1.2;
 }
 
 .test-info p {
     margin: 0;
-    font-size: 13px;
+    font-size: 1.8vh;
     opacity: 0.9;
 }
 
@@ -445,7 +441,7 @@ header {
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    padding: 15px;
+    padding: 1.5vw;
     flex-wrap: wrap;          /* Дозволяє елементам переноситися */
     text-align: left;
 }

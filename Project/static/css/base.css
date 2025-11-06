@@ -36,7 +36,6 @@ main {
     gap: 2vw;
 }
 
-
 header{
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.229); 
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
@@ -50,10 +49,12 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2vw;
+    padding: 0 1vw;
     /* padding: 12px 24px; */
     background-color: white;
     border: none;
+
+    width: 100vw;
 }
 
 .user-actions {
@@ -66,11 +67,12 @@ header{
     display: flex;
     align-items: center;
     justify-content: left;
-    width: 190px;
+    width: 7vw;
+    height: 5vh;
 }
   
 .logo img {
-    height: 42px;
+    height: 100%;
 }
 
 .nav-links {
@@ -82,6 +84,7 @@ header{
     text-decoration: none;
     color: #333;
     font-weight: 500;
+    font-size: 2.4vh;
     position: relative;
 }
   
@@ -110,8 +113,8 @@ header{
     text-decoration: underline !important;
     text-decoration-color: #333;
     text-decoration-style: dotted;
-    text-underline-offset: 3.5px;
-    text-decoration-thickness: 5px;
+    text-underline-offset: 0.4vh;
+    text-decoration-thickness: 0.4vh;
 }
 
 .auth-buttons {
@@ -132,14 +135,14 @@ header{
 
 .auth-buttons a:first-of-type {
     background-color:#8DBD84;
-    border-radius: 6px;
+    border-radius: 1vh;
     padding: 0.9vh 1.3vw;
     margin: 0;
 }
 
 .auth-buttons a:last-of-type {
-    border: 2px solid #8DBD84;
-    border-radius: 7px;
+    border: 0.3vh solid #8DBD84;
+    border-radius: 1vh;
     padding: 0.8vh 1.3vw;
     margin: 0;
 }
@@ -147,15 +150,15 @@ header{
 .username {
     font-size: 1.3vh;
     color: black;
-    border: 2px solid var(--sign_up_green); /* зелёная рамка */
-    border-radius: 6px;
+    border:  0.3vh solid var(--sign_up_green); /* зелёная рамка */
+    border-radius: 1vh;
     padding: 0.7vh 1.3vw;
 }
 
 .logout {
-    border: 2px solid var(--sign_up_green);
+    border:  0.3vh solid var(--sign_up_green);
     background-color: transparent;
-    border-radius: 7px;
+    border-radius: 1vh;
     padding: 0.7vh 1.3vw;
     font-size: 1.3vh;
     cursor: pointer;
@@ -179,10 +182,14 @@ footer {
     text-align: center;
 }
 
+footer .footer-text {
+    font-size: 2vh;
+}
+
 footer a {
     color: white;
     text-decoration: none;
-    font-size: 1.3vh;
+    font-size: 1.5vh;
     margin: 0 0.5vw;
 }
 
@@ -191,7 +198,6 @@ footer a {
     border: none;
 }
 
-
 ::-webkit-scrollbar {
     width: 1vw;
     height: 1vh; 
@@ -199,7 +205,7 @@ footer a {
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--green-light);
-    border-radius: 4px;
+    border-radius: 0.5vh;
 }
 
 ::-webkit-scrollbar-track {

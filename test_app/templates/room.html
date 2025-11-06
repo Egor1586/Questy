@@ -45,6 +45,7 @@
         
         let state = getCookie("state");
         let timerPaused= false;
+        let plusAnswerTime= 0;
 
         //window.addEventListener('beforeunload', function(){
         //    state = getCookie("state");
@@ -238,6 +239,7 @@
         socket.on('plus_time', function(data) {          
             const timerText= document.getElementById("timer")
             let plusTime= 15
+            plusAnswerTime += 1
             if (timerText && timerText.textContent != "Час закінчений"){
                 let curr_time= timerText.textContent
                 timerText.textContent = parseInt(curr_time) + plusTime
@@ -303,9 +305,9 @@
 
         function nextQuestion(){
             const nextButton = document.getElementById("next-q");
+            plusTime= 0
 
             console.log(nextButton)
-            console.log("FLJLFLFLFL")
             let countUsersAnswer= getCookie("countUsersAnswer");
             state = getCookie("state");
 

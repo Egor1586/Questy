@@ -168,7 +168,7 @@ function renderAuthorStart(quiz, answers, room, authorname, state, total_questio
 
     const userBlock = document.createElement('div')
     userBlock.id = 'user-block'
-    userBlock.className = 'user-block'
+    userBlock.className = 'user-blocks'
 
     const userAnswers = document.createElement('div')
     userAnswers.id = 'user-answers'
