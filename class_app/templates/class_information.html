@@ -10,7 +10,7 @@
 
 {% block class_content %}
     <div class="teacher-course-page">
-        <h1 class="course-title">Курс: {{ class.description }}</h1>
+        <h1 class="course-title">Клас: {{ class.title }}</h1>
 
         {% if class.users %}
             <div class="students-section">
@@ -21,7 +21,6 @@
                         <div class="student-card">
                             <img src="https://img.icons8.com/?size=100&id=12437&format=png&color=4D4D4D" alt="Аватар" class="student-avatar">
                             
-                            <!-- Ім'я -->
                             <span class="student-name">{{ user.username }}</span>
 
                             <a href="/delete_user?class_id={{class.id}}&user_id={{user.id}}" class="delete-tick">

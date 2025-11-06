@@ -10,7 +10,7 @@
 
 {% block content %}
     {% if is_authorization %}
-            <div class="container-profile">
+        <div class="container-profile">
             <div class="top-section">
                 <div class="graph-section">
                     <div class="dropdown">
@@ -117,11 +117,11 @@
                                     });
                                 }
 
-                                const dates_complete = {{ dates_complete | tojson }};
-                                const accuracy = {{ accuracy | tojson }};
-                                const count_cmpl_quiz = {{ count_cmpl_quiz | tojson }};
-                                const date_complete = {{ date_complete | tojson }};
-                                const time_complete = {{ time_complete | tojson }};
+                                const dates_complete = {{ dates_complete | default([]) | tojson }};
+                                const accuracy = {{ accuracy | default([]) | tojson }};
+                                const count_cmpl_quiz = {{ count_cmpl_quiz | default([]) | tojson }};
+                                const date_complete = {{ date_complete | default([]) | tojson }};
+                                const time_complete = {{ time_complete | default([]) | tojson }};
 
                                 const accuracyCanvas = document.getElementById('accuracyChart');
                                 if (accuracyCanvas) {
@@ -178,8 +178,8 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="tests-section">
+
+            <div class="filder-test">
                 <form action="" method="post" class="score-form">
                     <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
                         <option value="date" selected>По датi </option>
@@ -189,7 +189,7 @@
                     <input type="submit" value="Send" class="send-btn-profile">
                     <script>
                         const selectElementTest = document.getElementById("choice_test");
-
+    
                         function saveSelectedValueScore(){
                             localStorage.setItem('selectedOptionScore', selectElementTest.value)
                         }
@@ -203,8 +203,9 @@
                         window.onload = LoadSelectionScore;
                     </script>
                 </form>
-              
-                
+            </div>
+            
+            <div class="tests-section">            
                 {% if selected_option_test[0] == "date" %}
                     <div class="score-result">
                         {% for score in scores %}
@@ -250,10 +251,15 @@
                     </div>
                 {% endif %}
             </div>
-    
+        </div>
     {% else %}
-            <h1>У вас немає профілю, ви не авторизовані</h1>
+        <section class="no-profile">
+            <div class="no-profile-content">
+                <h1>У вас немає профілю, ви не авторизовані</h1>
+                <p>Будь ласка, <a href="/login" class="auth-link">увійдіть</a> або <a href="/sign_up" class="auth-link">зареєструйтесь</a>, щоб отримати доступ до свого профілю.</p>
+            </div>
+        </section>
     {% endif %}
-    </div>
+
 
 {% endblock %}

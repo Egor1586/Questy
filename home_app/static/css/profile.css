@@ -19,7 +19,7 @@ body {
     gap: 15px;
     padding: 20px;
     width: 100%;
-    min-height: 100vh;
+    height: 92vh;
     margin: auto;
 }
 
@@ -28,6 +28,7 @@ body {
     display: flex;
     gap: 15px;
     align-items: stretch;
+    height: 40vh; 
 }
 
 /* Графік */
@@ -36,13 +37,14 @@ body {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 15px;
-    height: 44vh;
+    padding: 1vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    
     width: 50%;
+    /* height: 100%; */
 }
 
 /* Контейнер графіка */
@@ -58,10 +60,12 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 1vh;
     border: 2px dashed #a5d6a7;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-    padding: 15px;
+    padding: 1vw;
+
+    height: 100%;
 }
 
 .profile-content {
@@ -114,8 +118,8 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 50vh; 
+    gap: 1vh;
+    height: 48vh; 
     overflow-y: auto; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
@@ -197,5 +201,53 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    /* font-size: clamp(0.85rem, 2vh, 1rem); */
+}
+
+/* Якщо хтось не зареєстрований, не увійшов */
+.no-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 24px;
+
+    text-align: center;
+    padding: 4vh 2vw;
+}
+
+.no-profile-content {
+    max-width: 600px;
+    color: #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8vh;
+}
+
+.no-profile-content h1 {
+    font-size: 3.5vh;
+    color: #2d6a4f;
+    font-weight: 600;
+    margin: 0;
+}
+
+
+.no-profile-content p {
+    font-size: 2.5vh;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Посилання для входу/реєстрації */
+.auth-link {
+    color: #3da35d;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #276b45;
+    text-decoration: underline;
 }

@@ -216,7 +216,7 @@ def handle_start_test(data):
 
 @Project.settings.socketio.on('message_to_chat')
 def handle_message(data):
-    emit("listening_to_messages", f"{data['username']}: {data['message']}", to= data['room'])
+    emit("listening_to_messages", f"{data['username']}: {data['message']}", include_self= False, to= data['room'])
 
 @Project.settings.socketio.on('new_user')
 def handle_message(data):
@@ -356,6 +356,15 @@ def handle_message(data):
     emit("room_get_result_data", {"room_get_result_data": room_get_result_data,
                                   "best_score_data": best_score_data,
                                   "averega_score": averega_score}, to= user_sid)
+
+
+@Project.settings.socketio.on('plus_time')
+def handle_message(data):
+    emit("plus_time", to= data['room'])
+
+@Project.settings.socketio.on('change_time')
+def handle_message(data):
+    emit("change_time", to= data['room'])
 
 @render_page(template_name = 'room.html')
 def render_room(test_code):

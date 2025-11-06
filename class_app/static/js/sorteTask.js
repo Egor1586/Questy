@@ -1,5 +1,3 @@
-console.log("jQuery версия:", $.fn.jquery);
-
 $(document).ready(function () {
     $('#course').on('change', function (){
         const selectedValue = $(this).val()
@@ -55,23 +53,26 @@ $(document).ready(function () {
                     }
                 }   
                 else {
-                    let allTasks = $('<div>')
-                        .addClass("category")
-                        .attr("data-course", data.class["id"])
-
-                    for (let task of data.task_list) {
-                        let taskHTML = `<details>
-                            <summary>Завдання <span class="arrow"></span></summary>
-                            <div class="task-details">
-                                Назва: ${ task.title }. <br>
-                                Опис: ${ task.description }. <br>
-                                Дедлайн: ${ task.due_time }.
-                            </div>
-                        </details>`
-                        
-                        allTasks.append(taskHTML)
+                    if (data.task_list.length){
+                        let allTasks = $('<div>').addClass("category").attr("data-course", data.class["id"])
+    
+                        for (let task of data.task_list) {
+                            let taskHTML = `<details>
+                                <summary>Завдання <span class="arrow"></span></summary>
+                                <div class="task-details">
+                                    Назва: ${ task.title }. <br>
+                                    Опис: ${ task.description }. <br>
+                                    Дедлайн: ${ task.due_time }.
+                                </div>
+                            </details>`
+                            
+                            allTasks.append(taskHTML)
+                        }
+                        $("#tasks").append(allTasks)
                     }
-                    $("#tasks").append(allTasks)
+                    else {
+                        $("#tasks").append($("<h2 class='title-tasks'>Немає завдань у класі</h2>"))
+                    }
                 }
             },
             error: function (xhr, status, error) {
@@ -80,29 +81,3 @@ $(document).ready(function () {
         })
     })
 })
-
-
-{/* <div class="category" data-course="all"><h3>На цей тиждень</h3>
-<summary>Завдання <span class="arrow"></span></summary>
-<div class="task-details">
-    Назва: task1. <br>
-    Опис: desc. <br>
-    Дедлайн: 2025-10-15 16:06:00.
-</div></div> */}
-
-{/* <div class="category" data-course="all">
-                <h3>На цей тиждень</h3>
-                <details>
-                          
-                        
-                            
-                            <summary>Завдання 1 <span class="arrow"></span></summary>
-                            <div class="task-details">
-                                Назва: task1. <br>
-                                Опис: desc. <br>
-                                Дедлайн: 2025-10-15 16:06:00.
-                            </div>
-                        
-                    
-                </details>
-            </div> */}

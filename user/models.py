@@ -45,7 +45,7 @@ class Classes(db.Model):
     id = db.Column(db.Integer, primary_key= True)
 
     title = db.Column(db.String(100), nullable= False)
-    description = db.Column(db.String(200), nullable= False)
+    lesson = db.Column(db.String(200), nullable= True, default= "lesson")
 
     class_code = db.Column(db.String(100), nullable= False)
     created_date = db.Column(db.String(100), nullable= False)
@@ -93,8 +93,9 @@ class Task(db.Model):
     description = db.Column(db.String(200), nullable= False)
 
     due_time = db.Column(db.DateTime, nullable= True)
-
     work_after_time= db.Column(db.Boolean, default= False)
+
+    online= db.Column(db.Boolean, nullable= True)
 
     class_id= db.Column(db.Integer, db.ForeignKey("classes.id"))
     test_id= db.Column(db.Integer, db.ForeignKey("test.id"), nullable= True)

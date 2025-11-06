@@ -11,18 +11,26 @@ def render_test_app():
     
     list_quiz = []
     list_answers= []
+    list_answers_multiple_choice = []
 
     test_id = flask.request.args.get('test_id')
     test = Test.query.filter_by(id= test_id).first()
 
     for quiz in Quiz.query.filter_by(test_id= test_id).all():
+        if quiz.question_type == "multiple_choice":
+            list_answers_multiple_choice.extend(quiz.correct_answer.split("%$№"))
+
+        if quiz.question_type == "input":
+            list_answers.append([quiz.correct_answer])
+            
         list_answers.append(quiz.answer_options.split("%$№"))
         list_quiz.append(quiz)
         
     return {
         "test": test,
         "list_quiz": list_quiz,
-        "list_answers": list_answers
+        "list_answers": list_answers,
+        "list_answers_multiple_choice": list_answers_multiple_choice
     }
 
 def delete_quiz_question(quiz_id):

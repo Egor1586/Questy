@@ -10,6 +10,7 @@ function userLeaveTest() {
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
     document.cookie = `temporary_name=; max-age=0; path=/;`;
+    document.cookie = `time=; max-age=0; path=/;`;
 
     window.location.href = '/';
 }
@@ -35,7 +36,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
     let correctAnswer = 0;
 
     for (let count = 0; count < list_quiz.length; count++) {
-        // console.log(list_quiz[count].correct_answer, answersArrey[count])
         let arrayCorrectAnswers= []
         let arrayUserAnswers= []
         if (list_quiz[count].question_type == "multiple_choice"){
@@ -103,9 +103,9 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
     answerInfo.className = 'answer-info';
     answerInfo.innerHTML = `
         <ul>
-        <li><span class="color-dot color-green"></span>Правильна відповідь (зелений)</li>
-        <li><span class="color-dot color-yellow"></span>Ваша неправильна відповідь (жовтий)</li>
-        <li><span class="color-dot color-red"></span>Неправильна відповідь (червоний)</li>
+            <li><span class="color-dot color-green"></span>Правильна відповідь (зелений)</li>
+            <li><span class="color-dot color-yellow"></span>Ваша неправильна відповідь (жовтий)</li>
+            <li><span class="color-dot color-red"></span>Неправильна відповідь (червоний)</li>
         </ul>
     `;
 
@@ -286,7 +286,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
                     
                     console.log("multiple_choice question")
                     console.log(answer)
-                    console.log(multiple_answer)
                     console.log(correct_answer_list)
                     console.log("multiple_choice question")
     

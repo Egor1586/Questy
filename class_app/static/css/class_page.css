@@ -1,16 +1,35 @@
 /* --- Контент --- */
 .content {
     flex: 1;
-    padding: 20px;
+    padding: 1vw;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    gap: 1vw;
     flex-wrap: nowrap; 
     align-items: flex-start;
     justify-items: flex-start;
 
-    height: fit-content;
-    width: 100%;
+    width: calc(100vw - 260px);
+    height: 100%;
+
+    transition: width 0.4s ease;
+}
+
+.full-content {
+    width: 95vw ;
+}
+
+.class-div h2{
+    margin-bottom: 15px;
+}
+
+.course-name {
+    margin-top: 1.8vh;
+    margin-bottom: 1.5vh;
+    font-size: 3vh;
+    font-weight: 700;
+    color: #3c3c3c;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
 }
 
 .class-div{
@@ -29,11 +48,11 @@
     flex-wrap: wrap;
     justify-content: left;
     align-items: flex-start;
-    gap: 30px;
+    gap: 2vw;
 }
 
 .card {
-    min-width: 250px;
+    min-width: 300px;
     min-height: 290px;
     background: #fff;
     border-radius: 12px;
@@ -42,24 +61,22 @@
     transition: transform 0.2s, box-shadow 0.2s;
     flex-shrink: 0;
 
-    margin-top: 2vh;
-    /* margin-left: 1vw; */
     display: flex;           
     flex-direction: column;  
     justify-content: space-between;
     align-items: stretch;
     cursor: pointer;
-    gap: 10px;
+    gap: 0.6vw;
 
 }
 
-.card .with-tasks{
+/* .card .with-tasks{
     width: fit-content;
 }
 
 .card .no-tasks{
     width: 250px;
-}
+} */
 
 .card:hover {
     /* transform: translateY(-1px); */
@@ -69,14 +86,51 @@
 .card-header {
     /* background: linear-gradient(135deg, #66bb6a, #43a047); */
     color: #fff;
-    padding: 12px;
-    font-size: 15px;
+    padding: 0.9vw;
+    font-size: 1.4vh;
     font-weight: 600;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 5px;
+    gap: 0.5vw;
+}
+
+.new-task-count {
+    width: 1vw;
+    height: 1vw;
+
+    min-width: 20px;
+    min-height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: red;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2vh;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    z-index: 10;
+
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.left-info{
+    display: flex;
+    flex-direction: row;
+}
+
+.left-info span{
+    margin-left: 1vw;
 }
 
 .h-left-info{
@@ -84,16 +138,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 4px;
+    gap: 0.4vw;
 }
 
 .more-class-actions{
     background: none;
     border: none;
     color: #fff;
-    font-size: 25px;
+    font-size: 2vh;
     cursor: pointer;
-    padding: 0 5px;
+    padding: 0 0.5vw;
 }
 
 
@@ -102,14 +156,14 @@
     font-weight: 500;
     display: flex;
     flex-direction: row;
-    font-size: 14px;   
+    font-size: 1.3vh;   
     color: rgb(242, 239, 239); 
     /* font-style: italic; */
 }
 
 .card-footer {
     background: #fcfcfc;
-    padding: 12px;
+    padding: 1vh;
     text-align: center;
     border-top: 1px solid #ccc;
 
@@ -128,7 +182,7 @@
     border: none;
     color: #fff;
     font-weight: 600;
-    padding: 10px 18px;
+    padding: 0.8vh 0.8vw;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.3s ease;
@@ -147,12 +201,12 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 15px;
+    padding: 1vw;
 }
 
 
 .card-body li{
-    padding: 8px;
+    padding: 0.2vw;
     border-radius: 6px;
     width: 100%;
     box-sizing: border-box;
@@ -260,7 +314,7 @@
 .modal h2 {
     margin-top: 0;
     font-size: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 2vh;
 }
 
 .form-group h3 {
@@ -336,9 +390,9 @@
 
 .color-group {
     display: flex;
-    gap: 12px;
+    gap: 1vw;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 1vw;
 }
 
 .color-group input[type="color"] {
@@ -408,7 +462,7 @@
 
 .color-group {
     display: flex;
-    gap: 10px;
+    gap: 1vh;
     align-items: center;
 }
 

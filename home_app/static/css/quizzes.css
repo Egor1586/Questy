@@ -148,7 +148,7 @@ aside {
     border-radius: 5px;
     font-weight: 600;
     cursor: pointer;
-    background-color: #dfeee2;
+    background: linear-gradient(135deg, #80b48a, #56c591);
     color: var(--text-dark);
     transition: background-color 0.3s, transform 0.2s;
 }
@@ -156,7 +156,6 @@ aside {
 .actions button:hover {
     background-color: var(--green-main);
     color: white;
-    transform: translateY(-1px);
 }
 
 .date{

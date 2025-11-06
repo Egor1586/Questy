@@ -11,6 +11,7 @@ body, main{
 }
 
 a {
+    height: fit-content;
     color: inherit;
     text-decoration: none;
 }
@@ -32,7 +33,7 @@ body {
 /* Макет */
 main {
     width: 97vw;
-    height: 84vh;
+    height: 82.5vh;
 
     display: flex;
     flex-direction: row;
@@ -40,48 +41,47 @@ main {
     gap: 1.5vw;
     padding: 1.5vw;
     flex-grow: 1;
-    height: calc(100vh - 60px); 
+    height: 95vh;
     overflow: hidden; 
+}
+
+header {
+    height: 9.5vh;
 }
 
 /* Про нас блок */
 .info {
     background: linear-gradient(145deg, #ffffff, #e8f8ec);
-    padding: 25px;
+    padding: 2vw;
     border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     border-left: 6px solid #3da35d;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 16vw;
-    min-width: 300px;
+    width: 28vw;
+    /* min-width: 300px; */
 }
 
-.info h2 {
-    color: #2d6a4f;
-    margin: 0 0 10px 0;
-}
-
-.info p {
+.info-text p {
     color: #3c3c3c;
-    font-size: 1.2rem;
+    font-size: 2.5vh;
     margin: 0;
 }
 
 /* Блок тестів */
-.tests {
+/* .tests {
     position: relative;
     background: linear-gradient(135deg, #ffffff 60%, #e8f9ee);
     border-radius: 24px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    padding: 30px;
+    box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.06);
+    padding: 2vw;
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 81vw;
+    width: 68vh;
     overflow: hidden; 
-}
+} */
 
 /* Стилі */
 .tests::before,
@@ -108,20 +108,20 @@ main {
     background: radial-gradient(circle, rgba(61,163,93,0.15) 0%, transparent 70%);
 }
 
-.tests h2 {
+/* .tests h2 {
     color: #2d6a4f;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
     position: relative;
     z-index: 2;
-}
+} */
 
 .tests-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap: 20px; 
+    gap: 1vw; 
     overflow-y: auto; 
     overflow-x: hidden; 
-    padding-right: 12px; 
+    padding-right: 1vw; 
     flex-grow: 1;
     position: relative;
     z-index: 2;
@@ -132,7 +132,7 @@ main {
 
 /* Стиль для скрол-бару */
 .tests-scroll::-webkit-scrollbar {
-    width: 6px;
+    width: 1vw;
 }
 
 .tests-scroll::-webkit-scrollbar-track {
@@ -156,7 +156,7 @@ main {
     background-position: center;
     border-radius: 14px;
     color: #fff;
-    padding: 12px;
+    padding: 1vw;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -193,12 +193,12 @@ main {
 
 .test-info h3 {
     margin: 0 0 3px 0;
-    font-size: 14px;
+    font-size: 1.2vh;
 }
 
 .test-info p {
     margin: 0;
-    font-size: 12px;
+    font-size: 1vh;
 }
 
 /* Про нас блок */
@@ -206,17 +206,16 @@ main {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 20px; 
-    /* width: 100%; */
-    /* max-width: 500px; */
+    /* justify-content: space-between; */
+    gap: 2vw; 
     background: linear-gradient(145deg, #ffffff, #e8f8ec);
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    padding: 30px;
+    padding: 2vw;
 }
 
-.info .start-t {
-    font-size: 36px;
+.start-t {
+    font-size: 4.5vh;
     font-weight: 700;
     color: #2d6a4f;
     margin: 0;
@@ -224,8 +223,8 @@ main {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
 }
 
-.info .text-d {
-    font-size: 15px;
+.text-d {
+    font-size: 1.5vh;
     color: #3c3c3c;
     line-height: 1.6;
     margin: 0;
@@ -271,7 +270,8 @@ main {
 
 .info .search-input input:focus {
     outline: none;
-    border-image: linear-gradient(90deg, #3da35d, #2d6a4f) 1;
+    /* border-image: linear-gradient(90deg, #3da35d, #2d6a4f) 1; */
+    border-color: #3da35d;
     box-shadow: 0 0 12px rgba(61,163,93,0.25), inset 0 2px 6px rgba(0,0,0,0.05);
     border-radius: 12px;
 }
@@ -302,16 +302,15 @@ main {
 }
 
 /* Адаптивність */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .info {
         width: 95%;
         padding: 25px 20px;
     }
 }
 
+ */
 
-
-/*  */
 
 /* ===============================
    Блок тестів та скрол
@@ -321,7 +320,7 @@ main {
     background: linear-gradient(135deg, #f0f5f1 0%, #d9f0e2 100%);
     border-radius: 24px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    padding: 30px;
+    padding: 2vw;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -378,8 +377,8 @@ main {
     height: 220px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* текст внизу */
-    align-items: flex-start;   /* текст ліворуч */
+    justify-content: flex-end; 
+    align-items: flex-start;   
     padding: 15px;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
@@ -434,12 +433,12 @@ main {
 /*  */
 .test-info h3, 
 .test-info p {
-    word-wrap: break-word;       /* Переносить довгі слова */
-    overflow-wrap: break-word;   /* Сучасний аналог */
-    white-space: normal;         /* Дозволяє тексту переноситись */
-    text-overflow: ellipsis;     /* Якщо обмеження ширини — додає "..." */
-    display: block;              /* Гарантує, що елементи поводяться як блоки */
-    max-width: 100%;             /* Не виходить за межі картки */
+    word-wrap: break-word;       
+    overflow-wrap: break-word;   
+    white-space: normal;         
+    text-overflow: ellipsis;     
+    display: block;              
+    max-width: 100%;             
 }
 
 .test-card {
@@ -448,7 +447,7 @@ main {
     justify-content: flex-end;
     align-items: flex-start;
     padding: 15px;
-    flex-wrap: wrap;          /* Дозволяє елементам переноситися */
+    flex-wrap: wrap;          
     text-align: left;
 }
 .test-info h3, 
@@ -457,4 +456,77 @@ main {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Якщо хтось не зареєстрований або не авторизований */
+.empty-tests {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #f1f3f2;
+    border-radius: 24px;
+    height: 100%;
+    padding: 5vh 2vw;
+}
+
+.empty-content {
+    max-width: 520px;
+    color: #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vh;
+}
+
+/* Заголовок */
+.empty-content h2 {
+    font-size: 2.85vh;
+    font-weight: 600;
+    color: #2d6a4f;
+    margin: 0;
+}
+
+.empty-content p {
+    font-size: 2.05vh;
+    line-height: 1.5;
+    color: #555;
+    margin: 0;
+}
+
+/* Кнопка створення тесту */
+.btn-create {
+    background: linear-gradient(90deg, #6fcf97, #4caf6a);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 1.8vh;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+}
+
+.btn-create:hover {
+    background: linear-gradient(90deg, #58b87f, #3d915c);
+    transform: translateY(-2px);
+}
+
+/* Підказка про авторизацію */
+.auth-hint {
+    margin-top: 2vh;
+    font-size: 1.6vh;
+    color: #6b6b6b;
+}
+
+.auth-link {
+    color: #3da35d;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #276b45;
+    text-decoration: underline;
 }

@@ -24,13 +24,13 @@
             </button>
 
             <nav class="nav-links">
-                <a href="/" class="{% if request.path == '/' %}active{% endif %}">HOME</a>
-                <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">PROFILE</a>      
+                <a href="/" class="{% if request.path == '/' %}active{% endif %}">Головна</a>
+                <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">Профіль</a>      
                 {% if is_authorization %}
-                    <a href="/class_page" class="{% if request.path == '/class_page' %}active{% endif %}">CLASS</a>
+                    <a href="/class_page" class="{% if request.path == '/class_page' %}active{% endif %}">Класи</a>
                 {% endif %}   
                 {% if is_teacher %}
-                    <a href="/quizzes" class="{% if request.path == '/quizzes/' %}active{% endif %}">QUIZ</a>
+                    <a href="/quizzes" class="{% if request.path == '/quizzes/' %}active{% endif %}">Тести</a>
                 {% endif %}
             </nav>
 
@@ -38,12 +38,12 @@
                 {% if is_authorization %}
                     <h2 class="username">{{ username }}</h2>
                     <form action="/logout">
-                        <button class="logout">Log out</button>
+                        <button class="logout">Вийти</button>
                     </form>
                 {% else %}
                     <div class="auth-buttons">
-                        <a href="/sign_up">SIGN UP</a>
-                        <a href="/login">LOGIN</a>
+                        <a href="/sign_up">Зареєструватися</a>
+                        <a href="/login">Увійти</a>
                     </div>
                 {% endif %}
             </div>

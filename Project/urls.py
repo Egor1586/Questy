@@ -16,7 +16,6 @@ home_app.add_url_rule(rule = '/get_active_codes', view_func = get_codes, methods
 # 
 sign_up_app.add_url_rule(rule="/sign_up/", view_func= render_sign_up, methods= ['GET', 'POST'])
 
-
 sign_up_app.add_url_rule(rule="/send_email_app/", view_func= render_send_email, methods= ['GET', 'POST'])
 sign_up_app.add_url_rule(rule= '/new_password/', view_func= render_new_password, methods= ['POST', 'GET'])
 sign_up_app.add_url_rule(rule= '/reset_password/', view_func= render_reset_app, methods= ['POST', 'GET'])
@@ -60,3 +59,4 @@ class_app.add_url_rule(rule = '/delete_class<class_id>', view_func = delete_clas
 class_app.add_url_rule(rule = '/delete_task<task_id>', view_func = delete_task, methods = ['GET', 'POST'])
 
 class_app.add_url_rule(rule = '/task_page/sorte', view_func = sorte_task, methods = ['GET', 'POST', "PUT"])
+class_app.add_url_rule(rule = '/class_page/task', view_func = new_task, methods = ['GET', 'POST', "PUT"])

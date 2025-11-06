@@ -11,13 +11,12 @@
 
 {% block content %}
     <div class="container-classroom">
-        <aside class="sidebar-classroom">
+        <aside class="sidebar-classroom hidden-sidebar">
             {% if username|length <= 5 %}            
                 <div class="classroom-avatar">{{ username }}</div>
             {% else %}
                 <div class="classroom-avatar">{{ username[:2]|upper }}</div>
             {% endif %}
-            <p class="classroom-username">{{ username }}</p>
             <p class="classroom-email">{{ email }}</p>
 
             <nav class="menu">
@@ -38,6 +37,10 @@
             </nav>
         </aside>
 
+        <button class="hide-btn" id="toggle-btn">
+            <i class="bx bx-chevron-left"></i>
+        </button>
+
         {% block class_content %}
 
         {% endblock %}
@@ -46,4 +49,6 @@
     {% block class_modal %}
 
     {% endblock %}
+
+    <script src="/class_app/static/js/hideAside.js"></script>
 {% endblock %}

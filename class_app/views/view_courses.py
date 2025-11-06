@@ -3,6 +3,7 @@ from datetime import datetime
 from Project.render_page import render_page
 
 from user.models import Classes, Score
+from test_app.models import Test, Room
 from flask_login import current_user
 
 @render_page(template_name = 'courses.html')
@@ -14,7 +15,23 @@ def render_class_courses(id):
     CLASS= Classes.query.filter_by(id= id).first()  
     taskes_list= CLASS.tasks
 
+    online_tasks= []
+    start_button= []
+
     for task in taskes_list:
+        TEST= Test.query.filter_by(id= task.test_id).first()
+        ROOM = Room.query.filter_by(test_code = TEST.test_code).first()
+        
+        if task.online:
+            online_tasks.append(TEST)
+        else:
+            online_tasks.append(0)
+
+        if ROOM:
+            start_button.append(1)
+        else:
+            start_button.append(0)
+
         if task.due_time:
             due_time_list.append([str(task.due_time)[0:10], str(task.due_time)[11:16]])
         else:
@@ -29,6 +46,7 @@ def render_class_courses(id):
     
     task_date_now_list= []
     task_time_now_list= []
+    
     for index, due in enumerate(due_time_list):
         task= taskes_list[index]
 
@@ -58,4 +76,6 @@ def render_class_courses(id):
             "taskes_list": taskes_list,
             "do_task": do_task,
             "due_time_list": due_time_list,
-            "can_do_task": can_do_task}
+            "can_do_task": can_do_task,
+            "online_tasks": online_tasks,
+            "start_button": start_button}

@@ -6,7 +6,9 @@ function getCookie(name) {
 }
 
 function renderWaiteQuestion() {
+    console.log("WAIRTE DEL TIME")
     const roomContent = document.getElementById("room-content");
+    document.cookie= "time=; max_age=0; path=/"
     roomContent.innerHTML = ""; 
     roomContent.className = 'waite-next-question'
 
@@ -37,9 +39,11 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     question.textContent = quiz.question_text;
     questionBlock.appendChild(question);
 
+    let quizTime= getCookie("time");
+
     const timer = document.createElement("p");
     timer.id= "timer"
-    timer.textContent = quiz.time;
+    timer.textContent = quizTime;
     questionBlock.appendChild(timer);
  
     const answersDiv = document.createElement("div");
@@ -51,7 +55,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
         answersDiv.className = "answers";
     }
 
-    console.log(quiz.time)
+    console.log(quizTime)
 
     if (quiz.question_type == "choice" || quiz.question_type == "image"){
 
@@ -118,9 +122,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             )
         }
     }
-    else if (quiz.question_type == "input"){
-        console.log("input")
-        
+    else if (quiz.question_type == "input"){        
         const inputAnswer = document.createElement("input");
         inputAnswer.placeholder = "Введіть відповідь на запитання";
         inputAnswer.type = "text";
@@ -171,8 +173,6 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     
     }
     else if (quiz.question_type == "multiple_choice"){
-        console.log("multiple_choice")
-
         answers.forEach(answer => {
             const answerDiv = document.createElement("div");
             answerDiv.className = "multiple-div";
@@ -261,14 +261,22 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
 
     const timerText= document.getElementById("timer")
     
-    const coundown= setInterval(() =>{
-        time= parseInt(timerText.textContent);
-        timerText.textContent= --time;
+    if (timerText){
+        const coundown= setInterval(() =>{
+            if (!timerPaused){
+                time= parseInt(timerText.textContent) -1;
+                timerText.textContent= time;
+                document.cookie = `time= ${time}; path=/;`;
+            
+                if (time <= 0){
+                    clearInterval(coundown);
+                    timerText.textContent = "Час закінчений"
 
-        if (time <= 0){
-            clearInterval(coundown);
-            timerText.textContent = "Час закінчений"
-        }
-
-    }, 1000);
+                    setTimeout(() => {
+                        renderWaiteQuestion();
+                    }, 2000)
+                }        
+            }
+        }, 1000);
+    }
 }
