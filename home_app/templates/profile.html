@@ -179,30 +179,31 @@
                 </div>
             </div>
             
-            <div class="tests-section">
-                <form action="" method="post" class="score-form">
-                    <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
-                        <option value="date" selected>По датi </option>
-                        <option value="accuracy">По точностi</option>
-                    </select>
-            
-                    <input type="submit" value="Send" class="send-btn-profile">
-                    <script>
-                        const selectElementTest = document.getElementById("choice_test");
+            <form action="" method="post" class="score-form">
+                <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
+                    <option value="date" selected>По датi </option>
+                    <option value="accuracy">По точностi</option>
+                </select>
+        
+                <input type="submit" value="Send" class="send-btn-profile">
+                <script>
+                    const selectElementTest = document.getElementById("choice_test");
 
-                        function saveSelectedValueScore(){
-                            localStorage.setItem('selectedOptionScore', selectElementTest.value)
+                    function saveSelectedValueScore(){
+                        localStorage.setItem('selectedOptionScore', selectElementTest.value)
+                    }
+                    
+                    function LoadSelectionScore(element){
+                        const savedValue = localStorage.getItem('selectedOptionScore')
+                        if (savedValue) {
+                            selectElementTest.value = savedValue;
                         }
-                        
-                        function LoadSelectionScore(element){
-                            const savedValue = localStorage.getItem('selectedOptionScore')
-                            if (savedValue) {
-                                selectElementTest.value = savedValue;
-                            }
-                        }
-                        window.onload = LoadSelectionScore;
-                    </script>
-                </form>
+                    }
+                    window.onload = LoadSelectionScore;
+                </script>
+            </form>
+            
+            <div class="tests-section">
               
                 
                 {% if selected_option_test[0] == "date" %}
