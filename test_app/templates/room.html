@@ -80,11 +80,7 @@
         if (state && state.includes("author_start")) {
             state= getCookie("state")
             let time= getCookie("time")
-<<<<<<< HEAD
             renderAuthorStart(list_quiz[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
-=======
-            renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
->>>>>>> origin/NastyaBranch
         } 
         else if (state === "author_result_test") {
             renderAuthorResultTest(username, author_name, total_question);

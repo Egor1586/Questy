@@ -47,7 +47,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
     countAnswerSpan.textContent= `${parseInt(countAnswerSpan.textContent) + 1}`;
 
     let correctAnswerDiv  = document.getElementById("author-correct-answer");
-    console.log(correctAnswerDiv.textContent)
 
     let correctAnswer= '';
     if (correctAnswerDiv.textContent.includes(':')){
@@ -57,6 +56,12 @@ function addUserAnswer(username, answer, authorname, quiz) {
         correctAnswer= correctAnswerDiv.textContent.trim()
     }
 
+    console.log("ANSWR ANSER")
+
+    if (answer.includes("$$$")){
+        const sortedAnswers= answer.split("$$$").sort().join(" та ")
+        answer= sortedAnswers
+    }
     console.log(typeof correctAnswer, correctAnswer, typeof answer, answer)
 
     if (answer == correctAnswer){
@@ -142,14 +147,12 @@ function startTimer() {
         }
 
         if (!timerPaused){
-            console.log("___!1-11")
             time -= 1
             timerText.textContent= time
             document.cookie = `time= ${time}; path=/;`;      
         }
 
         if (time <= 0){
-            console.log("SSSTOP TIME")
             clearInterval(timerInterval);
             timerInterval= null
             timerText.textContent = "Час закінчився"
@@ -203,10 +206,10 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
     correctAnswer.style.display= "none"
 
     if (quiz.question_type == "multiple_choice"){
-        answerSpan.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
+        correctAnswer.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
     }
     else{
-        answerSpan.textContent= `${quiz.correct_answer}`
+        correctAnswer.textContent= `${quiz.correct_answer}`
     }
 
     const eyeIcon= document.createElement('i')
