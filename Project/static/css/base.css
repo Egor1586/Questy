@@ -131,7 +131,7 @@ header{
     margin-right: 3.5vw;
     text-decoration: none;
     color: black;
-    font-size: 1.3vh; 
+    font-size: 1.5vh; 
 }
 
 .auth-buttons a:first-of-type {
@@ -149,7 +149,7 @@ header{
 }
 
 .username {
-    font-size: 1.3vh;
+    font-size: 1.6vh;
     color: black;
     border:  0.3vh solid var(--sign_up_green); /* зелёная рамка */
     border-radius: 1vh;
@@ -161,7 +161,7 @@ header{
     background-color: transparent;
     border-radius: 1vh;
     padding: 0.7vh 1.3vw;
-    font-size: 1.3vh;
+    font-size: 1.6vh;
     cursor: pointer;
     color: black;
 }
