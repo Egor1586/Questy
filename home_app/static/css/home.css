@@ -83,23 +83,23 @@ header {
 
 /* .info-text p {
     color: #3c3c3c;
-    font-size: 1.2rem;
+    font-size: 2.5vh;
     margin: 0;
 } */
 
 /* Блок тестів */
-.tests {
+/* .tests {
     position: relative;
     background: linear-gradient(135deg, #ffffff 60%, #e8f9ee);
     border-radius: 2.5vh;
     box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.06);
-    padding: 3vw;
+    padding: 2vw;
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 80vw;
     overflow: hidden; 
-}
+} */
 
 /* Стилі */
 .tests::before,
@@ -126,12 +126,12 @@ header {
     background: radial-gradient(circle, rgba(61,163,93,0.15) 0%, transparent 70%);
 }
 
-.tests h2 {
+/* .tests h2 {
     color: #2d6a4f;
     margin-bottom: 2vh;
     position: relative;
     z-index: 2;
-}
+} */
 
 .tests-scroll {
     display: grid;
@@ -359,9 +359,7 @@ header {
     background: linear-gradient(180deg, #2f8b52, #276b45);
 }
 
-/* ===============================
-   Картки тестів
-=============================== */
+
 .test-card {
     position: relative;
     background-size: cover;
@@ -430,12 +428,12 @@ header {
 /*  */
 .test-info h3, 
 .test-info p {
-    word-wrap: break-word;       /* Переносить довгі слова */
-    overflow-wrap: break-word;   /* Сучасний аналог */
-    white-space: normal;         /* Дозволяє тексту переноситись */
-    text-overflow: ellipsis;     /* Якщо обмеження ширини — додає "..." */
-    display: block;              /* Гарантує, що елементи поводяться як блоки */
-    max-width: 100%;             /* Не виходить за межі картки */
+    word-wrap: break-word;       
+    overflow-wrap: break-word;   
+    white-space: normal;         
+    text-overflow: ellipsis;     
+    display: block;              
+    max-width: 100%;             
 }
 
 .test-card {
@@ -453,4 +451,77 @@ header {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Якщо хтось не зареєстрований або не авторизований */
+.empty-tests {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #f1f3f2;
+    border-radius: 24px;
+    height: 100%;
+    padding: 5vh 2vw;
+}
+
+.empty-content {
+    max-width: 520px;
+    color: #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vh;
+}
+
+/* саме повідомлення */
+.empty-content h2 {
+    font-size: 2.85vh;
+    font-weight: 600;
+    color: #2d6a4f;
+    margin: 0;
+}
+
+.empty-content p {
+    font-size: 2.05vh;
+    line-height: 1.5;
+    color: #555;
+    margin: 0;
+}
+
+/* Кнопка створення тесту */
+.btn-create {
+    background: linear-gradient(90deg, #6fcf97, #4caf6a);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 1.8vh;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+}
+
+.btn-create:hover {
+    background: linear-gradient(90deg, #58b87f, #3d915c);
+    transform: translateY(-2px);
+}
+
+/* Підказка про авторизацію */
+.auth-hint {
+    margin-top: 2vh;
+    font-size: 1.6vh;
+    color: #6b6b6b;
+}
+
+.auth-link {
+    color: #3da35d;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #276b45;
+    text-decoration: underline;
 }

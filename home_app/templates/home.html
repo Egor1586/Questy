@@ -47,8 +47,29 @@
                     </a>
                 {% endfor %}
                 </div>
-        </section>      
-    {% endif %}
+        </section>     
+        
+    
+        {% elif not list_tests %}
+            <section class="tests empty-tests">
+                <div class="empty-content">
+                    <h2>Тестів поки що немає</h2>
+                    <p>Створи свій перший тест і допоможи іншим перевірити свої знання!</p>
+
+                    <a href="/create_test" class="btn-create">+ Створити тест</a>
+
+                    {% if not is_authorization %}
+                        <p class="auth-hint">
+                            Щоб створювати або проходити тести, будь ласка, 
+                            <a href="/login" class="auth-link">увійди</a> чи 
+                            <a href="/sign_up" class="auth-link">зареєструйся</a>.
+                        </p>
+                    {% endif %}
+                </div>
+            </section>
+        {% endif %}
+
+
 
     <script>    
         const username = "{{ username }}"

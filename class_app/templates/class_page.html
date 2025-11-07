@@ -8,11 +8,12 @@
     <link rel = "stylesheet" href = "{{ url_for('class_app.static', filename='css/class_page.css') }}">
 {% endblock %}
 {% block class_content %}
-    <div class="content">  
+    <main class="content">
+        
         {% if is_teacher%}
             <div class="class-div">
                 {% if my_classes_list%}
-                    <h2 class="course-name">Доступні класи</h2>
+                    <h2>Доступні класи</h2>
                     
                     <div class="card-div">
                         {% for class in my_classes_list %} 
@@ -20,13 +21,8 @@
                             <div class="card with-tasks">
                                 {% if class.class_color2 == None %}
                                     <div class="card-header" style="background: {{ class.class_color1 }};">
-                                        <div class="card-info">
-                                            <div class="left-info">
-                                                Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
-                                            </div>
-                                            <div class="h-left-info">
-                                                <span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
-                                            </div>
+                                        <div class="h-left-info">
+                                            Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
                                         </div>
 
                                         <div class="class-actions">
@@ -34,24 +30,19 @@
                                             
                                             <div class="dropdown">
                                                 <form action="/delete_class{{ class.id }}" method="post">
-                                                    <button type="submit" class="dropdown-btn d">Видалити клас</button>
+                                                    <button type="submit" class="dropdown-btn d">Видалити курс</button>
                                                 </form>
 
                                                 <a href="/class_information{{ class.id }}" class="dropdown-btn i">
-                                                    Інформація про клас
+                                                    Інформація про курс
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                 {% else %}
                                     <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
-                                        <div class="card-info">
-                                            <div class="left-info">
-                                                Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
-                                            </div>
-                                            <div class="h-left-info">
-                                                <span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
-                                            </div>
+                                        <div class="h-left-info">
+                                            Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span><span>Код: {{ class.class_code }}</span>
                                         </div>
 
                                         <div class="class-actions">
@@ -73,39 +64,44 @@
 
                                 <div class="card-body">
                                     <ul>
-                                        {% for task in tasks[:2] %} 
+                                        {% for task in tasks %} 
                                             <li>
                                                 {{ task.title }}
                                                 <span class="due-time-p">
                                                     {% if task.due_time %}
                                                         - здати до {{ task.due_time.strftime('%d.%m.%Y %H:%M') }}
                                                     {% else %}
-                                                        - без дедлайну
+                                                        без дедлайну
                                                     {% endif %}
                                                 </span>
                                             </li>
                                         {% endfor %}
                                     </ul>
+
+                                    <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                                    <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                                    <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
                                 </div>
 
                                 {% if class.class_color2 == None %}
                                     <div class="card-footer">
                                         <a href="/class_courses{{ class.id }}">
                                             <button class="start-btn" style="background: {{ class.class_color1 }};">
-                                                Перейти до класу
+                                                Перейти до курсу
                                             </button>
                                         </a>
                                         <a href="/create_task{{ class.id }}">
                                             <button class="start-btn" style="background: {{ class.class_color1 }};">
                                                 Створити завдання
                                             </button>
+
                                         </a>
                                     </div>
                                 {% else %}
                                     <div class="card-footer">
                                         <a href="/class_courses{{ class.id }}">
                                             <button class="start-btn" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
-                                                Перейти до класу
+                                                Перейти до курсу
                                             </button>
                                         </a>
                                         <a href="/create_task{{ class.id }}">
@@ -124,53 +120,40 @@
             
         {% if classes_list%}
             <div class="class-div">
-                <h2 class="course-name">Мої класи</h2>
+                <h2>Мої класи</h2>
             
                 <div class="card-div">       
                     {% for class in classes_list %}       
                         {% set tasks = tasks_class_user_list[loop.index0] %}
                           
-                        <div class="card with-tasks" id="{{class.class_code}}">
+                        <div class="card with-tasks">
                             {% if class.class_color2 == None %}
                                 <div class="card-header" style="background: {{ class.class_color1 }};">
-                                    <div class="h-left-info">
-                                        Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
-                                    </div>
-                                    <span>Автор: {{ class.teacher.username }}</span>
+                                    Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span>
                                 </div>
                             {% else %}
                                 <div class="card-header" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
-                                    <div class="h-left-info">
-                                        Назва класу: {{ class.title }}<span>Урок: {{ class.lesson }}</span>
-                                    </div>
-                                    <span>Автор: {{ class.teacher.username }}</span>
+                                    Назва курсу: {{ class.title }}<br><span>Автор: {{ class.teacher.username }}</span>
                                 </div>
                             {% endif %}
-
                             <div class="card-body">
-                                {% for task in tasks[:2] %} 
-                                    <li>
-                                        {{ task.title }}
-                                        <span class="due-time-p">
-                                            {% if task.due_time %}
-                                                - здати до {{ task.due_time.strftime('%d.%m.%Y %H:%M') }}
-                                            {% else %}
-                                                - без дедлайну
-                                            {% endif %}
-                                        </span>
-                                    </li>
+                                {% for task in tasks %} 
+                                    <li>{{ task.title }}</li>
                                 {% endfor %}
+                                <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
+                                <li>Завдання 2 <span class="to-do">- здати до 01.01.2025</span></li>
+                                <li>Завдання 3 <span class="not-done"> - срок здачі закінчився</span></li> -->
                             </div>
                 
                             <div class="card-footer">
                                 <a href="/class_courses{{ class.id }}">
                                     {% if class.class_color2 == None %}
                                         <button class="start-btn" style="background: {{ class.class_color1 }};">
-                                            Перейти до класу
+                                            Перейти до курсу
                                         </button>
                                     {% else %}
                                         <button class="start-btn" style="background: linear-gradient(135deg, {{ class.class_color1 }}, {{ class.class_color2 }});">
-                                            Перейти до класу
+                                            Перейти до курсу
                                         </button>
                                     {% endif %}
                                 </a>
@@ -180,16 +163,16 @@
                 </div>
             </div>
         {% endif %}
-        </div>
+    </main>
 {% endblock %}
 
 {% block class_modal %}
     <!-- Кнопка + -->
     <button class="add-btn">+</button>
     <ul class="menu-options">
-        <li id="join-course-button">Приєднатися до класу</li>
+        <li id="join-course-button">Приєднатися до курсу</li>
         {% if is_teacher %}
-            <li id="create-course-button">Створити клас</li>
+            <li id="create-course-button">Створити курс</li>
         {% endif %}
     </ul>
 
@@ -200,17 +183,17 @@
             <button class="back-btn" onclick="closeModal()">×</button>
             
             <form class="form" method="POST">
-                <h2>Приєднатися до класу</h2>
+                <h2>Приєднатися до курсу</h2>
                 <div class="form-group">
-                    <label>Код класу</label>
-                    <h3>Попросіть у свого викладача код класу та введіть його тут.</h3>
+                    <label>Код курсу</label>
+                    <h3>Попросіть у свого викладача код курсу та введіть його тут.</h3>
                     <input type="text" placeholder="Введіть код" name="code" required>
                 </div>
                 <div class="form-group">
-                    <label>Вимоги до входу за допомогою коду класу:</label>
+                    <label>Вимоги до входу за допомогою коду курсу:</label>
                         <ul>
                             <li>Використовуйте авторизований обліковий запис</li>
-                            <li>Код класу має містити лише літери або цифри (5–8) і не включати пробіли й спеціальні символи</li>
+                            <li>Код курсу має містити лише літери або цифри (5–8) і не включати пробіли й спеціальні символи</li>
                         </ul>
                 </div>
     
@@ -225,17 +208,17 @@
             <button class="back-btn" onclick="closeModal()">×</button>
             
             <form class="test-form" method="POST">
-                <h2>Створити клас</h2>
+                <h2>Створити курс</h2>
                 <div class="form-group">
-                    <label>Назва класу:</label>
-                    <input type="text" placeholder="Введіть назву класу" name="title" required>
+                    <label>Назва курсу:</label>
+                    <input type="text" placeholder="Введіть назву курсу" name="title" required>
                 </div>
                 <div class="form-group">
                     <label>Назва уроку:</label>
                     <input type="text" placeholder="Введіть назву уроку" name="lesson" required>
                 </div>
                 <div class="form-group">
-                    <label>Колір класу:</label>
+                    <label>Колір курсу:</label>
                     <select id="color-type" name="color-type">
                         <option value="single">Монотонний</option>
                         <option value="gradient">Градієнт</option>
@@ -255,12 +238,10 @@
                     <input type="number" placeholder="Введіть число" name="max-count" required>
                 </div>
         
-                <button class="join-course-btn" type="submit">Створити клас</button>
+                <button class="join-course-btn" type="submit">Створити курс</button>
             </div>
         </form>
     </div>
-
-    <script src="/class_app/static/js/newTask.js"></script>
 
     <script>
         const is_teacher = "{{ is_teacher | tojson }}"

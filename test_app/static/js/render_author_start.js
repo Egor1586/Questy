@@ -41,8 +41,6 @@ function renderDoughnutChart(canvasId, totalAnswer, correctCount){
 }
 
 function addUserAnswer(username, answer, authorname, quiz) {
-    console.log("add user answer")
-    
     const userAnswers = document.getElementById("user-answers");
     const countAnswerSpan  = document.getElementById("count-answer-span");
 
@@ -205,10 +203,10 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
     correctAnswer.style.display= "none"
 
     if (quiz.question_type == "multiple_choice"){
-        correctAnswer.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
+        answerSpan.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
     }
     else{
-        correctAnswer.textContent= `${quiz.correct_answer}`
+        answerSpan.textContent= `${quiz.correct_answer}`
     }
 
     const eyeIcon= document.createElement('i')
@@ -281,6 +279,18 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
     });
 
     let quizTime= getCookie("time");
+    
+    // let number_of_question= state.slice(-1)
+
+    // console.log(`LAST QUESTION ${number_of_question} ${total_question- 1}`)
+    // let nextQuestionButton= `
+    //     <button id="next-q" class="next-q" onclick="nextQuestion()">Наступне питання</button>
+    //     `
+    // if (number_of_question == total_question- 1) {
+    //     nextButton.textContent = 'Кінець тесту'
+    //     nextButton.removeEventListener("click", nextQuestion)
+    //     nextButton.addEventListener("click", testStop);
+    // }
 
     socket.once('get_usernames', function(data){
         let userArrey = data;

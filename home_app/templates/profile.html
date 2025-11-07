@@ -10,7 +10,7 @@
 
 {% block content %}
     {% if is_authorization %}
-            <div class="container-profile">
+        <div class="container-profile">
             <div class="top-section">
                 <div class="graph-section">
                     <div class="dropdown">
@@ -251,10 +251,15 @@
                     </div>
                 {% endif %}
             </div>
-    
+        </div>
     {% else %}
-            <h1>У вас немає профілю, ви не авторизовані</h1>
+        <section class="no-profile">
+            <div class="no-profile-content">
+                <h1>У вас немає профілю, ви не авторизовані</h1>
+                <p>Будь ласка, <a href="/login" class="auth-link">увійдіть</a> або <a href="/sign_up" class="auth-link">зареєструйтесь</a>, щоб отримати доступ до свого профілю.</p>
+            </div>
+        </section>
     {% endif %}
-    </div>
+
 
 {% endblock %}

@@ -34,7 +34,8 @@
             }
         }
         
-        const socket= io();
+        const socket= io({reconnection: true});
+
         const total_question = Number("{{ test.total_questions }}");
         const test_id = Number("{{ test.id }}");
         const answers_per_question = Number("{{ test.answers_per_question }}");
@@ -79,7 +80,11 @@
         if (state && state.includes("author_start")) {
             state= getCookie("state")
             let time= getCookie("time")
+<<<<<<< HEAD
             renderAuthorStart(list_quiz[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
+=======
+            renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
+>>>>>>> origin/NastyaBranch
         } 
         else if (state === "author_result_test") {
             renderAuthorResultTest(username, author_name, total_question);
@@ -143,17 +148,6 @@
             }
         });
 
-        socket.on("create_all_user_blocks", function(data) {
-            let temp_user_list= data.slice(1, -1);
-            temp_user_list= temp_user_list.split('||')
-
-            temp_user_list.forEach(function(username) {
-                if (username.trim() !== ""){
-                    createUserBlock(username, author_name, username)
-                }
-            })
-        });
-        
         socket.on("listening_to_messages", function(data) {
             let messages = document.getElementById("messages");
 
@@ -318,6 +312,7 @@
 
         function nextQuestion(){
             const nextButton = document.getElementById("next-q");
+            plusAnswerTime= 0
 
             state = getCookie("state");
             let number_of_question= Number(state.slice(-1)) + 1;
@@ -356,7 +351,6 @@
                 correct_answer.textContent= `${list_quiz[number_of_question].correct_answer}`
             }
             
-
             document.cookie= `time=${Number(list_quiz[number_of_question].time)}; path=/`
             resetTimer(Number(list_quiz[number_of_question].time))
 

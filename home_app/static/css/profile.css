@@ -42,7 +42,9 @@ body {
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    
     width: 50%;
+    /* height: 100%; */
 }
 
 .dropdown {
@@ -216,4 +218,53 @@ select {
     border-radius: 1vh;
     cursor: pointer;
     font-weight: bold;
+}
+
+/* Якщо хтось не зареєстрований, не увійшов */
+.no-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 24px;
+
+    text-align: center;
+    padding: 4vh 2vw;
+}
+
+.no-profile-content {
+    max-width: 600px;
+    color: #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8vh;
+}
+
+.no-profile-content h1 {
+    font-size: 3.5vh;
+    color: #2d6a4f;
+    font-weight: 600;
+    margin: 0;
+}
+
+
+.no-profile-content p {
+    font-size: 2.5vh;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Посилання для входу/реєстрації */
+.auth-link {
+    color: #3da35d;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #276b45;
+    text-decoration: underline;
 }

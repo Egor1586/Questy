@@ -42,23 +42,21 @@ body {
 }
 
 .hide-btn {
-    position: absolute;
-    top: 8vh;
-    left: 165px;
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0.7vh;
-    width: 3vh;
-    height: 2.5vh;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
 
-    font-size: 3vh;
-    color: rgb(131, 129, 129);
-    transition: left 0.45s ease;
+    z-index: 999;
+    background: #2f3b52;
+    color: white;
+    border: none;
+    padding: 14px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+
+
 }
 
 .hide-btn:hover {

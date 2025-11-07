@@ -3,7 +3,7 @@
     flex: 1;
     padding: 1vw;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1vw;
     flex-wrap: nowrap; 
     align-items: flex-start;
@@ -17,6 +17,10 @@
 
 .full-content {
     width: 95vw ;
+}
+
+.class-div h2{
+    margin-bottom: 15px;
 }
 
 .course-name {
@@ -65,14 +69,6 @@
     gap: 0.6vw;
 
 }
-
-/* .card .with-tasks{
-    width: fit-content;
-}
-
-.card .no-tasks{
-    width: 250px;
-} */
 
 .card:hover {
     /* transform: translateY(-1px); */

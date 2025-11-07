@@ -172,7 +172,7 @@ main {
 .chat{
     display: flex;
     flex-direction: column;
-    width: 32vw;
+    width: 30vw;
     height: 95vh;
 
     background-color: #ffffff;
@@ -401,10 +401,10 @@ main {
     z-index: 3000;
 }
 
-#room-content {
+/* #room-content {
     height: 100%;
     width: 100%;
-}
+} */
 
 .question {
     display: flex;
@@ -1259,6 +1259,10 @@ main {
     width: fit-content;
     height: fit-content;
     margin: 0.5vh;
+
+    display: flex;
+    align-self: center;
+    justify-self: center;
 }
 
 .question-table {
@@ -1300,4 +1304,8 @@ main {
 .question-table td {
   font-size: 1.5vh;
   font-weight: bold;
+}
+
+.eye-icon{
+    margin-left: 0.5vw;
 }

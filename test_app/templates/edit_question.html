@@ -11,6 +11,7 @@
 {% block content %}
     <form action="" method="post" class="edit-question-form">
         <h1>Редагувати питання</h1>
+        <h2>{{ question_text }}</h2>
         {% if quiz.question_type == "choice" %}
             {% for number in range(count_answers) %}
                 

@@ -20,7 +20,7 @@
             <div class="form-box reg">
                 <h2 class="title">Реєстрація</h2>
             
-                <form action="" method="POST">
+                <form action="" method="POST" onsubmit="return validatePassword(event)">
                     <div class="input-box">
                         <input type="text" name="name" required>
                         <label for="name">Ім'я</label>
@@ -34,16 +34,18 @@
                     </div>
 
                     <div class="input-box">
-                        <input type="password" name="password" required>
+                        <input type="password" id="password" name="password" required>
                         <label for="password">Пароль</label>
                         <i class='bx bxs-lock-alt'></i>
                     </div>
 
                     <div class="input-box">
-                        <input type="password" name="password-confirmation" required>
+                        <input type="password" id="password-confirmation" name="password-confirmation" required>
                         <label for="passwrod-confirmation">Підтвердження паролю</label>
                         <i class='bx bxs-lock-alt'></i>
                     </div>
+                    
+                    <p id="error-message" style="color: red; font-size: 14px;"></p>
 
                     <div class="radio-box">
                         <div class="radio-button-box">
@@ -70,7 +72,33 @@
                 <h2>Приєднуйтесь до нашої команди зараз!</h2>
                 <p>Будь ласка, введіть свої дані.</p>
             </div>
-            
+
         </div>
     {% endif %}
+
+        <script>
+            function validatePassword(event){
+                const password = document.getElementById("password").value;
+                const confirm_password = document.getElementById("password-confirmation").value;
+                const error = document.getElementById('error-message');
+
+                const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?/~`-]).{6,}$/;
+
+                if (!regex.test(password)) {
+                    error.textContent = "Пароль повинен містити хоча б одну велику літеру, цифру і спецсимвол (мін. 6 символів).";
+                    event.preventDefault();
+                    return false;
+                }
+                
+                if (password != confirm_password){
+                    error.textContent = 'Паролі не співпадають.';
+                    event.preventDefault();
+                    return false
+                }
+            
+            error.textContent = '';
+            alert('Все добре!')
+            return true;
+        }
+        </script>
 {% endblock %}

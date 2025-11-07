@@ -150,3 +150,66 @@ input[type="text"], input[type="file"] {
     background-color: var(--green-main);
     transform: translateY(-2px);
 }
+/* Контейнер для кнопок */
+.create-question-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* кнопки для створення питань */
+.button-create-question {
+    background-color: #e8f6ec;
+    border: 1.5px solid #3da35d;
+    color: #2d6a4f;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.2px;
+}
+
+.button-create-question:hover {
+    background-color: #3da35d;
+    color: #fff;
+    border-color: #2f8b52;
+    transform: translateY(-2px);
+}
+
+.button-create-question:active {
+    transform: translateY(1px);
+    background-color: #2f8b52;
+    color: #fff;
+}
+
+/* завершити створення тесту */
+.submit-button {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 28px;
+    background-color: #3da35d;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+    align-self: center;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+
+.submit-button:hover {
+    background-color: #2f8b52;
+    transform: translateY(-1.5px);
+}
+
+.submit-button:active {
+    transform: translateY(1px);
+    background-color: #276b45;
+}
