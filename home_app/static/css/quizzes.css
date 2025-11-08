@@ -30,11 +30,21 @@ aside {
     background-color: var(--bg-aside);
     padding: 1vh 1vw 1vh 1vh;
     box-shadow: 0 0 1vw var(--shadow);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aside-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .create-btn {
-    width: 100%;
-    padding: 1vw;
+    width: 18vw;
+    padding: 1.5vh 1.5vw;
     font-size: 2vh;
     background-color: var(--green-main);
     color: white;
@@ -49,6 +59,10 @@ aside {
 .create-btn a{
     text-decoration: none;
     color: #ffffff;
+    
+    display: flex;
+    justify-items: center;
+    align-items: center;
 }
 
 .start a{
@@ -63,11 +77,15 @@ aside {
 
 .create-btn:hover {
     background-color: var(--green-dark);
-    transform: translateY(-3px);
+    transform: translateY(-0.3vh);
 }
 
 .library {
-    width: 15vw;
+    width: 16vw;
+    display: flex;
+    flex-direction: column;
+
+    left: 0;
     /* padding: 20px; */
 }
 
@@ -75,6 +93,16 @@ aside {
     font-size: 2.7vh;
     margin-bottom: 2vh;
     margin-top: 2vh;
+
+    text-align: left;
+
+}
+
+
+.code-p span{
+    background: linear-gradient(135deg, #80b48a, #56c591);
+    padding: 0.5vh 0.5vw;
+    border-radius: 1vh;
 }
 
 .quiz-card {
@@ -90,7 +118,7 @@ aside {
 
 .quiz-card:hover {
     background-color: #e0f0e5;
-    transform: translateY(-4px);
+    transform: translateY(0.3vh);
 }
 
 .quiz-list {
@@ -132,7 +160,7 @@ aside {
 }
 
 .quiz-item:hover {
-    transform: translateY(-1px);
+    transform: translateY(0.3vh);
 }
 
 .quiz-item p {
@@ -185,7 +213,7 @@ aside {
 }
 
 .quiz-item:hover {
-    transform: translateY(-1px);
+    transform: translateY(-0.3vh);
 }
 
 .quiz-item .info {
@@ -233,7 +261,7 @@ aside {
 .actions button:hover {
     background-color: var(--green-main);
     color: white;
-    transform: translateY(-1px);
+    transform: translateY(-0.3vh);
 }
 
 /* button.edit {

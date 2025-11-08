@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block links %}
-    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/profile.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/david_profile.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -16,13 +16,6 @@
                     <div class="dropdown">
                         <label for="chartType">Вибір графіка:</label>
                         <form action="" method="POST" class="score-form">
-                            <!-- <select name="choice" id="choice" onchange="saveSelectedValueChart()">
-                                <option value="graph_1" selected>Graph 1 </option>
-                                <option value="graph_2">Graph 2</option>
-                                <option value="graph_3">Graph 3</option>
-                                <option value="graph_4">Graph 4</option>
-                            </select> -->
-
                             <select name="choice" id="choice" onchange="saveSelectedValueChart()">
                                 <option value="graph_active1" selected>Graph active 1</option>
                                 <option value="graph_active2">Graph active 2</option>
@@ -261,5 +254,6 @@
         </section>
     {% endif %}
 
+    <script src="home_app/static/css/"></script>
 
 {% endblock %}

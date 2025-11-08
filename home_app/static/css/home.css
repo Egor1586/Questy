@@ -136,10 +136,10 @@ header {
 .tests-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap: 1.5vw; 
+    gap: 1vw; 
     overflow-y: auto; 
     overflow-x: hidden; 
-    padding-right: 1vw; 
+    padding-right: 2vw; 
     flex-grow: 1;
     position: relative;
     z-index: 2;
@@ -334,9 +334,9 @@ header {
 .tests-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2vw;
+    gap: 2.5vw;
     overflow-y: auto;
-    padding-right: 1.5vw;
+    padding-right: 2vw;
 }
 
 

@@ -64,7 +64,7 @@
 
                                 <div class="card-body">
                                     <ul>
-                                        {% for task in tasks %} 
+                                        {% for task in tasks[:2] %} 
                                             <li>
                                                 {{ task.title }}
                                                 <span class="due-time-p">
@@ -137,7 +137,7 @@
                                 </div>
                             {% endif %}
                             <div class="card-body">
-                                {% for task in tasks %} 
+                                {% for task in tasks[:2] %} 
                                     <li>{{ task.title }}</li>
                                 {% endfor %}
                                 <!-- <li>Завдання 1 <span class="done">- заверешено</span></li>
