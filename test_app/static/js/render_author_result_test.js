@@ -13,6 +13,7 @@ function authorLeaveTest(){
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
     document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
+    document.cookie = `timeStop=; max-age=0; path=/;`;
     document.cookie = `time=; max-age=0; path=/;`;
 
     window.location.href = '/'; 
@@ -118,11 +119,11 @@ function renderAccuracyChart(canvasId, accuracy_aquestions){
 function renderAuthorResultTest(username, author_name, total_question) {
 
     let container = document.getElementById("container-question");
-
-    if (container == null){
-        container = document.getElementsByClassName("wrapper-author-results-container");
-        console.log(container)
+    
+    if (container === null){
+        container = document.getElementById("room-content");
     }
+
     container.innerHTML= "";
     container.className= 'wrapper-author-results-container';
 
@@ -137,8 +138,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
     let accurancyArray= []
     
     socket.once('room_get_result_data', function(data) {  
-        console.log(data)
-
         const resultData= data.room_get_result_data
         const best_score_data= data.best_score_data
         const averega_score= data.averega_score

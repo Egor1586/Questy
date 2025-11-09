@@ -16,26 +16,31 @@
             {% for number in range(count_answers) %}
                 
                 {% if list_answers[number] != correct_answer %}
-                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}" class="incorrect-answer-p">
+                    <p class="incorrect-answer-p">{{ list_answers[number] }}</p>
+                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}">
 
                 {% else %}
-                    <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}" class="correct-answer-p">
+                    <p class="correct-answer-p">{{ list_answers[number] }}</p>
+                    <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}">
                 
                 {% endif %}
             {% endfor %}
         {% endif %}
 
         {% if quiz.question_type == "input" %}
-            <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ correct_answer }}" class="correct-answer-p">
+            <p class="correct-answer-p">{{ correct_answer }}</p>
+            <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ correct_answer }}">
         {% endif %}
 
         {% if quiz.question_type == "multiple_choice" %}
             {% for number in range(count_answers) %}
                 {% if list_answers[number] in correct_answer %}
-                    <input type="text" name="correct_answer{{ number }}" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}" class="correct-answer-p">
+                    <p class="correct-answer-p">{{ list_answers[number] }}</p>
+                    <input type="text" name="correct_answer{{ number }}" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}">
 
                  {% else %}
-                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}" class="incorrect-answer-p">
+                    <p class="incorrect-answer-p">{{ list_answers[number] }}</p>
+                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}">
 
                 {% endif %}
             {% endfor %}
@@ -45,10 +50,12 @@
             {% for number in range(count_answers) %}
                 
                 {% if list_answers[number] != correct_answer %}
-                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}" class="incorrect-answer-p">
+                    <p class="incorrect-answer-p">{{ list_answers[number] }}</p>
+                    <input type="text" name="answer{{ number }}" placeholder="Введіть нову відповідь" value="{{ list_answers[number] }}">
 
                 {% else %}
-                    <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}" class="correct-answer-p">
+                    <p class="correct-answer-p">{{ list_answers[number] }}</p>
+                    <input type="text" name="correct_answer" placeholder="Введіть нову правильну відповідь" value="{{ list_answers[number] }}">
                 
                 {% endif %}
             {% endfor %}

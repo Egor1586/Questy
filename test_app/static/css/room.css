@@ -41,28 +41,40 @@ main {
 
 .waite-side {
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 1.2vh;
     padding: 1vw;
-    width: 67vw;
+    width: 66vw;
     height: 95vh;
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    box-shadow: 0 4px 12px var(--shadow);
+    justify-content: space-between;
+    gap: 1vw;
+    box-shadow: 0 4px 1.2vh var(--shadow);
+}
+
+.waite-side-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 11vh;
 }
 
 .info-bar {
     display: flex;
     justify-content: space-between;
     background-color: #f0f0f0;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 1vw 1.5vh;
+    margin-bottom: 1vh;
+    border-radius: 1vh;
     font-weight: bold;
 }
 
 .info-text {
-    font-size: 1.5rem;
+    font-size: 2.5vh;
     color: #333;
 
     display: flex;
@@ -70,32 +82,32 @@ main {
     align-items: center;
     flex-direction: row;
 
-    gap: 8px;
+    gap: 0.8vw;
 }
 
 .info-text strong{
     padding: 0.4vh;
-    border-radius: 8px;
+    border-radius: 1vh;
     background-color: var(--green-second);
 }
 
 .user-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 1vh;
     overflow-y: auto;
-    max-height: 300px;
+    max-height: 40vh;
 }
 
-.user-block {
+.user-blocks {
     display: flex;
 
-    height: 90% !important;
+    height: 90vh !important;
 
     justify-content: space-between;
     background-color: #f9f9f9;
-    padding: 10px 15px;
-    border-radius: 8px;
+    padding: 1vw 1vh;
+    border-radius: 1vh;
     /* box-shadow: 0 2px 6px var(--shadow); */
 
     display: flex;
@@ -104,17 +116,13 @@ main {
     transition: transform 0.2s;
 }
 
-.user-name {
-    font-weight: 500;
-}
-
 .btn-remove {
     background-color: rgb(220, 77, 77);
     color: white;
-    padding: 3px 5px;
+    padding: 0.8vh 1.7vw;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 1vh;
+    font-size: 1.2vh;
     cursor: pointer;
     transition:  background-color 0.3s;
 }
@@ -128,10 +136,13 @@ main {
     background-color: var(--green-main);
     color: white;
 
+    width: 100%;
+    height: 5vh;
+
     padding: 1vh 2vw;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 1vh;
+    font-size: 2.5vh;
     cursor: pointer;
     transition:  background-color 0.3s;
 }
@@ -140,10 +151,13 @@ main {
     background-color: rgb(220, 77, 77);
     color: white;
 
-    padding: 12px 24px;
+    width: 100%;
+    height: 5vh;
+
+    padding: 1vh 2vw;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 1vh;
+    font-size: 2.5vh;
     cursor: pointer;
     transition:  background-color 0.3s;
 }
@@ -151,7 +165,7 @@ main {
 .btn-start:hover{
     background-color: #2e7a31;
 }
-.btn-end{
+.btn-end:hover{
     background-color: rgb(193, 54, 54);
 }
 
@@ -162,33 +176,34 @@ main {
     height: 95vh;
 
     background-color: #ffffff;
-    border-radius: 12px;
+    border-radius: 1.2vh;
     padding: 1vw;
-    box-shadow: 0 4px 12px var(--shadow);
-    gap: 1rem;
+    box-shadow: 0 4px 1.2vh var(--shadow);
+    gap: 2vh;
     box-sizing: border-box;
 }
 
 .chat h2{
     margin: 0;
-    font-size: 1.7rem;
+    text-align: center;
+    font-size: 3vh;
     color: #444;
 }
 
 .waite-title{
     margin: 0;
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 3.7vh;
     color: #3b3939;
 }
 
 .msg-chat{
     width: 100%;
-    padding: 12px 16px;
-    font-size: 1.2rem;
+    padding: 1vh 2vw;
+    font-size: 2vh;
 
-    border: 1px solid var(--green-light);
-    border-radius: 8px;
+    border: 0.4vh solid var(--green-light);
+    border-radius: 1vh;
     outline: none;
     transition: border-color 0.3s;
 }
@@ -196,11 +211,11 @@ main {
 .send-btn{
     padding: 1vh 2vw;
     background-color: rgba(142, 133, 133, 0.884);
-    font-size: 0.9rem;
+    font-size: 1.5vh;
 
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 1vh;
     cursor: pointer;
     width: 100%;
     transition: border-color 0.3s;
@@ -213,7 +228,7 @@ main {
 #messages{
     flex-grow: 1;
     overflow-y: auto;
-    border-top: 1px solid #ddd;
+    border-top: 0.1vh solid #ddd;
     padding-top: 1vh;
 
     display: flex;
@@ -222,7 +237,7 @@ main {
 
 .messages .my-msg {
     width: fit-content;
-    font-size: 1.5rem;
+    font-size: 2.3vh;
     color: #2e2e2e;
     
     align-self: flex-start;
@@ -231,22 +246,22 @@ main {
 .messages .other-msg {
     width: fit-content;
     align-self: flex-end;
-    font-size: 1.5rem;
+    font-size: 2.3vh;
     color: #2e2e2e;
 }
 
 
 #msg{
     padding: 1vh 1.5vw;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    border-radius: 1vh;
+    border: 0.4vh solid #ddd;
 
     transition: border-color 0.3s;
 
 }
 
 #msg:focus{
-    border: 1px solid rgba(142, 133, 133, 0.949);
+    border: 0.4vh solid rgba(142, 133, 133, 0.949);
 }
 
 .room-container {
@@ -258,15 +273,15 @@ main {
 
 .test-info-box, .instructions-box {
     background-color: #f7fdf6;
-    padding: 1vh 2vw;
-    border-radius: 10px;
-    border: 1px solid var(--green-light);
+    padding: 1vh 1.5vw;
+    border-radius: 2vh;
+    border: 0.4vh solid var(--green-light);
     box-shadow: 0 2px 6px var(--shadow);
 }
 
 .test-info-box h3, .instructions-box h3 {
-    margin: 0 0 10px;
-    font-size: 2rem;
+    margin: 0 0 1vh;
+    font-size: 4.2vh;
     color: #3c3c3c;
 }
 
@@ -278,7 +293,7 @@ main {
 
 .test-info-box ul li {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 2.7vh;
     color: #555;
 }
 
@@ -287,18 +302,18 @@ main {
 .messages {
     flex-grow: 1;
     overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    border: 0.4vh solid #ccc;
+    border-radius: 1vh;
     padding: 1vh;
-    height: 200px;
-    margin-bottom: 10px;
+    height: 100%;
+    margin-bottom: 1vh;
     background-color: #f9f9f9;
 }
 
 .participants-box {
     background-color: #f7fdf6;
-    padding: 15px 20px;
-    border-radius: 10px;
+    padding: 1vh 1vw;
+    border-radius: 1.2vh;
     border: 1px solid var(--green-light);
     box-shadow: 0 2px 6px var(--shadow);
 }
@@ -312,17 +327,17 @@ main {
 .participants-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 1vw;
 }
 
 .participants-list p {
     margin: 0;
-    padding: 6px 12px;
+    padding: 1vw 1vh;
     background-color: #eaf8ea;
-    border-radius: 6px;
+    border-radius: 0.8vh;
     font-size: 0.95rem;
     color: #3a3a3a;
-    border-left: 4px solid var(--green-main);
+    border-left: 0.4vw solid var(--green-main);
 }
 
 .waiting-msg {
@@ -331,13 +346,15 @@ main {
 }
 
 .teacher-block {
+    margin-top: 1vh;
+    font-size: 2.5vh;
     background-color: #e0f7e9;
-    border-left: 4px solid var(--green-main);
+    border-left: 0.4vw solid var(--green-main);
 }
 
 .empty-block {
     background-color: #f9f9f9;
-    border-left: 4px dashed #ccc;
+    border-left: 0.4vw dashed #ccc;
     font-style: italic;
     color: #666;
 }
@@ -347,18 +364,18 @@ main {
     color: #999;
     font-style: italic;
     /* padding: 20px; */
-    font-size: 0.95rem;
+    font-size: 1.8vh;
     /* background-color: #f5f5f5; */
-    /* border-radius: 8px; */
-    margin-top: 10px;
+    /* border-radius: 1vh; */
+    margin-top: 1vh;
     /* border: 1px dashed #ccc; */
 }
 
 .chat-message {
-    padding: 10px 14px;
-    margin-bottom: 8px;
+    padding: 1vw 1vh;
+    margin-bottom: 1vh;
     background-color: #e8f5e9;
-    border-radius: 8px;
+    border-radius: 1vh;
     color: #333;
     font-size: 0.95rem;
     box-shadow: 0 1px 3px var(--shadow);
@@ -379,8 +396,8 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 3rem;
-    gap: 2rem;
+    padding: 3vw;
+    gap: 2vh;
     z-index: 3000;
 }
 
@@ -392,19 +409,24 @@ main {
 .question {
     display: flex;
     flex-direction: row;
-
     justify-content: space-between;
-    font-size: 2rem;
+    align-items: center;
+
+    font-size: 3.7vh;
     font-weight: 700;
     text-align: center;
     background-color: #e8f9eb; 
     color: #000;
-    padding: 2rem;
-    border-radius: 16px;
+    padding: 2vw;
+    border-radius: 1.5vh;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     width: 95vw;
     height: fit-content;
-    min-height: 100px;
+}
+
+.question #timer{
+    display: flex;
+    justify-self: flex-start;
 }
 
 .answers {
@@ -413,9 +435,9 @@ main {
     grid-template-rows: 1fr 1fr; */
     grid-auto-flow: row;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 1vw;
     width: 100%;      
-    padding: 0 3rem;   
+    padding: 0 2vh;   
     height: 100%;
     box-sizing: border-box;
 }
@@ -423,7 +445,7 @@ main {
 .answers-input {
     gap: 1vh;
     width: 100%;      
-    padding: 0 3rem;   
+    padding: 0 2vh;   
     height: 100%;
     box-sizing: border-box;
 
@@ -468,15 +490,15 @@ main {
     width: 100%;
     height: 100%;
     background-color: #ffffff;
-    border-radius: 16px;
+    border-radius: 1.5vh;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 4.5vh;
     font-weight: 500;
     text-align: center;
-    padding: 2rem;
+    padding: 2vw;
 }
 
 .multiple-answer:hover {
@@ -491,15 +513,15 @@ main {
     width: 100%;
     height: 100%;
     background-color: var(--green-light);
-    border-radius: 16px;
+    border-radius: 1.5vh;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 4.5vh;
     font-weight: 500;
     text-align: center;
-    padding: 2rem;
+    padding: 2vw;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -514,27 +536,25 @@ main {
 .multiple-choice-answer{
     width: 80%;
     height: fit-content;
-    padding: 20px 0px 20px 0px;
+    padding: 3vh 0px 3vh 0px;
     background-color: var(--green-main);
     align-self: center;
     border: none;
-    border-radius: 16px;
-    font-size: 3rem;
+    border-radius: 2vh;
+    font-size: 4vh;
     font-weight: 700;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .input-with-answer {
-    width: 100%;
-    max-width: 800px;
-    height: 20%;
-    max-height: 200px;
-    padding: 1.5rem 2rem;
-    font-size: 3rem;
+    width: 50vw;
+    height: 15vh;
+    padding: 2vw 2vh;
+    font-size: 4vh;
     font-weight: 500;
     background-color: #ffffff;
-    border: 3px solid transparent;
-    border-radius: 16px;
+    border: 1vh solid transparent;
+    border-radius: 1.5vh;
     outline: none;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     text-align: center;
@@ -544,31 +564,40 @@ main {
 }
 
 .timer-btn {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
     background: rgb(105, 177, 105);
     color: white;
     border: none;
     padding: 0.8vh;
-    border-radius: 5px;
+    border-radius: 1vh;
     cursor: pointer;
     font-weight: bold;
+    font-size: 2.5vh;
+    height: 7vh;
     margin: 0.5vh;
 }
 
 .passing-answer {
     width: 44vw;
+    height: 100%;
 
     background-color: #ffffff;
-    border-radius: 16px;
+    border: 1vh grey;
+    border-radius: 1vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 3vh;
     font-weight: 500;
     text-align: center;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    padding: 2rem;
+    box-shadow: 0 0.5vw 1vh rgba(0, 0, 0, 0.08);
+    padding: 2vw;
 }
 
 .passing-answer:hover {
@@ -584,14 +613,14 @@ main {
 
 .container-question {
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 1.2vh;
     padding: 0.5vh;
 
     margin: 1vh;
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1vw;
     box-shadow: 0 4px 12px var(--shadow);
     height: 95vh;
     width: 95vw;
@@ -602,41 +631,43 @@ main {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 1vw 1vh;
     background-color: var(--green-light);
     color: white;
-    border-radius: 8px;
+    border-radius: 1vh;
 
     height: fit-content;
-    min-height: 8vh;
+    min-height: 10vh;
 }
 
-.user-block{
+.user-block {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-
-    height: 100%;
+    padding: 0.5vh 1vw;
+    
+    border-radius: 1vh;
+    border-left: 0.4vw solid var(--green-main);
+    font-size: 2.5vh;
+    height: 6vh;
     width: 100%;
 }
 
 .next-q{
-    width: 100%;
     background-color: var(--green-main);
     color: white;
     border: none;
-    padding: 1vh 0.5vw;
-    border-radius: 8px;
+    padding: 0.5vh 0.2vw;
+    border-radius: 1vh;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease;
 
-    font-style: italic;
-    font-size: 1rem;
-
-    height: 5.2vh;
+    /* font-style: italic; */
+    font-size: 3.5vh;
+    height: fit-content;
+    max-width: 20vw;
 }
 
 .next-q:hover {
@@ -675,14 +706,14 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 5%;
+    margin-top: 1vh;
 
     overflow-y: auto;
-    gap: 15px;
-    padding: 10px 15px;
+    gap: 1vw;
+    padding: 1vw 1vh;
     background-color: #f9fff8;
-    border-radius: 10px;
-    border: 2px dashed var(--green-light);
+    border-radius: 1.2vh;
+    border: 0.4vh dashed var(--green-light);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 
     width: 100%;
@@ -713,11 +744,11 @@ main {
 
     flex-grow: 1;
     overflow-y: auto;
-    gap: 15px;
-    padding: 10px 15px;
+    gap: 1vw;
+    padding: 1vw 1vh;
     background-color: #f9fff8;
-    border-radius: 10px;
-    border: 2px dashed var(--green-light);
+    border-radius: 1.2vh;
+    border: 0.4vh dashed var(--green-light);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 
     width: 49%;
@@ -732,21 +763,21 @@ main {
 
     flex-grow: 1;
     overflow-y: auto;
-    gap: 15px;
-    padding: 10px 15px;
+    gap: 1vw;
+    padding: 1vw 1vh;
     background-color: #f9fff8;
-    border-radius: 10px;
-    border: 2px dashed var(--green-light);
+    border-radius: 1.2vh;
+    border: 0.4vh dashed var(--green-light);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .user-answer {
     display: flex;
     flex-direction: column;
-    padding: 12px 16px;
+    padding: 1vw 1vh;
     background-color: #c7e3c7;
-    border-left: 6px solid var(--green-main);
-    border-radius: 8px;
+    border-radius: 1vh;
+    border-left: 0.4vh solid var(--green-main);
     box-shadow: 0 2px 6px var(--shadow);
     transition: transform 0.2s ease;
 }
@@ -758,17 +789,17 @@ main {
 .user-name {
     font-weight: bold;
     color: var(--green-main);
-    margin-bottom: 5px;
-    font-size: 1.5rem;
+    font-size: 2.5vh;
+    font-weight: 500;
 }
 
 .answer-text {
     display: flex;
     justify-content: space-between;
-    font-size: 0.95rem;
+    font-size: 2vh;
     color: #444;
     line-height: 1.4;
-    padding-left: 5px;
+    padding-left: 1vh;
 }
 
 .end-t {
@@ -777,7 +808,7 @@ main {
     color: white;
     border: none;
     padding: 12px 24px;
-    border-radius: 10px;
+    border-radius: 1.2vh;
     cursor: pointer;
     font-weight: bold;
     font-size: 1rem;
@@ -791,12 +822,12 @@ main {
 }
 
 .user-answers::-webkit-scrollbar {
-    width: 8px;
+    width: 1vw;
 }
 
 .user-answers::-webkit-scrollbar-thumb {
     background-color: var(--green-light);
-    border-radius: 4px;
+    border-radius: 0.4vh;
 }
 
 .user-answers::-webkit-scrollbar-track {
@@ -809,7 +840,7 @@ main {
     align-items: center;
     padding: 20px;
     background-color: #ffffff;
-    border-radius: 12px;
+    border-radius: 1.2vh;
     box-shadow: 0 2px 6px var(--shadow);
     max-width: 100%;
     margin: 0 auto;
@@ -818,7 +849,7 @@ main {
 .chart {
     max-width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 1.2vh;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
@@ -829,9 +860,9 @@ main {
 
 .stud-info-box {
     background-color: #f7fdf6;
-    padding: 15px 20px;
-    border-radius: 10px;
-    border: 1px solid var(--green-light);
+    padding: 1vw 1.5vh;
+    border-radius: 1.2vh;
+    border: 0.4vh solid var(--green-light);
     box-shadow: 0 2px 6px var(--shadow);
 
     width: 100%;
@@ -846,14 +877,14 @@ main {
 
 .stud-info-box h3 {
     margin: 0 0 1vw;
-    font-size: 2rem;
+    font-size: 4vh;
     color: #3c3c3c;
 }
 
 .stud-info-box ul {
     margin: 0;
     padding-left: 1vw;
-    font-size: 1.2rem;
+    font-size: 2.2vh;
     color: #555;
 }
 
@@ -874,8 +905,8 @@ main {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 1vw;
+    margin-top: 1vh;
 }
 
 /* --------------- BLUR --------------- */
@@ -899,14 +930,14 @@ main {
 
 .waiting-message {
     background-color: var(--bg-aside, #f0f7f0);
-    border: 1px solid var(--green-light, #aad8af);
-    border-radius: 12px;
-    padding: 30px 40px;
+    border: 0.4vh solid var(--green-light, #aad8af);
+    border-radius: 3vh;
+    padding: 3vw 3vh;
     box-shadow: 0 4px 12px var(--shadow, rgba(0,0,0,0.1));
-    font-size: 22px;
+    font-size: 4.5vh;
     color: var(--text-dark, #2f2f2f);
     text-align: center;
-    max-width: 400px;
+    max-width: 50vw;
     animation: pulse 2s infinite;
 }
 
@@ -928,29 +959,24 @@ main {
     justify-content: space-between;
 
     background-color: var(--bg-aside);
-    border: 1px solid var(--green-light);
+    border: 0.4vh solid var(--green-light);
 
-    border-radius: 10px;
-    margin-top: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 1.2vh;
+    margin-top: 2vh;
+    padding: 2vw;
+    margin-bottom: 2vh;
     box-shadow: 0 2px 4px var(--shadow);
 }
 
-/* .test-info, .answer-info {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-} */
-
 .answer-info {
-    max-width: 360px;
+    /* max-width: 360px; */
     background-color: #fff;
-    border-radius: 12px;
-    padding: 24px 28px;
+    border-radius: 1.2vh;
+    padding: 2vw 2vh;
+    font-size: 2vh;
     box-sizing: border-box;
-    border: 1.5px solid #c5d9c5;
-    margin: 10px 0;
+    border: 0.4vh solid #c5d9c5;
+    margin: 1vw 0;
 }
 
 .answer-info ul {
@@ -961,14 +987,13 @@ main {
 
 .answer-info li {
     display: grid;
-    grid-template-columns: 28px 1fr;
+    grid-template-columns: 2.5vw 1fr;
     align-items: center;
-    gap: 14px;
+    gap: 1vw;
     font-weight: 600;
-    font-size: 16px;
     color: #2e2e2e;
-    padding: 10px 0;
-    border-bottom: 1px solid #e1e8e1;
+    padding: 1vw 0;
+    border-bottom: 0.4vh solid #e1e8e1;
 }
 
 .answer-info li:last-child {
@@ -976,16 +1001,16 @@ main {
 }
 
 .answer-info{
-    margin-left: 20px;
+    margin-left: 1.5vw;
 }
 
 .answer-info p{
-    margin-bottom: 5px;
+    margin-bottom: 0.8vh;
 }
 
 .color-dot {
-    width: 22px;
-    height: 22px;
+    width: 2vh;
+    height: 2vh;
     border-radius: 50%;
     flex-shrink: 0;
     box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
@@ -1020,8 +1045,8 @@ main {
     background-color: white;
     color: var(--green-dark);
     border: 1px solid var(--green-main);
-    border-radius: 6px;
-    padding: 6px 12px;
+    border-radius: 1vh;
+    padding: 1vw 1vh;
     font-size: 14px;
     cursor: pointer;
     height: fit-content;
@@ -1036,31 +1061,32 @@ main {
 }
 .question-block, .result-info {
     background-color: white;
-    border: 1px solid var(--green-light);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border: 0.2vh solid var(--green-light);
+    border-radius: 1.2vh;
+    padding: 2vw;
+    margin-bottom: 2vh;
     box-shadow: 0 2px 4px var(--shadow);
 
-    width: 800px;
+    font-size: 1.8vh;
+    width: 60vw;
 }
 .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
+    font-size: 2.5vh;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 1.2vh;
 }
 .question-text {
-    margin-bottom: 15px;
+    margin-bottom: 1.2vh;
 }
 .answer{
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 15px;
-    border-left: 5px solid transparent;
+    padding: 1vw 1.2vh;
+    border-radius: 1vh;
+    margin-bottom: 1vh;
+    font-size: 2vh;
+    border-left: 0.4vh solid transparent;
 }
 .correct-answer {
     background-color: #8cea6a;
@@ -1080,21 +1106,22 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 2.5vh;
+    font-size: 2.5vh;
     height: auto;    
 }
 
 .home-btn{
-    font-size: 15px;
+    font-size: 2vh;
     text-decoration: none;
     color: white;
     
     font-weight: 600;
     background-color: #555;
-    border-radius: 5px;
-    margin: 10px 0;    
-    width: 100px;
-    height: 20px;
+    border-radius: 1vh;
+    margin: 1vw 0;    
+    width: 90%;
+    height: 5vh;
     border: none;
 }
 
@@ -1102,7 +1129,7 @@ main {
 .auth-block{
     background-color: #f8f9fa;
     border: 1px solid #dee2e6;
-    border-radius: 16px;
+    border-radius: 1.5vh;
     padding: 24px;
     max-width: 400px;
 
@@ -1124,7 +1151,7 @@ main {
     padding: 12px 24px;
     text-decoration: none;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 1vh;
     font-weight: 600;
     transition: background-color 0.3 ease, transform 0.2 ease;
 }
@@ -1157,7 +1184,7 @@ main {
     gap: 1rem;
     background-color: #f3f1f1ec;
     border: none;
-    border-radius: 1rem;
+    border-radius: 1vh;
     box-shadow: inset;
 
     color: #000;
@@ -1177,28 +1204,41 @@ main {
 .leave-btn{
     background-color: #ee7f7f;
     border: none;
-    padding: 0.7rem;
-    border-radius: 1rem;
+    padding: 0.6vh;
+    font-size: 1.5vh;
+    border-radius: 1vh;
     box-shadow: inset;
     text-align: center;
 
-    width: 40%;
+    width: 40vw;
+    display: flex;
+    align-self: center;
+    justify-content: center;
 }
 
-.wrapper-author-results-container{
+/* .wrapper-author-results-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    gap: 2rem;
-    padding: 1rem;
+    gap: 2vh;
+    padding: 3vw;
+} */
+
+.chart-wrapper {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+
+    width: 50vw;
+    height: auto;
 }
 
 .result-block-for-question{
     background-color: rgb(120, 201, 155);
     border: 1px solid rgb(98, 158, 124);
-    border-radius: 1rem;
+    border-radius: 1vh;
 
     display: flex;
     flex-direction: column;
@@ -1209,12 +1249,12 @@ main {
 /* TIME */
 #timer{
     color: #837d7d;
-    font-size: 2rem;
+    font-size: 4vh;
     font-weight: bold;
     text-align: center;
     background-color: var(--green-light);
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 1vw 1vh;
+    border-radius: 1vh;
     box-shadow: 0 2px 6px var(--shadow);
     width: fit-content;
     height: fit-content;
@@ -1225,41 +1265,43 @@ main {
     justify-self: center;
 }
 
-/* .author-question, .author-correct-answer {
-    font-size: 2.5rem;
-} */
-
-.header-bar {
-  margin: 1vh 0;
-  display: flex;
-  justify-content: center;
-}
-
 .question-table {
   border-collapse: collapse;
-  width: 80%;
-  max-width: 70%;
+  height: 100%;
+  width: 100%;
   background: #fdfdfd;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 0.4vh solid #ddd;
+  border-radius: 1vh;
   overflow: hidden;
 }
 
+.correct-line {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    text-align: left;
+    align-items: center;
+    padding: 1vh 1.4vw;
+}
+
+#eye-icon {
+    margin-left: 0.5vw;
+}
+
 .question-table th,
-.question-table td {
-  border: 1px solid #ccc;
+.author-question {
+  border: 0.4vh solid #ccc;
   padding: 1vh 1.4vw;
   text-align: left;
 }
 
 .question-table th {
-  background-color: #f3f3f3;
   font-size: 2vh;
   font-weight: bold;
 }
 
 .question-table td {
-  background-color: #f3f3f3;
   font-size: 1.5vh;
   font-weight: bold;
 }

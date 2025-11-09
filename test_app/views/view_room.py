@@ -103,6 +103,8 @@ def handle_send_usernames(data):
     author = data['authorname']
     author_sid = get_sid(author)
 
+    print("NENENENEN DJDJD")
+    print(room)
     ROOM = Room.query.filter_by(test_code = room).first()
 
     users_in_room = ROOM.user_list.split('|')
@@ -204,8 +206,6 @@ def handle_start_test(data):
     ROOM= Room.query.filter_by(test_code= room).first()
     ROOM.active_test= True
     db.session.commit()
-
-    print("active_test True")
     
     emit("start_test", {
         "room": room,
@@ -337,7 +337,10 @@ def handle_message(data):
         if score.accuracy > best_accuracy:
             BEST_SCORE= score
 
-    averega_score= averega_accuracy//len(SCORE_LIST)
+    if len(SCORE_LIST) > 0:
+        averega_score= averega_accuracy//len(SCORE_LIST)
+    else:
+        averega_score= 0
 
     print(SCORE_LIST)
     print(BEST_SCORE)

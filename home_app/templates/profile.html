@@ -5,24 +5,17 @@
 {% endblock %}
 
 {% block links %}
-    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/profile.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/david_profile.css') }}">
 {% endblock %}
 
 {% block content %}
     {% if is_authorization %}
-            <div class="container-profile">
+        <div class="container-profile">
             <div class="top-section">
                 <div class="graph-section">
                     <div class="dropdown">
                         <label for="chartType">Вибір графіка:</label>
                         <form action="" method="POST" class="score-form">
-                            <!-- <select name="choice" id="choice" onchange="saveSelectedValueChart()">
-                                <option value="graph_1" selected>Graph 1 </option>
-                                <option value="graph_2">Graph 2</option>
-                                <option value="graph_3">Graph 3</option>
-                                <option value="graph_4">Graph 4</option>
-                            </select> -->
-
                             <select name="choice" id="choice" onchange="saveSelectedValueChart()">
                                 <option value="graph_active1" selected>Graph active 1</option>
                                 <option value="graph_active2">Graph active 2</option>
@@ -178,34 +171,34 @@
                     </div>
                 </div>
             </div>
+            
+            <form action="" method="post" class="score-form">
+                <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
+                    <option value="date" selected>По датi </option>
+                    <option value="accuracy">По точностi</option>
+                </select>
+        
+                <input type="submit" value="Send" class="send-btn-profile">
+                <script>
+                    const selectElementTest = document.getElementById("choice_test");
 
-            <div class="filder-test">
-                <form action="" method="post" class="score-form">
-                    <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
-                        <option value="date" selected>По датi </option>
-                        <option value="accuracy">По точностi</option>
-                    </select>
-            
-                    <input type="submit" value="Send" class="send-btn-profile">
-                    <script>
-                        const selectElementTest = document.getElementById("choice_test");
-    
-                        function saveSelectedValueScore(){
-                            localStorage.setItem('selectedOptionScore', selectElementTest.value)
+                    function saveSelectedValueScore(){
+                        localStorage.setItem('selectedOptionScore', selectElementTest.value)
+                    }
+                    
+                    function LoadSelectionScore(element){
+                        const savedValue = localStorage.getItem('selectedOptionScore')
+                        if (savedValue) {
+                            selectElementTest.value = savedValue;
                         }
-                        
-                        function LoadSelectionScore(element){
-                            const savedValue = localStorage.getItem('selectedOptionScore')
-                            if (savedValue) {
-                                selectElementTest.value = savedValue;
-                            }
-                        }
-                        window.onload = LoadSelectionScore;
-                    </script>
-                </form>
-            </div>
+                    }
+                    window.onload = LoadSelectionScore;
+                </script>
+            </form>
             
-            <div class="tests-section">            
+            <div class="tests-section">
+              
+                
                 {% if selected_option_test[0] == "date" %}
                     <div class="score-result">
                         {% for score in scores %}
@@ -251,10 +244,16 @@
                     </div>
                 {% endif %}
             </div>
-    
+        </div>
     {% else %}
-            <h1>У вас немає профілю, ви не авторизовані</h1>
+        <section class="no-profile">
+            <div class="no-profile-content">
+                <h1>У вас немає профілю, ви не авторизовані</h1>
+                <p>Будь ласка, <a href="/login" class="auth-link">увійдіть</a> або <a href="/sign_up" class="auth-link">зареєструйтесь</a>, щоб отримати доступ до свого профілю.</p>
+            </div>
+        </section>
     {% endif %}
-    </div>
+
+    <script src="home_app/static/css/"></script>
 
 {% endblock %}

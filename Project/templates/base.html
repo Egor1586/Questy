@@ -24,14 +24,14 @@
             </button>
 
             <nav class="nav-links">
-                <a href="/" class="{% if request.path == '/' %}active{% endif %}">Головна</a>
-                <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">Профіль</a>      
                 {% if is_authorization %}
+                    <a href="/" class="{% if request.path == '/' %}active{% endif %}">Головна</a>
+                    <a href="/profile" class="{% if request.path == '/profile/' %}active{% endif %}">Профіль</a>      
                     <a href="/class_page" class="{% if request.path == '/class_page' %}active{% endif %}">Класи</a>
+                    {% if is_teacher %}
+                        <a href="/quizzes" class="{% if request.path == '/quizzes/' %}active{% endif %}">Тести</a>
+                    {% endif %}
                 {% endif %}   
-                {% if is_teacher %}
-                    <a href="/quizzes" class="{% if request.path == '/quizzes/' %}active{% endif %}">Тести</a>
-                {% endif %}
             </nav>
 
             <div class="user-actions">

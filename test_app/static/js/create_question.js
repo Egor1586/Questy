@@ -66,7 +66,7 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                 <label>Текст питання:</label>
                 <input type="text" class="question-text" name="question-text">
 
-                <label>Час для виконання</label>
+                <label>Час на виконання</label>
                 <input type="text" class="question-time" name="question-time">
             `
 

@@ -1,0 +1,184 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f3f8f4;
+    color: #2d3e2f;
+}
+
+/* Контейнер профілю */
+.container-profile {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    padding: 2vh;
+    width: 100%;
+    height: 92vh;
+    margin: auto;
+}
+
+/* Верхня секція: графік + профіль */
+.top-section {
+    display: flex;
+    gap: 2vh;
+    align-items: stretch;
+    height: 40vh;
+}
+
+/* Графік */
+.graph-section {
+    flex: 2.5;
+    background-color: #fff;
+    border: 0.2vh solid #ddd;
+    border-radius: 1.5vh;
+    padding: 1.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05);
+
+    width: 50%;
+}
+
+/* Контейнер графіка */
+.chart-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* Профіль */
+.profile-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 1.5vh;
+    border: 0.4vh dashed #a5d6a7;
+    box-shadow: inset 0 0.4vh 1vh rgba(0,0,0,0.05);
+    padding: 1.5vh;
+    height: 100%;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vh;
+    width: 100%;
+}
+
+.profile-section .avatar {
+    width: 9vh;
+    height: 9vh;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-section h3 {
+    font-size: 2.4vh;
+    margin: 0;
+}
+
+.profile-section p {
+    font-size: 2vh;
+    text-align: center;
+    margin: 0.5vh 0;
+}
+
+.edit-profile-btns {
+    display: flex;
+    gap: 1vh;
+}
+
+.edit-profile-btns button {
+    background: linear-gradient(135deg, #66bb75, #43a060);
+    color: white;
+    border: none;
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 2vh;
+}
+
+/* Блок тестів */
+.tests-section {
+    flex: 1;
+    background-color: #fff;
+    border: 0.2vh solid #ddd;
+    border-radius: 1.5vh;
+    padding: 2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    height: 48vh;
+    overflow-y: auto;
+    box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05);
+}
+
+.score-result {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh;
+}
+
+.test-card {
+    flex: 1 1 22vh;
+    max-width: 26vh;
+    border: 0.2vh solid #ccc;
+    border-radius: 1.5vh;
+    padding: 1.5vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    background-color: #f9fdf8;
+    box-shadow: 0 0.4vh 0.9vh rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.test-card:hover {
+    transform: translateY(-0.6vh);
+    box-shadow: 0 1vh 2vh rgba(0,0,0,0.15);
+}
+
+.test-card p {
+    font-size: 1.8vh;
+    margin: 0.5vh 0;
+}
+
+.test-card button {
+    background-color: #356d7d;
+    color: white;
+    border: none;
+    padding: 1vh 1.5vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-weight: bold;
+    width: fit-content;
+    margin-top: 1vh;
+}
+
+/* Скролл */
+.tests-section::-webkit-scrollbar {
+    width: 0.8vh;
+}
+
+.tests-section::-webkit-scrollbar-track {
+    background: #f0f5f2;
+}
+
+.tests-section::-webkit-scrollbar-thumb {
+    background-color: #66bb75;
+    border-radius: 1vh;
+}
+
+/* Кнопка Send */
+.send-btn-profile {
+    background: rgb(105, 177, 105);
+    color: white;
+    border: none;
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-weight: bold;
+}

@@ -17,8 +17,10 @@ def render_edit_question():
 
     list_answers = quiz.answer_options.split("%$№") if quiz.answer_options else []
     correct_answer = quiz.correct_answer
+    print(correct_answer)
     question_text = quiz.question_text
     message = ""
+    
     if quiz.question_type == "multiple_choice":
         correct_answer = correct_answer.split("%$№")
 
