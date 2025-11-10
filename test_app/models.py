@@ -16,6 +16,15 @@ class Test(db.Model):
 
     quizes= db.relationship('Quiz', backref= 'test', cascade= "all, delete-orphan")
 
+    def dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "author_name": self.author_name,
+            "test_code": self.test_code,
+        }
+
 
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key= True)

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block links %}
-    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/david_profile.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('home_app.static', filename='css/profile.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -154,7 +154,7 @@
 
                 <div class="profile-section">
                     <div class="profile-content">
-                        <img src="/home_app/static/images/default-profile1.jpg" alt="avatar" class="avatar">
+                        <img src="/home_app/static/images/default-profile.jpg" alt="avatar" class="avatar">
                         <h3>{{ username }}</h3>
 
                         <div class="edit-profile-btns">
@@ -172,77 +172,34 @@
                 </div>
             </div>
             
-            <form action="" method="post" class="score-form">
-                <select name="choice_test" id="choice_test" onchange="saveSelectedValueScore()">
-                    <option value="date" selected>По датi </option>
-                    <option value="accuracy">По точностi</option>
-                </select>
-        
-                <input type="submit" value="Send" class="send-btn-profile">
-                <script>
-                    const selectElementTest = document.getElementById("choice_test");
-
-                    function saveSelectedValueScore(){
-                        localStorage.setItem('selectedOptionScore', selectElementTest.value)
-                    }
-                    
-                    function LoadSelectionScore(element){
-                        const savedValue = localStorage.getItem('selectedOptionScore')
-                        if (savedValue) {
-                            selectElementTest.value = savedValue;
-                        }
-                    }
-                    window.onload = LoadSelectionScore;
-                </script>
-            </form>
+            <div class="filter-score-block">
+                <button class="date">Filter date</button>
+                <button class="accuracy">Filter accuracsy</button>
+            </div>
             
             <div class="tests-section">
-              
-                
-                {% if selected_option_test[0] == "date" %}
-                    <div class="score-result">
-                        {% for score in scores %}
-                            <div class="test-card">   
-                                {% for test in list_tests %}
-                                    {% if test.id == score.test_id %}
-                                        <p><strong>Тест: </strong>{{ test.title }}</p>
-                                        <p><strong>Опис: </strong>{{ test.description }}</p>
-                                        <p><strong>Автор: </strong>{{ test.author_name }}</p>
-                                        <p><strong>Код: </strong>{{ test.test_code }}</p>
-                                        <a href="/review_results{{ score.id }}">
-                                            <button>Переглянути</button>
-                                        </a>
-                                    {% endif %}
-                                {% endfor %}
-                                <p><strong>Результат: </strong>{{ score.accuracy }}</p>
-                                <p><strong>Дата: </strong>{{ score.date_complete }}</p>
-                                <p><strong>Час: </strong>{{ score.time_complete }}</p>
-                                
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% elif selected_option_test[0] == "accuracy" %}
-                    <div class="score-result">
-                        {% for score in accuracy_sort %}
-                            <div class="test-card">   
-                                {% for test in list_tests %}
-                                    {% if test.id == score[2] %}
-                                        <p><strong>Тест: </strong>{{ test.title }}</p>
-                                        <p><strong>Опис: </strong>{{ test.description }}</p>
-                                        <p><strong>Автор: </strong>{{ test.author_name }}</p>
-                                        <p><strong>Код: </strong>{{ test.test_code }}</p>
-                                        <a href="/review_results{{ score[1] }}">
-                                            <button>Переглянути</button>
-                                        </a>
-                                    {% endif %}
-                                {% endfor %}
-                                <p><strong>Результат: </strong>{{ score[0] }}</p>
-                                <p><strong>Дата: </strong>{{ score[3] }}</p>
-                                <p><strong>Час: </strong>{{ score[4] }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                    
+                <div class="score-result">
+                    {% for score in scores %}
+                        {% for test in list_tests %}
+                            {% if test.id == score.test_id %}
+                                <div class="test-card">   
+                                    <p><strong>Тест: </strong>{{ test.title }}</p>
+                                    <p><strong>Опис: </strong>{{ test.description }}</p>
+                                    <p><strong>Автор: </strong>{{ test.author_name }}</p>
+                                    <p><strong>Код: </strong>{{ test.test_code }}</p>
+                                    <a href="/review_results{{ score.id }}">
+                                        <button>Переглянути</button>
+                                    </a>
+                                    <p><strong>Результат: </strong>{{ score.accuracy }}</p>
+                                    <p><strong>Дата: </strong>{{ score.date_complete }}</p>
+                                    <p><strong>Час: </strong>{{ score.time_complete }}</p>
+                                    
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     {% else %}
@@ -254,6 +211,6 @@
         </section>
     {% endif %}
 
-    <script src="home_app/static/css/"></script>
+    <script src="/home_app/static/js/profileScoreSort.js"></script>
 
 {% endblock %}
