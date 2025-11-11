@@ -26,7 +26,7 @@
                 <input placeholder="Введіть код тесту" class= "input_code" id="room">
                 <div class="fake-input-border"></div>
             </div>
-            <button type="button" class= "search-btn" onclick="emitUser()">ПІДКЛЮЧИТИСЬ</button>
+            <button type="button" class="search-btn">ПІДКЛЮЧИТИСЬ</button>
         </div>
     </aside>
 
@@ -35,16 +35,17 @@
             <h2>Доступні тести</h2>
             <div class="tests-scroll">
                 {% for test in list_tests %}
-                <a href="/passing_test?test_id={{ test.id }}&question_number=0">
-                    <div class="test-card" style="background-image: url({% if test.image %}/home_app/static/images/media/{{ test.id }}{% else %}/home_app/static/images/media/4.png{% endif %});">
-                            <div class="test-info">
-                                <h3>{{ test.title }}</h3>
-                                <p>Автор: {{ test.author_name }}</p>
+                    <div class="test-card" 
+                        data-test-id= "{{ test.id }}"
+                        data-test-title= "{{ test.title }}"
+                        style="background-image: url({% if test.image %}/home_app/static/images/media/{{ test.id }}{% else %}/home_app/static/images/media/4.png{% endif %});">
+                        <div class="test-info">
+                            <h3>{{ test.title }}</h3>
+                            <p>Автор: {{ test.author_name }}</p>
 
-                                <p>{{ test.total_questions }} питань</p>
-                            </div>
+                            <p>{{ test.total_questions }} питань</p>
                         </div>
-                    </a>
+                    </div>
                 {% endfor %}
                 </div>
         </section>     
@@ -67,38 +68,25 @@
                     {% endif %}
                 </div>
             </section>
-        {% endif %}
+        {% endif %}  
+{% endblock %}
 
-
-
-    <script>    
-        const username = "{{ username }}"
-        const test_list = "{{ list_tests }}"
-        let currentCodes = [];
-
-        async function updateCodes() {
-            try {
-                const response = await fetch('/get_active_codes');
-                const codes = await response.json();
-                currentCodes = codes;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        updateCodes();
-        setInterval(updateCodes, 5000);
-
-        function emitUser(){
-            const room = document.getElementById('room').value.trim();
+{% block modal %}
+    <div class="modal-bg" id="modal-bg" style="display:none;">
+        <div class="modal" id="join-form">
+            <button class="back-btn">×</button>
             
-            if (currentCodes.includes(room)) {
-                window.location.href = `/room${room}`; 
-            } 
-        }
-
-    </script>
+            <h2>Start test</h2>
+            <div class="form-group">
+                <label id="modal-id">Код test</label>
+                <h3 id="modal-desc">Some text</h3>
+            </div>
     
+            <div class="bottom-button">
+                <button class="start-test-btn" id="start-test-btn">Приєднатися</button>
+            </div>
+        </div>
+    </div>    
 {% endblock %}
 
 {% block footer %}
@@ -110,4 +98,6 @@
             <a href="#"><i class='bx bxl-twitter'></i></a>
         </div>
     </footer>
+
+    <script src="/home_app/static/js/codeCheck.js"></script>
 {% endblock %}

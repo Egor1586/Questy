@@ -48,7 +48,7 @@
                             <div class="actions">
                                 {% if test.test_code != 0 %}
                                     <form action="/reset_test{{ test.id }}" >
-                                        <button class="btn" onclick="cleanCookies()">
+                                        <button class="btn" id="clear">
                                             Скинути тест
                                         </button>
                                     </form>

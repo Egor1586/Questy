@@ -154,7 +154,7 @@
     <!-- Приєднатись -->
     <div class="modal-bg" id="modal-bg" style="display:none;">
         <div class="modal" id="join-form">
-            <button class="back-btn" onclick="closeModal()">×</button>
+            <button class="back-btn">×</button>
             
             <form class="form" method="POST">
                 <h2>Приєднатися до курсу</h2>
@@ -179,7 +179,7 @@
 
         <!-- Створити -->
         <div class="modal" id="create-form" style="display:none;">
-            <button class="back-btn" onclick="closeModal()">×</button>
+            <button class="back-btn">×</button>
             
             <form class="test-form" method="POST">
                 <h2>Створити курс</h2>
@@ -215,72 +215,8 @@
                 <button class="join-course-btn" type="submit">Створити курс</button>
             </div>
         </form>
-    </div>
+    </div>   
 
     <script src="/class_app/static/js/classSorte.js"></script>
-    <script>
-        const is_teacher = "{{ is_teacher | tojson }}"
-        console.log(is_teacher)
-
-        // Відкриття меню +
-        const addBtn = document.querySelector('.add-btn')
-
-        const menuOptions = document.querySelector('.menu-options')
-
-        addBtn.addEventListener('click', () => {
-            menuOptions.style.display = menuOptions.style.display === 'flex' ? 'none' : 'flex'
-        })
-
-        // Показ форми
-        const modalBg = document.getElementById('modal-bg')
-        const joinForm = document.getElementById('join-form')
-        const createForm = document.getElementById('create-form')
-
-        document.getElementById('join-course-button').addEventListener('click', () => {
-            joinForm.style.display = 'block'
-            createForm.style.display = 'none'
-            modalBg.style.display = 'flex'
-            menuOptions.style.display = 'none'
-        })
-
-        if (is_teacher){
-            document.getElementById('create-course-button').addEventListener('click', () => {
-                createForm.style.display = 'block'
-                joinForm.style.display = 'none'
-                modalBg.style.display = 'flex'
-                menuOptions.style.display = 'none'
-            })
-        }
-
-        // Закриття модалки
-        function closeModal() {
-            modalBg.style.display = 'none'
-        }
-
-        // Зміна вибору кольору
-        const colorType = document.getElementById('color-type')
-        colorType.addEventListener('change', () => {
-            if (colorType.value === 'single') {
-                document.getElementById('color-single').style.display = 'flex'
-                document.getElementById('color-gradient').style.display = 'none'
-            } else {
-                document.getElementById('color-single').style.display = 'none'
-                document.getElementById('color-gradient').style.display = 'flex'
-            }
-        })
-
-        // Класи та їх видалення
-        document.addEventListener("click", function(e) {
-            const actions = e.target.closest(".class-actions")
-
-            document.querySelectorAll(".class-actions").forEach(el => {
-                el.classList.remove("show");
-            })
-
-            if (actions && e.target.closest(".more-class-actions")) {
-                actions.classList.toggle("show")
-            }
-        });
-
-    </script>      
+    <script src="/class_app/static/js/classModals.js"></script>   
 {% endblock %}

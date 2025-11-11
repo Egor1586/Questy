@@ -65,42 +65,6 @@ header {
     /* min-width: 300px; */
 }
 
-/* .info {
-     width: 16vw;
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
-
-    gap: 2vw; 
-    background: linear-gradient(145deg, #ffffff, #e8f8ec);
-    border-radius: 2vh;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    padding: 2vw;
-} */
-
-
-/* .info-text p {
-    color: #3c3c3c;
-    font-size: 2.5vh;
-    margin: 0;
-} */
-
-/* Блок тестів */
-/* .tests {
-    position: relative;
-    background: linear-gradient(135deg, #ffffff 60%, #e8f9ee);
-    border-radius: 2.5vh;
-    box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.06);
-    padding: 2vw;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 80vw;
-    overflow: hidden; 
-} */
-
 /* Стилі */
 .tests::before,
 .tests::after {
@@ -125,13 +89,6 @@ header {
     height: 250px;
     background: radial-gradient(circle, rgba(61,163,93,0.15) 0%, transparent 70%);
 }
-
-/* .tests h2 {
-    color: #2d6a4f;
-    margin-bottom: 2vh;
-    position: relative;
-    z-index: 2;
-} */
 
 .tests-scroll {
     display: grid;
@@ -166,42 +123,6 @@ header {
 .tests-scroll::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #2f8b52, #276b45);
 }
-
-/* Картки тестів */
-/* .test-card {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    border-radius: 14px;
-    color: #fff;
-    padding: 1vw;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    overflow: hidden;
-    width: 250px;
-    height: 270px;
-}
-
-.test-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(45, 106, 79, 0.55);
-    border-radius: 14px;
-    transition: background 0.3s ease;
-}
-
-.test-card:hover {
-    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.12);
-}
-
-.test-card:hover::after {
-    background: rgba(45, 106, 79, 0.75);
-} */
 
 .start-t {
     font-size: 4.5vh;
@@ -403,12 +324,8 @@ header {
     z-index: 2;
     color: #fff;
     text-align: left;
-    /* width: 100%; */
-    /* backdrop-filter: blur(4px); */
     border-radius: 1.2vh;
     padding: 1vw 1vh;
-    /* background: rgba(0, 0, 0, 0.25); */
-    /* box-shadow: 0 2px 6px rgba(0,0,0,0.3); */
 }
 
 .test-info h3 {
@@ -524,4 +441,219 @@ header {
 .auth-link:hover {
     color: #276b45;
     text-decoration: underline;
+}
+
+
+.modal-bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(0.5vw);
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal {
+    background-color: #fff;
+    padding: 2vw;
+    border-radius: 1.3vh;
+    height: fit-content;
+    width: 35vw;
+    /* min-width: fit-content; */
+    animation: popIn 0.3s ease-in-out;
+    position: relative;
+}
+
+.modal h2 {
+    margin-top: 0;
+    font-size: 4.5vh;
+    margin-bottom: 1.5vh;
+}
+
+.form-group {
+    margin: 0;
+}
+
+.form-group h3 {
+    margin-top: 0;
+    font-size: 3vh;
+    margin-bottom: 1.5vh;
+    font-weight: normal;
+    color: #555;
+}
+
+.form-group ul {
+    font-size: 2vh;
+    padding-left: 2vw;
+    margin: 1vh 0 1.5vh 0;
+    color: #555;
+}
+
+.form-group ul li {
+    font-size: 2vh;
+    margin-bottom: 1.5vh;
+    line-height: 1.4;
+}
+
+.form-group label {
+    font-size: 3vh;
+}
+
+.form-group input, select{
+    width: 20vw;
+    height: 5vh;
+    border-radius: 1vh;
+    margin: 0;
+    padding: 0;
+}
+
+.form-group input::placeholder{
+    padding-left: 0.5vw;
+    font-size: 1.5vh;
+}
+
+.modal .form-group {
+    margin-bottom: 0.6vh;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 0.6vh;
+    /* font-weight: bold; */
+}
+
+.modal input[type="text"],
+.modal input[type="number"],
+.modal textarea,
+.modal select {
+    width: 100%;
+    padding: 1hv 1vw;
+    border-radius: 0.8vh;
+    border: 0.2vh solid #ccc;
+    font-size: 1.8vh;
+    box-sizing: border-box;
+    margin: 0 0 1vh 0;
+}
+
+.modal select {
+    margin-right: 1.5vw;
+}
+
+/* SELECT */
+.modal select {
+    width: 100%;
+    padding: 0.8vh 3.5vw 1vh 1vw; 
+    border-radius: 0.8vh;
+    border: 0.2vh solid #ccc;
+    font-size: 1.8vh;
+    box-sizing: border-box;
+    margin: 0 0 1vh 0;
+    background-color: #fff;
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1.2vw center; 
+    background-size: 2vh;
+}
+
+.modal select option {
+    padding: 1vw;
+    font-weight: 500;
+}
+
+.color-group {
+    display: flex;
+    gap: 1vw;
+    align-items: center;
+    margin-bottom: 1vw;
+}
+
+.color-group input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0.4vh solid #ccc;
+    width: 4vw;
+    height: 5vh;
+    border-radius: 0.8vh; 
+    cursor: pointer;
+    padding: 0;
+    background: none;
+
+    margin: 0 0 1vh 0;
+}
+
+.color-group input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 0.8vh;
+}
+.color-group input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 0.8vh;
+}  /*  */
+
+/* BUTTON */
+.modal button {
+    border: none;
+    border-radius: 1vh;
+    background-color: #3a7c3c;
+    color: #fff;
+    cursor: pointer;
+    font-size: 2vh;
+    transition: background 0.3s;
+}
+
+.modal button:hover {
+    background-color: #45a049;
+}
+
+.start-test-btn{
+    font-size: 2.5vh;
+    padding: 1vh 2vw;
+    width: fit-content;
+    height: 5vh;
+}
+
+.back-btn {
+    padding: 1vh 0.8vw;
+    position: absolute;
+    top: 1vh;
+    right: 1vh;
+    border: none;
+    background: none;
+    font-size: 4vh;
+    border-radius: 0.8vh;
+    cursor: pointer;
+    color: #888;
+}
+
+.back-btn:hover {
+    color: #333;
+}
+
+@keyframes popIn {
+    from {transform: scale(0.8); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+}
+
+.color-group {
+    display: flex;
+    gap: 1vh;
+    align-items: center;
+}
+
+.color-group input[type="color"] {
+    width: 4vw;
+    height: 5vh;
+    padding: 0;
+    border: none;
 }
