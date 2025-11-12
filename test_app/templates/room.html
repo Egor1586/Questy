@@ -45,8 +45,20 @@
         const list_answers = {{ list_answers | tojson }};
         
         let state = getCookie("state");
-        let timerPaused= false;
-        let plusAnswerTime= 0
+        let plusAnswerTime= 0;
+        let timerPaused= getCookie("timeStop");
+        let timerInterval= null;
+
+        if (timerPaused === NaN){
+            document.cookie = `timeStop=false; path=/;`;
+            timerPaused= false
+        }else if (timerPaused == 'true'){
+            timerPaused= true
+        }else if (timerPaused == 'false'){
+            timerPaused= false
+        } 
+
+        console.log(timerPaused, typeof(timerPaused))
 
         //window.addEventListener('beforeunload', function(){
         //    state = getCookie("state");
@@ -68,7 +80,7 @@
         if (state && state.includes("author_start")) {
             state= getCookie("state")
             let time= getCookie("time")
-            renderAuthorStart(list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
+            renderAuthorStart(list_quiz[Number(state.slice(-1))], room, author_name, Number(state.slice(-1)), total_question);
         } 
         else if (state === "author_result_test") {
             renderAuthorResultTest(username, author_name, total_question);
@@ -96,6 +108,7 @@
             renderQuestion(Number("{{ test.id }}"), list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
         } 
         else if (state && state.includes("waite")) {
+            console.log("AFTER ADN HTML")
             renderWaiteQuestion();
         } 
         else {       
@@ -171,14 +184,14 @@
 
         socket.on("next_question", function(data) {  
             state = getCookie("state");
-            checkAnswers();
+            document.cookie = `timeStop=false; path=/;`;
+            timerPaused= false
+            plusAnswerTime= 0
             
+            checkAnswers();
             if (state != "author_result_test") {
                 let number_of_question= Number(state.slice(-1));
-                document.cookie= `time=${list_quiz[number_of_question + 1].time}; path=/`
-                console.log(`NEW TIME ${list_quiz[number_of_question + 1].time}`)
-                console.log("Номер вопроса")
-                console.log(Number(state.slice(-1)))
+                document.cookie= `time=${Number(list_quiz[number_of_question + 1].time)}; path=/`
                 if (number_of_question != total_question - 1) {
                     document.cookie = `state= question${number_of_question + 1}; path=/`;
                     renderQuestion(Number("{{ test.id }}"), list_quiz[number_of_question + 1], list_answers[number_of_question + 1], room, author_name);
@@ -229,14 +242,16 @@
             let plusTime= 15
             plusAnswerTime += 15
             if (timerText && timerText.textContent != "Час закінчений"){
-                let curr_time= timerText.textContent
+                let curr_time= Number(getCookie('time'))
                 timerText.textContent = parseInt(curr_time) + plusTime
+                document.cookie = `time=${parseInt(curr_time) + plusTime}; path=/;`;
             }
         });
 
         socket.on('change_time', function(data) {          
             timerPaused= !timerPaused
-            console.log(timerPaused)
+            console.log(`${timerPaused} STATE TIMER`)
+            document.cookie = `timeStop=${timerPaused}; path=/;`;
             const playBtn= document.getElementById("play-btn")
 
             if (playBtn){
@@ -281,7 +296,7 @@
                 document.cookie = "state= author_start0; path=/";
                 document.cookie = "countUsersAnswer= 0; path=/";
                 document.cookie = `countCorrectAnswer= 0; path=/`;
-                renderAuthorStart(list_quiz[0], list_answers[0], room, author_name, state, total_question);
+                renderAuthorStart(list_quiz[0], room, author_name, state, total_question);
             }
             else {
                 console.log("Тест начат");
@@ -295,8 +310,11 @@
             const nextButton = document.getElementById("next-q");
             plusAnswerTime= 0
 
-            let countUsersAnswer= getCookie("countUsersAnswer");
             state = getCookie("state");
+            let number_of_question= Number(state.slice(-1)) + 1;
+            let countUsersAnswer= getCookie("countUsersAnswer");
+            
+            document.cookie = `timeStop=false; path=/;`;
 
             const userAnswers = document.getElementById("user-answers");
             userAnswers.innerHTML = ""
@@ -304,7 +322,6 @@
             const countAnswer = document.getElementById("count-answer-span");
             countAnswer.textContent= 0;
              
-            let number_of_question= Number(state.slice(-1)) + 1;
             document.cookie = `state= author_start${number_of_question}; path=/`;
             document.cookie = `countCorrectAnswer= 0; path=/`;
 
@@ -313,26 +330,32 @@
                 nextButton.removeEventListener("click", nextQuestion)
                 nextButton.addEventListener("click", testStop);
             }
+
             document.cookie = `countUsersAnswer= 0; path=/`;
             
             console.log("Вопрос")
-            console.log(Number(state.slice(-1))+1)
+            console.log(number_of_question)
             const question_text = document.getElementById("author-question")
-            question_text.textContent = `${list_quiz[Number(state.slice(-1))+1].question_text}`
+            question_text.textContent = `${list_quiz[number_of_question].question_text}`
         
             const correct_answer = document.getElementById("author-correct-answer")
 
-            if (list_quiz[Number(state.slice(-1))+1].question_type == "multiple_choice"){
-                correct_answer.textContent= `${list_quiz[Number(state.slice(-1))+1].correct_answer.replace("%$№", " та ")}`
-                console.log(list_quiz[Number(state.slice(-1))+1].correct_answer.replace("%$№", " та "))
+            if (list_quiz[number_of_question].question_type == "multiple_choice"){
+                correct_answer.textContent= `${list_quiz[number_of_question].correct_answer.replace("%$№", " та ")}`
             }
             else{
-                correct_answer.textContent= `${list_quiz[Number(state.slice(-1))+1].correct_answer}`
+                correct_answer.textContent= `${list_quiz[number_of_question].correct_answer}`
             }
             
-            const newTime = document.getElementById("timer")
-            newTime.textContent =`${list_quiz[Number(state.slice(-1))+1].time}`
+            document.cookie= `time=${Number(list_quiz[number_of_question].time)}; path=/`
+            resetTimer(Number(list_quiz[number_of_question].time))
 
+            const newTime = document.getElementById("timer")
+            newTime.textContent =`${list_quiz[number_of_question].time}`
+
+            timerPaused= false
+            plusAnswerTime= 0
+            
             if (donatChart){
                 donatChart.destroy()
             }
@@ -398,6 +421,8 @@
             document.cookie = `state= author_result_test; path=/`;
             //console.log(`Stop test ${getCookie("state")}`);
             
+
+            console.log("test STOP AUTH RES")
             renderAuthorResultTest(username, author_name, total_question);
         }
 

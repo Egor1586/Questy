@@ -9,7 +9,7 @@ body {
 .container-profile {
     display: flex;
     flex-direction: column;
-    gap: 2vh;
+    gap: 1vh;
     padding: 2vh;
     width: 100%;
     height: 92vh;
@@ -21,7 +21,7 @@ body {
     display: flex;
     gap: 2vh;
     align-items: stretch;
-    height: 40vh;
+    height: 38vh;
 }
 
 /* Графік */
@@ -35,8 +35,16 @@ body {
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05);
-
     width: 50%;
+}
+
+.dropdown label {
+    font-size: 2.5vh;
+}
+
+.dropdown form {
+    font-size: 2.5vh;
+    height: 4vh;
 }
 
 /* Контейнер графіка */
@@ -116,6 +124,36 @@ body {
     box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05);
 }
 
+.filter-score-block {
+    background-color: #fff;
+    border: 0.2vh solid #ddd;
+    border-radius: 1.5vh;
+    padding: 2vh;
+    gap: 2vh;
+    height: 5vh;
+    width: 100%;
+    overflow-y: auto;
+    box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05); 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-score-block button {
+    background: linear-gradient(135deg, #66bb75, #43a060);
+    color: white;
+    border: none;
+    padding: 0.5vh 1.5vh;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-size: 1.8vh;
+    font-weight: bold;
+    width: fit-content;
+    display: flex;
+    text-align: center;
+}
+
 .score-result {
     display: flex;
     flex-wrap: wrap;
@@ -137,7 +175,7 @@ body {
 }
 
 .test-card:hover {
-    transform: translateY(-0.6vh);
+    transform: translateY(-0.5vh);
     box-shadow: 0 1vh 2vh rgba(0,0,0,0.15);
 }
 
@@ -153,6 +191,7 @@ body {
     padding: 1vh 1.5vh;
     border-radius: 1vh;
     cursor: pointer;
+    font-size: 1.8vh;
     font-weight: bold;
     width: fit-content;
     margin-top: 1vh;
@@ -177,8 +216,55 @@ body {
     background: rgb(105, 177, 105);
     color: white;
     border: none;
-    padding: 1vh 2vh;
+    padding: 0.6vh 1.5vh;
     border-radius: 1vh;
     cursor: pointer;
     font-weight: bold;
+}
+
+/* Якщо хтось не зареєстрований, не увійшов */
+.no-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 2.4vh;
+    text-align: center;
+    padding: 4vh 2vh;
+}
+
+.no-profile-content {
+    max-width: 60vh;
+    color: #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8vh;
+}
+
+.no-profile-content h1 {
+    font-size: 3.5vh;
+    color: #2d6a4f;
+    font-weight: 600;
+    margin: 0;
+}
+
+.no-profile-content p {
+    font-size: 2.5vh;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Посилання для входу/реєстрації */
+.auth-link {
+    color: #3da35d;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #276b45;
+    text-decoration: underline;
 }

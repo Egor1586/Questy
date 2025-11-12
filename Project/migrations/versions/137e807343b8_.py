@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d9d7a36fbf82
+Revision ID: 137e807343b8
 Revises: 
-Create Date: 2025-10-18 23:49:21.986636
+Create Date: 2025-11-06 21:42:27.573298
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd9d7a36fbf82'
+revision = '137e807343b8'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,6 +40,17 @@ def upgrade():
     sa.Column('image', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('unconfirmed_user',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('username', sa.String(length=20), nullable=False),
+    sa.Column('email', sa.String(length=50), nullable=False),
+    sa.Column('password', sa.String(length=20), nullable=False),
+    sa.Column('is_teacher', sa.Boolean(), nullable=True),
+    sa.Column('is_admin', sa.Boolean(), nullable=True),
+    sa.Column('code', sa.Integer(), nullable=False),
+    sa.Column('create_time', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=20), nullable=False),
@@ -52,7 +63,7 @@ def upgrade():
     op.create_table('classes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
-    sa.Column('description', sa.String(length=200), nullable=False),
+    sa.Column('lesson', sa.String(length=200), nullable=True),
     sa.Column('class_code', sa.String(length=100), nullable=False),
     sa.Column('created_date', sa.String(length=100), nullable=False),
     sa.Column('class_color1', sa.String(length=100), nullable=True),
@@ -86,6 +97,7 @@ def upgrade():
     sa.Column('description', sa.String(length=200), nullable=False),
     sa.Column('due_time', sa.DateTime(), nullable=True),
     sa.Column('work_after_time', sa.Boolean(), nullable=True),
+    sa.Column('online', sa.Boolean(), nullable=True),
     sa.Column('class_id', sa.Integer(), nullable=True),
     sa.Column('test_id', sa.Integer(), nullable=True),
     sa.Column('image', sa.Boolean(), nullable=True),
@@ -104,6 +116,7 @@ def upgrade():
     sa.Column('class_id', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('user_name', sa.String(), nullable=False),
+    sa.Column('test_code', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['class_id'], ['classes.id'], ),
     sa.ForeignKeyConstraint(['task_test_id'], ['task.id'], ),
     sa.ForeignKeyConstraint(['test_id'], ['test.id'], ),
@@ -121,6 +134,7 @@ def downgrade():
     op.drop_table('quiz')
     op.drop_table('classes')
     op.drop_table('user')
+    op.drop_table('unconfirmed_user')
     op.drop_table('test')
     op.drop_table('room')
     # ### end Alembic commands ###

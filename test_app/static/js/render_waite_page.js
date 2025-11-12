@@ -4,6 +4,9 @@ function renderRoomMain(testCode, authorName, username) {
 
     const container = document.createElement("div");
     container.className = "room-container";
+    
+    const waiteSideTop = document.createElement("div");
+    waiteSideTop.className = "waite-side-top";
 
     const waiteSide = document.createElement("div");
     waiteSide.className = "waite-side";
@@ -12,7 +15,7 @@ function renderRoomMain(testCode, authorName, username) {
     const roomTitle = document.createElement("h2");
     roomTitle.className = "waite-title";
     roomTitle.textContent = "Кімната очікування";
-    waiteSide.appendChild(roomTitle);
+    waiteSideTop.appendChild(roomTitle);
 
     // Інформація про автора та код
     const infoBar = document.createElement("div");
@@ -28,7 +31,7 @@ function renderRoomMain(testCode, authorName, username) {
 
     infoBar.appendChild(textAuthor);
     infoBar.appendChild(textCode);
-    waiteSide.appendChild(infoBar);
+    waiteSideTop.appendChild(infoBar);
 
     // Інформація про тест
     const testInfo = document.createElement("div");
@@ -41,7 +44,7 @@ function renderRoomMain(testCode, authorName, username) {
             <li>Всього учнів: 4</li>
         </ul>
     `;
-    waiteSide.appendChild(testInfo);
+    waiteSideTop.appendChild(testInfo);
 
     // Інструкції
     const instructions = document.createElement("div");
@@ -69,7 +72,10 @@ function renderRoomMain(testCode, authorName, username) {
     </div>
     `;
     
-    waiteSide.appendChild(userList);
+    waiteSideTop.appendChild(userList);
+
+    const waiteSideBottom = document.createElement("div");
+    waiteSideBottom.className = "waite-side-bottom";
 
     // Кнопка "Почати" для автора
     if (authorName === username) {
@@ -78,14 +84,14 @@ function renderRoomMain(testCode, authorName, username) {
         buttonStart.className = "btn-start";
         buttonStart.textContent = "Почати тест";
         buttonStart.addEventListener("click", authorStartTest);
-        waiteSide.appendChild(buttonStart);
+        waiteSideBottom.appendChild(buttonStart);
 
         const buttonEnd = document.createElement("button");
         buttonEnd.type = "button";
         buttonEnd.className = "btn-end";
         buttonEnd.textContent = "Завершити тест";
         buttonEnd.addEventListener("click", endTest);
-        waiteSide.appendChild(buttonEnd);
+        waiteSideBottom.appendChild(buttonEnd);
     }
 
     // Чат
@@ -102,6 +108,9 @@ function renderRoomMain(testCode, authorName, username) {
     `;
 
     chat.querySelector(".send-btn").addEventListener("click", sendMessage);
+
+    waiteSide.appendChild(waiteSideTop)
+    waiteSide.appendChild(waiteSideBottom)
 
     container.appendChild(waiteSide);
     container.appendChild(chat);

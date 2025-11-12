@@ -10,6 +10,7 @@ function userLeaveTest() {
     document.cookie = `user_answers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
     document.cookie = `temporary_name=; max-age=0; path=/;`;
+    document.cookie = `timeStop=; max-age=0; path=/;`;
     document.cookie = `time=; max-age=0; path=/;`;
 
     window.location.href = '/';
@@ -214,7 +215,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             }
         }
         else if (quiz.question_type == "input"){
-            // console.log("input question")
             let answerText = list_answers[quiz_number];
             let answers= answersArrey[quiz_number]
 
@@ -225,10 +225,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
                 questionBlock.appendChild(notAnswerDiv);
             }
 
-            // console.log(answerText, answers, quiz.correct_answer)
-            if (quiz.correct_answer !== answers){
-                // console.log("not correct")
-                
+            if (quiz.correct_answer !== answers){             
                 const answerIncorrect = document.createElement('div');
                 answerIncorrect.className = 'answer incorrect';
                 answerIncorrect.textContent = `✗ ${answers}`;
@@ -245,7 +242,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
                 questionBlock.appendChild(answerCorrect);
             }
             else{
-                // console.log("correct")
                 const answerCorrect = document.createElement('div');
                 answerCorrect.className = 'answer correct';
                 answerCorrect.textContent = `✓ ${quiz.correct_answer}`;

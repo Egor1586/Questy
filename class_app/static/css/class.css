@@ -18,8 +18,9 @@ body {
 
 /* Sidebar */
 .sidebar-classroom {
-    width: fit-content;
-    min-width: 210px;
+    /* width: fit-content; */
+    min-width: fit-content;
+    width: 20vw;
     height: 100%;
     background-color: #2f3b52;
     color: #fff;
@@ -29,8 +30,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: left;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
+    border-top-right-radius: 1.2vh;
+    border-bottom-right-radius: 1.2vh;
     box-shadow: 2px 0 12px rgba(0,0,0,0.2);
     transition: transform 0.4s ease, opacity 0.4s ease;
 }
@@ -42,23 +43,21 @@ body {
 }
 
 .hide-btn {
-    position: absolute;
-    top: 8vh;
-    left: 165px;
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0.7vh;
-    width: 3vh;
-    height: 2.5vh;
+    position: fixed;
+    bottom: 3vh;
+    left: 2vw;
 
-    font-size: 3vh;
-    color: rgb(131, 129, 129);
-    transition: left 0.45s ease;
+    z-index: 999;
+    background: #2f3b52;
+    color: white;
+    border: none;
+    padding: 2vh 2vh;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 4vh;
+    box-shadow: 0 0 1vh rgba(0,0,0,0.2);
+
+
 }
 
 .hide-btn:hover {
@@ -71,7 +70,7 @@ body {
 
 .hide-btn.move-left {
     right: auto;
-    left: 10px;
+    left: 2vw;
 }
 
 .hide-btn.rotate i {
@@ -80,20 +79,20 @@ body {
 
 
 .classroom-avatar {
-    width: 60px;
-    height: 60px;
+    width: 8vh;
+    height: 8vh;
     border-radius: 50%;
     background-color: #4caf50;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 2.5vh;
+    margin-bottom: 1vh;
 }
 
 .classroom-email {
-    font-size: 1em;
+    font-size: 1.8vh;
     color: #ffffffc7;
     margin: 0.5vw 0.2vw 1vw 0.2vw;
 }
@@ -101,8 +100,8 @@ body {
 /* меню */
 .menu {
     width: 100%;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
+    border-top: 0.2vh solid #eee;
+    padding-top: 1.5vh;
 }
 
 .menu ul {
@@ -120,7 +119,7 @@ body {
 .menu ul li a {
     text-decoration: none;
     color: #dcd7d7;
-    font-size: 1.02rem;
+    font-size: 2vh;
 }
 
 .menu ul li a:hover {
@@ -131,20 +130,20 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 1.5vh;
     align-items: center;
 
-    padding: 10px;
-    border-radius: 8px;
+    padding: 1vh;
+    border-radius: 1vh;
     border: transparent;
 
-    font-size: 1.5rem;
+    font-size: 2.8vh;
 }
 
 .page a{
     text-decoration: none;
     color: rgb(255, 255, 255);
-    font-size: 1.5rem;
+    font-size: 2.8vh;
 }
 
 .page:hover{

@@ -26,6 +26,12 @@ function renderWaiteQuestion() {
 
 function renderQuestion(testId, quiz, answers, room, author_name) {
     const roomContent = document.getElementById("room-content");
+    let quizTime= getCookie("time");
+    console.log(quizTime)
+
+    if (isNaN(quizTime)){
+        renderWaiteQuestion()
+    }
 
     if (roomContent != null) {
         roomContent.className = "question-content";
@@ -38,8 +44,6 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     const question = document.createElement("p");
     question.textContent = quiz.question_text;
     questionBlock.appendChild(question);
-
-    let quizTime= getCookie("time");
 
     const timer = document.createElement("p");
     timer.id= "timer"
@@ -54,8 +58,6 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     else{
         answersDiv.className = "answers";
     }
-
-    console.log(quizTime)
 
     if (quiz.question_type == "choice" || quiz.question_type == "image"){
 
@@ -268,15 +270,16 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 timerText.textContent= time;
                 document.cookie = `time= ${time}; path=/;`;
             
-                if (time <= 0){
-                    clearInterval(coundown);
-                    timerText.textContent = "Час закінчений"
+            }   
 
-                    setTimeout(() => {
-                        renderWaiteQuestion();
-                    }, 2000)
-                }        
-            }
+            if (time <= 0){
+                clearInterval(coundown);
+                timerText.textContent = "Час закінчився"
+        
+                setTimeout(() => {
+                    renderWaiteQuestion();
+            }, 2000)
+        }
         }, 1000);
     }
 }

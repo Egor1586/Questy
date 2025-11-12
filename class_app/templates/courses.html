@@ -78,29 +78,32 @@
                                 <a href="/result_task?class_id={{task.class_id}}&task_id={{task.id}}">
                                     <button>Результати класу</button>
                                 </a>
-                                <a href="/delete_task{{task.id}}">
-                                    <button>Видалити завдання</button>
-                                </a>
-                                
 
                                 {% if task.online %}       
                                     {% if test.test_code != 0 %}
                                         <form action="/reset_test{{ test.id }}" >
                                             <button >Скинути тест</button>
                                         </form>
-                                    {% endif %}
+                                        {% if test.test_code != 0 and not can_start %}
+                                            <a href="/room{{ test.test_code }}?online_test='{{ task.id }}'">
+                                                <button class="start" type="button">Почати</button>
+                                            </a>
+                                        {% endif %}                           
+                                    {% else %}
+                                        {% if test.test_code == 0 %}
+                                            <a href="/create_code{{ test.id }}">
+                                                <button class="edit" type="button">Створити код</button>
+                                            </a>
+                                        {% endif %}
 
-                                    {% if test.test_code != 0 and not can_start %}
-                                        <a href="/room{{ test.test_code }}?online_test='{{ task.id }}'">
-                                            <button class="start" type="button">Почати</button>
+                                        <a href="/delete_task{{task.id}}">
+                                            <button>Видалити завдання</button>
                                         </a>
                                     {% endif %}
-                                    
-                                    {% if test.test_code == 0 %}
-                                        <a href="/create_code{{ test.id }}">
-                                            <button class="edit" type="button">Створити код</button>
-                                        </a>
-                                    {% endif %}
+                                {% else %}
+                                    <a href="/delete_task{{task.id}}">
+                                        <button>Видалити завдання</button>
+                                    </a>
                                 {% endif %}
                             </div>
                         {% endif %}
