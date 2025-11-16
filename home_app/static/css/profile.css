@@ -268,3 +268,21 @@ body {
     color: #276b45;
     text-decoration: underline;
 }
+/* График */
+.chart-container {
+    width: 600px;
+    height: 350px;
+    position: relative;
+}
+/* Что бы "график" не изменялся */
+.score-form select {
+    width: 220px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.send-btn-profile {
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+}
