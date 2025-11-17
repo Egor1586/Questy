@@ -2,6 +2,7 @@ import flask
 
 from test_app.models import Room, Test
 from Project.render_page import render_page
+from Project.database import db
 
 def loguot():
     flask.session.clear()
@@ -21,7 +22,6 @@ def get_codes():
 def render_home():
     list_room= []
     list_tests= []
-
 
     try:
         list_room = Room.query.all()

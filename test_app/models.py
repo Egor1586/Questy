@@ -63,3 +63,6 @@ class Room(db.Model):
     active_test= db.Column(db.Boolean, nullable= True)
 
     all_members = db.Column(db.String(300), nullable = False)
+
+    def __str__(self):
+        return f"{self.user_list} and {self.all_members}"

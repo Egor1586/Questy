@@ -73,8 +73,11 @@ def handle_disconnect():
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
     room = data['room']
-    ROOM = Room.query.filter_by(test_code= room).first()
-    ROOM.active = 0
+    ROOM= Room.query.filter_by(test_code= room).first()
+    # ROOM.active = 0
+    if ROOM:
+        db.session.delete(ROOM)
+
     TEST = Test.query.filter_by(test_code= room).first()
     TEST.test_code = 0  
     db.session.commit()
@@ -204,15 +207,18 @@ def handle_start_test(data):
     test= Test.query.filter_by(test_code = room).first()
     
     ROOM= Room.query.filter_by(test_code= room).first()
-    ROOM.active_test= True
-    db.session.commit()
-    
-    emit("start_test", {
-        "room": room,
-        "test_id": test.id,
-        "author_name": test.author_name
-        }
-    , to=room)
+
+    if (ROOM.all_members):
+        print(ROOM)
+        ROOM.active_test= True
+        db.session.commit()
+        
+        emit("start_test", {
+            "room": room,
+            "test_id": test.id,
+            "author_name": test.author_name
+            }
+        , to=room)
 
 @Project.settings.socketio.on('message_to_chat')
 def handle_message(data):
