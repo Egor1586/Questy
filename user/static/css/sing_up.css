@@ -209,3 +209,8 @@ form .linkTxt{
     border-bottom:  7px solid rgba(113, 145, 107, 1);
     transition:  1.5s ease;
 }
+
+#error-message {
+    font-size: 1.5vh;
+    color: red;
+}

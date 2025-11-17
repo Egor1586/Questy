@@ -160,7 +160,7 @@ header {
 
 .info .search-input i {
     position: absolute;
-    left: 0.5vh;
+    left: 1vh;
     top: 52%;
     transform: translateY(-50%);
     font-size: 1.5vh;
@@ -169,7 +169,7 @@ header {
 
 .info .search-input input {
     width: 100%;
-    padding: 1vh 1.5vh;
+    padding: 1vh 2.5vh;
     border: 0.4vh solid #7B9F7D;
     border-radius: 1.2vh;
     font-size: 1.7vh;

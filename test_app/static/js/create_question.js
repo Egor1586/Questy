@@ -16,8 +16,8 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
-                    <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна
-                
+                    <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> 
+                    <span>Правильна</span>     
                 </div>
             </div>
             <button type="button" class="add-answer">Додати відповідь</button>
@@ -35,8 +35,8 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                 <label>Варіанти відповідей:</label>
                 <div class="answer-input">
                     <input type="text" class="answer-text" placeholder="Відповідь 1">
-                    <input type="checkbox" class="checkbox" name="correct-answer-q${countQuestion}"> Правильна
-                
+                    <input type="checkbox" class="checkbox" name="correct-answer-q${countQuestion}"> 
+                    <span>Правильна</span>
                 </div>
             </div>
             <button type="button" class="add-mutlti add-mutlti-answer">Додати відповідь</button>
@@ -50,7 +50,8 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
             </div>
             <div class="answer-input">
                 <input type="text" class="answer-text" placeholder="Відповідь 1">
-                <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> Правильна     
+                <input type="radio" class="question-radio" name="correct-answer-q${countQuestion}"> 
+                <span>Правильна</span>     
             </div>
         </div>
         <button type="button" class="add-answer">Додати відповідь</button>
@@ -104,7 +105,8 @@ testQuestionDiv.addEventListener("click", function(event){
         newAnswer.className= "answer-input"
         newAnswer.innerHTML= `
                             <input type="text" class="answer-text" placeholder="Відповідь ${answerCount}">
-                            <input type="radio" class="question-radio" name="correct-answer-${blockId}"> Правильна`
+                            <input type="radio" class="question-radio" name="correct-answer-${blockId}"> 
+                            <span>Правильна</span>`
 
         answersBlock.appendChild(newAnswer)
     }
@@ -118,7 +120,8 @@ testQuestionDiv.addEventListener("click", function(event){
         newAnswer.className= "answer-input"
         newAnswer.innerHTML= `
                             <input type="text" class="answer-text" placeholder="Відповідь ${answerCountMulti}">
-                            <input type="checkbox" class="checkbox" name="correct-answer-${blockId}"> Правильна`
+                            <input type="checkbox" class="checkbox" name="correct-answer-${blockId}"> 
+                            <span>Правильна</span>`
 
         answersBlock.appendChild(newAnswer)
     }

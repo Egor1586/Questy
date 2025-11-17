@@ -163,7 +163,6 @@ function buildTest(){
         correctData = data
     }
 
-    alert(questionCount)
     console.log(messageError)
     
     return correctData

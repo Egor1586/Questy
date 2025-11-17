@@ -31,10 +31,11 @@
                     <label for="question-count">Кількість питань</label>
                     <input type="number" id="question-count" name="total_questions" min="1" placeholder="За замовчуванням - 10" required>
               </div>
-              <div class="form-group">
+
+              <!-- <div class="form-group">
                     <label for="correct-answers">Кількість відповідей на питання</label>
                     <input type="number" id="correct-answers" name="answers_per_question" min="4" placeholder="За замовчуванням - 4">
-              </div>
+              </div> -->
 
               <div class="form-group">
                     <label for="time">Кількість часу на відповідь</label>
@@ -44,14 +45,15 @@
             
             <div class="load-img">
               <label for="image">Зображення (необов'язково)</label>
-              <input type="file" name="image" id="" accept="image/*">
+              <input type="file" name="image" accept="image/*">
             </div>
         
             <button type="submit" class="submit-button">Створити тест за допомогою ШІ</button>
         </form>
 
     </section>
-    <button class="home-circle-btn" onclick="window.location.href='/class_page'">
+    
+    <button class="home-circle-btn" onclick="window.location.href='/quizzes/'">
         <i class='bx  bx-home'></i>
     </button>
 {% endblock %}
