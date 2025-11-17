@@ -241,6 +241,8 @@ function renderAuthorResultTest(username, author_name, total_question) {
         headerUsers.className = 'cell label';  
         headerUsers.textContent= "Учні"
 
+        resultHeader.appendChild(headerUsers);
+        
         accuracy_aquestions.forEach(questionFor => {
             const div = document.createElement('div');
             div.className= "cell";
@@ -252,7 +254,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
         headerAccyracy.className = 'cell label';  
         headerAccyracy.textContent= "Точність"
         
-        resultHeader.appendChild(headerUsers);
 
         resultHeader.appendChild(headerAccyracy);
         resultTable.appendChild(resultHeader);

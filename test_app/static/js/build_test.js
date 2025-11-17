@@ -15,6 +15,7 @@ function buildTest(){
     
     let flagError = false
     let messageError = ""
+    let questionCount= 0
 
     let arrayQuestionBlock = document.querySelectorAll(".question-block") 
     arrayQuestionBlock.forEach(questionBlock => {
@@ -27,7 +28,6 @@ function buildTest(){
             }
         let questionInformation= questionData
         
-       
         let answerRadioFlag = false
         let countAnswers = 0
         let countCorrectAnswers = 0
@@ -141,6 +141,7 @@ function buildTest(){
                     }
                 })
                 if(answerRadioFlag && countAnswers >= 2){
+                    questionCount += 1
                     data["questions"].push(questionInformation)
                 }
                 else{
@@ -158,11 +159,11 @@ function buildTest(){
             if(messageError == "")(messageError = "Ви не задали назву тесту або опис")
         }})
     
-    if(flagError == false){
+    if(flagError == false && questionCount > 2){
         correctData = data
-        console.log(correctData)
     }
-    console.log(flagError)
+
+    alert(questionCount)
     console.log(messageError)
     
     return correctData

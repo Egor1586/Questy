@@ -1,4 +1,4 @@
-import flask, Project, random
+import flask, Project, random, os, shutil
 from flask_login import current_user
 from test_app.models import Test, Room
 from user.models import Task
@@ -51,9 +51,23 @@ def delete_test(test_id):
         for task in task_list:
             db.session.delete(task)
         
-        db.session.delete(test)
-        
-    db.session.commit()
+        db.session.delete(test) 
+        db.session.commit()
+
+        question_images_dic = os.path.abspath(os.path.join(__file__, "..", "..","..","test_app","static","images", f"{test.id}"))
+        test_media_dir= os.path.abspath(os.path.join(__file__, "..", "..","..","home_app","static","images", "media", f"{test.id}"))
+
+        if os.path.exists(question_images_dic):
+            try:
+                shutil.rmtree(question_images_dic)
+            except Exception as error:
+                print(error)
+
+        if os.path.exists(test_media_dir):
+            try:
+                shutil.rmtree(test_media_dir)
+            except Exception as error:
+                print(error)
 
     last_page= flask.request.referrer
     return flask.redirect(last_page or "/")
