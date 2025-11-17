@@ -1,11 +1,11 @@
-body, main{
+body, main {
     all: unset;
     display: block;
 }
 
-.test-img{
+.test-img {
     border-radius: 1.2vh;
-    border: 1px solid #ccc;
+    border: 0.2vh solid #ccc;
     width: 100%;
     height: auto;
 }
@@ -16,11 +16,9 @@ a {
     text-decoration: none;
 }
 
-
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     display: block;
 }
-
 
 body {
     height: 100vh;
@@ -34,15 +32,12 @@ body {
 /* Макет */
 main {
     width: 97vw;
-    height: 82.5vh;
-
+    height: 95vh;
     display: flex;
     flex-direction: row;
-    grid-template-columns: 1.2fr 2.8fr;
-    gap: 1.5vw;
-    padding: 1.5vw;
+    gap: 1.5vh;
+    padding: 1.5vh;
     flex-grow: 1;
-    height: 95vh;
     overflow: hidden; 
 }
 
@@ -54,15 +49,14 @@ header {
 /* Про нас блок */
 .info {
     background: linear-gradient(145deg, #ffffff, #e8f8ec);
-    padding: 1vw;
+    padding: 1.2vh;
     border-radius: 2vh;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border-left: 0.3vw solid #3da35d;
+    box-shadow: 0 0.4vh 1.2vh rgba(0, 0, 0, 0.05);
+    border-left: 0.3vh solid #3da35d;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 18vw;
-    /* min-width: 300px; */
 }
 
 /* Стилі */
@@ -75,39 +69,35 @@ header {
 }
 
 .tests::before {
-    top: -100px;
-    right: -100px;
-    width: 250px;
-    height: 250px;
+    top: -10vh;
+    right: -10vh;
+    width: 25vh;
+    height: 25vh;
     background: radial-gradient(circle, rgba(61,163,93,0.2) 0%, transparent 70%);
 }
 
 .tests::after {
-    bottom: -100px;
-    left: -100px;
-    width: 250px;
-    height: 250px;
+    bottom: -10vh;
+    left: -10vh;
+    width: 25vh;
+    height: 25vh;
     background: radial-gradient(circle, rgba(61,163,93,0.15) 0%, transparent 70%);
 }
 
 .tests-scroll {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap: 1vw; 
+    grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr)); 
+    gap: 1.2vh; 
     overflow-y: auto; 
-    overflow-x: hidden; 
-    padding-right: 2vw; 
+    padding-right: 2vh; 
     flex-grow: 1;
     position: relative;
     z-index: 2;
-
-    flex: 1;
-    overflow-y: auto;
 }
 
 /* Стиль для скрол-бару */
 .tests-scroll::-webkit-scrollbar {
-    width: 1vw;
+    width: 1vh;
 }
 
 .tests-scroll::-webkit-scrollbar-track {
@@ -130,7 +120,7 @@ header {
     color: #2d6a4f;
     margin: 0;
     text-align: left;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+    text-shadow: 0.1vh 0.1vh 0.3vh rgba(0,0,0,0.05);
 }
 
 .test-info {
@@ -161,7 +151,7 @@ header {
     flex-direction: column;
     width: 100%;
     gap: 1vh;
-    }
+}
 
 .info .search-input {
     position: relative;
@@ -170,7 +160,7 @@ header {
 
 .info .search-input i {
     position: absolute;
-    left: 0.5vw;
+    left: 0.5vh;
     top: 52%;
     transform: translateY(-50%);
     font-size: 1.5vh;
@@ -179,7 +169,7 @@ header {
 
 .info .search-input input {
     width: 100%;
-    padding: 1vh 1.5vw 1vh 1.5vw;
+    padding: 1vh 1.5vh;
     border: 0.4vh solid #7B9F7D;
     border-radius: 1.2vh;
     font-size: 1.7vh;
@@ -190,20 +180,16 @@ header {
 
 .info .search-input input:hover {
     border-color: #5fb374;
-    border-radius: 1.2vh;
 }
 
 .info .search-input input:focus {
     outline: none;
-    border-radius: 1.2vh;
-    /* border-image: linear-gradient(90deg, #3da35d, #2d6a4f) 1; */
-    box-shadow: 0 0 1.2vh rgba(61,163,93,0.25), inset 0 2px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 0 1.2vh rgba(61,163,93,0.25), inset 0 0.2vh 0.6vh rgba(0,0,0,0.05);
 }
 
 .info .search-input input::placeholder {
     color: #7b9f7d;
     font-style: italic;
-    border-radius: 1.2vh;
 }
 
 /* Кнопка */
@@ -223,9 +209,7 @@ header {
 
 .info .search-btn:hover {
     background-color: #276b45;
-    border-radius: 1.2vh;
 }
-
 
 /* ===============================
    Блок тестів та скрол
@@ -234,8 +218,8 @@ header {
     position: relative;
     background: linear-gradient(135deg, #f0f5f1 0%, #d9f0e2 100%);
     border-radius: 2vh;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    padding: 2vw;
+    box-shadow: 0 0.6vh 1.8vh rgba(0, 0, 0, 0.06);
+    padding: 2vh;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -254,16 +238,15 @@ header {
 /* Скрол всередині блоку тестів */
 .tests-scroll {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2.5vw;
+    grid-template-columns: repeat(auto-fill, minmax(25vh, 1fr));
+    gap: 2.5vh;
     overflow-y: auto;
-    padding-right: 2vw;
+    padding-right: 2vh;
 }
-
 
 /* Стиль видимого скролу */
 .tests-scroll::-webkit-scrollbar {
-    width: 1vw;
+    width: 1vh;
 }
 
 .tests-scroll::-webkit-scrollbar-track {
@@ -280,7 +263,6 @@ header {
     background: linear-gradient(180deg, #2f8b52, #276b45);
 }
 
-
 .test-card {
     position: relative;
     background-size: cover;
@@ -288,17 +270,15 @@ header {
     border-radius: 2vh;
     overflow: hidden;
     cursor: pointer;
-    height: 100%;
-    width: 100%;
-    min-width: 280px;
-    min-height: 220px;
+    min-width: 28vh;
+    min-height: 22vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end; 
     align-items: flex-start;   
     padding: 1.5vh;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.6vh 1.8vh rgba(0, 0, 0, 0.1);
 }
 
 .test-card::after {
@@ -311,7 +291,7 @@ header {
 }
 
 .test-card:hover {
-    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 1.2vh 2.2vh rgba(0, 0, 0, 0.18);
 }
 
 .test-card:hover::after {
@@ -325,7 +305,7 @@ header {
     color: #fff;
     text-align: left;
     border-radius: 1.2vh;
-    padding: 1vw 1vh;
+    padding: 1.5vh;
 }
 
 .test-info h3 {
@@ -341,49 +321,31 @@ header {
     opacity: 0.9;
 }
 
-
-/*  */
 .test-info h3, 
 .test-info p {
-    word-wrap: break-word;       
-    overflow-wrap: break-word;   
-    white-space: normal;         
-    text-overflow: ellipsis;     
-    display: block;              
-    max-width: 100%;             
-}
-
-.test-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 1.5vw;
-    flex-wrap: wrap;          /* Дозволяє елементам переноситися */
-    text-align: left;
-}
-.test-info h3, 
-.test-info p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/* Якщо хтось не зареєстрований або не авторизований */
+/* Якщо хтось не зареєстрований */
 .empty-tests {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     background: #f1f3f2;
-    border-radius: 24px;
+    border-radius: 2.4vh;
     height: 100%;
-    padding: 5vh 2vw;
+    padding: 5vh 2vh;
 }
 
 .empty-content {
-    max-width: 520px;
+    max-width: 52vh;
     color: #3a3a3a;
     display: flex;
     flex-direction: column;
@@ -410,18 +372,18 @@ header {
 .btn-create {
     background: linear-gradient(90deg, #6fcf97, #4caf6a);
     color: #fff;
-    padding: 12px 28px;
-    border-radius: 12px;
+    padding: 1.2vh 2.8vh;
+    border-radius: 1.2vh;
     font-size: 1.8vh;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.03vh;
 }
 
 .btn-create:hover {
     background: linear-gradient(90deg, #58b87f, #3d915c);
-    transform: translateY(-2px);
+    transform: translateY(-0.2vh);
 }
 
 /* Підказка про авторизацію */
@@ -443,7 +405,7 @@ header {
     text-decoration: underline;
 }
 
-
+/* Модалка */
 .modal-bg {
     display: none;
     position: fixed;
@@ -451,7 +413,7 @@ header {
     left: 0;
     width: 100vw;
     height: 100vh;
-    backdrop-filter: blur(0.5vw);
+    backdrop-filter: blur(0.5vh);
     background-color: rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
@@ -461,11 +423,9 @@ header {
 
 .modal {
     background-color: #fff;
-    padding: 2vw;
+    padding: 2vh;
     border-radius: 1.3vh;
-    height: fit-content;
     width: 35vw;
-    /* min-width: fit-content; */
     animation: popIn 0.3s ease-in-out;
     position: relative;
 }
@@ -474,10 +434,6 @@ header {
     margin-top: 0;
     font-size: 4.5vh;
     margin-bottom: 1.5vh;
-}
-
-.form-group {
-    margin: 0;
 }
 
 .form-group h3 {
@@ -490,7 +446,7 @@ header {
 
 .form-group ul {
     font-size: 2vh;
-    padding-left: 2vw;
+    padding-left: 2vh;
     margin: 1vh 0 1.5vh 0;
     color: #555;
 }
@@ -505,27 +461,16 @@ header {
     font-size: 3vh;
 }
 
-.form-group input, select{
+.form-group input,
+select {
     width: 20vw;
     height: 5vh;
     border-radius: 1vh;
-    margin: 0;
-    padding: 0;
 }
 
-.form-group input::placeholder{
-    padding-left: 0.5vw;
+.form-group input::placeholder {
+    padding-left: 0.5vh;
     font-size: 1.5vh;
-}
-
-.modal .form-group {
-    margin-bottom: 0.6vh;
-}
-
-.modal label {
-    display: block;
-    margin-bottom: 0.6vh;
-    /* font-weight: bold; */
 }
 
 .modal input[type="text"],
@@ -533,73 +478,59 @@ header {
 .modal textarea,
 .modal select {
     width: 100%;
-    padding: 1hv 1vw;
+    padding: 1vh;
     border-radius: 0.8vh;
     border: 0.2vh solid #ccc;
     font-size: 1.8vh;
     box-sizing: border-box;
     margin: 0 0 1vh 0;
-}
-
-.modal select {
-    margin-right: 1.5vw;
 }
 
 /* SELECT */
 .modal select {
     width: 100%;
-    padding: 0.8vh 3.5vw 1vh 1vw; 
+    padding: 0.8vh 3.5vh 1vh 1vh; 
     border-radius: 0.8vh;
     border: 0.2vh solid #ccc;
     font-size: 1.8vh;
-    box-sizing: border-box;
-    margin: 0 0 1vh 0;
     background-color: #fff;
-    appearance: none; 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    position: relative;
     background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
-    background-position: right 1.2vw center; 
+    background-position: right 1.2vh center; 
     background-size: 2vh;
+    appearance: none; 
 }
 
 .modal select option {
-    padding: 1vw;
+    padding: 1vh;
     font-weight: 500;
 }
 
 .color-group {
     display: flex;
-    gap: 1vw;
+    gap: 1vh;
     align-items: center;
-    margin-bottom: 1vw;
+    margin-bottom: 1vh;
 }
 
 .color-group input[type="color"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     border: 0.4vh solid #ccc;
-    width: 4vw;
+    width: 4vh;
     height: 5vh;
     border-radius: 0.8vh; 
     cursor: pointer;
     padding: 0;
     background: none;
-
-    margin: 0 0 1vh 0;
 }
 
 .color-group input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0;
-    border-radius: 0.8vh;
 }
+
 .color-group input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 0.8vh;
-}  /*  */
+}
 
 /* BUTTON */
 .modal button {
@@ -616,19 +547,18 @@ header {
     background-color: #45a049;
 }
 
-.start-test-btn{
+.start-test-btn {
     font-size: 2.5vh;
-    padding: 1vh 2vw;
+    padding: 1vh 2vh;
     width: fit-content;
     height: 5vh;
 }
 
 .back-btn {
-    padding: 1vh 0.8vw;
+    padding: 1vh;
     position: absolute;
     top: 1vh;
     right: 1vh;
-    border: none;
     background: none;
     font-size: 4vh;
     border-radius: 0.8vh;
@@ -643,17 +573,4 @@ header {
 @keyframes popIn {
     from {transform: scale(0.8); opacity: 0;}
     to {transform: scale(1); opacity: 1;}
-}
-
-.color-group {
-    display: flex;
-    gap: 1vh;
-    align-items: center;
-}
-
-.color-group input[type="color"] {
-    width: 4vw;
-    height: 5vh;
-    padding: 0;
-    border: none;
 }

@@ -48,4 +48,11 @@ $(() => {
             $(this).fadeOut(200)
         }
     })
+
+    $('#room').on('keydown', function(event){
+        if (event.key === "Enter"){
+            event.preventDefault()
+            $('.search-btn').click()
+        }
+    })
 })

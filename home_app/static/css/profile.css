@@ -35,15 +35,14 @@ body {
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05);
-
     width: 50%;
 }
 
-.dropdown label{
+.dropdown label {
     font-size: 2.5vh;
 }
 
-.dropdown form{
+.dropdown form {
     font-size: 2.5vh;
     height: 4vh;
 }
@@ -125,34 +124,32 @@ body {
     box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05);
 }
 
-.filter-score-block{
+.filter-score-block {
     background-color: #fff;
     border: 0.2vh solid #ddd;
     border-radius: 1.5vh;
     padding: 2vh;
-    gap: 2vw;
+    gap: 2vh;
     height: 5vh;
     width: 100%;
     overflow-y: auto;
     box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.05); 
-    
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.filter-score-block button{
+.filter-score-block button {
     background: linear-gradient(135deg, #66bb75, #43a060);
     color: white;
     border: none;
-    padding: 0.5vh 1vw;
+    padding: 0.5vh 1.5vh;
     border-radius: 1vh;
     cursor: pointer;
     font-size: 1.8vh;
     font-weight: bold;
     width: fit-content;
-
     display: flex;
     text-align: center;
 }
@@ -219,7 +216,7 @@ body {
     background: rgb(105, 177, 105);
     color: white;
     border: none;
-    padding: 0.6vh 1vw;
+    padding: 0.6vh 1.5vh;
     border-radius: 1vh;
     cursor: pointer;
     font-weight: bold;
@@ -231,14 +228,13 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    border-radius: 24px;
-
+    border-radius: 2.4vh;
     text-align: center;
-    padding: 4vh 2vw;
+    padding: 4vh 2vh;
 }
 
 .no-profile-content {
-    max-width: 600px;
+    max-width: 60vh;
     color: #3a3a3a;
     display: flex;
     flex-direction: column;
@@ -252,7 +248,6 @@ body {
     font-weight: 600;
     margin: 0;
 }
-
 
 .no-profile-content p {
     font-size: 2.5vh;
@@ -272,4 +267,22 @@ body {
 .auth-link:hover {
     color: #276b45;
     text-decoration: underline;
+}
+/* График */
+.chart-container {
+    width: 600px;
+    height: 350px;
+    position: relative;
+}
+/* Что бы "график" не изменялся */
+.score-form select {
+    width: 220px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.send-btn-profile {
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
 }
