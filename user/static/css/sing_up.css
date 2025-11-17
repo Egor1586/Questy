@@ -1,39 +1,40 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 main {
     display: flex;
     align-items: center;
 }
 
+
 .wrapper{
     position: relative;
+    /* width: 780px;
+    height: 540px; */
     width: 75vw;
     height: 84vh;
     background: white;
     border: 0.32vh solid black;
-    border-radius: 1.6vh;
-    box-shadow:  0 0 2vh black;
+    border-radius: 1.8vh;
+    box-shadow:  0 0 2.4vh black;
     overflow: hidden;
+
+    margin: 4vh auto;
 }
 
 .wrapper .form-box{
     position: absolute;
-    top: 0;
+    /* padding: 10px; */
     width: 50%;
     height: 100%;
 
     display: flex;
     justify-content: center;
     flex-direction: column;
+
 }
-/* ? */
-.wrapper .form-box.login{
-    left: 0;
-    padding: 0 9.6vh 0 6.4vh; 
+
+.wrapper .form-box.reg{
+    right: 0;
+    padding: 4.8vh 12vh 4.8vh 6.4vh; 
+
 }
 
 .form-box h2{
@@ -48,11 +49,11 @@ main {
 .form-box h2::after{
     content: "";
     position: absolute;
-    bottom: -4.8vh;
+    bottom: -1.6vh;
     left: 50%;
     transform: translateX(-50%);
 
-    width: 3vw;
+    width: 5vw;
     height: 0.64vh;
 
     background: black;
@@ -61,8 +62,8 @@ main {
 .form-box .input-box{
     position: relative;
     width: 100%;
-    height: 8vh;
-    margin: 4vh 0;
+    height: 6.4vh;
+    margin: 3.2vh 0;
 }
 
 .input-box input{
@@ -80,15 +81,9 @@ main {
     padding-right: 3.68vh;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:focus {
-  /* transition: background-color 0s 600000s, color 0s 600000s !important; */
-  background-color: transparent;
-}
 .input-box input:focus,
 .input-box input:valid{
     border-bottom-color: lightblue;
-    background-color: white;
 }
 
 .input-box label{
@@ -100,13 +95,13 @@ input:-webkit-autofill:focus {
     color: black;
     pointer-events: none;
     transition: 0.5s;   
+    
 }
-
 
 .input-box input:focus~label,
 .input-box input:valid~label{
     top: -0.8vh;
-    color:  rgba(59, 73, 109, 1);
+    color: rgba(59, 73, 109, 1);
 }
 
 .input-box i{
@@ -140,6 +135,23 @@ form button:hover{
     box-shadow: 0 0 1.6vh rgba(0, 0, 0, 0.5);
 }
 
+form  .radio-box {
+    display: flex;           
+    justify-content: center;
+    margin: 2.4vh 5.6vh;
+}
+
+form  .radio-box .radio-button-box{
+    margin:  0px 0.8vh;
+    font-size: 2.56vh;        
+    padding: 1vh;
+}
+
+input[type="radio"] {
+    width: 2vh;
+    height: 2vh;
+}
+
 form .linkTxt{
     font-size: 2.24vh;
     color:  black;
@@ -165,10 +177,12 @@ form .linkTxt{
     justify-content: center;
 }
 
-.wrapper .info-text.login{
-    right: 0;
-    text-align: right;
-    padding:  0 6.4vh 9.6vh 24vh;
+.wrapper .info-text.reg{
+    left: 0;
+    text-align: left;
+    padding:  0 24vh 9.6vh 6.4vh;
+    pointer-events: none;
+    /* background: rgba(59, 73, 109, 1); */
 }
 
 .wrapper .info-text h2{
@@ -185,18 +199,13 @@ form .linkTxt{
 
 .wrapper .rotate-bg{
     position: absolute;
-    top:  -6.4vh;
-    right: 0;
+    top:  0;
+    left: 0;
     width: 65vw;
     height: 134vh;
     background: rgba(113, 145, 107, 1);
-    transform: rotate(10deg) skewY(40deg);
-    transform-origin: bottom right;
-    border-bottom:  0.48vh solid rgba(113, 145, 107, 1);
+    transform: rotate(-10.5deg) skewY(-44deg);
+    transform-origin: bottom left;
+    border-bottom:  7px solid rgba(113, 145, 107, 1);
     transition:  1.5s ease;
-
-}
-
-.wrapper {
-    margin: 4vh;
 }

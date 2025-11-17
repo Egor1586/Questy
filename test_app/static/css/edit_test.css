@@ -21,7 +21,7 @@ main {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 40wv;
     margin: auto;
 }
 
@@ -30,41 +30,46 @@ main {
     justify-content: space-between;
 
     background-color: var(--bg-aside);
-    border: 1px solid var(--green-light);
+    border: 0.1vh solid var(--green-light);
 
-    border-radius: 10px;
-    margin-top: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px var(--shadow);
+    border-radius: 1vh;
+    margin-top: 1.5vh;
+    padding: 2vh;
+    margin-bottom: 2vh;
+    box-shadow: 0 0.2vh 0.4vh var(--shadow);
 }
 
 .test-details {
-    flex-grow: 1;
+    flex-grow: 0.1vh;
 }
 .test-title {
-    font-size: 20px;
+    font-size: 2vh;
+    padding-right: 2vh;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 0.8vh;
 }
 .test-description {
-    font-size: 14px;
+    font-size: 1.4vh;
     color: #555;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 .edit-btn {
     background-color: white;
     color: var(--green-dark);
-    border: 1px solid var(--green-main);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 14px;
+    border: 0.1vh solid var(--green-main);
+    border-radius: 0.6vh;
+    padding: 0.6vh 1.2vh;
+    font-size: 1.4vh;
     cursor: pointer;
     height: fit-content;
 }
 
+.meta-info{
+    font-size: 2vh;
+}
+
 .edit-btn a{
-     all: unset;
+    all: unset;
 }
 
 .edit-btn:hover {
@@ -72,29 +77,30 @@ main {
 }
 .question-block {
     background-color: white;
-    border: 1px solid var(--green-light);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px var(--shadow);
+    border: 0.1vh solid var(--green-light);
+    border-radius: 1vh;
+    padding: 2vh;
+    margin-bottom: 2vh;
+    box-shadow: 0 0.2vh 0.4vh var(--shadow);
 }
 .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
+    font-size: 1.6vh;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 .question-text {
-    margin-bottom: 15px;
+    margin-bottom: 1.5vh;
+    font-size: 1.5vh;
 }
 .answer {
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 15px;
-    border-left: 5px solid transparent;
+    padding: 1vh 1.5vh;
+    border-radius: 0.8vh;
+    margin-bottom: 1vh;
+    font-size: 1.5vh;
+    border-left: 0.5vh solid transparent;
 }
 .correct {
     background-color: var(--green-light);
@@ -111,9 +117,9 @@ main {
     color: rgb(233, 96, 96);
     font-weight: 600;
     border: none;
-    border-radius: 6px;
-    padding-bottom: 5px;
-    font-size: 14px;
+    border-radius: 0.6vh;
+    padding-bottom: 0.5vh;
+    font-size: 1.4vh;
     cursor: pointer;
     height: fit-content;
 }
