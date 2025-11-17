@@ -1,22 +1,58 @@
+:root {
+    --green-main: #4CAF50;
+    --green-dark: #3e8641;
+    --green-light: hwb(120 82% 11% / 0.877);
+    --bg-light: #f9fdf9;
+    --bg-aside: #f0f7f0;
+    --text-dark: #2f2f2f;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
 /* --- Контент --- */
 .content {
-    flex: 1;
-    padding: 1vw;
+    /* flex: 1; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    padding: 1vw;
     gap: 1vw;
     flex-wrap: nowrap; 
     align-items: flex-start;
     justify-items: flex-start;
 
     width: calc(100vw - 260px);
-    height: 100%;
+    height: fit-content;
 
     transition: width 0.4s ease;
 }
 
 .full-content {
     width: 95vw ;
+}
+
+.class-btn-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+
+    width: fit-content;
+    height: 8vh;
+    align-self: center;
+
+    gap: 2vw;
+}
+.class-btn-div button{
+    width: 20vw;
+    padding: 1.5vh 1.5vw;
+    font-size: 4vh;
+    background-color: var(--green-main);
+    color: white;
+    border: none;
+    border-radius: 1vh;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0.4vw 1vh var(--shadow);
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .class-div h2{
@@ -30,7 +66,7 @@
     font-size: 3vh;
     font-weight: 700;
     color: #3c3c3c;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.05);
 }
 
 .class-div{
@@ -75,7 +111,7 @@
 
 .card:hover {
     /* transform: translateY(-1px); */
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    box-shadow: 0 0.5vh 1vw rgba(0,0,0,0.15);
 }
 
 .card-header {
@@ -107,9 +143,9 @@
     font-weight: 700;
     font-size: 1.2vh;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 0.2vh solid white;
     display: flex;
-    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    box-shadow: 0 0 0.4vh rgba(0,0,0,0.2);
     z-index: 10;
 
 }
@@ -188,7 +224,7 @@
     transition: 0.5s ease;
     filter: brightness(92%);
     /* background: linear-gradient(135deg, #5ba88e, #387c87); */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 0.2vh 0.5vh rgba(0,0,0,0.15);
 }
 
 .card-body {
@@ -258,8 +294,8 @@
 /* menu */
 .menu-options {
     position: fixed;
-    bottom: 7vh;
-    right: 6vw;
+    bottom: 8.5vh;
+    right: 5vw;
     background-color: #fff;
     border-radius: 1.2vh;
     box-shadow: 0 0.4vh 1.2vw rgba(0,0,0,0.2);
@@ -290,7 +326,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(0.5vw);
     background-color: rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
@@ -353,6 +389,7 @@
 }
 
 .form-group input::placeholder{
+    padding-left: 0.5vw;
     font-size: 1.5vh;
 }
 
@@ -371,27 +408,27 @@
 .modal textarea,
 .modal select {
     width: 100%;
-    padding: 12px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+    padding: 1hv 1vw;
+    border-radius: 0.8vh;
+    border: 0.2vh solid #ccc;
+    font-size: 1.8vh;
     box-sizing: border-box;
-    margin: 0 0 10px 0;
+    margin: 0 0 1vh 0;
 }
 
 .modal select {
-    margin-right: 20px;
+    margin-right: 1.5vw;
 }
 
 /* SELECT */
 .modal select {
     width: 100%;
-    padding: 12px 40px 12px 12px; 
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+    padding: 0.8vh 3.5vw 1vh 1vw; 
+    border-radius: 0.8vh;
+    border: 0.2vh solid #ccc;
+    font-size: 1.8vh;
     box-sizing: border-box;
-    margin: 0 0 10px 0;
+    margin: 0 0 1vh 0;
     background-color: #fff;
     appearance: none; 
     -webkit-appearance: none;
@@ -399,12 +436,12 @@
     position: relative;
     background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
-    background-position: right 12px center; 
-    background-size: 20px;
+    background-position: right 1.2vw center; 
+    background-size: 2vh;
 }
 
 .modal select option {
-    padding: 10px;
+    padding: 1vw;
     font-weight: 500;
 }
 
@@ -422,7 +459,7 @@
     border: 0.4vh solid #ccc;
     width: 4vw;
     height: 5vh;
-    border-radius: 0.6vh; 
+    border-radius: 0.8vh; 
     cursor: pointer;
     padding: 0;
     background: none;
@@ -432,11 +469,11 @@
 
 .color-group input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0;
-    border-radius: 6px;
+    border-radius: 0.8vh;
 }
 .color-group input[type="color"]::-webkit-color-swatch {
     border: none;
-    border-radius: 6px;
+    border-radius: 0.8vh;
 }  /*  */
 
 /* BUTTON */

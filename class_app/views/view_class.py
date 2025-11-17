@@ -8,9 +8,67 @@ from Project.database import db
 from datetime import date
 
 def generate_code(length):
-  characters = string.ascii_letters + string.digits
-  code = ''.join(random.choice(characters) for i in range(length))
-  return code
+    code= ""
+    characters = string.ascii_letters + string.digits
+    for letter in range(length):
+        code += random.choice(characters)
+    return code
+
+def class_sorte():
+    data = flask.request.get_json()
+    sorteType= data.get('sortyType')
+
+    my_classes= []
+    my_classes_list= Classes.query.filter_by(teacher_id= current_user.id).all()
+    
+    if sorteType == "my_classes":
+        tasks_class_teacher_list= []
+
+        for clas in my_classes_list:
+            tasks_list= []
+
+            for index, task in  enumerate(clas.tasks):
+                if index < 2:
+                    tasks_list.append(task.dict())
+            
+            tasks_class_teacher_list.append(tasks_list)
+
+        for clas in my_classes_list:
+            my_classes.append(clas.dict())
+        
+        return flask.jsonify({
+            "classes": my_classes,
+            "tasks_class_teacher_list": tasks_class_teacher_list
+        })
+    
+    elif sorteType == "classes":
+        classes_id= []
+        classes_list= []
+        tasks_class_user_list= []
+
+        user= User.query.filter_by(id= current_user.id).first()
+
+        for clas in user.classes:
+            classes_id.append(clas.id)
+
+            tasks_list= []
+
+            for index, task in  enumerate(clas.tasks):
+                if index < 3:
+                    tasks_list.append(task.dict())
+            
+            tasks_class_user_list.append(tasks_list)
+        for id in classes_id:
+            find_class= Classes.query.filter_by(id= id).first()
+            classes_list.append(find_class.dict())
+
+        return flask.jsonify({
+            "classes_list": classes_list,
+            "tasks_class_user_list": tasks_class_user_list
+        })
+    else:
+        return flask.jsonify({"error": "error"})
+
 
 @render_page(template_name = 'class_page.html')
 def render_class_page():
@@ -80,7 +138,7 @@ def render_class_page():
         tasks_list= []
 
         for index, task in  enumerate(clas.tasks):
-            if index <= 3:
+            if index < 3:
                 tasks_list.append(task)
         
         tasks_class_user_list.append(tasks_list)
@@ -92,7 +150,7 @@ def render_class_page():
         tasks_list= []
 
         for index, task in  enumerate(clas.tasks):
-            if index <= 3:
+            if index < 2:
                 tasks_list.append(task)
         
         tasks_class_teacher_list.append(tasks_list)

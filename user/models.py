@@ -22,6 +22,12 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'User: {self.username}'
     
+    def dict(self):
+        return {
+            "id": self.id,
+            "username": self.username
+        }
+    
 
 class UnconfirmedUser(db.Model):
     id = db.Column(db.Integer, primary_key= True)
@@ -65,7 +71,12 @@ class Classes(db.Model):
     def dict(self):
         return {
             "id": self.id,
-            "title": self.title
+            "title": self.title,
+            "lesson": self.lesson,
+            "class_code": self.class_code,
+            "teacher": self.teacher.dict(),
+            "class_color1": self.class_color1,
+            "class_color2": self.class_color2
         }
 
 class Score(db.Model):
@@ -85,6 +96,15 @@ class Score(db.Model):
     user_name = db.Column(db.String, nullable= False)
 
     test_code= db.Column(db.Integer, nullable= True)
+
+    def dict(self):
+        return {
+            "id": self.id,
+            "test_id": self.test_id,
+            "accuracy": self.accuracy,
+            "date_complete": self.date_complete,
+            "time_complete": self.time_complete
+        }
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key= True)
@@ -108,7 +128,7 @@ class Task(db.Model):
             "id": self.id,
             "title": self.title,
             "description": self.description,
-            "due_time": self.due_time.strftime("%Y-%m-%d %H:%M:%S") if self.due_time else None,
+            "due_time": self.due_time.strftime('%d.%m.%Y %H:%M') if self.due_time else None,
             "work_after_time": self.work_after_time
         }
 

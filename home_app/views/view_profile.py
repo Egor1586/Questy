@@ -1,9 +1,5 @@
-import flask
+import flask, io, datetime
 import matplotlib.pyplot as plt
-import io
-
-import datetime
-
 
 from flask_login import current_user
 
@@ -19,10 +15,42 @@ def bubble_sort(list):
                 list[accuracy], list[accuracy+ 1] = list[accuracy+ 1], list[accuracy]
     return list
 
+def profile_sorte():
+    data= flask.request.get_json()
+    sorte_type= data.get('sortyType')
+    scores = Score.query.filter_by(user_id= current_user.id).all()
+
+    date_sort= []
+    accuracy_sort = []
+    list_tests_sort= []
+
+    for score in scores:
+        test= Test.query.filter_by(id= score.test_id).first()
+        if test and test not in list_tests_sort:
+            list_tests_sort.append(test.dict())
+
+    if sorte_type == "accuracy":
+        for score in scores:
+            accuracy_sort.append([score.accuracy, score.id, score.test_id, score.date_complete, score.time_complete])
+
+        bubble_sort(list= accuracy_sort)
+
+        return flask.jsonify({
+            "scores":accuracy_sort,
+            "tests": list_tests_sort})
+    elif sorte_type == "date":
+        for score in scores:
+            date_sort.append(score.dict())
+        return flask.jsonify({
+            "scores": date_sort,
+            "tests": list_tests_sort})
+    else:
+        return flask.jsonify({"error": "error"})
+
+
 @render_page(template_name='profile.html')
 def render_profile():
     accuracy = []
-    accuracy_sort = []
     time_complete = []
     date_complete = []
     dates_complete = []
@@ -31,7 +59,6 @@ def render_profile():
     list_tests = []
     list_tests_sort = []
     selected_option = ["graph_1"]
-    selected_option_test = ["date"]
     message = ' '
     tests_count= 0
     scores_count= 0
@@ -50,27 +77,13 @@ def render_profile():
             accuracy.append(score.accuracy)
             date_complete.append(score.date_complete)
             time_complete.append(score.time_complete)
-            accuracy_sort.append([score.accuracy, score.id, score.test_id, score.date_complete, score.time_complete])
             dates_complete.append(score.date_complete)
             if Test.query.filter_by(id= score.test_id).first() not in list_tests:
                 list_tests.append(Test.query.filter_by(id= score.test_id).first())
 
-        bubble_sort(list= accuracy_sort)
-        for id in accuracy_sort:
-            if Test.query.filter_by(id= id[2]).first() not in list_tests_sort:
-                list_tests_sort.append(Test.query.filter_by(id= id[2]).first())
-
-        print(accuracy_sort)
-        
         if flask.request.method == 'POST':
             if flask.request.form.get('choice') != None:
                 selected_option[0] = (flask.request.form.get('choice'))
-                
-            if flask.request.form.get('choice_test') != None:
-                selected_option_test[0] = (flask.request.form.get('choice_test'))
-                
-           
-            print(selected_option_test)
     
         dates_complete.sort()
 
@@ -93,12 +106,10 @@ def render_profile():
                 'time_complete': time_complete or [],
                 'list_tests': list_tests,
                 "selected_option": selected_option,
-                "selected_option_test": selected_option_test,
                 'wt_graph': '1_active',
                 'count_cmpl_quiz': count_cmpl_quiz or [],
                 'user': user,
-                "list_tests_sort": list_tests_sort,
-                "accuracy_sort": accuracy_sort
+                "list_tests_sort": list_tests_sort
             }
 
         if selected_option[0] == 'graph_1':
@@ -115,12 +126,10 @@ def render_profile():
                 'time_complete': time_complete or [],
                 'list_tests': list_tests,
                 "selected_option": selected_option,
-                "selected_option_test": selected_option_test,
                 'wt_graph': '1',
                 'count_cmpl_quiz': count_cmpl_quiz or [],
                 'user': user,
-                "list_tests_sort": list_tests_sort,
-                "accuracy_sort": accuracy_sort
+                "list_tests_sort": list_tests_sort
             }
         
         
@@ -145,10 +154,8 @@ def render_profile():
                 'date_complete': date_complete or [],
                 'time_complete': time_complete or [],
                 "selected_option": selected_option,
-                "selected_option_test": selected_option_test,
                 'user': user,
-                "list_tests_sort": list_tests_sort,
-                "accuracy_sort": accuracy_sort
+                "list_tests_sort": list_tests_sort
             }
 
         elif selected_option[0] == 'graph_3':
@@ -173,11 +180,9 @@ def render_profile():
                     'accuracy': accuracy or [],
                     'list_tests': list_tests,
                     "selected_option": selected_option,
-                    "selected_option_test": selected_option_test,
                     'count_cmpl_quiz': count_cmpl_quiz or [],
                     'user': user,
-                    "list_tests_sort": list_tests_sort,
-                    "accuracy_sort": accuracy_sort
+                    "list_tests_sort": list_tests_sort
                     }
             
         elif selected_option[0] == 'graph_4':
@@ -203,11 +208,9 @@ def render_profile():
                 'date_complete': date_complete or [],
                 'time_complete': time_complete or [],
                 "selected_option": selected_option,
-                "selected_option_test": selected_option_test,
                 'count_cmpl_quiz': count_cmpl_quiz or [],
                 'user': user,
-                "list_tests_sort": list_tests_sort,
-                "accuracy_sort": accuracy_sort
+                "list_tests_sort": list_tests_sort
                 }
     else:
         message = "Ви не авторизовані"
@@ -228,7 +231,5 @@ def render_profile():
         'date_complete': date_complete or [],
         'time_complete': time_complete or [],
         "selected_option": selected_option,
-        "selected_option_test": selected_option_test,
-        "list_tests_sort": list_tests_sort,
-        "accuracy_sort": accuracy_sort
+        "list_tests_sort": list_tests_sort
         }
