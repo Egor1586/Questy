@@ -270,19 +270,27 @@ body {
 }
 /* График */
 .chart-container {
-    width: 600px;
-    height: 350px;
-    position: relative;
+    width: 100%; 
+    height: 100%;
 }
-/* Что бы "график" не изменялся */
+
 .score-form select {
-    width: 220px;
-    height: 40px;
-    font-size: 16px;
+    width: 22vh;
+    height: 6vh;
+    font-size: 2vh;
+    border-radius: 1.2vh;
+    padding: 0.1vh;
+    border: 0.3vh solid #ccc;
 }
 
 .send-btn-profile {
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
+    width: 15vh;
+    height: 6vh;
+    font-size: 2vh;
+    border-radius: 1.2vh;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
