@@ -58,7 +58,7 @@
             timerPaused= false
         } 
 
-        console.log(timerPaused, typeof(timerPaused))
+        // console.log(timerPaused, typeof(timerPaused))
 
         //window.addEventListener('beforeunload', function(){
         //    state = getCookie("state");
@@ -108,19 +108,22 @@
             renderQuestion(Number("{{ test.id }}"), list_quiz[Number(state.slice(-1))], list_answers[Number(state.slice(-1))], room, author_name);
         } 
         else if (state && state.includes("waite")) {
-            console.log("AFTER ADN HTML")
             renderWaiteQuestion();
         } 
-        else {       
-            renderRoomMain(room, author_name, username, list_quiz);
-
-            let messages= document.getElementById("messages");
-            
-            if (messages && messages.children.length != 1){
-                const emptyMessages= document.getElementById("no-messages");
-                if (emptyMessages){
-                    emptyMessages.remove()
+        else {
+            if (author_name === username){
+                renderRoomMain(room, author_name, username, list_quiz);
+    
+                let messages= document.getElementById("messages");
+                
+                if (messages && messages.children.length != 1){
+                    const emptyMessages= document.getElementById("no-messages");
+                    if (emptyMessages){
+                        emptyMessages.remove()
+                    }
                 }
+            } else{
+                renderWaiteQuestion();
             }
         }
  
@@ -130,13 +133,12 @@
                 username: username
             });
         
-            if (username !== author_name) {
+            if (username !== author_name && !state) {
 
-                if (!state){
-                    createUserBlock(username, author_name, username)
-                }
+                //createUserBlock(username, author_name, username, "waite")              
+                console.log("Add in waite list")
                 
-                socket.emit("new_user", {
+                socket.emit("new_user_admin", {
                     room: room,
                     username: username,
                     author_name: author_name
@@ -227,8 +229,17 @@
         });
 
         socket.on("create_user_block", function(data) {  
+            if (!state){    
+                if (username === data){
+                    renderRoomMain(room, author_name, username, list_quiz);
+                }  
+                createUserBlock(username, author_name, data, "not");
+            }
+        });
+
+        socket.on("new_user_admin", function(data) {  
             if (!state){          
-                createUserBlock(username, author_name, data);
+                createUserBlock(username, author_name, data, "waite");
             }
         });
 
@@ -454,6 +465,22 @@
             else {
                 document.cookie = `user_answers= |not_answer|; path=/`;
             }
+        }
+
+        function addUesrBlock(username, button){
+            console.log(username)
+            console.log("Neds del waite block and add normal block to all")
+
+            const userBlock= button.closest(".user-block")
+            if (userBlock){
+                userBlock.remove()
+            }
+            
+            socket.emit("new_user", {
+                room: room,
+                username: username,
+                author_name: author_name
+            });
         }
 
         function kickUser(kick_user) {
