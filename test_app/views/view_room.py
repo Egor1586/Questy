@@ -228,20 +228,19 @@ def handle_message(data):
 def handle_message(data):
     room= data['room']
     username= data['username']
-    author_name= data["author_name"]
+
     user_sid = get_sid(username)
 
-    ROOM= Room.query.filter_by(test_code= room).first()
+    emit("create_user_block", f"{username}", to= room)
 
-    users_string= ROOM.user_list.replace(f"|{username}|", "")
-    
-    if username != author_name:
-        users_string= users_string.replace(f"|{author_name}|", "")
+@Project.settings.socketio.on('new_user_admin')
+def handle_message(data):
+    username= data['username']
+    author_name= data["author_name"]
 
-    print(users_string)
+    author_sid = get_sid(author_name)
 
-    emit("create_user_block", f"{username}", include_self= False, to= room)
-    emit("create_all_user_blocks", users_string, to= user_sid)
+    emit("new_user_admin", username, to= author_sid)
 
 @Project.settings.socketio.on('next_question')
 def handle_message(data):
