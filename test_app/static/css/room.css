@@ -91,11 +91,34 @@ main {
     background-color: var(--green-second);
 }
 
+.waite-side-top{
+    height: auto;
+}
+
+.all-users {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 95%;
+}
+
 .user-list {
     display: flex;
     flex-direction: column;
     gap: 1vh;
     overflow-y: auto;
+    max-height: 40vh;
+    /* background-color: red; */
+}
+
+.waite-users {
+    display: flex;
+    flex-direction: column;
+    /* background-color: blue; */
+    gap: 1vh;
+    overflow-y: auto;
+    height: 10vh;
     max-height: 40vh;
 }
 
@@ -130,6 +153,22 @@ main {
 .btn-remove:hover {
     background-color: rgb(193, 54, 54);
 }
+
+.btn-accept {
+    background-color: var(--green-main);
+    color: white;
+    padding: 0.8vh 1.7vw;
+    border: none;
+    border-radius: 1vh;
+    font-size: 1.2vh;
+    cursor: pointer;
+    transition:  background-color 0.3s;
+}
+
+.btn-accept:hover {
+    background-color: green;
+}
+
 
 
 .btn-start {
@@ -353,7 +392,7 @@ main {
 }
 
 .empty-block {
-    background-color: #f9f9f9;
+    background-color: #e0f7e9;
     border-left: 0.4vw dashed #ccc;
     font-style: italic;
     color: #666;

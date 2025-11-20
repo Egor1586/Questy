@@ -1,20 +1,21 @@
-function createUserBlock(username, author_name, block_username, type) {    
-    let userListDiv
-    const emptyUserBlock= document.getElementById("emty-users-list")
-
-    if (emptyUserBlock){
-        emptyUserBlock.remove();
-    }
+function createUserBlock(username, author_name, block_username, type) {   
     
-    if(type === "waite"){
-        userListDiv = document.getElementById("user-list")
+    let userListDiv
+    if (type === "not"){
+        userListDiv= document.getElementById("user-list")
+        const emptyUserBlock= document.getElementById("emty-users-list")
+    
+        if (emptyUserBlock){
+            emptyUserBlock.remove();
+        }
+        
         let checkingUserBlock= document.getElementById(`${block_username}`)
         
         if (checkingUserBlock) {
             return
         }
     } else {
-        userListDiv = document.getElementById("user-list")
+        userListDiv= document.getElementById("waite-users")
     }
     
     const userBlock= document.createElement("div");
@@ -41,8 +42,8 @@ function createUserBlock(username, author_name, block_username, type) {
 
         if (type === "waite"){
             const btnAccept= document.createElement("button");
-            // btnAccept.className= "btn-remove";
-            // btnAccept.type= "button";
+            btnAccept.className= "btn-accept";
+            btnAccept.type= "button";
             btnAccept.textContent= "Accept"
             btnAccept.onclick = function () {
                 addUesrBlock(block_username, this);
