@@ -7,7 +7,6 @@ class Test(db.Model):
     description = db.Column(db.String(200), nullable= False)
 
     total_questions = db.Column(db.Integer, nullable= False)
-    answers_per_question = db.Column(db.Integer, nullable= True)
     test_code = db.Column(db.Integer, nullable= True)
     author_name = db.Column(db.String(100), nullable= False)
     created_date = db.Column(db.String(100), nullable= False)
@@ -63,3 +62,6 @@ class Room(db.Model):
     active_test= db.Column(db.Boolean, nullable= True)
 
     all_members = db.Column(db.String(300), nullable = False)
+
+    def __str__(self):
+        return f"{self.user_list} and {self.all_members}"

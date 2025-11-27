@@ -1,15 +1,21 @@
-function createUserBlock(username, author_name, block_username) {    
-    const userListDiv = document.getElementById("user-list")
-    const emptyUserBlock= document.getElementById("emty-users-list")
-
-    if (emptyUserBlock){
-        emptyUserBlock.remove();
-    }
+function createUserBlock(username, author_name, block_username, type) {   
     
-    let checkingUserBlock= document.getElementById(`${block_username}`)
+    let userListDiv
+    if (type === "not"){
+        userListDiv= document.getElementById("user-list")
+        const emptyUserBlock= document.getElementById("emty-users-list")
     
-    if (checkingUserBlock) {
-        return
+        if (emptyUserBlock){
+            emptyUserBlock.remove();
+        }
+        
+        let checkingUserBlock= document.getElementById(`${block_username}`)
+        
+        if (checkingUserBlock) {
+            return
+        }
+    } else {
+        userListDiv= document.getElementById("waite-users")
     }
     
     const userBlock= document.createElement("div");
@@ -33,6 +39,18 @@ function createUserBlock(username, author_name, block_username) {
         btnRemove.onclick = function () {
             kickUser(block_username);
         };
+
+        if (type === "waite"){
+            const btnAccept= document.createElement("button");
+            btnAccept.className= "btn-accept";
+            btnAccept.type= "button";
+            btnAccept.textContent= "Accept"
+            btnAccept.onclick = function () {
+                addUesrBlock(block_username, this);
+            };
+            
+            userActions.appendChild(btnAccept);
+        }
         
         userActions.appendChild(btnRemove);
         userBlock.appendChild(userActions);

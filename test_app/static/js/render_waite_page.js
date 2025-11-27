@@ -1,4 +1,4 @@
-function renderRoomMain(testCode, authorName, username) {
+function renderRoomMain(testCode, authorName, username, quizzes) {
     const content = document.getElementById("room-content");
     content.innerHTML = "";
 
@@ -33,15 +33,22 @@ function renderRoomMain(testCode, authorName, username) {
     infoBar.appendChild(textCode);
     waiteSideTop.appendChild(infoBar);
 
+    let durationSeconds= 0
+    quizzes.forEach(quiz => {
+        durationSeconds += Number(quiz.time) + 15
+    });
+
+    let duration= durationSeconds / 60
+    let durationFix= duration.toFixed(2)
+
     // Інформація про тест
     const testInfo = document.createElement("div");
     testInfo.className = "test-info-box";
     testInfo.innerHTML = `
         <h3>Інформація про тест</h3>
         <ul>
-            <li>Кількість запитань: 10</li>
-            <li>Тривалість: 20 хв</li>
-            <li>Всього учнів: 4</li>
+            <li>Кількість запитань: ${quizzes.length}</li>
+            <li>Тривалість: ${durationFix} хвилин</li>
         </ul>
     `;
     waiteSideTop.appendChild(testInfo);
@@ -58,27 +65,39 @@ function renderRoomMain(testCode, authorName, username) {
         </ol>
     `;
 
+    const allUsers = document.createElement("div");
+    allUsers.id = "all-users";
+    allUsers.className = "all-users";
+
     // Список учасників
     const userList = document.createElement("div");
     userList.id = "user-list";
     userList.className = "user-list";
 
     userList.innerHTML = `
-    <div class="user-block teacher-block">
-        <div class="user-name"><strong>Вчитель:</strong> ${authorName}</div>
-    </div>
-    <div class="user-block empty-block" id="emty-users-list">
-        <div class="user-name">Учні ще не приєдналися. Очікуємо...</div>
-    </div>
+        <div class="user-block teacher-block">
+            <div class="user-name"><strong>Вчитель:</strong> ${authorName}</div>
+        </div>
+        <div class="user-block empty-block" id="emty-users-list">
+            <div class="user-name">Учні ще не приєдналися. Очікуємо...</div>
+        </div>
     `;
+
+    const waiteUsers = document.createElement("div");
+    waiteUsers.id = "waite-users";
+    waiteUsers.className = "waite-users";
     
-    waiteSideTop.appendChild(userList);
+    allUsers.appendChild(userList);
+    allUsers.appendChild(waiteUsers);
 
-    const waiteSideBottom = document.createElement("div");
-    waiteSideBottom.className = "waite-side-bottom";
+    waiteSideTop.appendChild(allUsers);
 
+    let waiteSideBottom;
     // Кнопка "Почати" для автора
     if (authorName === username) {
+        waiteSideBottom = document.createElement("div");
+        waiteSideBottom.className = "waite-side-bottom";
+
         const buttonStart = document.createElement("button");
         buttonStart.type = "button";
         buttonStart.className = "btn-start";
@@ -110,7 +129,9 @@ function renderRoomMain(testCode, authorName, username) {
     chat.querySelector(".send-btn").addEventListener("click", sendMessage);
 
     waiteSide.appendChild(waiteSideTop)
-    waiteSide.appendChild(waiteSideBottom)
+    if (waiteSideBottom) {
+        waiteSide.appendChild(waiteSideBottom)
+    }
 
     container.appendChild(waiteSide);
     container.appendChild(chat);
@@ -124,6 +145,10 @@ function renderRoomMain(testCode, authorName, username) {
     participantsTitle.textContent = "Кількість учасників";
     participantsBox.appendChild(participantsTitle);
 
-    //participantsBox.appendChild(participantsList);
-    //waiteSide.appendChild(participantsBox);
+    $('#msg').on('keydown', function(event){
+        if (event.key === "Enter"){
+            event.preventDefault()
+            $('.send-btn').click()
+        }
+    })
 }

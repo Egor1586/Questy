@@ -18,53 +18,71 @@ body {
 }
 
 .container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
+    width: 55vw;
+    margin: 2vh auto;
+    padding: 2vh;
     background: white;
-    border-radius: 12px;
+    border-radius: 1.2vh;
     box-shadow: 0 4px 10px var(--shadow);
 }
 
 h1 {
     text-align: center;
     color: var(--green-dark);
-    margin-bottom: 20px;
+    font-size: 4vh;
+    margin-bottom: 1.5vh;
 }
 
 label {
+    font-size: 2.5vh;
     font-weight: 600;
     display: block;
-    margin: 10px 0 6px;
+    margin: 1vh 0 0.8vh;
 }
 
 input[type="text"], input[type="file"] {
     width: 100%;
-    padding: 10px;
+    padding: 1vh;
     
-    border: 1px solid var(--green-light);
-    border-radius: 8px;
-    font-size: 15px;
-    margin: 2px 0px;
+    border: 0.2vh solid var(--green-light);
+    border-radius: 1vh;
+    font-size: 2vh;
+    margin: 1vh 0px;
 }
+
+input[type="file" i] {
+    padding: 1vh 1.4vh;
+    border: 0.1vh solid var(--green-light);
+    border-radius: 0.6vh;
+    font-size: 1.6vh;
+    transition: 0.3s ease;
+}
+
+
 
 .question-block {
     background-color: var(--bg-aside);
-    border: 1px solid var(--green-light);
-    border-radius: 10px;
-    padding: 15px;
+    border: 0.2vh solid var(--green-light);
+    border-radius: 1.2vh;
+    padding: 1.5vh;
 
-    margin-top: 20px;
-    box-shadow: 0 2px 5px var(--shadow);
+    margin-top: 1.5vh;
+    box-shadow: 0 0.1vw 0.4vh var(--shadow);
 }
+
+
 
 .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
     font-weight: bold;
     color: var(--green-dark);
+}
+
+.question-header span {
+    font-size: 2vh;
 }
 
 .delete-question {
@@ -72,19 +90,23 @@ input[type="text"], input[type="file"] {
     border: none;
     color: rgb(233, 96, 96);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 2vh;
     font-weight: 600;
 }
 
 .answers {
-    margin-top: 10px;
+    margin-top: 1vh;
+}
+
+.answers span{
+    font-size: 2vh;
 }
 
 .answer-input {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    gap: 1vw;
+    margin-bottom: 1vh;
 }
 
 .answer-input input[type="text"] {
@@ -96,15 +118,21 @@ input[type="text"], input[type="file"] {
     background-color: var(--green-main);
     border: none;
     color: white;
-    padding: 8px 14px;
-    border-radius: 6px;
+    padding: 1vh 1vw;
+    border-radius: 0.8vh;
     cursor: pointer;
+    font-size: 2.2vh;
     font-weight: 600;
     transition: 0.3s;
 }
 
 .add-answer:hover {
     background-color: var(--green-dark);
+}
+
+.question-radio, .checkbox {
+    width: 2.5vh;
+    height: 2.5vh;
 }
 
 .create-question-block {
@@ -115,62 +143,28 @@ input[type="text"], input[type="file"] {
 }
 
 .button-create-question {
-    background-color: var(--green-dark);
-    border: none;
+    background-color: #e8f6ec;
+    border: 0.2vh solid #3da35d;
     width: 24%;
-    padding: 14px 36px;
-    color: white;
+    padding: 1vh 2.5vw;
+    color: #2d6a4f;
+
     font-weight: 700;
-    font-size: 17px;
-    border-radius: 30px;
+    font-size: 2vh;
+    border-radius: 1vh;
     cursor: pointer;
     user-select: none;
     transition: background-color 0.3s ease, transform 0.15s ease;
-    margin-top: 20px;
+    margin-top: 1.5vh;
 }
 
-.submit-button {
-    background-color: var(--green-dark);
-    border: none;
-    width: 100%;
-    padding: 14px 36px;
-    color: white;
-    font-weight: 700;
-    font-size: 17px;
-    border-radius: 30px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease, transform 0.15s ease;
-    margin-top: 20px;
-}
-
-
-.button-create-question:hover,
-.submit-button:hover {
-    background-color: var(--green-main);
-    transform: translateY(-2px);
-}
 /* Контейнер для кнопок */
 .create-question-block {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-top: 25px;
-}
-
-/* кнопки для створення питань */
-.button-create-question {
-    background-color: #e8f6ec;
-    border: 1.5px solid #3da35d;
-    color: #2d6a4f;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 8px 14px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    letter-spacing: 0.2px;
+    gap: 0.5vw;
+    margin-top: 2vh;
 }
 
 .button-create-question:hover {
@@ -188,19 +182,20 @@ input[type="text"], input[type="file"] {
 
 /* завершити створення тесту */
 .submit-button {
-    display: inline-block;
-    margin-top: 25px;
-    padding: 12px 28px;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    margin-top: 2vh;
+    padding: 1vh 2vw;
     background-color: #3da35d;
     color: white;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 3vh;
     border: none;
-    border-radius: 10px;
+    border-radius: 1.2vh;
     cursor: pointer;
     transition: all 0.3s ease;
     width: fit-content;
-    align-self: center;
     box-shadow: 0 0 0 rgba(0,0,0,0);
 }
 
@@ -212,4 +207,39 @@ input[type="text"], input[type="file"] {
 .submit-button:active {
     transform: translateY(1px);
     background-color: #276b45;
+}
+
+.home-circle-btn {
+    position: fixed;
+    bottom: 2vh;
+    right: 2vh;
+
+    width: 8vh;
+    height: 8vh;
+    border-radius: 50%;
+    border: none;
+
+    background: #2e7d32;
+    color: #fff;
+    font-size: 3.4vh;
+    font-weight: bold;
+
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.home-circle-btn:hover {
+    background: #388e3c;
+    box-shadow: 0 0.6vh 1.4vh rgba(0, 0, 0, 0.3);
+}
+
+.home-circle-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 0.2vh 0.6vh rgba(0, 0, 0, 0.2);
 }

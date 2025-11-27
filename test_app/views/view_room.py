@@ -73,8 +73,11 @@ def handle_disconnect():
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
     room = data['room']
-    ROOM = Room.query.filter_by(test_code= room).first()
-    ROOM.active = 0
+    ROOM= Room.query.filter_by(test_code= room).first()
+    # ROOM.active = 0
+    if ROOM:
+        db.session.delete(ROOM)
+
     TEST = Test.query.filter_by(test_code= room).first()
     TEST.test_code = 0  
     db.session.commit()
@@ -204,15 +207,18 @@ def handle_start_test(data):
     test= Test.query.filter_by(test_code = room).first()
     
     ROOM= Room.query.filter_by(test_code= room).first()
-    ROOM.active_test= True
-    db.session.commit()
-    
-    emit("start_test", {
-        "room": room,
-        "test_id": test.id,
-        "author_name": test.author_name
-        }
-    , to=room)
+
+    if (ROOM.all_members):
+        print(ROOM)
+        ROOM.active_test= True
+        db.session.commit()
+        
+        emit("start_test", {
+            "room": room,
+            "test_id": test.id,
+            "author_name": test.author_name
+            }
+        , to=room)
 
 @Project.settings.socketio.on('message_to_chat')
 def handle_message(data):
@@ -222,20 +228,19 @@ def handle_message(data):
 def handle_message(data):
     room= data['room']
     username= data['username']
-    author_name= data["author_name"]
+
     user_sid = get_sid(username)
 
-    ROOM= Room.query.filter_by(test_code= room).first()
+    emit("create_user_block", f"{username}", to= room)
 
-    users_string= ROOM.user_list.replace(f"|{username}|", "")
-    
-    if username != author_name:
-        users_string= users_string.replace(f"|{author_name}|", "")
+@Project.settings.socketio.on('new_user_admin')
+def handle_message(data):
+    username= data['username']
+    author_name= data["author_name"]
 
-    print(users_string)
+    author_sid = get_sid(author_name)
 
-    emit("create_user_block", f"{username}", include_self= False, to= room)
-    emit("create_all_user_blocks", users_string, to= user_sid)
+    emit("new_user_admin", username, to= author_sid)
 
 @Project.settings.socketio.on('next_question')
 def handle_message(data):

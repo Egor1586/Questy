@@ -211,20 +211,17 @@ def render_new_quiz():
         try:
             title = flask.request.form['title']
             description = flask.request.form['description']
-            total_questions = flask.request.form['total_questions']
-            answers_per_question= flask.request.form["answers_per_question"]
+            total_questions = flask.request.form['total_questions'] 
             time= flask.request.form["time"]
             image_form = flask.request.files.get('image', None)
 
             total_questions = total_questions or 10
-            answers_per_question = answers_per_question or 4
             time= time or 20
             
             test = Test(
                 title= title,
                 description= description,
                 total_questions = total_questions,
-                answers_per_question = answers_per_question,
                 test_code= 0,
                 author_name = current_user.username,
                 image=  1 if image_form else 0,

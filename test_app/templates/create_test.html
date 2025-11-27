@@ -35,6 +35,10 @@
         <button type="button" class="submit-button" id="submit-button">Завершити створення тесту</button>
     </div>
 
+    <button class="home-circle-btn" onclick="window.location.href='/quizzes/'">
+        <i class='bx  bx-home'></i>
+    </button>
+
     <script src="{{ url_for('test_app.static', filename= 'js/create_question.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/build_test.js') }}"></script>
 {% endblock %}

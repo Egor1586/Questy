@@ -8,7 +8,7 @@ main {
     position: relative;
     /* width: 780px;
     height: 540px; */
-    width: 150vh;
+    width: 75vw;
     height: 84vh;
     background: white;
     border: 0.32vh solid black;
@@ -53,7 +53,7 @@ main {
     left: 50%;
     transform: translateX(-50%);
 
-    width: 6.4vh;
+    width: 5vw;
     height: 0.64vh;
 
     background: black;
@@ -150,8 +150,6 @@ form  .radio-box .radio-button-box{
 input[type="radio"] {
     width: 2vh;
     height: 2vh;
-    
-    
 }
 
 form .linkTxt{
@@ -203,11 +201,16 @@ form .linkTxt{
     position: absolute;
     top:  0;
     left: 0;
-    width: 190vh;
+    width: 65vw;
     height: 134vh;
     background: rgba(113, 145, 107, 1);
     transform: rotate(-10.5deg) skewY(-44deg);
     transform-origin: bottom left;
     border-bottom:  7px solid rgba(113, 145, 107, 1);
     transition:  1.5s ease;
+}
+
+#error-message {
+    font-size: 1.5vh;
+    color: red;
 }

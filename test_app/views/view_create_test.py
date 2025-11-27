@@ -27,14 +27,12 @@ def create_test():
         image_form = data.get("image")
 
         total_questions = total_questions or len(data["questions"])
-        answers_per_question = answers_per_question or 4
         time= time or 20
         
         test = Test(
             title= title,
             description= description,
             total_questions = total_questions,
-            answers_per_question = answers_per_question,
             test_code= 0,
             author_name = current_user.username,
             image=  1 if image_form else 0,

@@ -10,53 +10,53 @@
 
 .edit-question-form {
     background-color: var(--bg-light);
-    margin: 30px auto;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px var(--shadow);
-    max-width: 500px;
+    margin: 6vh auto;
+    padding: 4vh;
+    border-radius: 3.2vh;
+    box-shadow: 0 1.6vh 4vh var(--shadow);
+    max-width: 60vw;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
-    border: 1px solid var(--green-light);
+    gap: 3vh;
+    border: 0.2vh solid var(--green-light);
 }
 
 .edit-question-form h1 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
+    font-size: 7vh;
+    margin-bottom: 3.2vh;
     text-align: center;
     color: var(--text-dark);
 }
 
 .edit-question-form input[type="text"] {
-    padding: 0.65rem 0.9rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    padding: 2vh 2.8vh;
+    font-size: 3.2vh;
+    border: 0.2vh solid #ccc;
+    border-radius: 1.6vh;
     width: 100%;
     box-sizing: border-box;
     background-color: #fff;
     transition: all 0.25s ease;
-    margin: 10px 0;
+    margin: 2vh 0;
 }
 
 .edit-question-form input[type="text"]:focus {
     border-color: var(--green-main);
-    box-shadow: 0 0 6px var(--green-light);
+    box-shadow: 0 0 1.2vh var(--green-light);
     outline: none;
 }
 
 .edit-question-form button[type="submit"] {
     align-self: center;
-    margin-top: 1rem;
-    padding: 0.75rem 2rem;
+    margin-top: 3.2vh;
+    padding: 2.4vh 6.4vh;
     background-color: var(--green-main);
     color: white;
     border: none;
-    border-radius: 70px;
-    font-size: 1rem;
+    border-radius: 14vh;
+    font-size: 3.2vh;
     font-weight: 600;
     cursor: pointer;
     width: 100%;

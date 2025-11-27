@@ -11,7 +11,7 @@ main {
 
 .wrapper{
     position: relative;
-    width: 150vh;
+    width: 75vw;
     height: 84vh;
     background: white;
     border: 0.32vh solid black;
@@ -30,7 +30,7 @@ main {
     justify-content: center;
     flex-direction: column;
 }
-
+/* ? */
 .wrapper .form-box.login{
     left: 0;
     padding: 0 9.6vh 0 6.4vh; 
@@ -52,7 +52,7 @@ main {
     left: 50%;
     transform: translateX(-50%);
 
-    width: 6.4vh;
+    width: 3vw;
     height: 0.64vh;
 
     background: black;
@@ -187,7 +187,7 @@ form .linkTxt{
     position: absolute;
     top:  -6.4vh;
     right: 0;
-    width: 190vh;
+    width: 65vw;
     height: 134vh;
     background: rgba(113, 145, 107, 1);
     transform: rotate(10deg) skewY(40deg);
@@ -196,8 +196,6 @@ form .linkTxt{
     transition:  1.5s ease;
 
 }
-
-
 
 .wrapper {
     margin: 4vh;
