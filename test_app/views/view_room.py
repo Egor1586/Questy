@@ -224,6 +224,10 @@ def handle_start_test(data):
 def handle_message(data):
     emit("listening_to_messages", f"{data['username']}: {data['message']}", include_self= False, to= data['room'])
 
+# @Project.settings.socketio.on('waite_user_block')
+# def handle_message(data):
+#     emit("waite_user_block", data['username'], include_self= False, to= data['room'])
+
 @Project.settings.socketio.on('new_user')
 def handle_message(data):
     room= data['room']
@@ -231,16 +235,15 @@ def handle_message(data):
 
     user_sid = get_sid(username)
 
-    emit("create_user_block", f"{username}", to= room)
+    emit("create_user_block", {"username": username, "user_ip": data["user_ip"]}, to= room)
 
 @Project.settings.socketio.on('new_user_admin')
 def handle_message(data):
-    username= data['username']
     author_name= data["author_name"]
 
     author_sid = get_sid(author_name)
-
-    emit("new_user_admin", username, to= author_sid)
+    print(data["username"], data["ip"], "jjjjj")
+    emit("new_user_admin", {"username": data["username"], "ip": data["ip"]}, to= author_sid)
 
 @Project.settings.socketio.on('next_question')
 def handle_message(data):

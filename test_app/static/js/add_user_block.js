@@ -1,6 +1,7 @@
-function createUserBlock(username, author_name, block_username, type) {   
+function createUserBlock(username, author_name, block_username, ip,type) {   
     
     let userListDiv
+    let checkingUserBlock
     if (type === "not"){
         userListDiv= document.getElementById("user-list")
         const emptyUserBlock= document.getElementById("emty-users-list")
@@ -9,13 +10,18 @@ function createUserBlock(username, author_name, block_username, type) {
             emptyUserBlock.remove();
         }
         
-        let checkingUserBlock= document.getElementById(`${block_username}`)
+        checkingUserBlock= document.getElementById(`${block_username}`)
         
         if (checkingUserBlock) {
             return
         }
     } else {
-        userListDiv= document.getElementById("waite-users")
+        userListDiv= document.getElementById("waite-users") 
+        checkingUserBlock= document.getElementById(`${block_username}`)
+        
+        if (checkingUserBlock) {
+            return
+        }
     }
     
     const userBlock= document.createElement("div");
@@ -30,14 +36,31 @@ function createUserBlock(username, author_name, block_username, type) {
     const userActions= document.createElement("div");
     userActions.className= "user-actions";
     
+    const userIP= document.createElement("p")
+    userIP.textContent= `ip:`
 
+    const spanIP= document.createElement("span")
+    spanIP.className= "user-ip"
+    spanIP.textContent= ip
+    console.log(ip)
+
+    userIP.appendChild(spanIP)
+    userBlock.appendChild(userIP)
+
+    let kickType
     if (username === author_name) {
         const btnRemove= document.createElement("button");
         btnRemove.className= "btn-remove";
         btnRemove.type= "button";
-        btnRemove.textContent= "Видалити"
+        if (type === "waite"){
+            btnRemove.textContent= "Block"
+            kickType= "block"
+        } else{
+            btnRemove.textContent= "Видалити"
+            kickType= "kick"
+        }
         btnRemove.onclick = function () {
-            kickUser(block_username);
+            kickUser(block_username, ip, kickType);
         };
 
         if (type === "waite"){
