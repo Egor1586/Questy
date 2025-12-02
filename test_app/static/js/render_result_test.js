@@ -12,6 +12,7 @@ function userLeaveTest() {
     document.cookie = `temporary_name=; max-age=0; path=/;`;
     document.cookie = `timeStop=; max-age=0; path=/;`;
     document.cookie = `time=; max-age=0; path=/;`;
+    document.cookie = `compound=; max-age=0; path=/;`;
 
     window.location.href = '/';
 }

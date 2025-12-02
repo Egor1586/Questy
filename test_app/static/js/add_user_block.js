@@ -37,7 +37,7 @@ function createUserBlock(username, author_name, block_username, ip,type) {
     userActions.className= "user-actions";
     
     const userIP= document.createElement("p")
-    userIP.textContent= `ip:`
+    userIP.textContent= `ip: `
 
     const spanIP= document.createElement("span")
     spanIP.className= "user-ip"
@@ -53,8 +53,19 @@ function createUserBlock(username, author_name, block_username, ip,type) {
         btnRemove.className= "btn-remove";
         btnRemove.type= "button";
         if (type === "waite"){
-            btnRemove.textContent= "Block"
+            btnRemove.textContent= "Заблокувати"
             kickType= "block"
+
+            const btnKick= document.createElement("button");
+            btnKick.className= "btn-remove";
+            btnKick.type= "button";
+            btnKick.textContent= "Видалити"
+            
+            btnKick.onclick = function () {
+                kickUser(block_username, ip, "kick");
+            };
+
+            userActions.appendChild(btnKick);
         } else{
             btnRemove.textContent= "Видалити"
             kickType= "kick"
@@ -67,7 +78,7 @@ function createUserBlock(username, author_name, block_username, ip,type) {
             const btnAccept= document.createElement("button");
             btnAccept.className= "btn-accept";
             btnAccept.type= "button";
-            btnAccept.textContent= "Accept"
+            btnAccept.textContent= "Прийняти"
             btnAccept.onclick = function () {
                 addUesrBlock(block_username, this);
             };

@@ -87,7 +87,26 @@ function renderRoomMain(testCode, authorName, username, quizzes) {
     waiteUsers.id = "waite-users";
     waiteUsers.className = "waite-users";
     
+
+    const info1 = document.createElement("div");
+    info1.className = "info-user";
+
+    const info2 = document.createElement("div");
+    info2.className = "info-user";
+
+    const userListText = document.createElement("h3");
+    userListText.className= "user-list-title"
+    userListText.textContent = "Список учасників:";
+    
+    const waiteUsersText = document.createElement("h3");
+    waiteUsersText.className= "user-list-title"
+    waiteUsersText.textContent = "Зал очікування:";
+    info1.appendChild(userListText)
+    info2.appendChild(waiteUsersText)
+
+    allUsers.appendChild(info1);
     allUsers.appendChild(userList);
+    allUsers.appendChild(info2);
     allUsers.appendChild(waiteUsers);
 
     waiteSideTop.appendChild(allUsers);

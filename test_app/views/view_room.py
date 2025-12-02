@@ -61,8 +61,9 @@ def handle_disconnect():
         print(f"disconected {username}")
 
         ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
-        ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
-        db.session.commit()
+        if ROOM.user_list:
+            ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
+            db.session.commit()
 
         emit('user_disconnected', {
                 'msg': f'{username} відключився',
@@ -207,8 +208,9 @@ def handle_start_test(data):
     test= Test.query.filter_by(test_code = room).first()
     
     ROOM= Room.query.filter_by(test_code= room).first()
+    user_list= ROOM.user_list.replace(f"|{ROOM.author_name}|", "")
 
-    if (ROOM.all_members):
+    if (user_list):
         print(ROOM)
         ROOM.active_test= True
         db.session.commit()

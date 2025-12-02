@@ -15,6 +15,7 @@ function authorLeaveTest(){
     document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
     document.cookie = `timeStop=; max-age=0; path=/;`;
     document.cookie = `time=; max-age=0; path=/;`;
+    document.cookie = `blocked_users=; max-age=0; path=/;`;
 
     window.location.href = '/'; 
 }

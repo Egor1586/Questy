@@ -17,7 +17,7 @@ function renderWaiteQuestion(type) {
             <div class="wait-content">
                 <div class="waiting-message">
                     Будь ласка, зачекайте, поки інші учасники відповідають...
-                    <button class='leave-test' onclick="leaveTest()">LEAVE</button>
+                    <button class='leave-test' onclick="leaveTest()">Відключитися від тесту</button>
                 </div>
             </div>
         </div>
