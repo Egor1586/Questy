@@ -87,14 +87,15 @@ def render_profile():
     
         dates_complete.sort()
 
+        print(selected_option)
         if selected_option[0] == 'graph_active1':
-                print(f'========================{count_cmpl_quiz}')
                 
-                count_cmpl_quiz.extend([2,3,4,1,6,5,12,5,21])
-                print(count_cmpl_quiz)
-                time_complete[1] = '11:11:11'
-                time_complete[2] = '13:11:11'
-                time_complete[3] = '14:11:11'
+                count_cmpl_quiz.extend([2,3,4,5,6,7,3,24,5])
+                time_complete.append('11:11:11')
+                time_complete.append('13:11:11') # ДЛЯ НАГЛЯДНОСТИ !
+                time_complete.append('14:11:11')
+                print(f'----------------{time_complete}')
+                print(f'++++++++++++++++{count_cmpl_quiz}')
 
                 return {
                 "scores": scores,
@@ -134,10 +135,13 @@ def render_profile():
         
         
         
-        elif selected_option[0] == 'graph_2':  
+        elif selected_option[0] == 'graph_active2':  
             for date in dates_complete:
                 count = Score.query.filter_by(user_id=current_user.id, date_complete=date).count()
                 count_cmpl_quiz.append(count)
+                
+            count_cmpl_quiz.extend([2,3,4,5,6,7,3,24,5])
+            dates_complete = ['2025-07-20', '2025-07-21', '2025-07-22']
 
             print(count_cmpl_quiz)
             print(dates_complete)
@@ -158,45 +162,53 @@ def render_profile():
                 "list_tests_sort": list_tests_sort
             }
 
-        elif selected_option[0] == 'graph_3':
+        elif selected_option[0] == 'graph_active3':
             
-            obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
-            delta_week = (obj_date + datetime.timedelta(days=7))
-            if delta_week <= obj_date:
-                dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
-                accuracy = [13, 25, 60]
-
+            if dates_complete: 
+                obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
+                delta_week = obj_date + datetime.timedelta(days=7)
+                if delta_week <= obj_date:
+                    dates_complete = ['2025-07-20', '2025-07-21', '2025-07-22'] # ДЛЯ НАГЛЯДНОСТИ!
+                    accuracy = [13, 25, 60]
+                else:
+                    message = 'Занадто мало даних для побудови графіка'
             else:
-                message = 'Занадто мало даних для побудови графіка'
-                return{
-                    "scores": scores,
-                    "scores_count": scores_count,
-                    "tests_count": tests_count,
-                    'message': message,
-                    'flag_graph': 'flag_graph',
-                    'dates_complete': dates_complete,
-                    'date_complete': date_complete or [],
-                    'time_complete': time_complete or [],
-                    'accuracy': accuracy or [],
-                    'list_tests': list_tests,
-                    "selected_option": selected_option,
-                    'count_cmpl_quiz': count_cmpl_quiz or [],
-                    'user': user,
-                    "list_tests_sort": list_tests_sort
-                    }
-            
-        elif selected_option[0] == 'graph_4':
-            
-            obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
-            delta_week = (obj_date + datetime.timedelta(days=31))
-            
-            if delta_week <= obj_date:
+                message = 'Немає даних для побудови графіка'
 
-                dates_complete = ['2025-07-20', '2025-07-21','2025-07-22']
-                accuracy = [13, 25, 60]
-                message = 'Занадто мало даних для побудови графіка'
+
+            return {
+                "scores": scores,
+                "scores_count": scores_count,
+                "tests_count": tests_count,
+                'message': message,
+                'flag_graph': 'flag_graph',
+                'dates_complete': dates_complete,
+                'date_complete': date_complete or [],
+                'time_complete': time_complete or [],
+                'accuracy': accuracy or [],
+                'list_tests': list_tests,
+                "selected_option": selected_option,
+                'count_cmpl_quiz': count_cmpl_quiz or [],
+                'user': user,
+                "list_tests_sort": list_tests_sort
+            }
+
             
-            return{
+        elif selected_option[0] == 'graph_active4':
+            
+            if dates_complete: 
+                obj_date = datetime.datetime.strptime(dates_complete[0], '%Y-%m-%d')
+                delta_month = obj_date + datetime.timedelta(days=31)
+
+                if delta_month <= obj_date:
+                    dates_complete = ['2025-07-20', '2025-07-21', '2025-07-22']
+                    accuracy = [13, 25, 60]
+                    message = 'Занадто мало даних для побудови графіка'
+            else:
+
+                message = 'Немає даних для побудови графіка'
+
+            return {
                 "scores": scores,
                 "scores_count": scores_count,
                 "tests_count": tests_count,
@@ -211,7 +223,7 @@ def render_profile():
                 'count_cmpl_quiz': count_cmpl_quiz or [],
                 'user': user,
                 "list_tests_sort": list_tests_sort
-                }
+            }
     else:
         message = "Ви не авторизовані"
 

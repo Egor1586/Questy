@@ -64,7 +64,7 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
                     <button type="button" class="delete-question">Видалити питання?</button>
                 </div>
 
-                <label>Текст питання:</label>
+                <label>Формулювання питання:</label>
                 <input type="text" class="question-text" name="question-text">
 
                 <label>Час на виконання</label>

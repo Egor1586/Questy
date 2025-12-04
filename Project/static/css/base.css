@@ -16,11 +16,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
-html {
-    font-size: 10px !important; /* БЛОКУЄ зменшення/збільшення тексту */
-}
 
- 
 body {
     width: 100%;
     min-height: 100vh;
@@ -51,7 +47,12 @@ header{
     position: relative;
     height: 8vh;
 }
-  
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 1.2vh rgba(61,163,93,0.25), inset 0 0.2vh 0.6vh rgba(0,0,0,0.05);
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -73,8 +74,8 @@ header{
     display: flex;
     align-items: center;
     justify-content: left;
-    width: 7vw;
-    height: 5vh;
+    width: 8.2vw;
+    height: 6.2vh;
 }
   
 .logo img {
@@ -104,7 +105,7 @@ header{
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 0.1vh;
+    height: 0.2vh;
     width: 0;
     background-color: black;
     transition: width 0.25s ease;
@@ -137,7 +138,7 @@ header{
     margin-right: 3.5vw;
     text-decoration: none;
     color: black;
-    font-size: 1.5vh; 
+    font-size: 2.04vh; 
 }
 
 .auth-buttons a:first-of-type {
@@ -155,9 +156,9 @@ header{
 }
 
 .username {
-    font-size: 1.6vh;
+    font-size: 2.2vh;
     color: black;
-    border:  0.3vh solid var(--sign_up_green); /* зелёная рамка */
+    border:  0.3vh solid var(--sign_up_green); 
     border-radius: 1vh;
     padding: 0.7vh 1.3vw;
 }
@@ -167,46 +168,97 @@ header{
     background-color: transparent;
     border-radius: 1vh;
     padding: 0.7vh 1.3vw;
-    font-size: 1.6vh;
+    font-size: 2.2vh;
     cursor: pointer;
     color: black;
 }
 
-
+/* FOOTER */
 footer {
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 8vh;             
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0.6vh;
 
     background-color: #414D42;
-    width: 100%;
-    height: 8vh;
-
-    padding: 1.5vh;
-    overflow: hidden;
-
-    color: white;
-    text-align: center;
+    color: #ffffff;
+    padding: 0.6vh 1.6vw;    
+    box-shadow: 0 -0.4vh 1vh rgba(0,0,0,0.25);
+    border-top: 0.3vh solid rgba(255,255,255,0.08);
+    z-index: 999;
+    -webkit-user-select: none; 
+    user-select: none;
 }
 
 .footer-text {
-    font-size: 2vh;
+    font-size: 2vh;         
+    line-height: 2.2vh;
+    font-weight: 500;
+    letter-spacing: 0.08vw;
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 80vw;      
+    text-align: center;
 }
 
 .social-media {
-    width: fit-content;
-    height: 2vh;
+    display: flex;
+    gap: 1.6vw;              
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.4vh;
 }
 
-.social-media a i{
-    width: fit-content;
-    max-height: 2vh;
-    /* color: white;
+.social-media a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 3.2vh;            
+    height: 3.2vh;
+    min-width: 3.2vh;
+    min-height: 3.2vh;
+
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+
+    /*  */
+    transition: transform 0.18s ease, background 0.18s ease;
     text-decoration: none;
-    font-size: 2vh;
-    max-height: 1.5vh; */
+    color: #fff;
+    -webkit-tap-highlight-color: transparent;
 }
+
+.social-media a:hover {
+    transform: translateY(-0.35vh);
+    background: rgba(255,255,255,0.18);
+}
+
+.social-media i {
+    display: inline-block;
+    font-size: 1.8vh;        
+    line-height: 1;
+}
+
+@media (max-width: 40vw) {
+    .footer-text {
+        font-size: 1.6vh;
+        max-width: 70vw;
+    }
+    .social-media {
+        gap: 1.2vw;
+    }
+    .social-media a { width: 3vh; height: 3vh; }
+    .social-media i { font-size: 1.6vh; }
+}
+
 
 .logo-btn-hidden{
     background: transparent;

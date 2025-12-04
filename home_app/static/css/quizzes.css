@@ -28,7 +28,7 @@ aside {
     width: 20vw;
     height: 92vh;
     background-color: var(--bg-aside);
-    padding: 1vh 1vw 1vh 1vh;
+    padding: 2.5vh 1vw 1vh 1vw;
     box-shadow: 0 0 1vw var(--shadow);
 
     display: flex;

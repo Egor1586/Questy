@@ -22,7 +22,7 @@ body {
     margin: 2vh auto;
     padding: 2vh;
     background: white;
-    border-radius: 1.2vh;
+    border-radius: 2vh;
     box-shadow: 0 4px 10px var(--shadow);
 }
 
@@ -183,19 +183,21 @@ input[type="file" i] {
 /* завершити створення тесту */
 .submit-button {
     display: flex;
-    align-self: center;
-    justify-self: center;
+    align-items: center;
+    justify-content: center;
     margin-top: 2vh;
-    padding: 1vh 2vw;
+    padding: 1.6vh 2vw;
     background-color: #3da35d;
     color: white;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 3vh;
     border: none;
     border-radius: 1.2vh;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: fit-content;
+    /* text-transform: uppercase; */
+    width: 100%;
+    text-align: center;
     box-shadow: 0 0 0 rgba(0,0,0,0);
 }
 
