@@ -65,6 +65,10 @@ function renderRoomMain(testCode, authorName, username, quizzes) {
         </ol>
     `;
 
+    const allUsers = document.createElement("div");
+    allUsers.id = "all-users";
+    allUsers.className = "all-users";
+
     // Список учасників
     const userList = document.createElement("div");
     userList.id = "user-list";
@@ -78,14 +82,22 @@ function renderRoomMain(testCode, authorName, username, quizzes) {
             <div class="user-name">Учні ще не приєдналися. Очікуємо...</div>
         </div>
     `;
+
+    const waiteUsers = document.createElement("div");
+    waiteUsers.id = "waite-users";
+    waiteUsers.className = "waite-users";
     
-    waiteSideTop.appendChild(userList);
+    allUsers.appendChild(userList);
+    allUsers.appendChild(waiteUsers);
 
-    const waiteSideBottom = document.createElement("div");
-    waiteSideBottom.className = "waite-side-bottom";
+    waiteSideTop.appendChild(allUsers);
 
+    let waiteSideBottom;
     // Кнопка "Почати" для автора
     if (authorName === username) {
+        waiteSideBottom = document.createElement("div");
+        waiteSideBottom.className = "waite-side-bottom";
+
         const buttonStart = document.createElement("button");
         buttonStart.type = "button";
         buttonStart.className = "btn-start";
@@ -117,7 +129,9 @@ function renderRoomMain(testCode, authorName, username, quizzes) {
     chat.querySelector(".send-btn").addEventListener("click", sendMessage);
 
     waiteSide.appendChild(waiteSideTop)
-    waiteSide.appendChild(waiteSideBottom)
+    if (waiteSideBottom) {
+        waiteSide.appendChild(waiteSideBottom)
+    }
 
     container.appendChild(waiteSide);
     container.appendChild(chat);

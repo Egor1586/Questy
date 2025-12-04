@@ -5,7 +5,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function renderWaiteQuestion() {
+function renderWaiteQuestion(type) {
     console.log("WAIRTE DEL TIME")
     const roomContent = document.getElementById("room-content");
     document.cookie= "time=; max_age=0; path=/"
@@ -17,6 +17,7 @@ function renderWaiteQuestion() {
             <div class="wait-content">
                 <div class="waiting-message">
                     Будь ласка, зачекайте, поки інші учасники відповідають...
+                    <button class='leave-test' onclick="leaveTest()">LEAVE</button>
                 </div>
             </div>
         </div>
@@ -30,7 +31,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     console.log(quizTime)
 
     if (isNaN(quizTime)){
-        renderWaiteQuestion()
+        renderWaiteQuestion("test")
     }
 
     if (roomContent != null) {
@@ -112,7 +113,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                         document.cookie = `user_answers = ${cookie}; path= /`
                     }   
 
-                    renderWaiteQuestion();
+                    renderWaiteQuestion("test");
                     
                     socket.emit("user_answer", {
                         room: room,
@@ -163,7 +164,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 document.cookie = `user_answers=${cookie}; path= /`
             }       
 
-            renderWaiteQuestion();
+            renderWaiteQuestion("test");
                     
             socket.emit("user_answer", {
                 room: room,
@@ -249,7 +250,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 document.cookie = `user_answers=${cookie}; path= /`
             }       
 
-            renderWaiteQuestion();
+            renderWaiteQuestion("test");
                     
             socket.emit("user_answer", {
                 room: room,
@@ -277,7 +278,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 timerText.textContent = "Час закінчився"
         
                 setTimeout(() => {
-                    renderWaiteQuestion();
+                    renderWaiteQuestion("test");
             }, 2000)
         }
         }, 1000);
