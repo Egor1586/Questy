@@ -239,7 +239,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         resultTable.style.setProperty(
             'grid-template-columns',
-            `8vw repeat(${total_question}, ${32 /total_question}vw) 6vw`
+            `8vw repeat(${total_question}, ${32 /total_question}vw) 5.9vw`
         )
 
         const resultHeader = document.createElement('div');

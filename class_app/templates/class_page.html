@@ -10,13 +10,19 @@
 
 {% block class_content %}
     <main class="content">
-        <div class="class-btn-div">
-            {% if is_teacher%}
-                <button class="my-classes">Доступні класи</button>
-            {% endif %}
-            <button class="classes">Мої класи</button>
+        <div class="class-btn-wrapper">
+            <h2 class="class-btn-title">Виберіть категорію класів</h2>
+            <div class="class-btn-div">
+                {% if is_teacher %}
+                    <button class="my-classes">Доступні класи</button>
+                {% endif %}
+                <button class="classes">Мої класи</button>
+            </div>
+            <p class="class-btn-subtitle">Перегляньте всі ваші класи або приєднайтесь до нових</p>
         </div>
+
         {% if is_teacher%}
+        <hr>
             <div class="class-div">
                 {% if my_classes_list%}
                     <h2>Доступні класи</h2>
@@ -87,9 +93,21 @@
                             </div>
                         {% endfor %}
                     </div>
+
+                    {% if not classes_list %}
+                        <div class="no-classes-block">
+                            <img src="/static/img/no-classes.svg" alt="No classes">
+                            <h3>Ви ще не приєднані до жодного курсу</h3>
+                            <p>Попросіть учителя надіслати код курсу або введіть його нижче</p>
+
+                            <button class="join-class-btn">Приєднатися за кодом</button>
+                        </div>
+                    {% endif %}
                 {% endif %}
+
             </div>
         {% else %}       
+        <hr>
             {% if classes_list%}
                 <div class="class-div">
                     <h2>Мої класи</h2>
@@ -135,6 +153,16 @@
                         {% endfor %}
                     </div>
                 </div>
+
+                {% if not my_classes_list %}
+                    <div class="no-classes-block">
+                        <img src="/static/img/no-classes.svg" alt="No classes">
+                        <h3>У вас ще немає створених курсів</h3>
+                        <p>Створіть свій перший курс, щоб додати завдання та керувати студентами</p>
+
+                        <button class="create-first-class-btn">Створити курс</button>
+                    </div>
+                {% endif %}
             {% endif %}
         {% endif %}
     </main>
@@ -159,15 +187,15 @@
             <form class="form" method="POST">
                 <h2>Приєднатися до курсу</h2>
                 <div class="form-group">
-                    <label>Код курсу</label>
                     <h3>Попросіть у свого викладача код курсу та введіть його тут.</h3>
+                    <label>Код курсу</label>
                     <input type="text" placeholder="Введіть код" name="code" required>
                 </div>
                 <div class="form-group">
                     <label>Вимоги до входу за допомогою коду курсу:</label>
                         <ul>
-                            <li>Використовуйте авторизований обліковий запис</li>
-                            <li>Код курсу має містити лише літери або цифри (5–8) і не включати пробіли й спеціальні символи</li>
+                            <li class="join-li">Використовуйте авторизований обліковий запис</li>
+                            <li class="join-li">Код курсу має містити лише літери або цифри (5–8) і не включати пробіли й спеціальні символи</li>
                         </ul>
                 </div>
     

@@ -9,21 +9,7 @@
 }
 
 /* --- Контент --- */
-.content {
-    /* flex: 1; */
-    display: flex;
-    flex-direction: column;
-    padding: 1vw;
-    gap: 1vw;
-    flex-wrap: nowrap; 
-    align-items: flex-start;
-    justify-items: flex-start;
 
-    width: calc(100vw - 260px);
-    height: fit-content;
-
-    transition: width 0.4s ease;
-}
 
 .full-content {
     width: 95vw ;
@@ -336,7 +322,7 @@
 
 .modal {
     background-color: #fff;
-    padding: 2vw;
+    padding: 1.4vw;
     border-radius: 1.3vh;
     height: fit-content;
     width: 35vw;
@@ -347,8 +333,8 @@
 
 .modal h2 {
     margin-top: 0;
-    font-size: 4.5vh;
-    margin-bottom: 1.5vh;
+    font-size: 4vh;
+    margin-bottom: 1vh;
 }
 
 .form-group {
@@ -357,27 +343,27 @@
 
 .form-group h3 {
     margin-top: 0;
-    font-size: 3vh;
+    font-size: 2.3vh;
     margin-bottom: 1.5vh;
     font-weight: normal;
     color: #555;
 }
 
 .form-group ul {
-    font-size: 2vh;
     padding-left: 2vw;
     margin: 1vh 0 1.5vh 0;
     color: #555;
 }
 
 .form-group ul li {
-    font-size: 2vh;
+    font-size: 2.4vh;
     margin-bottom: 1.5vh;
     line-height: 1.4;
 }
 
 .form-group label {
-    font-size: 3vh;
+    font-size: 2.5vh;
+    margin-bottom: 1.5vh;
 }
 
 .form-group input, select{
@@ -386,11 +372,11 @@
     border-radius: 1vh;
     margin: 0;
     padding: 0;
+    padding-left: 1vw;
 }
 
 .form-group input::placeholder{
-    padding-left: 0.5vw;
-    font-size: 1.5vh;
+    font-size: 2.5vh;
 }
 
 .modal .form-group {
@@ -411,7 +397,7 @@
     padding: 1hv 1vw;
     border-radius: 0.8vh;
     border: 0.2vh solid #ccc;
-    font-size: 1.8vh;
+    font-size: 2vh;
     box-sizing: border-box;
     margin: 0 0 1vh 0;
 }
@@ -426,7 +412,7 @@
     padding: 0.8vh 3.5vw 1vh 1vw; 
     border-radius: 0.8vh;
     border: 0.2vh solid #ccc;
-    font-size: 1.8vh;
+    font-size: 2.3vh;
     box-sizing: border-box;
     margin: 0 0 1vh 0;
     background-color: #fff;
@@ -483,7 +469,7 @@
     background-color: #3a7c3c;
     color: #fff;
     cursor: pointer;
-    font-size: 2vh;
+    font-size: 2.5vh;
     transition: background 0.3s;
 }
 
@@ -492,10 +478,12 @@
 }
 
 .join-course-btn{
-    font-size: 2.5vh;
-    padding: 1vh 2vw;
+    font-size: 3vh;
+    padding: 1.5vh 2vw;
     width: fit-content;
-    height: 5vh;
+    /* height: 5vh; */
+    width: 100%;
+
 }
 
 .back-btn {
@@ -505,7 +493,7 @@
     right: 1vh;
     border: none;
     background: none;
-    font-size: 4vh;
+    font-size: 5vh;
     border-radius: 0.8vh;
     cursor: pointer;
     color: #888;
@@ -608,14 +596,182 @@
 
 /*  */
 
-li {
+/* li {
     margin-bottom: 1vh;
-    font-size: 1.8vh;
+    font-size: 2.4vh;
     display: flex;         
+} */
+
+#create-course-button {
+    margin-bottom: 0;
 }
+
 .due-time-p {
     font-size: 2vh;
     color: #8e8282;
     font-style: italic;
     margin-left: 1vw; 
+}
+
+/*  */
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1vw;
+    gap: 1vw;
+    flex-wrap: nowrap; 
+    align-items: flex-start;
+    justify-items: flex-start;
+
+    width: calc(100vw - 260px);
+    height: fit-content;
+
+    transition: width 0.4s ease;
+}
+
+.class-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2vh;
+    width: 100%;
+    margin: 5vh 0;
+    text-align: center;
+}
+
+.class-btn-title {
+    font-size: 4.5vh;
+    color: var(--text-dark);
+}
+
+.class-btn-subtitle {
+    font-size: 2vh;
+    color: #666;
+    max-width: 50vw;
+}
+
+.class-btn-div {
+    display: flex;
+    gap: 2vw;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.class-btn-div button {
+    width: 18vw;
+    padding: 1.5vh 1vw;
+    font-size: 3.5vh;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    box-shadow: 0 0.5vh 1vh rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.class-btn-div button:hover {
+    transform: translateY(-0.3vh);
+    box-shadow: 0 0.7vh 1.2vh rgba(0,0,0,0.2);
+}
+
+.my-classes {
+    background: linear-gradient(135deg, #4CAF50, #43A047);
+}
+
+.classes {
+    background: linear-gradient(135deg, #247754, #164e37);
+}
+
+.class-btn-div button.active {
+    box-shadow: 0 0.5vh 1vh rgba(0,0,0,0.3);
+    outline: 0.3vh solid rgba(255,255,255,0.7);
+}
+/*  */
+hr {
+    width: 90vw;
+    height: 0.35vh; 
+    border: none;
+    border-radius: 1vh; 
+
+    background: linear-gradient(
+        90deg,
+        rgba(86, 197, 145, 0.1),
+        rgba(76, 175, 80, 0.8),
+        rgba(86, 197, 145, 0.1)
+    );
+
+    box-shadow: 0 0.3vh 1vh rgba(0, 0, 0, 0.15);
+    margin: 2vh auto;
+}
+/*  */
+.no-classes-block {
+    width: 100%;
+    height: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: var(--bg-light);
+    border: 0.3vh dashed var(--green-light);
+    border-radius: 2vh;
+
+    margin-top: 4vh;
+    padding: 4vh 2vw;
+
+    box-shadow: 0 0.6vh 1.2vw rgba(0,0,0,0.08);
+}
+
+.no-classes-block img {
+    width: 14vw;
+    height: auto;
+    margin-bottom: 2vh;
+
+    opacity: 0.9;
+}
+
+.no-classes-block h3 {
+    font-size: 4vh;
+    color: var(--text-dark);
+    margin-bottom: 1vh;
+}
+
+.no-classes-block p {
+    font-size: 2.2vh;
+    color: #555;
+    width: 60%;
+    text-align: center;
+    margin-bottom: 3vh;
+}
+
+/* Кнопки */
+.create-first-class-btn,
+.join-class-btn {
+    padding: 1.8vh 3vw;
+    font-size: 2.8vh;
+    background-color: var(--green-main);
+    color: white;
+
+    border: none;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    font-weight: 600;
+
+    box-shadow: 0 0.6vh 1.2vw rgba(0,0,0,0.15);
+    transition: 0.25s ease;
+}
+
+.create-first-class-btn:hover,
+.join-class-btn:hover {
+    transform: translateY(-0.4vh);
+    background-color: var(--green-dark);
 }

@@ -3,15 +3,12 @@ body, main {
     display: block;
 }
 
-.test-img {
-    border-radius: 1.2vh;
-    border: 0.2vh solid #ccc;
-    width: 100%;
-    height: auto;
+* {
+    box-sizing: border-box;
 }
 
 a {
-    height: fit-content;
+    height: auto;
     color: inherit;
     text-decoration: none;
 }
@@ -26,42 +23,129 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--lite_green);
-    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
 }
 
-/* Макет */
+/* main layout */
 main {
-    width: 97vw;
+    width: 100vw;
     height: 95vh;
     display: flex;
     flex-direction: row;
     gap: 1.5vh;
     padding: 1.5vh;
     flex-grow: 1;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
+/* header */
 header {
-    width: 100%;
+    width: 100vw;
     height: 9.5vh;
 }
 
-/* Про нас блок */
 .info {
     background: linear-gradient(145deg, #ffffff, #e8f8ec);
-    padding: 1.2vh;
+    padding: 2.2vh;
     border-radius: 2vh;
     box-shadow: 0 0.4vh 1.2vh rgba(0, 0, 0, 0.05);
-    border-left: 0.3vh solid #3da35d;
+    border-left: 0.45vh solid #3da35d;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 18vw;
 }
 
-/* Стилі */
-.tests::before,
-.tests::after {
+/* info text */
+.info-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.8vh;
+}
+
+.text-d {
+    font-size: 2.5vh;
+}
+
+/* search/input */
+.info .enter-code {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1.05vh;
+}
+
+.info .search-input {
+    position: relative;
+    width: 100%;
+}
+
+.info .search-input i {
+    position: relative;
+    left: 1vh;
+    top: 50%;
+    font-size: 2.3vh;
+    color: #3da35d;
+}
+
+.info .search-input input {
+    width: 100%;
+    padding: 1vh 3.5vh;
+    border: 0.3vh solid #7B9F7D;
+    border-radius: 1.2vh;
+    font-size: 2.4vh;
+    background: #f9fff8;
+    color: #2f3b32;
+    transition: all 0.3s ease;
+}
+
+.info .search-input input:hover {
+    border-color: #5fb374;
+}
+
+.info .search-input input:focus {
+    outline: none;
+    box-shadow: 0 0 1.2vh rgba(61,163,93,0.25), inset 0 0.2vh 0.6vh rgba(0,0,0,0.05);
+}
+
+.info .search-input input::placeholder {
+    color: #7b9f7d;
+    font-style: italic;
+}
+
+.info .search-btn {
+    background-color: #3da35d;
+    border-radius: 1.2vh;
+    color: white;
+    width: 100%;
+    height: 5.5vh;
+    font-size: 2vh;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    align-self: flex-start;
+}
+
+.info .search-btn:hover {
+    background-color: #276b45;
+}
+
+.tests {
+    position: relative;
+    background: linear-gradient(135deg, #f0f5f1 0%, #d9f0e2 100%);
+    border-radius: 2vh;
+    box-shadow: 0 0.6vh 1.8vh rgba(0, 0, 0, 0.06);
+    padding: 2vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 79.5vw;
+    overflow: hidden;
+}
+
+.tests::before, .tests::after {
     content: "";
     position: absolute;
     border-radius: 50%;
@@ -84,149 +168,6 @@ header {
     background: radial-gradient(circle, rgba(61,163,93,0.15) 0%, transparent 70%);
 }
 
-.tests-scroll {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18vh, 1fr)); 
-    gap: 1.2vh; 
-    overflow-y: auto; 
-    padding-right: 2vh; 
-    flex-grow: 1;
-    position: relative;
-    z-index: 2;
-}
-
-/* Стиль для скрол-бару */
-.tests-scroll::-webkit-scrollbar {
-    width: 1vh;
-}
-
-.tests-scroll::-webkit-scrollbar-track {
-    background: #e5f6ea;
-    border-radius: 1.2vh;
-}
-
-.tests-scroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #3da35d, #2d6a4f);
-    border-radius: 1.2vh;
-}
-
-.tests-scroll::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #2f8b52, #276b45);
-}
-
-.start-t {
-    font-size: 4.5vh;
-    font-weight: 700;
-    color: #2d6a4f;
-    margin: 0;
-    text-align: left;
-    text-shadow: 0.1vh 0.1vh 0.3vh rgba(0,0,0,0.05);
-}
-
-.test-info {
-    position: relative;
-    z-index: 2;
-}
-
-.test-info h3 {
-    margin: 0 0 0.5vh 0;
-    font-size: 1.2vh;
-}
-
-.test-info p {
-    margin: 0;
-    font-size: 1vh;
-}
-
-.text-d {
-    font-size: 2vh;
-    color: #3c3c3c;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* Інпут для коду */
-.info .enter-code {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1vh;
-}
-
-.info .search-input {
-    position: relative;
-    width: 100%;
-}
-
-.info .search-input i {
-    position: absolute;
-    left: 1vh;
-    top: 52%;
-    transform: translateY(-50%);
-    font-size: 1.5vh;
-    color: #3da35d;
-}
-
-.info .search-input input {
-    width: 100%;
-    padding: 1vh 2.5vh;
-    border: 0.4vh solid #7B9F7D;
-    border-radius: 1.2vh;
-    font-size: 1.7vh;
-    background: #f9fff8;
-    color: #2f3b32;
-    transition: all 0.3s ease;
-}
-
-.info .search-input input:hover {
-    border-color: #5fb374;
-}
-
-.info .search-input input:focus {
-    outline: none;
-    box-shadow: 0 0 1.2vh rgba(61,163,93,0.25), inset 0 0.2vh 0.6vh rgba(0,0,0,0.05);
-}
-
-.info .search-input input::placeholder {
-    color: #7b9f7d;
-    font-style: italic;
-}
-
-/* Кнопка */
-.info .search-btn {
-    background-color: #3da35d;
-    border-radius: 1.2vh;
-    color: white;
-    width: 100%;
-    height: 4vh;
-    font-size: 1.5vh;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s ease;
-    align-self: flex-start;
-}
-
-.info .search-btn:hover {
-    background-color: #276b45;
-}
-
-/* ===============================
-   Блок тестів та скрол
-=============================== */
-.tests {
-    position: relative;
-    background: linear-gradient(135deg, #f0f5f1 0%, #d9f0e2 100%);
-    border-radius: 2vh;
-    box-shadow: 0 0.6vh 1.8vh rgba(0, 0, 0, 0.06);
-    padding: 2vh;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 81vw;
-    overflow: hidden; 
-}
-
 .tests h2 {
     color: #2d6a4f;
     font-size: 4.5vh;
@@ -235,16 +176,19 @@ header {
     z-index: 2;
 }
 
-/* Скрол всередині блоку тестів */
+/* tests scroll grid */
 .tests-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25vh, 1fr));
-    gap: 2.5vh;
+    grid-auto-rows: 25vh;
+    gap: 2vw;
     overflow-y: auto;
-    padding-right: 2vh;
+    /* padding-right: 2vh; */
+    flex-grow: 1;
+    position: relative;
+    z-index: 2;
 }
 
-/* Стиль видимого скролу */
 .tests-scroll::-webkit-scrollbar {
     width: 1vh;
 }
@@ -261,6 +205,16 @@ header {
 
 .tests-scroll::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #2f8b52, #276b45);
+}
+
+/* start text */
+.start-t {
+    font-size: 4.5vh;
+    font-weight: 700;
+    color: #2d6a4f;
+    margin: 0;
+    text-align: left;
+    text-shadow: 0.1vh 0.1vh 0.3vh rgba(0,0,0,0.05);
 }
 
 .test-card {
@@ -274,8 +228,8 @@ header {
     min-height: 22vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; 
-    align-items: flex-start;   
+    justify-content: flex-end;
+    align-items: flex-start;
     padding: 1.5vh;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     box-shadow: 0 0.6vh 1.8vh rgba(0, 0, 0, 0.1);
@@ -298,7 +252,6 @@ header {
     background: linear-gradient(to top, rgba(45, 106, 79, 0.95), rgba(61, 163, 93, 0.4));
 }
 
-/* Текст всередині картки */
 .test-info {
     position: relative;
     z-index: 2;
@@ -321,7 +274,7 @@ header {
     opacity: 0.9;
 }
 
-.test-info h3, 
+.test-info h3,
 .test-info p {
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -332,7 +285,6 @@ header {
     overflow: hidden;
 }
 
-/* Якщо хтось не зареєстрований */
 .empty-tests {
     display: flex;
     justify-content: center;
@@ -353,7 +305,6 @@ header {
     gap: 2vh;
 }
 
-/* саме повідомлення */
 .empty-content h2 {
     font-size: 2.85vh;
     font-weight: 600;
@@ -362,15 +313,15 @@ header {
 }
 
 .empty-content p {
-    font-size: 2.05vh;
+    font-size: 2.5vh;
     line-height: 1.5;
     color: #555;
     margin: 0;
 }
 
-/* Кнопка створення тесту */
+/* create button */
 .btn-create {
-    background: linear-gradient(90deg, #6fcf97, #4caf6a);
+    background: linear-gradient(90deg, #33694a, #4caf6a);
     color: #fff;
     padding: 1.2vh 2.8vh;
     border-radius: 1.2vh;
@@ -386,7 +337,7 @@ header {
     transform: translateY(-0.2vh);
 }
 
-/* Підказка про авторизацію */
+/* auth hint and links */
 .auth-hint {
     margin-top: 2vh;
     font-size: 1.6vh;
@@ -405,7 +356,6 @@ header {
     text-decoration: underline;
 }
 
-/* Модалка */
 .modal-bg {
     display: none;
     position: fixed;
@@ -423,6 +373,7 @@ header {
 
 .modal {
     background-color: #fff;
+    font-size: 1.9vh;
     padding: 2vh;
     border-radius: 1.3vh;
     width: 35vw;
@@ -461,8 +412,7 @@ header {
     font-size: 3vh;
 }
 
-.form-group input,
-select {
+.form-group input, .form-group select {
     width: 20vw;
     height: 5vh;
     border-radius: 1vh;
@@ -473,10 +423,8 @@ select {
     font-size: 1.5vh;
 }
 
-.modal input[type="text"],
-.modal input[type="number"],
-.modal textarea,
-.modal select {
+.modal input[type="text"], .modal input[type="number"],
+.modal textarea, .modal select {
     width: 100%;
     padding: 1vh;
     border-radius: 0.8vh;
@@ -486,19 +434,18 @@ select {
     margin: 0 0 1vh 0;
 }
 
-/* SELECT */
 .modal select {
     width: 100%;
-    padding: 0.8vh 3.5vh 1vh 1vh; 
+    padding: 0.8vh 3.5vh 1vh 1vh;
     border-radius: 0.8vh;
     border: 0.2vh solid #ccc;
     font-size: 1.8vh;
     background-color: #fff;
     background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
-    background-position: right 1.2vh center; 
+    background-position: right 1.2vh center;
     background-size: 2vh;
-    appearance: none; 
+    appearance: none;
 }
 
 .modal select option {
@@ -517,7 +464,7 @@ select {
     border: 0.4vh solid #ccc;
     width: 4vh;
     height: 5vh;
-    border-radius: 0.8vh; 
+    border-radius: 0.8vh;
     cursor: pointer;
     padding: 0;
     background: none;
@@ -532,14 +479,13 @@ select {
     border-radius: 0.8vh;
 }
 
-/* BUTTON */
 .modal button {
     border: none;
     border-radius: 1vh;
     background-color: #3a7c3c;
     color: #fff;
     cursor: pointer;
-    font-size: 2vh;
+    font-size: 2.7vh;
     transition: background 0.3s;
 }
 
@@ -548,9 +494,8 @@ select {
 }
 
 .start-test-btn {
-    font-size: 2.5vh;
     padding: 1vh 2vh;
-    width: fit-content;
+    width: 100%;
     height: 5vh;
 }
 
@@ -571,6 +516,13 @@ select {
 }
 
 @keyframes popIn {
-    from {transform: scale(0.8); opacity: 0;}
-    to {transform: scale(1); opacity: 1;}
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.test-img {
+    border-radius: 1.2vh;
+    border: 0.2vh solid #ccc;
+    width: 100%;
+    height: auto;
 }

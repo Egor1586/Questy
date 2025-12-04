@@ -12,7 +12,7 @@ function renderWaiteQuestion(type) {
     roomContent.innerHTML = ""; 
     roomContent.className = 'waite-next-question'
 
-    let leaveButton
+    let leaveButton= ""
     if (type === "waite"){
         leaveButton= `<button class='leave-test' onclick="leaveTest()">Відключитися від тесту</button>`
     }
