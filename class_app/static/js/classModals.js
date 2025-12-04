@@ -37,11 +37,13 @@ $(() => {
     })
 
     // Зміна вибору кольору
-    $('#color-type').on('change', () => {
-        if (colorType.value === 'single') {
+    $('#color-type').on('change', function (){
+        const colorType = $(this).val();
+
+        if (colorType === 'single') {
             $('#color-single').css('display', 'flex')
-            $(']color-gradient').css('display', 'none')
-        } else {
+            $('#color-gradient').css('display', 'none')
+        } else if(colorType === "gradient"){
             $('#color-single').css('display', 'none')
             $('#color-gradient').css('display', 'flex')
         }
