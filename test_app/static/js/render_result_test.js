@@ -7,28 +7,29 @@ function getCookie(name) {
 
 function userLeaveTest() {
     document.cookie = `state=; max-age=0; path=/;`;
-    document.cookie = `user_answers=; max-age=0; path=/;`;
+    document.cookie = `userAnswers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-    document.cookie = `temporary_name=; max-age=0; path=/;`;
+    document.cookie = `temporaryName=; max-age=0; path=/;`;
     document.cookie = `timeStop=; max-age=0; path=/;`;
     document.cookie = `time=; max-age=0; path=/;`;
+    document.cookie = `compound=; max-age=0; path=/;`;
 
     window.location.href = '/';
 }
 
 function renderResultTest(username, total_question, list_quiz, list_answers, test_id) {
-    let answersStr = getCookie("user_answers");
+    let answersStr = getCookie("userAnswers");
     let answers_list = answersStr.split("|");
-    let user_answers = [];
+    let userAnswers = [];
     let answersArrey = [];
 
     for (let answer of answers_list) {
         if (answer != "|") {
-            user_answers.push(answer);
+            userAnswers.push(answer);
         }
     }
 
-    for (let answer of user_answers) {
+    for (let answer of userAnswers) {
         if (answer != "") {
             answersArrey.push(answer);
         }
@@ -249,7 +250,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             }
         }
         else if (quiz.question_type == "multiple_choice"){
-            console.log("multiple_choice question")
             let answerText = list_answers[quiz_number];
             let answers= answersArrey[quiz_number].split("$$$");
             let correct_answer_list= quiz.correct_answer.split("%$№");
@@ -279,11 +279,6 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             else{
                 for (let answer_number = 0; answer_number < answerText.length; answer_number++){
                     let answer= answerText[answer_number];
-                    
-                    console.log("multiple_choice question")
-                    console.log(answer)
-                    console.log(correct_answer_list)
-                    console.log("multiple_choice question")
     
                     if (correct_answer_list.includes(answer)){
                         const answerCorrect = document.createElement('div');

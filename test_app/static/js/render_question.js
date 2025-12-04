@@ -5,32 +5,35 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function renderWaiteQuestion() {
+function renderWaiteQuestion(type) {
     console.log("WAIRTE DEL TIME")
     const roomContent = document.getElementById("room-content");
     document.cookie= "time=; max_age=0; path=/"
     roomContent.innerHTML = ""; 
     roomContent.className = 'waite-next-question'
 
+    let leaveButton
+    if (type === "waite"){
+        leaveButton= `<button class='leave-test' onclick="leaveTest()">Відключитися від тесту</button>`
+    }
     roomContent.innerHTML = `
         <div class="blur-overlay">
             <div class="wait-content">
                 <div class="waiting-message">
                     Будь ласка, зачекайте, поки інші учасники відповідають...
+                    ${leaveButton}
                 </div>
             </div>
         </div>
     `
-    console.log("waite next question")
 }
 
 function renderQuestion(testId, quiz, answers, room, author_name) {
     const roomContent = document.getElementById("room-content");
     let quizTime= getCookie("time");
-    console.log(quizTime)
 
     if (isNaN(quizTime)){
-        renderWaiteQuestion()
+        renderWaiteQuestion("test")
     }
 
     if (roomContent != null) {
@@ -100,19 +103,19 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             button.addEventListener(
                 type= "click" ,
                 listener= function ( event ) {
-                    let cookie= getCookie("user_answers")
+                    let cookie= getCookie("userAnswers")
                     let state= getCookie("state")
                     document.cookie = `state= waite${state.slice(-1)}; path=/`;
                     
                     if (typeof cookie === "undefined"){
-                        document.cookie = `user_answers= |${button.id}|; path = /`     
+                        document.cookie = `userAnswers= |${button.id}|; path = /`     
                     }
                     else{
                         cookie= cookie + `|${button.id}|`
-                        document.cookie = `user_answers = ${cookie}; path= /`
+                        document.cookie = `userAnswers = ${cookie}; path= /`
                     }   
 
-                    renderWaiteQuestion();
+                    renderWaiteQuestion("test");
                     
                     socket.emit("user_answer", {
                         room: room,
@@ -143,27 +146,25 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
         }
         
         inputButton.addEventListener("click", function(event) {
-            let user_answer= getCookie("user_answers")
+            let user_answer= getCookie("userAnswers")
             let state= getCookie("state")
             let answerValue= document.querySelector(".input-with-answer").value
 
             document.cookie = `state= waite${state.slice(-1)}; path=/`;
-
-            console.log(answerValue)
 
             if (typeof answerValue === "undefined"){
                 answerValue= "not_answer"
             }
             
             if (typeof user_answer === "undefined"){
-                document.cookie = `user_answers=|${answerValue}|; path = /`     
+                document.cookie = `userAnswers=|${answerValue}|; path = /`     
             }
             else{
                 cookie= user_answer + `|${answerValue}|`
-                document.cookie = `user_answers=${cookie}; path= /`
+                document.cookie = `userAnswers=${cookie}; path= /`
             }       
 
-            renderWaiteQuestion();
+            renderWaiteQuestion("test");
                     
             socket.emit("user_answer", {
                 room: room,
@@ -209,18 +210,16 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 listener= function ( event ) {
                     if (button.className == "multiple-answer"){
                         button.className= "active-multiple-answer"
-                        console.log(button.textContent, "active-multiple-answer")
                     }
                     else{
                         button.className= "multiple-answer"
-                        console.log(button.textContent, "multiple-answer")
                     }
                 }
             )
         }
 
         multipleChoiceButton.addEventListener("click", function(event) {
-            let user_answer= getCookie("user_answers")
+            let user_answer= getCookie("userAnswers")
             let state= getCookie("state")
             let answerValue= ""
             let arreyUserMultipleChoice= document.querySelectorAll(".active-multiple-answer")
@@ -235,21 +234,20 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             }
 
             document.cookie = `state= waite${state.slice(-1)}; path=/`;
-            console.log(answerValue)
 
             if (typeof answerValue === "undefined"){
                 answerValue= "not_answer"
             }
             
             if (typeof user_answer === "undefined"){
-                document.cookie = `user_answers=${answerValue}; path = /`     
+                document.cookie = `userAnswers=${answerValue}; path = /`     
             }
             else{
                 cookie= user_answer + `|${answerValue}|`
-                document.cookie = `user_answers=${cookie}; path= /`
+                document.cookie = `userAnswers=${cookie}; path= /`
             }       
 
-            renderWaiteQuestion();
+            renderWaiteQuestion("test");
                     
             socket.emit("user_answer", {
                 room: room,
@@ -277,7 +275,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 timerText.textContent = "Час закінчився"
         
                 setTimeout(() => {
-                    renderWaiteQuestion();
+                    renderWaiteQuestion("test");
             }, 2000)
         }
         }, 1000);

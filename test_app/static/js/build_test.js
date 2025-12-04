@@ -11,8 +11,6 @@ function buildTest(){
     data["description"] = document.getElementById("test-description").value;
     data["topic"] = document.getElementById("test-title").value;
 
-    console.log("build test test")
-    
     let flagError = false
     let messageError = ""
     let questionCount= 0
@@ -162,8 +160,6 @@ function buildTest(){
     if(flagError == false && questionCount > 2){
         correctData = data
     }
-
-    console.log(messageError)
     
     return correctData
 }
@@ -187,8 +183,6 @@ $("#submit-button").click(function () {
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log(data)
-
             window.location.href = "/quizzes/"
         },
         error: function (xhr){

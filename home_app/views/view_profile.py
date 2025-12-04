@@ -21,13 +21,16 @@ def profile_sorte():
     scores = Score.query.filter_by(user_id= current_user.id).all()
 
     date_sort= []
-    accuracy_sort = []
+    accuracy_sort= []
     list_tests_sort= []
 
     for score in scores:
         test= Test.query.filter_by(id= score.test_id).first()
         if test and test not in list_tests_sort:
             list_tests_sort.append(test.dict())
+
+    # for score in scores:
+    #     scores.append(score.dict())
 
     if sorte_type == "accuracy":
         for score in scores:
@@ -36,17 +39,19 @@ def profile_sorte():
         bubble_sort(list= accuracy_sort)
 
         return flask.jsonify({
-            "scores":accuracy_sort,
+            "scores": accuracy_sort,
             "tests": list_tests_sort})
     elif sorte_type == "date":
         for score in scores:
             date_sort.append(score.dict())
+        
         return flask.jsonify({
             "scores": date_sort,
             "tests": list_tests_sort})
     else:
-        return flask.jsonify({"error": "error"})
-
+        return flask.jsonify({
+            "scores": [],
+            "tests": []})
 
 @render_page(template_name='profile.html')
 def render_profile():

@@ -2,7 +2,6 @@ function authorLeaveTest(){
     let currentURL = window.location.href;
     let roomCode = currentURL.split('room')[1];
 
-    console.log(currentURL)
     console.log(`Это код теста: ${roomCode}`)
     
     socket.emit("test_end", {
@@ -10,11 +9,13 @@ function authorLeaveTest(){
     });
     
     document.cookie = `state=; max-age=0; path=/;`;
-    document.cookie = `user_answers=; max-age=0; path=/;`;
+    document.cookie = `userAnswers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
     document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
     document.cookie = `timeStop=; max-age=0; path=/;`;
     document.cookie = `time=; max-age=0; path=/;`;
+    document.cookie = `blockedUsers=; max-age=0; path=/;`;
+    document.cookie = `userList=; max-age=0; path=/;`;
 
     window.location.href = '/'; 
 }
@@ -34,7 +35,7 @@ function appendResultRow(resultTable, username, answersArrey) {
         }
     }
 
-    let accuracy = (numberCorrectAnswers / total_question) * 100;
+    let accuracy = (numberCorrectAnswers / totalQuestion) * 100;
 
     const studentAccuracy = document.createElement('div');
     studentAccuracy.className = 'cell accuracy';
@@ -191,10 +192,8 @@ function renderAuthorResultTest(username, author_name, total_question) {
         let accuracy_aquestions= []
 
         for (let question_number= 0; question_number < total_question; question_number++){
-            console.log("question_number")
             let pas_accurasy= 0;
             for (let array= 0; array < allAnswersArray.length; array++){
-                console.log("array")
                 if (allAnswersArray[array][question_number] == 1){
                     pas_accurasy++
                 }
@@ -262,9 +261,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
             answersArray = resultData[username]; 
             appendResultRow(resultTable, username, answersArray);
         }  
-
-        console.log(accurancyArray)
-
         container.appendChild(resultTable);
         
         const legenBox = document.createElement('div');

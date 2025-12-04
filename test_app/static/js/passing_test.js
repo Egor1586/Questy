@@ -13,20 +13,17 @@ function getCookie(name) {
 
 if (inputButton) {
     inputButton.addEventListener("click", function(event) {
-        let user_answer= getCookie("user_answers");
+        let user_answer= getCookie("userAnswers");
         let answerValue= document.querySelector(".input-with-answer").value
-
-        console.log(answerValue)
-
         if (!answerValue){
             answerValue= "not_answer"
         }
             
         if (!user_answer){
-            document.cookie = `user_answers=${answerValue}; path = /`     
+            document.cookie = `userAnswers=${answerValue}; path = /`     
         }
         else{
-            document.cookie = `user_answers=${user_answer}|${answerValue}; path= /`
+            document.cookie = `userAnswers=${user_answer}|${answerValue}; path= /`
         }       
     })
 }
@@ -34,7 +31,7 @@ if (inputButton) {
 if (multipleChoiceButton){
     multipleChoiceButton.addEventListener("click", function(event) {
         let answerValue= ""
-        let currentAnswers= getCookie("user_answers");
+        let currentAnswers= getCookie("userAnswers");
 
         for (const value of document.querySelectorAll(".active-multiple-answer")){
             if (!answerValue){
@@ -45,18 +42,16 @@ if (multipleChoiceButton){
             }
         }
         
-        console.log(answerValue)
-
         if (!answerValue){
             answerValue= "not_answer"
         }
         
         if (!currentAnswers){
-            document.cookie = `user_answers=${answerValue}; path = /`     
+            document.cookie = `userAnswers=${answerValue}; path = /`     
         }
         else{
-            user_answer = getCookie("user_answers");
-            document.cookie = `user_answers=${user_answer}|${answerValue}; path= /`
+            user_answer = getCookie("userAnswers");
+            document.cookie = `userAnswers=${user_answer}|${answerValue}; path= /`
         }       
     })
 }
@@ -82,14 +77,14 @@ for (let count = 0; count < arreyButton.length; count++ ) {
     button.addEventListener(
         type= "click" ,
         listener= function ( event ) {
-            let currentAnswers= getCookie("user_answers");
+            let currentAnswers= getCookie("userAnswers");
             
             if (!currentAnswers){
-                document.cookie = `user_answers=${button.id}; path = /`     
+                document.cookie = `userAnswers=${button.id}; path = /`     
             }
             else{
-                user_answer = getCookie("user_answers");
-                document.cookie = `user_answers=${user_answer}|${button.id}; path= /`
+                user_answer = getCookie("userAnswers");
+                document.cookie = `userAnswers=${user_answer}|${button.id}; path= /`
             }       
         }
     )

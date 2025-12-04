@@ -48,17 +48,17 @@ main {
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 1vw;
+    justify-content: center;
     box-shadow: 0 4px 1.2vh var(--shadow);
 }
 
 .waite-side-bottom {
     display: flex;
     flex-direction: column;
+    justify-content: end;
     align-items: center;
-    justify-content: space-between;
 
+    gap: 1vh;
     width: 100%;
     height: 11vh;
 }
@@ -68,9 +68,20 @@ main {
     justify-content: space-between;
     background-color: #f0f0f0;
     padding: 1vw 1.5vh;
-    margin-bottom: 1vh;
+    margin: 1vh 0 1vh 0;
     border-radius: 1vh;
     font-weight: bold;
+}
+
+.info-user {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 0.7vw 1vh;
+    margin: 1vh 0 1vh 0;
+    border-radius: 1vh;
+    font-weight: bold;
+    width: fit-content;
 }
 
 .info-text {
@@ -86,17 +97,51 @@ main {
 }
 
 .info-text strong{
-    padding: 0.4vh;
+    padding: 0 0.2vw 0 0.2vw;
     border-radius: 1vh;
     background-color: var(--green-second);
 }
 
-.user-list {
+.waite-side-top{
+    height: 80vh;
+}
+
+.all-users {
     display: flex;
     flex-direction: column;
+    justify-content: start;
+
+    height: 60%;
+}
+
+.user-list {
+    height: 25vh;
+    width: 100%;
+    border-radius: 2vh;
+    border: 0.4vh solid var(--green-light);
+    box-shadow: 0 2px 6px var(--shadow);
+    padding-bottom: 1vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1vh;
     overflow-y: auto;
-    max-height: 40vh;
+}
+
+.waite-users {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+    overflow-y: auto;
+    padding: 1vh 0 1vh 0;
+
+    height: 25vh;
+    width: 100%;
+    border-radius: 2vh;
+    border: 0.4vh solid var(--green-light);
+    box-shadow: 0 2px 6px var(--shadow);
 }
 
 .user-blocks {
@@ -130,6 +175,22 @@ main {
 .btn-remove:hover {
     background-color: rgb(193, 54, 54);
 }
+
+.btn-accept {
+    background-color: var(--green-main);
+    color: white;
+    padding: 0.8vh 1.7vw;
+    border: none;
+    border-radius: 1vh;
+    font-size: 1.2vh;
+    cursor: pointer;
+    transition:  background-color 0.3s;
+}
+
+.btn-accept:hover {
+    background-color: green;
+}
+
 
 
 .btn-start {
@@ -194,6 +255,13 @@ main {
     margin: 0;
     text-align: center;
     font-size: 3.7vh;
+    color: #3b3939;
+}
+
+.user-list-title{
+    margin: 0;
+    text-align: left;
+    font-size: 2.7vh;
     color: #3b3939;
 }
 
@@ -353,7 +421,7 @@ main {
 }
 
 .empty-block {
-    background-color: #f9f9f9;
+    background-color: #e0f7e9;
     border-left: 0.4vw dashed #ccc;
     font-style: italic;
     color: #666;
@@ -651,7 +719,8 @@ main {
     border-left: 0.4vw solid var(--green-main);
     font-size: 2.5vh;
     height: 6vh;
-    width: 100%;
+    width: 98%;
+    flex-shrink: 0;
 }
 
 .next-q{
@@ -929,6 +998,8 @@ main {
 } 
 
 .waiting-message {
+    display: flex;
+    flex-direction: column;
     background-color: var(--bg-aside, #f0f7f0);
     border: 0.4vh solid var(--green-light, #aad8af);
     border-radius: 3vh;
@@ -941,11 +1012,32 @@ main {
     animation: pulse 2s infinite;
 }
 
+.leave-test {
+    width: fit-content;
+    min-height: fit-content;
+    height: 4vh;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    background-color: rgb(220, 77, 77);
+    color: white;
+    padding: 1vh 2vw;
+    border: none;
+    margin-top: 2vh;
+    border-radius: 1vh;
+    font-size: 4vh;
+    cursor: pointer;
+    transition:  background-color 0.3s;
+}
+
+.leave-test:hover {
+    background-color: rgb(193, 54, 54);
+}
+
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.8; }
 }
-
 
 /* TEST RESULT */
 .container {

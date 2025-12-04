@@ -56,8 +56,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
         correctAnswer= correctAnswerDiv.textContent.trim()
     }
 
-    console.log("ANSWR ANSER")
-
     if (answer.includes("$$$")){
         const sortedAnswers= answer.split("$$$").sort().join(" та ")
         answer= sortedAnswers
@@ -96,7 +94,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
         correctAnswerChart= getCookie("countCorrectAnswer")
         
         if (lengthArrey == countUsersAnswer){
-            console.log("create chart")
             renderDoughnutChart("donat-chart", lengthArrey, correctAnswerChart)
         }
     })
@@ -230,8 +227,6 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
     infoRow.appendChild(questionInfo)
     correctTd.appendChild(correctAnswer)
     correctTd.appendChild(eyeIcon)
-    // infoRow.appendChild(correctAnswer)
-    // infoRow.appendChild(eyeIcon)
     infoRow.appendChild(correctTd)
 
     questionTable.appendChild(headerRow)
@@ -265,8 +260,7 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
     const chartCanvas = document.createElement('canvas');
     chartCanvas.id = 'donat-chart'
     chartCanvas.className = 'donat-chart'
-    
-    // userInfo.appendChild(studButttons)
+
     userInfo.appendChild(studInfoBox)
 
     chartDiv.appendChild(chartCanvas)
@@ -282,18 +276,6 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
     });
 
     let quizTime= getCookie("time");
-    
-    // let number_of_question= state.slice(-1)
-
-    // console.log(`LAST QUESTION ${number_of_question} ${total_question- 1}`)
-    // let nextQuestionButton= `
-    //     <button id="next-q" class="next-q" onclick="nextQuestion()">Наступне питання</button>
-    //     `
-    // if (number_of_question == total_question- 1) {
-    //     nextButton.textContent = 'Кінець тесту'
-    //     nextButton.removeEventListener("click", nextQuestion)
-    //     nextButton.addEventListener("click", testStop);
-    // }
 
     socket.once('get_usernames', function(data){
         let userArrey = data;
@@ -323,24 +305,6 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
                 </div>
             </div>
             `
-        // const timerText= document.getElementById("timer")
-
-        // if (timerText){
-        //     const coundown= setInterval(() =>{
-        //         if (!timerPaused){
-        //             time= parseInt(timerText.textContent) - 1;
-        //             timerText.textContent= time;
-        //             document.cookie = `time= ${time}; path=/;`;
-                
-        //         }
-
-        //         if (time <= 0){
-        //             clearInterval(coundown);
-        //             timerText.textContent = "Час закінчився"
-        //         }        
-        //     }, 1000);
-        // }
-
         startTimer()
     });
 }

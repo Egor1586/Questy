@@ -9,8 +9,6 @@ $(document).ready(function () {
             dataType: "json",
             data: JSON.stringify({sortytype: selectedValue}),
             success: function (data) {
-                console.log(data.task_list);
-
                 $("#tasks").empty()
 
                 if (data.sorty_type === "all"){

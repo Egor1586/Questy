@@ -13,6 +13,7 @@ def render_login_app():
         email = flask.request.form["email"]
         
         user = User.query.filter_by(email= email).first()
+        print()
         
         if user and user.email == email and check_password_hash(user.password, password): 
             login_user(user)

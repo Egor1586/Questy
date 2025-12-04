@@ -61,8 +61,9 @@ def handle_disconnect():
         print(f"disconected {username}")
 
         ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
-        ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
-        db.session.commit()
+        if ROOM.user_list:
+            ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
+            db.session.commit()
 
         emit('user_disconnected', {
                 'msg': f'{username} відключився',
@@ -207,8 +208,9 @@ def handle_start_test(data):
     test= Test.query.filter_by(test_code = room).first()
     
     ROOM= Room.query.filter_by(test_code= room).first()
+    user_list= ROOM.user_list.replace(f"|{ROOM.author_name}|", "")
 
-    if (ROOM.all_members):
+    if (user_list):
         print(ROOM)
         ROOM.active_test= True
         db.session.commit()
@@ -224,24 +226,27 @@ def handle_start_test(data):
 def handle_message(data):
     emit("listening_to_messages", f"{data['username']}: {data['message']}", include_self= False, to= data['room'])
 
+# @Project.settings.socketio.on('waite_user_block')
+# def handle_message(data):
+#     emit("waite_user_block", data['username'], include_self= False, to= data['room'])
+
 @Project.settings.socketio.on('new_user')
 def handle_message(data):
     room= data['room']
     username= data['username']
-    author_name= data["author_name"]
+
     user_sid = get_sid(username)
 
-    ROOM= Room.query.filter_by(test_code= room).first()
+    emit("create_user_block", {"username": username, "user_ip": data["user_ip"]}, to= room)
 
-    users_string= ROOM.user_list.replace(f"|{username}|", "")
-    
-    if username != author_name:
-        users_string= users_string.replace(f"|{author_name}|", "")
+@Project.settings.socketio.on('new_user_admin')
+def handle_message(data):
+    author_name= data["author_name"]
+    compound= data.get("compound", 0)
 
-    print(users_string)
-
-    emit("create_user_block", f"{username}", include_self= False, to= room)
-    emit("create_all_user_blocks", users_string, to= user_sid)
+    author_sid = get_sid(author_name)
+    print(data["username"], data["ip"], "jjjjj")
+    emit("new_user_admin", {"username": data["username"], "ip": data["ip"], "compound": compound}, to= author_sid)
 
 @Project.settings.socketio.on('next_question')
 def handle_message(data):

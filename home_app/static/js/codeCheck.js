@@ -25,7 +25,6 @@ $(() => {
 
     $('.test-card').on('click', function() {
         testId= $(this).data('test-id')
-        console.log(testId)
         const title= $(this).data('test-title')
 
         $('#modal-id').text(`Test id ${testId}`);
