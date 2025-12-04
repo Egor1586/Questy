@@ -9,14 +9,15 @@
 }
 
 .wrapper-author-results-container {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
-  padding: 40px;
+  padding: 0px !important;
   box-sizing: border-box;
   background: #f5fff5; 
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  margin-top: 2vh;
+  gap: 4vh;
   font-family: "Segoe UI", sans-serif;
 }
 
@@ -27,18 +28,53 @@
   display: flex;
   flex-direction: column;
   align-self: center;
+  gap: 1vh;
 }
 
 .results-header-block h1 {
-  font-size: 2.5rem;
-  margin: 0 0 10px;
+  font-weight: 700;
+  font-size: 6vh;
 }
 
 .results-header-block p {
-  font-size: 1.2rem;
+  font-size: 3vh;
   color: #388e3c;
   margin: 0;
 }
+
+.content-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start; 
+
+  width: 100vw;
+  height: fit-content;
+  gap: 1vw;
+}
+
+.info-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start; 
+
+  width: 49vw;
+  height: 100%;
+  gap: 2vh;
+}
+
+.base-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start; 
+
+  /* width:; */
+  height: fit-content;
+  gap: 2vw;
+}
+
 
 /* Графік */
 .chart-box {
@@ -47,16 +83,17 @@
   justify-content: center;
   align-items: center;
   background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  border-radius: 1.5vh;
+  padding: 2vh 0.5vw;
+  margin-left: 1vw;
+  box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
+  width: 52vw;
 }
 
 .chart-box h2 {
   margin-top: 0;
   color: #205b24;
-  font-size: 1.4rem;
+  font-size: 3vh;
 }
 
 /* .donat-chart{
@@ -64,35 +101,39 @@
 } */
 
 .results-info-box {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 20px;
+  background: #ffffff;
+  backdrop-filter: blur(1vh);
+  -webkit-backdrop-filter: blur(1vh);
+  border-radius: 1.5vh;
+  padding: 2vh 1vw;
   color: #1d4120;
   font-weight: 500;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  width: 100%;
+  box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
+  width: 22vw;
+  height: 17vh;
+  min-height: fit-content;
 }
 
 .results-info-box h3 {
   margin-top: 0;
   color: #205b24;
-  font-size: 1.4rem;
+  font-size: 3vh;
 }
 
 .results-info-box p{
-    margin: 5px 0;
-    font-size: 1.1rem;
+    margin: 1vh 0;
+    font-size: 2.3vh;
 }
 
 /* Таблиця результатів */
 .results-table {
+  background-color: #ffffff;
+  border: 0.1vh solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
   display: grid;
-  border-radius: 12px;
+  border-radius: 1.5vh;
   overflow: hidden;
-  border: 1px solid #c8e6c9;
-  width: 100%;
+  width: 46vw;
 }
 
 .results-header, .results-row {
@@ -105,7 +146,6 @@
 }
 
 .results-row {
-  border-bottom: 1.5px solid #c8e6c9;
   background: rgba(255, 255, 255, 1);
 }
 
@@ -115,14 +155,29 @@
 }
 
 .cell {
-  padding: 10px;
-  /* border-bottom: 1px solid #c8e6c9; */
+  display: flex;
+  justify-content: center;
+  border: 0.1vh solid rgba(0, 0, 0, 0.15);
+  padding: 1vw;
+  font-size: 2vh;
 }
 
+.accuracy {
+  border: 0.1vh solid rgba(0, 0, 0, 0.15);
+  padding: 1vw;
+  font-size: 2vh;
+}
+
+.label {
+  border: 0.1vh solid rgba(0, 0, 0, 0.15);
+  padding: 1vw;
+  font-size: 2vh;
+}
 
 /* Ім’я учня + % */
 .student-name {
   font-weight: 600;
+  font-size: 2vh;
   text-align: left;
   display: flex;
   justify-content: space-between;
@@ -131,8 +186,8 @@
 
 .circle {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 2vh;
+  height: 2vh;
   border-radius: 50%;
 }
 
@@ -151,24 +206,40 @@
 
 .legend-box {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  border-radius: 1.5vh;
+  padding: 1.5vw;
+  box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
+  width: 22vw;
+  height: 14.5vh;
+  min-height: fit-content;
+}
+
+.legend-box h3{
+  margin-top: 0;
+  color: #205b24;
+  font-size: 3vh;
+  text-align: center;
 }
 
 .legend {
   display: flex;
-  gap: 20px;
-  margin-top: 10px;
-  font-size: 0.95rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  gap: 1vw;
+  margin-top: 1.5vh;
+  font-size: 1.5vh;
   color: #205b24;
+
+  flex-wrap: wrap;
+  gap: 1vw 2vw;
 }
 
 .legend span {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.5vw;
+  font-size: 1.5vh;
 }
 
 .cell.accuracy {

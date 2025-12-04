@@ -38,7 +38,7 @@ function appendResultRow(resultTable, username, answersArrey) {
     let accuracy = (numberCorrectAnswers / totalQuestion) * 100;
 
     const studentAccuracy = document.createElement('div');
-    studentAccuracy.className = 'cell accuracy';
+    studentAccuracy.className = 'accuracy';
     studentAccuracy.textContent = `${accuracy.toFixed(1)}%`;
 
     resultRow.appendChild(studentName);
@@ -157,6 +157,9 @@ function renderAuthorResultTest(username, author_name, total_question) {
         container.appendChild(header);
 
         //
+        const contentBox = document.createElement('div');
+        contentBox.className = 'content-box';
+
         const chartBox = document.createElement('div');
         chartBox.className = 'chart-box';
 
@@ -175,9 +178,15 @@ function renderAuthorResultTest(username, author_name, total_question) {
         chartBox.appendChild(headerTitle2);
         chartWrapper.appendChild(chartCanvas);
         chartBox.appendChild(chartWrapper);
-        container.appendChild(chartBox);
+        contentBox.appendChild(chartBox);
 
         //
+        const infoBox = document.createElement('div');
+        infoBox.className = 'info-box';
+
+        const baseInfo = document.createElement('div');
+        baseInfo.className = 'base-info';
+
         const resultsInfoBox = document.createElement('div');
         resultsInfoBox.className = 'results-info-box';
 
@@ -223,21 +232,21 @@ function renderAuthorResultTest(username, author_name, total_question) {
         resultsInfoBox.appendChild(headerTitle3);
         resultsInfoBox.appendChild(resultsInfoBoxText2);
         resultsInfoBox.appendChild(resultsInfoBoxText);
-        container.appendChild(resultsInfoBox);
+        baseInfo.appendChild(resultsInfoBox);
 
         const resultTable = document.createElement('div');
         resultTable.className = 'results-table';
 
         resultTable.style.setProperty(
             'grid-template-columns',
-            `200px repeat(${total_question}, 1fr) 120px`
+            `8vw repeat(${total_question}, ${32 /total_question}vw) 6vw`
         )
 
         const resultHeader = document.createElement('div');
         resultHeader.className = 'results-header';
 
         const headerUsers = document.createElement('div');
-        headerUsers.className = 'cell label';  
+        headerUsers.className = 'label';  
         headerUsers.textContent= "Учні"
 
         resultHeader.appendChild(headerUsers);
@@ -250,7 +259,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
         })
 
         const headerAccyracy = document.createElement('div');
-        headerAccyracy.className = 'cell label';  
+        headerAccyracy.className = 'label';  
         headerAccyracy.textContent= "Точність"
         
 
@@ -261,7 +270,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
             answersArray = resultData[username]; 
             appendResultRow(resultTable, username, answersArray);
         }  
-        container.appendChild(resultTable);
         
         const legenBox = document.createElement('div');
         legenBox.className = 'legend-box';
@@ -278,14 +286,18 @@ function renderAuthorResultTest(username, author_name, total_question) {
                         `
         legenBox.appendChild(legenBoxTitle);
         legenBox.appendChild(legend);
-        container.appendChild(legenBox);
+        baseInfo.appendChild(legenBox);
      
         const leaveButton= document.createElement('button');
         leaveButton.className= 'leave-btn';
         leaveButton.textContent = 'Покинути тест';
         leaveButton.addEventListener("click", authorLeaveTest);
         
-        container.appendChild(leaveButton);
+        infoBox.appendChild(baseInfo)
+        infoBox.appendChild(resultTable);
+        infoBox.appendChild(leaveButton)
+        contentBox.appendChild(infoBox)
+        container.appendChild(contentBox)
 
         renderAccuracyChart('authorAccuracyChart', accuracy_aquestions);
     });
