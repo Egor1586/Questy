@@ -1,4 +1,4 @@
-function renderRoomMain(testCode, authorName, username, quizzes) {
+function renderRoomMain(testCode, authorName, username, quizzes, userListName) {
     const content = document.getElementById("room-content");
     content.innerHTML = "";
 
@@ -74,48 +74,58 @@ function renderRoomMain(testCode, authorName, username, quizzes) {
     userList.id = "user-list";
     userList.className = "user-list";
 
-    userList.innerHTML = `
-        <div class="user-block teacher-block">
-            <div class="user-name"><strong>Вчитель:</strong> ${authorName}</div>
-        </div>
-        <div class="user-block empty-block" id="emty-users-list">
-            <div class="user-name">Учні ще не приєдналися. Очікуємо...</div>
-        </div>
-    `;
-
-    const waiteUsers = document.createElement("div");
-    waiteUsers.id = "waite-users";
-    waiteUsers.className = "waite-users";
-    
-
+    if (!userListName){
+        userList.innerHTML = `
+            <div class="user-block teacher-block">
+                <div class="user-name"><strong>Вчитель:</strong> ${authorName}</div>
+            </div>
+            <div class="user-block empty-block" id="emty-users-list">
+                <div class="user-name">Учні ще не приєдналися. Очікуємо...</div>
+            </div>
+        `;
+    }else {
+        userList.innerHTML = `
+            <div class="user-block teacher-block">
+                <div class="user-name"><strong>Вчитель:</strong> ${authorName}</div>
+            </div>`
+    }
     const info1 = document.createElement("div");
     info1.className = "info-user";
-
-    const info2 = document.createElement("div");
-    info2.className = "info-user";
 
     const userListText = document.createElement("h3");
     userListText.className= "user-list-title"
     userListText.textContent = "Список учасників:";
     
-    const waiteUsersText = document.createElement("h3");
-    waiteUsersText.className= "user-list-title"
-    waiteUsersText.textContent = "Зал очікування:";
     info1.appendChild(userListText)
-    info2.appendChild(waiteUsersText)
-
     allUsers.appendChild(info1);
     allUsers.appendChild(userList);
-    allUsers.appendChild(info2);
-    allUsers.appendChild(waiteUsers);
+
+    if (authorName === username) {
+
+        const info2 = document.createElement("div");
+        info2.className = "info-user";
+
+        const waiteUsers = document.createElement("div");
+        waiteUsers.id = "waite-users";
+        waiteUsers.className = "waite-users";
+
+        
+        const waiteUsersText = document.createElement("h3");
+        waiteUsersText.className= "user-list-title"
+        waiteUsersText.textContent = "Зал очікування:";
+        info2.appendChild(waiteUsersText)
+
+        allUsers.appendChild(info2);
+        allUsers.appendChild(waiteUsers);
+    }
 
     waiteSideTop.appendChild(allUsers);
 
     let waiteSideBottom;
     // Кнопка "Почати" для автора
+    waiteSideBottom = document.createElement("div");
+    waiteSideBottom.className = "waite-side-bottom";
     if (authorName === username) {
-        waiteSideBottom = document.createElement("div");
-        waiteSideBottom.className = "waite-side-bottom";
 
         const buttonStart = document.createElement("button");
         buttonStart.type = "button";
@@ -130,6 +140,13 @@ function renderRoomMain(testCode, authorName, username, quizzes) {
         buttonEnd.textContent = "Завершити тест";
         buttonEnd.addEventListener("click", endTest);
         waiteSideBottom.appendChild(buttonEnd);
+    } else{
+        const leaveButton = document.createElement("button");
+        leaveButton.type = "button";
+        leaveButton.className = "btn-end";
+        leaveButton.textContent = "Залишити тест";
+        leaveButton.addEventListener("click", leaveTestBlock);
+        waiteSideBottom.appendChild(leaveButton);
     }
 
     // Чат
@@ -163,6 +180,13 @@ function renderRoomMain(testCode, authorName, username, quizzes) {
     const participantsTitle = document.createElement("h3");
     participantsTitle.textContent = "Кількість учасників";
     participantsBox.appendChild(participantsTitle);
+
+    if (userListName){
+        let userListBlocks= userListName.split("</>")
+        userListBlocks.forEach(block => {
+            createUserBlock(username, authorName, block, 0, "not");
+        })
+    }
 
     $('#msg').on('keydown', function(event){
         if (event.key === "Enter"){

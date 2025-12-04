@@ -6,7 +6,6 @@ function newTask(){
         success: function (data) {
             class_new_task= data["class_online_task"]    
 
-            console.log(class_new_task)
             for (let element= 0; element < class_new_task.length; element++){
                 const classCard = $(`#${class_new_task[element][0]}`)
                 const cardHeader = classCard.find(".card-header")

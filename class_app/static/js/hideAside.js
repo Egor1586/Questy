@@ -5,6 +5,5 @@ $(() => {
         
         $(".hide-btn").toggleClass("move-left")
         $(".hide-btn").toggleClass("rotate")
-        console.log("HIDE")
     })
 })

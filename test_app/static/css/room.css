@@ -55,6 +55,7 @@ main {
 .waite-side-bottom {
     display: flex;
     flex-direction: column;
+    justify-content: end;
     align-items: center;
 
     gap: 1vh;
@@ -108,7 +109,7 @@ main {
 .all-users {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
 
     height: 60%;
 }
@@ -1013,13 +1014,14 @@ main {
 
 .leave-test {
     width: fit-content;
+    min-height: fit-content;
     height: 4vh;
     display: flex;
     align-items: center;
     align-self: center;
     background-color: rgb(220, 77, 77);
     color: white;
-    padding: 3vh 2vw;
+    padding: 1vh 2vw;
     border: none;
     margin-top: 2vh;
     border-radius: 1vh;

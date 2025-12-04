@@ -7,8 +7,6 @@ const testQuestionDiv = document.querySelector(".container")
 
 createQuestionButtonDiv.addEventListener('click', function(event) {
     const questionType= event.target.id
-    console.log(questionType)
-
     countQuestion++;
 
     const choiceQuestion = `                
@@ -91,7 +89,6 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
 
 testQuestionDiv.addEventListener("click", function(event){
     if (event.target.classList.contains("delete-question")){
-        console.log("delete")
         event.target.closest(".question-block").remove(); 
     }
 

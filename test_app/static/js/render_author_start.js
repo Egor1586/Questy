@@ -56,8 +56,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
         correctAnswer= correctAnswerDiv.textContent.trim()
     }
 
-    console.log("ANSWR ANSER")
-
     if (answer.includes("$$$")){
         const sortedAnswers= answer.split("$$$").sort().join(" та ")
         answer= sortedAnswers
@@ -96,7 +94,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
         correctAnswerChart= getCookie("countCorrectAnswer")
         
         if (lengthArrey == countUsersAnswer){
-            console.log("create chart")
             renderDoughnutChart("donat-chart", lengthArrey, correctAnswerChart)
         }
     })

@@ -1,4 +1,4 @@
-function createUserBlock(username, author_name, block_username, ip,type) {   
+function createUserBlock(username, authorName, blockUsername, ip, type) {   
     
     let userListDiv
     let checkingUserBlock
@@ -10,14 +10,14 @@ function createUserBlock(username, author_name, block_username, ip,type) {
             emptyUserBlock.remove();
         }
         
-        checkingUserBlock= document.getElementById(`${block_username}`)
+        checkingUserBlock= document.getElementById(`${blockUsername}`)
         
         if (checkingUserBlock) {
             return
         }
     } else {
         userListDiv= document.getElementById("waite-users") 
-        checkingUserBlock= document.getElementById(`${block_username}`)
+        checkingUserBlock= document.getElementById(`${blockUsername}`)
         
         if (checkingUserBlock) {
             return
@@ -26,29 +26,30 @@ function createUserBlock(username, author_name, block_username, ip,type) {
     
     const userBlock= document.createElement("div");
     userBlock.className= "user-block";
-    userBlock.id= `${block_username}`
+    userBlock.id= `user${blockUsername}`
 
     const userName= document.createElement("div");
     userName.className= "user-name";
-    userName.textContent = `${block_username}`;
+    userName.textContent = `${blockUsername}`;
     userBlock.appendChild(userName);
 
     const userActions= document.createElement("div");
     userActions.className= "user-actions";
     
-    const userIP= document.createElement("p")
-    userIP.textContent= `ip: `
+    if (ip){
+        const userIP= document.createElement("p")
+        userIP.textContent= `ip: `
 
-    const spanIP= document.createElement("span")
-    spanIP.className= "user-ip"
-    spanIP.textContent= ip
-    console.log(ip)
+        const spanIP= document.createElement("span")
+        spanIP.className= "user-ip"
+        spanIP.textContent= ip
 
-    userIP.appendChild(spanIP)
-    userBlock.appendChild(userIP)
+        userIP.appendChild(spanIP)
+        userBlock.appendChild(userIP)
+    }
 
     let kickType
-    if (username === author_name) {
+    if (username === authorName) {
         const btnRemove= document.createElement("button");
         btnRemove.className= "btn-remove";
         btnRemove.type= "button";
@@ -62,7 +63,7 @@ function createUserBlock(username, author_name, block_username, ip,type) {
             btnKick.textContent= "Видалити"
             
             btnKick.onclick = function () {
-                kickUser(block_username, ip, "kick");
+                kickUser(blockUsername, ip, "kick");
             };
 
             userActions.appendChild(btnKick);
@@ -71,7 +72,7 @@ function createUserBlock(username, author_name, block_username, ip,type) {
             kickType= "kick"
         }
         btnRemove.onclick = function () {
-            kickUser(block_username, ip, kickType);
+            kickUser(blockUsername, ip, kickType);
         };
 
         if (type === "waite"){
@@ -80,7 +81,7 @@ function createUserBlock(username, author_name, block_username, ip,type) {
             btnAccept.type= "button";
             btnAccept.textContent= "Прийняти"
             btnAccept.onclick = function () {
-                addUesrBlock(block_username, this);
+                addUesrBlock(blockUsername, this);
             };
             
             userActions.appendChild(btnAccept);
@@ -89,7 +90,7 @@ function createUserBlock(username, author_name, block_username, ip,type) {
         userActions.appendChild(btnRemove);
         userBlock.appendChild(userActions);
     }
-    
+
     if (userListDiv){
         userListDiv.appendChild(userBlock);
         return userListDiv;
