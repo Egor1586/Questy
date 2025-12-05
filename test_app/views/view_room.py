@@ -80,7 +80,9 @@ def handle_clear_test_code(data):
         db.session.delete(ROOM)
 
     TEST = Test.query.filter_by(test_code= room).first()
-    TEST.test_code = 0  
+    if (TEST):
+        TEST.test_code = 0  
+        
     db.session.commit()
     
 @Project.settings.socketio.on('kick_user')

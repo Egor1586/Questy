@@ -33,7 +33,7 @@ main {
     display: flex;
     flex-direction: row;
     gap: 1.5vh;
-    padding: 1.5vh;
+    padding: 1.5vh 0vw 1.5vh 0.8vw;
     flex-grow: 1;
     overflow: hidden;
 }

@@ -138,7 +138,7 @@ function renderRoomMain(testCode, authorName, username, quizzes, userListName) {
         buttonEnd.type = "button";
         buttonEnd.className = "btn-end";
         buttonEnd.textContent = "Завершити тест";
-        buttonEnd.addEventListener("click", endTest);
+        buttonEnd.addEventListener("click", authorLeaveTest);
         waiteSideBottom.appendChild(buttonEnd);
     } else{
         const leaveButton = document.createElement("button");

@@ -425,23 +425,23 @@
             msgInput.value = "";
         }
 
-        function endTest() {
-            let currentURL = window.location.href;
-            let roomCode = currentURL.split('room')[1]
-
-            socket.emit("end_test", {
-                room: room,         
-                username: username  
-            });
-
-            socket.emit("test_end", {
-                room: roomCode
-            });
-            
-            setTimeout(() => {
-                window.location.href = '/'; 
-            }, 200);
-        }
+        //function endTest() {
+        //    let currentURL = window.location.href;
+        //    let roomCode = currentURL.split('room')[1]
+        //
+        //    socket.emit("end_test", {
+        //        room: room,         
+        //        username: username  
+        //    });
+        //
+        //    socket.emit("test_end", {
+        //        room: roomCode
+        //    });
+        //    
+        //    setTimeout(() => {
+        //        window.location.href = '/'; 
+        //    }, 200);
+        //}
 
         function testStop(){    
             socket.emit("stop_test", {
@@ -489,9 +489,9 @@
             let addUserList= getCookie("userList")
 
             if (!addUserList){
-                document.cookie= `userList= ${username}; path=/`
+                document.cookie= `userList= ${username}()${userIP}; path=/`
             } else {
-                document.cookie= `userList= ${addUserList}</>${username}`
+                document.cookie= `userList= ${addUserList}</>${username}()${userIP}`
             }
 
             if (userBlock){
@@ -519,7 +519,12 @@
         function kickUser(kick_user, ip, type) {   
             let UserList= getCookie("userList") || ""
             let users= UserList.split("</>").filter(username => username.trim() !== "")
+            users= UserList.split("()").filter(username => username.trim() !== "")
             users = users.filter(username => username !== kick_user)
+
+            // users.forEach(user, index => {
+
+            // })
             const newUserList = users.join("</>")
 
             document.cookie= `userList=${newUserList}; path=/`

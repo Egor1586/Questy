@@ -1,11 +1,15 @@
 function authorLeaveTest(){
     let currentURL = window.location.href;
     let roomCode = currentURL.split('room')[1];
-
-    console.log(`Это код теста: ${roomCode}`)
+    roomCode= roomCode.split("?")[0]
     
+    socket.emit("end_test", {
+        room: room,         
+        username: username  
+    });
+     
     socket.emit("test_end", {
-            room: roomCode
+        room: roomCode
     });
     
     document.cookie = `state=; max-age=0; path=/;`;
@@ -17,7 +21,9 @@ function authorLeaveTest(){
     document.cookie = `blockedUsers=; max-age=0; path=/;`;
     document.cookie = `userList=; max-age=0; path=/;`;
 
-    window.location.href = '/'; 
+    setTimeout(() => {
+        window.location.href = '/'; 
+    }, 200);
 }
 
 function appendResultRow(resultTable, username, answersArrey) {
