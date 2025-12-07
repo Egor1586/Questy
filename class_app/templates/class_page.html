@@ -24,10 +24,9 @@
         {% if is_teacher%}
         <hr>
             <div class="class-div">
-                {% if my_classes_list%}
-                    <h2>Доступні класи</h2>
-                    
+                {% if my_classes_list %}
                     <div class="card-div">
+                        <h2>Доступні класи</h2>
                         {% for class in my_classes_list %} 
                             {% set tasks = tasks_class_teacher_list[loop.index0] %}
 
