@@ -122,7 +122,67 @@ function renderAccuracyChart(canvasId, accuracy_aquestions){
     });
 }
 
+function exel_table(username, author_name){
+    setTimeout(function() {
+        socket.emit("room_get_result", {
+            room: room,
+            username: username,
+            author_name: author_name
+        });
+    }, 100); 
+    
+    socket.once('room_get_result_data', function(data) {  
+        const resultData = data.room_get_result_data;
+        const best_score_data = data.best_score_data;
 
+        const firstUser = Object.keys(resultData)[0];
+        const totalQuestions = resultData[firstUser].length;
+
+        let headerRow = ["Учень"];
+        for (let i = 1; i <= totalQuestions; i++) {
+            headerRow.push(`Q${i}`);
+        }
+        headerRow.push("Точність");
+
+        let table = [];
+        table.push(headerRow);
+
+        let totalAccuracy = 0;
+        let usersCount = 0;
+        for (const user in resultData) {
+            const answers = resultData[user];
+            const correct = answers.filter(a => a === 1).length;
+            const accuracyNumber = correct / answers.length;
+            const accuracy = (accuracyNumber * 100).toFixed(1) + "%";
+
+            totalAccuracy += accuracyNumber;
+            usersCount++;
+
+            let row = [user];
+
+            answers.forEach(a => {
+                if (a === 1) row.push("✅");
+                else if (a === 0) row.push("❌");
+                else row.push("➖"); 
+            });
+
+            row.push(accuracy);
+            table.push(row);
+        }
+        const averageAccuracy = ((totalAccuracy / usersCount) * 100).toFixed(1) + "%";
+        console.log(totalAccuracy)
+        table.push([]);
+        table.push(["Найкращий результат", best_score_data.user_name,`${best_score_data.accuracy}%`]);
+        table.push(["Середній результат", averageAccuracy]);
+        
+
+        const worksheet = XLSX.utils.aoa_to_sheet(table);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
+
+        XLSX.writeFile(workbook, "results.xlsx");
+    });
+}
 function renderAuthorResultTest(username, author_name, total_question) {
 
     let container = document.getElementById("container-question");
@@ -298,10 +358,16 @@ function renderAuthorResultTest(username, author_name, total_question) {
         leaveButton.className= 'leave-btn';
         leaveButton.textContent = 'Покинути тест';
         leaveButton.addEventListener("click", authorLeaveTest);
+
+        const exelButton= document.createElement('button');
+        exelButton.className= 'exel_table';
+        exelButton.textContent = 'exel_table';
+        exelButton.addEventListener("click", () => exel_table(username, author_name));
         
         infoBox.appendChild(baseInfo)
         infoBox.appendChild(resultTable);
         infoBox.appendChild(leaveButton)
+        infoBox.appendChild(exelButton)
         contentBox.appendChild(infoBox)
         container.appendChild(contentBox)
 
