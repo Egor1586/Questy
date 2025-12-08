@@ -15,6 +15,109 @@ def get_sid(username):
     
     return None
 
+def room_get_result(room, author_name, username):
+    room_get_result_data= {}
+    
+    ROOM= Room.query.filter_by(test_code= room).first()
+    QUIZ_LIST = Quiz.query.filter_by(test_id= ROOM.test_id).all()
+
+    # user_name= data["username"]
+    # TEST = Test.query.filter_by(id= ROOM.test_id).first()
+     
+    users_list= ROOM.all_members.strip('|').split('||')
+    USER_LIST= []
+    SCORE_LIST= []
+
+    for user in users_list:
+        if user:
+            USER= User.query.filter_by(username= user).first()
+            if not USER and user != author_name:
+                USER_LIST.append(user)
+            elif USER.username != author_name:
+                USER_LIST.append(USER)
+
+    SCORE_LIST= Score.query.filter_by(test_code= room).all()
+    
+    for user in USER_LIST:
+        answers_list= []
+        answers_str= ""
+        correct_answers_list= []
+
+        for score in SCORE_LIST:
+            try:
+                if score.user_id == user.id:
+                    answers_str= score.user_answer
+                    break
+            except:
+                if score.user_name == user:
+                    answers_str= score.user_answer
+                    break
+        
+        print(answers_str)
+        answers_list= answers_str.strip('|').split('||')
+        print("Answer list")
+        print(answers_list)
+
+        for index, quiz in enumerate(QUIZ_LIST):
+            print(quiz.correct_answer, answers_list[index])
+            print(quiz.question_type)
+            if answers_list[index] == "not_answer":
+                correct_answers_list.append(2)
+                continue
+            
+            if quiz.question_type  == "multiple_choice":
+                multi_choice_correct= quiz.correct_answer.split("%$№")
+                multi_choice_answer= answers_list[index].split("$$$")
+                sorted_multi_choice_correct= sorted(multi_choice_correct)
+                sorted_multi_choice_answer= sorted(multi_choice_answer)
+                print(multi_choice_correct, multi_choice_answer)
+                print(sorted_multi_choice_correct, sorted_multi_choice_answer)
+                if sorted_multi_choice_correct == sorted_multi_choice_answer:
+                    correct_answers_list.append(1)
+                else:
+                    correct_answers_list.append(0)
+            else:
+                if quiz.correct_answer == answers_list[index]:
+                    correct_answers_list.append(1)
+                else:
+                    correct_answers_list.append(0)
+        try:
+            room_get_result_data[user.username]= correct_answers_list
+        except:
+            room_get_result_data[user]= correct_answers_list
+    
+    BEST_SCORE= None
+    best_accuracy= 0
+    averega_accuracy= 0
+    averega_score= 0
+
+    for score in SCORE_LIST:
+        averega_accuracy =+ score.accuracy
+        if score.accuracy > best_accuracy:
+            BEST_SCORE= score
+
+    if len(SCORE_LIST) > 0:
+        averega_score= averega_accuracy//len(SCORE_LIST)
+    else:
+        averega_score= 0
+
+    if BEST_SCORE:
+        best_score_data= {
+            "user_name": BEST_SCORE.user_name,
+            "accuracy": BEST_SCORE.accuracy,
+        }
+    elif len(SCORE_LIST) == 1:
+        best_score_data= {
+            "user_name": SCORE_LIST[0].user_name,
+            "accuracy": SCORE_LIST[0].accuracy,
+        }
+
+    print(room_get_result_data)
+    print(best_score_data)
+    print(averega_score)
+
+    return room_get_result_data, best_score_data, averega_score
+
 @Project.settings.socketio.on('join')
 def handle_join(data):
     room= data['room']
@@ -109,7 +212,6 @@ def handle_send_usernames(data):
     author = data['authorname']
     author_sid = get_sid(author)
 
-    print("NENENENEN DJDJD")
     print(room)
     ROOM = Room.query.filter_by(test_code = room).first()
 
@@ -228,10 +330,6 @@ def handle_start_test(data):
 def handle_message(data):
     emit("listening_to_messages", f"{data['username']}: {data['message']}", include_self= False, to= data['room'])
 
-# @Project.settings.socketio.on('waite_user_block')
-# def handle_message(data):
-#     emit("waite_user_block", data['username'], include_self= False, to= data['room'])
-
 @Project.settings.socketio.on('new_user')
 def handle_message(data):
     room= data['room']
@@ -265,114 +363,12 @@ def handle_message(data):
 
 @Project.settings.socketio.on('room_get_result')
 def handle_message(data):
-    room_get_result_data= {}
-
-    room= data["room"]
-    user_name= data["username"]
-    author_name= data["author_name"]
     user_sid= get_sid(data["username"])
-    
-    ROOM= Room.query.filter_by(test_code= room).first()
-    TEST = Test.query.filter_by(id= ROOM.test_id).first()
-    QUIZ_LIST = Quiz.query.filter_by(test_id= ROOM.test_id).all()
-     
-    users_list= ROOM.user_list.strip('|').split('||')
-    USER_LIST= []
-    SCORE_LIST= []
-
-    for user in users_list:
-        if user:
-            USER= User.query.filter_by(username= user).first()
-            if not USER and user != author_name:
-                USER_LIST.append(user)
-            elif USER.username != author_name:
-                USER_LIST.append(USER)
-
-    SCORE_LIST= Score.query.filter_by(test_code= room).all()
-    
-    for user in USER_LIST:
-        answers_list= []
-        answers_str= ""
-        correct_answers_list= []
-
-        for score in SCORE_LIST:
-            try:
-                if score.user_id == user.id:
-                    answers_str= score.user_answer
-                    break
-            except:
-                if score.user_name == user:
-                    answers_str= score.user_answer
-                    break
-        
-        print(answers_str)
-        answers_list= answers_str.strip('|').split('||')
-        print("Answer list")
-        print(answers_list)
-
-        for index, quiz in enumerate(QUIZ_LIST):
-            print(quiz.correct_answer, answers_list[index])
-            print(quiz.question_type)
-            if answers_list[index] == "not_answer":
-                correct_answers_list.append(2)
-                continue
-            
-            if quiz.question_type  == "multiple_choice":
-                multi_choice_correct= quiz.correct_answer.split("%$№")
-                multi_choice_answer= answers_list[index].split("$$$")
-                print(multi_choice_correct, multi_choice_answer)
-                sorted_multi_choice_correct= sorted(multi_choice_correct)
-                sorted_multi_choice_answer= sorted(multi_choice_answer)
-                print(sorted_multi_choice_correct, sorted_multi_choice_answer)
-                if sorted_multi_choice_correct == sorted_multi_choice_answer:
-                    correct_answers_list.append(1)
-                else:
-                    correct_answers_list.append(0)
-            else:
-                if quiz.correct_answer == answers_list[index]:
-                    correct_answers_list.append(1)
-                else:
-                    correct_answers_list.append(0)
-        try:
-            room_get_result_data[user.username]= correct_answers_list
-        except:
-            room_get_result_data[user]= correct_answers_list
-
-    print(room_get_result_data)
-    
-    BEST_SCORE= None
-    best_accuracy= 0
-    averega_accuracy= 0
-    averega_score= 0
-
-    for score in SCORE_LIST:
-        averega_accuracy =+ score.accuracy
-        if score.accuracy > best_accuracy:
-            BEST_SCORE= score
-
-    if len(SCORE_LIST) > 0:
-        averega_score= averega_accuracy//len(SCORE_LIST)
-    else:
-        averega_score= 0
-
-    print(SCORE_LIST)
-    print(BEST_SCORE)
-
-    if BEST_SCORE:
-        best_score_data= {
-            "user_name": BEST_SCORE.user_name,
-            "accuracy": BEST_SCORE.accuracy,
-        }
-    elif len(SCORE_LIST) == 1:
-        best_score_data= {
-            "user_name": SCORE_LIST[0].user_name,
-            "accuracy": SCORE_LIST[0].accuracy,
-        }
+    room_get_result_data, best_score_data, averega_score= room_get_result(data["room"], data["author_name"], data["username"])
    
     emit("room_get_result_data", {"room_get_result_data": room_get_result_data,
                                   "best_score_data": best_score_data,
                                   "averega_score": averega_score}, to= user_sid)
-
 
 @Project.settings.socketio.on('plus_time')
 def handle_message(data):

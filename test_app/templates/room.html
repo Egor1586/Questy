@@ -15,6 +15,7 @@
 
     </div>
     
+    
     <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_waite_page.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
@@ -197,9 +198,12 @@
             checkAnswers();
             if (state != "authorResultTest") {
                 let numberOfQuestion= Number(state.slice(-1));
+                console.log(4)
+                console.log(Number(listQuiz[numberOfQuestion + 1].time))
+                //alert(Number(listQuiz[numberOfQuestion + 1].time))
                 document.cookie= `time=${Number(listQuiz[numberOfQuestion + 1].time)}; path=/`
                 if (numberOfQuestion != totalQuestion - 1) {
-                    document.cookie = `state= question${numberOfQuestion + 1}; path=/`;
+                    document.cookie= `state=question${numberOfQuestion + 1}; path=/`;
                     renderQuestion(Number("{{ test.id }}"), listQuiz[numberOfQuestion + 1], listAnswers[numberOfQuestion + 1], room, authorName);
                 }
                 else {
@@ -208,7 +212,7 @@
                         author_name: authorName
                     });
                     
-                    document.cookie = `state= authorResultTest; path=/`;
+                    document.cookie= `state=authorResultTest; path=/`;
 
                     renderAuthorResultTest(username, authorName, totalQuestion);
                 }
@@ -262,21 +266,27 @@
         });
 
         socket.on('kicked', function(data) {
-            document.cookie = `temporaryName=; max-age=0; path=/;`;    
+            document.cookie = `state=; max-age=0; path=/;`;
+            document.cookie = `userAnswers=; max-age=0; path=/;`;
+            document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
+            document.cookie = `temporaryName=; max-age=0; path=/;`;
+            document.cookie = `timeStop=; max-age=0; path=/;`;
+            document.cookie = `time=; max-age=0; path=/;`;
             document.cookie = `compound=; max-age=0; path=/;`;
-            document.cookie = `time=; max-age=0; path=/;`;  
 
             window.location.href = '/'; 
         });
 
         socket.on('plus_time', function(data) {          
-            const timerText= document.getElementById("timer")
             let plusTime= 15
+            const timer= document.getElementById("timer")
+            if (!timer) return;
+            
+            const timerCount= getCookie("time")
             plusAnswerTime += 15
-            if (timerText && timerText.textContent != "Час закінчений"){
-                let currTime= Number(getCookie('time'))
-                timerText.textContent = parseInt(currTime) + plusTime
-                document.cookie = `time=${parseInt(currTime) + plusTime}; path=/;`;
+            if (timerCount && timer.textContent != "Час закінчений"){
+                timer.textContent = parseInt(timerCount) + plusTime
+                document.cookie = `time=${parseInt(timerCount) + plusTime}; path=/;`;
             }
         });
 
@@ -322,8 +332,11 @@
             let messages = document.getElementById("messages");         
             if (messages){
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
-            }        
-            document.cookie= `time= ${listQuiz[0].time}; path=/`
+            }     
+            
+            console.log(6)
+            //alert(listQuiz[0].time)
+            document.cookie= `time=${listQuiz[0].time}; path=/`
             let compoundStart= getCookie("compound")
 
             if (username === data["author_name"]) {          
@@ -365,6 +378,15 @@
                 nextButton.removeEventListener("click", nextQuestion)
                 nextButton.addEventListener("click", testStop);
             }
+            
+            if (donatChart){
+                donatChart.destroy()
+            }
+    
+            if (!listQuiz[numberOfQuestion]){
+                console.log("QUESTIONTSONST")
+                return
+            }
 
             document.cookie = `countUsersAnswer= 0; path=/`;
             
@@ -380,6 +402,8 @@
                 correct_answer.textContent= `${listQuiz[numberOfQuestion].correct_answer}`
             }
             
+            console.log(7)
+            //alert(Number(listQuiz[numberOfQuestion].time))
             document.cookie= `time=${Number(listQuiz[numberOfQuestion].time)}; path=/`
             resetTimer(Number(listQuiz[numberOfQuestion].time))
 
@@ -389,10 +413,6 @@
             timerPaused= false
             plusAnswerTime= 0
             
-            if (donatChart){
-                donatChart.destroy()
-            }
-    
             socket.emit("next_question", {
                 room: room,
                 author_name: authorName
@@ -424,24 +444,6 @@
             }
             msgInput.value = "";
         }
-
-        //function endTest() {
-        //    let currentURL = window.location.href;
-        //    let roomCode = currentURL.split('room')[1]
-        //
-        //    socket.emit("end_test", {
-        //        room: room,         
-        //        username: username  
-        //    });
-        //
-        //    socket.emit("test_end", {
-        //        room: roomCode
-        //    });
-        //    
-        //    setTimeout(() => {
-        //        window.location.href = '/'; 
-        //    }, 200);
-        //}
 
         function testStop(){    
             socket.emit("stop_test", {
@@ -513,6 +515,7 @@
         function leaveTestBlock(kick_user, ip, type){
             document.cookie = `compound=; max-age=0; path=/;`;
             document.cookie = `time=; max-age=0; path=/;`;
+            alert("leaveTestBlock")
             window.location.href = `/`;
         }
 

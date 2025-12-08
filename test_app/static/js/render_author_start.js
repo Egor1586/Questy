@@ -109,14 +109,14 @@ function getCookie(name) {
 function plusTime(){
     socket.emit("plus_time", {
         room: room,
-        author_name: author_name
+        author_name: authorName
     });
 }
 
 function stopTime(){
     socket.emit("change_time", {
         room: room,
-        author_name: author_name
+        author_name: authorName
     });
 }
 
@@ -136,33 +136,43 @@ function startTimer() {
         let time= parseInt(timerText.textContent);
 
         const cookieTime= parseInt(getCookie("time"));
+        console.log("START TIMER")
+        console.log(cookieTime)
         timerText.textContent= time;
 
-        if (!isNaN(cookieTime) && cookieTime !== time){
-            time= cookieTime
-            timerText.textContent= time
+        if (isNaN(cookieTime)){
+            console.log("Stop timer")
+            renderWaiteQuestion("test");
         }
+
+        // if (!isNaN(cookieTime) && cookieTime !== time){
+        //     time= cookieTime
+        //     timerText.textContent= time
+        // }
 
         if (!timerPaused){
             time -= 1
             timerText.textContent= time
-            document.cookie = `time= ${time}; path=/;`;      
+            document.cookie = `time=${time}; path=/;`;      
         }
-
+        
         if (time <= 0){
-            clearInterval(timerInterval);
-            timerInterval= null
-            timerText.textContent = "Час закінчився"
-        }        
+                clearInterval(timerInterval);
+                timerText.textContent = "Час закінчився"
+        
+                setTimeout(() => {
+                    console.log("Stop timer")
+                    renderWaiteQuestion("test");
+            }, 2000)}
     }, 1000);
 }
 
-function resetTimer (newTime){
+function resetTimer(newTime){
     const timerText= document.getElementById("timer") 
 
     if (timerText){
         timerText.textContent= newTime
-        document.cookie = `time= ${newTime}; path=/;`;   
+        document.cookie = `time=${newTime}; path=/;`;   
         startTimer()
     }
 }
@@ -305,6 +315,7 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
                 </div>
             </div>
             `
+
         startTimer()
     });
 }

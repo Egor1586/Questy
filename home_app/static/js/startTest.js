@@ -16,5 +16,6 @@ $(() => {
         document.cookie = `timeStop=; max-age=0; path=/;`;
         document.cookie = `time=; max-age=0; path=/;`;
         document.cookie = `blockedUsers=; max-age=0; path=/;`;
+        document.cookie = `userList=; max-age=0; path=/;`;
     })
 })

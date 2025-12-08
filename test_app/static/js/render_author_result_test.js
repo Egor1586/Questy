@@ -1,12 +1,14 @@
-function authorLeaveTest(){
+function authorLeaveTest(type){
     let currentURL = window.location.href;
     let roomCode = currentURL.split('room')[1];
     roomCode= roomCode.split("?")[0]
-    
-    socket.emit("end_test", {
-        room: room,         
-        username: username  
-    });
+   
+    if (type === "waite"){
+        socket.emit("end_test", {
+            room: room,         
+            username: username  
+        });
+    }
      
     socket.emit("test_end", {
         room: roomCode
@@ -77,16 +79,71 @@ function appendResultRow(resultTable, username, answersArrey) {
     resultTable.appendChild(resultRow);
 }
 
-function renderAccuracyChart(canvasId, accuracy_aquestions){
+function accuracyAquestions(resultData, total_question){
+    let allAnswersArray= Object.values(resultData)
+    const userCount = Object.keys(allAnswersArray).length;
 
+    let accurancyArray= []
+    let accuracyAquestionsArray= []
+
+    for (let question_number= 0; question_number < total_question; question_number++){
+        let pas_accurasy= 0;
+        for (let array= 0; array < allAnswersArray.length; array++){
+            if (allAnswersArray[array][question_number] == 1){
+                pas_accurasy++
+            }
+        }
+        
+        const accuracy= (pas_accurasy / userCount) * 100;
+        accurancyArray.push(accuracy.toFixed(1));
+    } 
+
+    for (number=0; number < total_question; number++){
+        accuracyAquestionsArray.push({
+            question: `Q${number + 1}`,
+            accuracy: `${accurancyArray[number]}`
+        });
+    }
+
+    console.log(accuracyAquestionsArray)
+    return {accuracyAquestionsArray, accurancyArray}
+}
+
+function renderAccuracyChart(canvasId, resultData, total_question){
     const ctx= document.getElementById(canvasId).getContext('2d');
+
+    const {accuracyAquestionsArray, accurancyArray}= accuracyAquestions(resultData, total_question)
+    // const userCount = Object.keys(allAnswersArray).length;
+
+    // let allAnswersArray= Object.values(resultData)
+    // let accuracyAquestionsArray= []
+
+    // for (let question_number= 0; question_number < total_question; question_number++){
+    //     let pas_accurasy= 0;
+    //     for (let array= 0; array < allAnswersArray.length; array++){
+    //         if (allAnswersArray[array][question_number] == 1){
+    //             pas_accurasy++
+    //         }
+    //     }
+        
+    //     const accuracy= (pas_accurasy / userCount) * 100;
+    //     accurancyArray.push(accuracy.toFixed(1));
+    // } 
+
+    // for (number=0; number < total_question; number++){
+    //     accuracyAquestionsArray.push({
+    //         question: `Q${number + 1}`,
+    //         accuracy: `${accurancyArray[number]}`
+    //     });
+    // }
+
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: accuracy_aquestions.map(item => item.question),
+            labels: accuracyAquestionsArray.map(item => item.question),
             datasets: [{
                 label: 'Точність відповідей (%)',
-                data: accuracy_aquestions.map(item => parseFloat(item.accuracy)),
+                data: accuracyAquestionsArray.map(item => parseFloat(item.accuracy)),
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 fill: true,
@@ -122,9 +179,7 @@ function renderAccuracyChart(canvasId, accuracy_aquestions){
     });
 }
 
-
 function renderAuthorResultTest(username, author_name, total_question) {
-
     let container = document.getElementById("container-question");
     
     if (container === null){
@@ -141,8 +196,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
             author_name: author_name
         });
     }, 100); 
-
-    let accurancyArray= []
     
     socket.once('room_get_result_data', function(data) {  
         const resultData= data.room_get_result_data
@@ -163,6 +216,40 @@ function renderAuthorResultTest(username, author_name, total_question) {
         container.appendChild(header);
 
         //
+        const buttonBox = document.createElement('div');
+        buttonBox.className = 'button-box';
+  
+        const leftButtonBox = document.createElement('div');
+        leftButtonBox.className = 'left-button-box';
+        
+        const rigthButtonBox = document.createElement('div');
+        rigthButtonBox.className = 'right-button-box';
+
+        const leaveButton= document.createElement('button');
+        leaveButton.className= 'leave-btn';
+        leaveButton.textContent = 'Покинути тест';
+        leaveButton.addEventListener("click", () => {
+            authorLeaveTest("test")
+        });
+
+        const allInfoButton= document.createElement('button');
+        allInfoButton.className= 'all-info-btn';
+        allInfoButton.textContent = 'Загальна успішність'
+        allInfoButton.addEventListener("click", () => {
+            renderAccuracyChart('authorAccuracyChart', resultData, total_question);
+        });
+
+        const exelButton= document.createElement('button');
+        exelButton.className= 'exel-btn';
+        exelButton.textContent = 'Exel table';
+
+        leftButtonBox.appendChild(allInfoButton)
+        rigthButtonBox.appendChild(exelButton)
+        rigthButtonBox.appendChild(leaveButton)
+        buttonBox.appendChild(leftButtonBox)
+        buttonBox.appendChild(rigthButtonBox)
+        container.appendChild(buttonBox);
+
         const contentBox = document.createElement('div');
         contentBox.className = 'content-box';
 
@@ -199,32 +286,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
         const headerTitle3 = document.createElement('h3');
         headerTitle3.textContent = "Підсумок";  
 
-        //
-        let allAnswersArray= Object.values(resultData)
-        const userCount = Object.keys(allAnswersArray).length;
-
-        let answersArray= []
-        let accuracy_aquestions= []
-
-        for (let question_number= 0; question_number < total_question; question_number++){
-            let pas_accurasy= 0;
-            for (let array= 0; array < allAnswersArray.length; array++){
-                if (allAnswersArray[array][question_number] == 1){
-                    pas_accurasy++
-                }
-            }
-            
-            const accuracy= (pas_accurasy / userCount) * 100;
-            accurancyArray.push(accuracy.toFixed(1));
-        } 
-
-        for (number=0; number < total_question; number++){
-            accuracy_aquestions.push({
-                question: `Q${number + 1}`,
-                accuracy: `${accurancyArray[number]}`
-            });
-        }
-
         // посчитать средний результат 
         const resultsInfoBoxText = document.createElement('p')
         resultsInfoBoxText.id= "results-info-box-text"
@@ -257,7 +318,8 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         resultHeader.appendChild(headerUsers);
         
-        accuracy_aquestions.forEach(questionFor => {
+        const {accuracyAquestionsArray, accurancyArray}= accuracyAquestions(resultData, total_question)
+        accuracyAquestionsArray.forEach(questionFor => {
             const div = document.createElement('div');
             div.className= "cell";
             div.innerHTML = `${questionFor.question}`;
@@ -268,7 +330,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
         headerAccyracy.className = 'label';  
         headerAccyracy.textContent= "Точність"
         
-
         resultHeader.appendChild(headerAccyracy);
         resultTable.appendChild(resultHeader);
         
@@ -293,18 +354,13 @@ function renderAuthorResultTest(username, author_name, total_question) {
         legenBox.appendChild(legenBoxTitle);
         legenBox.appendChild(legend);
         baseInfo.appendChild(legenBox);
-     
-        const leaveButton= document.createElement('button');
-        leaveButton.className= 'leave-btn';
-        leaveButton.textContent = 'Покинути тест';
-        leaveButton.addEventListener("click", authorLeaveTest);
         
         infoBox.appendChild(baseInfo)
         infoBox.appendChild(resultTable);
-        infoBox.appendChild(leaveButton)
         contentBox.appendChild(infoBox)
         container.appendChild(contentBox)
 
-        renderAccuracyChart('authorAccuracyChart', accuracy_aquestions);
+        console.log("DL")
+        renderAccuracyChart('authorAccuracyChart', resultData, total_question);
     });
 }

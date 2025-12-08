@@ -32,7 +32,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     const roomContent = document.getElementById("room-content");
     let quizTime= getCookie("time");
 
-    if (isNaN(quizTime)){
+    if (isNaN(quizTime) || quizTime <= 0){
         renderWaiteQuestion("test")
     }
 
@@ -258,26 +258,5 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
         })
     }
 
-
-    const timerText= document.getElementById("timer")
-    
-    if (timerText){
-        const coundown= setInterval(() =>{
-            if (!timerPaused){
-                time= parseInt(timerText.textContent) -1;
-                timerText.textContent= time;
-                document.cookie = `time= ${time}; path=/;`;
-            
-            }   
-
-            if (time <= 0){
-                clearInterval(coundown);
-                timerText.textContent = "Час закінчився"
-        
-                setTimeout(() => {
-                    renderWaiteQuestion("test");
-            }, 2000)
-        }
-        }, 1000);
-    }
+    startTimer()
 }

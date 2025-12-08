@@ -1,5 +1,4 @@
 function createUserBlock(username, authorName, blockUsername, ip, type) {   
-    
     let userListDiv
     let checkingUserBlock
     if (type === "not"){
