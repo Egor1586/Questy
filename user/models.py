@@ -83,6 +83,7 @@ class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     user_answer = db.Column(db.String, nullable = False)
+    user_timers = db.Column(db.String)
     accuracy = db.Column(db.Integer, nullable = False)
     test_id= db.Column(db.Integer, db.ForeignKey('test.id'))
 

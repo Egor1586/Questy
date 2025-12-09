@@ -10,7 +10,6 @@ $(() => {
 
     $('#clear').on('click', () => {
         document.cookie = `state=; max-age=0; path=/;`;
-        document.cookie = `userAnswers=; max-age=0; path=/;`;
         document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
         document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
         document.cookie = `timeStop=; max-age=0; path=/;`;

@@ -42,25 +42,23 @@ def room_get_result(room, author_name, username):
         answers_list= []
         answers_str= ""
         correct_answers_list= []
+        timers_list= []
 
         for score in SCORE_LIST:
             try:
                 if score.user_id == user.id:
+                    timers_list= score.user_timers.split("|")
                     answers_str= score.user_answer
                     break
             except:
                 if score.user_name == user:
+                    timers_list= score.user_timers.split("|")
                     answers_str= score.user_answer
                     break
         
-        print(answers_str)
         answers_list= answers_str.strip('|').split('||')
-        print("Answer list")
-        print(answers_list)
 
         for index, quiz in enumerate(QUIZ_LIST):
-            print(quiz.correct_answer, answers_list[index])
-            print(quiz.question_type)
             if answers_list[index] == "not_answer":
                 correct_answers_list.append(2)
                 continue
@@ -70,8 +68,6 @@ def room_get_result(room, author_name, username):
                 multi_choice_answer= answers_list[index].split("$$$")
                 sorted_multi_choice_correct= sorted(multi_choice_correct)
                 sorted_multi_choice_answer= sorted(multi_choice_answer)
-                print(multi_choice_correct, multi_choice_answer)
-                print(sorted_multi_choice_correct, sorted_multi_choice_answer)
                 if sorted_multi_choice_correct == sorted_multi_choice_answer:
                     correct_answers_list.append(1)
                 else:
@@ -82,9 +78,15 @@ def room_get_result(room, author_name, username):
                 else:
                     correct_answers_list.append(0)
         try:
-            room_get_result_data[user.username]= correct_answers_list
+            room_get_result_data[user.username]= {
+                "correct_answers_list": correct_answers_list,
+                "timers_list": timers_list            
+            }
         except:
-            room_get_result_data[user]= correct_answers_list
+            room_get_result_data[user]= {
+                "correct_answers_list": correct_answers_list,
+                "timers_list": timers_list            
+            }
     
     BEST_SCORE= None
     best_accuracy= 0
@@ -247,15 +249,12 @@ def handle_message(data):
     accuracy = number_of_correct_answers / len(QUIZ_LIST) * 100
     
     accuracy = int(accuracy)
-    print(accuracy)
-    print(user_answers_list)
-
-    print(f'{data["username"]}  {data["user_answers"]}')
-    
     USER = User.query.filter_by(username= user_name).first()
+    print(data["user_timers"])
     
     SCORE = Score(
         user_answer= data["user_answers"],
+        user_timers= data["user_timers"],
         accuracy= accuracy,
         test_id= TEST.id,
         date_complete = datetime.date.today(),
@@ -264,9 +263,6 @@ def handle_message(data):
         user_name= user_name,
         test_code= room
     )
-
-    print("SCORE SCORE SCORE")
-    print(data["user_answers"], accuracy, TEST.id)
 
     db.session.add(SCORE)
     db.session.commit()

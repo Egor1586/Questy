@@ -60,7 +60,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
         const sortedAnswers= answer.split("$$$").sort().join(" та ")
         answer= sortedAnswers
     }
-    console.log(typeof correctAnswer, correctAnswer, typeof answer, answer)
 
     if (answer == correctAnswer){
         countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
@@ -122,6 +121,7 @@ function stopTime(){
 
 function startTimer() {
     const timerText= document.getElementById("timer")
+    let state= getCookie("state")
     
     if(!timerText){
         return
@@ -131,24 +131,15 @@ function startTimer() {
         clearInterval(timerInterval)
     }
 
-    
     timerInterval= setInterval(() =>{
+        const cookieTime= parseInt(getCookie("time"));
         let time= parseInt(timerText.textContent);
 
-        const cookieTime= parseInt(getCookie("time"));
-        console.log("START TIMER")
-        console.log(cookieTime)
         timerText.textContent= time;
 
-        if (isNaN(cookieTime)){
-            console.log("Stop timer")
+        if (isNaN(cookieTime) && username != authorName){
             renderWaiteQuestion("test");
         }
-
-        // if (!isNaN(cookieTime) && cookieTime !== time){
-        //     time= cookieTime
-        //     timerText.textContent= time
-        // }
 
         if (!timerPaused){
             time -= 1
@@ -156,13 +147,14 @@ function startTimer() {
             document.cookie = `time=${time}; path=/;`;      
         }
         
-        if (time <= 0){
+        if (time < 0){
                 clearInterval(timerInterval);
                 timerText.textContent = "Час закінчився"
         
                 setTimeout(() => {
-                    console.log("Stop timer")
-                    renderWaiteQuestion("test");
+                    if (username != authorName){
+                        renderWaiteQuestion("test");
+                    }
             }, 2000)}
     }, 1000);
 }

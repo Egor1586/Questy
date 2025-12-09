@@ -46,9 +46,10 @@
         
         let state = getCookie("state");
         let compound= getCookie("compound")
-        let plusAnswerTime= 0;
         let timerPaused= getCookie("timeStop");
+        let plusAnswerTime= 0;
         let timerInterval= null;
+        let plusTimeCount= 15
 
         if (timerPaused === NaN){
             document.cookie = `timeStop= false; path=/;`;
@@ -58,23 +59,6 @@
         }else if (timerPaused == 'false'){
             timerPaused= false
         } 
-
-        //window.addEventListener('beforeunload', function(){
-        //    state = getCookie("state");
-        //    if (state && state === "authorResultTest") {
-        //        document.cookie = `state= authorLeave; max-age=3; path=/;`;
-        //        document.cookie = `userAnswers=; max-age=0; path=/;`;
-        //        document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-        //        document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
-        //    }
-        //    else if (state && state=== "resultTest"){
-        //        document.cookie = `state= userLeave; max-age=3; path=/;`;
-        //        document.cookie = `userAnswers=; max-age=0; path=/;`;
-        //        document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-        //        document.cookie = `temporaryName=; max-age=0; path=/;`;
-        //    }
-        //    
-        //});
 
         if (state && state.includes("authorStart")) {
             state= getCookie("state")
@@ -137,8 +121,6 @@
                 fetch('https://api.ipify.org?format=text')
                     .then(r => r.text())
                     .then(ip => {
-                        console.log("Ваш IP:", ip);
-
                         socket.emit("new_user_admin", {
                             room: room,
                             username: username,
@@ -193,14 +175,12 @@
             state = getCookie("state");
             document.cookie = `timeStop=false; path=/;`;
             timerPaused= false
-            plusAnswerTime= 0
             
             checkAnswers();
+            plusAnswerTime= 0
             if (state != "authorResultTest") {
                 let numberOfQuestion= Number(state.slice(-1));
-                console.log(4)
-                console.log(Number(listQuiz[numberOfQuestion + 1].time))
-                //alert(Number(listQuiz[numberOfQuestion + 1].time))
+
                 document.cookie= `time=${Number(listQuiz[numberOfQuestion + 1].time)}; path=/`
                 if (numberOfQuestion != totalQuestion - 1) {
                     document.cookie= `state=question${numberOfQuestion + 1}; path=/`;
@@ -225,12 +205,14 @@
             renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
 
             userAnswers= getCookie("userAnswers");
+            userTimers= getCookie("userTimers");
 
             socket.emit("user_answers", {
                     room: room,
                     username: username,
                     author_name: authorName,
-                    user_answers: userAnswers
+                    user_answers: userAnswers,
+                    user_timers: userTimers
                 });
 
             document.cookie = `state= resultTest; path=/`;
@@ -253,7 +235,6 @@
                 blockedUsers= blockedUsers.split("$%^")
                 
                 blockedUsers.forEach(blockIp =>{
-                    console.log(data.ip, blockIp)
                     if (data.ip === blockIp){
                         addUser= false
                     }
@@ -278,15 +259,14 @@
         });
 
         socket.on('plus_time', function(data) {          
-            let plusTime= 15
             const timer= document.getElementById("timer")
             if (!timer) return;
             
             const timerCount= getCookie("time")
             plusAnswerTime += 15
             if (timerCount && timer.textContent != "Час закінчений"){
-                timer.textContent = parseInt(timerCount) + plusTime
-                document.cookie = `time=${parseInt(timerCount) + plusTime}; path=/;`;
+                timer.textContent = parseInt(timerCount) + plusTimeCount
+                document.cookie = `time=${parseInt(timerCount) + plusTimeCount}; path=/;`;
             }
         });
 
@@ -334,10 +314,9 @@
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
             }     
             
-            console.log(6)
-            //alert(listQuiz[0].time)
             document.cookie= `time=${listQuiz[0].time}; path=/`
             let compoundStart= getCookie("compound")
+            document.cookie = `compound=; max-age=0; path=/`;
 
             if (username === data["author_name"]) {          
                 document.cookie = "state= authorStart0; path=/";
@@ -346,7 +325,6 @@
                 renderAuthorStart(listQuiz[0], room, authorName, state, totalQuestion);
             }
             else if(compoundStart) {
-                console.log("Тест начат");
                 document.cookie = "state= question0; path=/";
                 renderQuestion(Number("{{ test.id }}"), listQuiz[state], listAnswers[state], room, authorName);
             } else{
@@ -356,7 +334,6 @@
 
         function nextQuestion(){
             const nextButton = document.getElementById("next-q");
-            plusAnswerTime= 0
 
             state = getCookie("state");
             let numberOfQuestion= Number(state.slice(-1)) + 1;
@@ -384,7 +361,6 @@
             }
     
             if (!listQuiz[numberOfQuestion]){
-                console.log("QUESTIONTSONST")
                 return
             }
 
@@ -401,9 +377,7 @@
             else{
                 correct_answer.textContent= `${listQuiz[numberOfQuestion].correct_answer}`
             }
-            
-            console.log(7)
-            //alert(Number(listQuiz[numberOfQuestion].time))
+
             document.cookie= `time=${Number(listQuiz[numberOfQuestion].time)}; path=/`
             resetTimer(Number(listQuiz[numberOfQuestion].time))
 
@@ -458,6 +432,9 @@
         function checkAnswers(){
             state = getCookie("state");
             let answers = getCookie("userAnswers")
+            let userTimers= getCookie("userTimers")
+            let curTime= getCookie("time");
+            let userTimer= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time- curTime
             
             if (answers) {
                 let answersList = answers.split("|")
@@ -478,9 +455,12 @@
     
                     answers += "|not_answer|"
                     document.cookie = `userAnswers= ${answers}; path=/`;
+                    newUserTimers= userTimers+ `|${userTimer}`
+                    document.cookie= `userTimers=${newUserTimers}; path = /`  
                 }
             }
             else {
+                document.cookie= `userTimers=${userTimer}; path = /`
                 document.cookie = `userAnswers= |not_answer|; path=/`;
             }
         }
@@ -515,7 +495,7 @@
         function leaveTestBlock(kick_user, ip, type){
             document.cookie = `compound=; max-age=0; path=/;`;
             document.cookie = `time=; max-age=0; path=/;`;
-            alert("leaveTestBlock")
+
             window.location.href = `/`;
         }
 
@@ -525,9 +505,6 @@
             users= UserList.split("()").filter(username => username.trim() !== "")
             users = users.filter(username => username !== kick_user)
 
-            // users.forEach(user, index => {
-
-            // })
             const newUserList = users.join("</>")
 
             document.cookie= `userList=${newUserList}; path=/`
@@ -537,9 +514,8 @@
             });
 
             if (type === "block"){
-                console.log("Block USER")
-
                 let blockUserArray= getCookie("blockedUsers")
+                
                 if (!blockUserArray){
                     document.cookie = `blockedUsers=${ip}; path=/;`;
                 } else{

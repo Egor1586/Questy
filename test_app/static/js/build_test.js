@@ -57,7 +57,6 @@ function buildTest(){
                 })
                 
                 arrayAnswersInput.forEach(answerInput => {
-                    console.log(questionBlock.querySelector(".answers").id)
                     if(questionBlock.querySelector(".answers").id == "choice"){
                         
                         let answerText = answerInput.querySelector(".answer-text")
