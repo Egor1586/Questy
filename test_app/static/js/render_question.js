@@ -5,6 +5,16 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+function tokenTimePrecent(userTimer, allTime){
+    let timePrecent= (userTimer/ allTime)
+    let max_token= 1200
+    let token= 0
+    let constant= 2
+
+    token= Math.round(max_token * Math.exp(-timePrecent * constant))
+    return token
+}
+
 function renderWaiteQuestion(type) {
     const roomContent = document.getElementById("room-content");
 
@@ -31,8 +41,10 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     let state= getCookie("state")
     let quizTime= getCookie("time");
     let userTimers= getCookie("userTimers")
+    let userTokens= getCookie("userTokens")
     let userTimer= 0
     let curTime= 0
+    let token= 0
     const roomContent= document.getElementById("room-content");
 
     if (isNaN(quizTime) || quizTime < 0){
@@ -108,18 +120,25 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 listener= function (event) {
                     let cookie= getCookie("userAnswers")
                     curTime= getCookie("time");
-                    userTimer= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time- curTime
+                    allTime= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time
+                    userTimer= allTime- curTime
+                    token= tokenTimePrecent(userTimer, allTime)
+                    console.log(token)
+
                     document.cookie= `state= waite${state.slice(-1)}; path=/`;
                     
                     if (typeof cookie === "undefined"){
                         document.cookie= `userAnswers=|${button.id}|; path = /`     
-                        document.cookie= `userTimers=${userTimer}; path = /`     
+                        document.cookie= `userTimers=${userTimer}; path = /` 
+                        document.cookie= `userTokens=${token}; path = /`    
                     }
                     else{
                         cookie= cookie+ `|${button.id}|`
                         newUserTimers= userTimers+ `|${userTimer}`
+                        newUserTokens= userTokens+ `|${token}`
                         document.cookie= `userAnswers=${cookie}; path= /`
-                        document.cookie= `userTimers=${newUserTimers}; path = /`  
+                        document.cookie= `userTimers=${newUserTimers}; path= /` 
+                        document.cookie= `userTokens=${newUserTokens}; path= /`     
                     }   
 
                     renderWaiteQuestion("test");
@@ -156,25 +175,34 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             let userAnswer= getCookie("userAnswers")
             let answerValue= document.querySelector(".input-with-answer").value
             curTime= getCookie("time");
-            userTimer= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time- curTime
-            newUserTimers= userTimers+ `|${userTimer}`
+            allTime= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time
+            userTimer= allTime- curTime
+            token= tokenTimePrecent(userTimer, allTime)
+            console.log(token)
+
             document.cookie = `state= waite${state.slice(-1)}; path=/`;
+            newUserTokens= userTokens+ `|${token}`
+            newUserTimers= userTimers+ `|${userTimer}`
 
             if (typeof answerValue === "undefined"){
                 answerValue= "not_answer"
                 if (typeof userAnswer === "undefined"){
-                    document.cookie= `userTimers=${userTimer}; path = /`     
+                    document.cookie= `userTimers=${userTimer}; path= /`    
+                    document.cookie= `userTokens=${token}; path = /`
                 }
                 else{
-                    document.cookie= `userTimers=${newUserTimers}; path = /`     
+                    document.cookie= `userTimers=${newUserTimers}; path= /`     
+                    document.cookie= `userTokens=${newUserTokens}; path= /` 
                 } 
             }
             
             if (typeof userAnswer === "undefined"){
-                document.cookie = `userAnswers=|${answerValue}|; path = /`     
+                document.cookie = `userAnswers=|${answerValue}|; path = /`  
+                document.cookie= `userTokens=${token}; path = /`  
             }
             else{
-                cookie= userAnswer + `|${answerValue}|`
+                cookie= userAnswer + `|${answerValue}|`            
+                document.cookie= `userTokens=${newUserTokens}; path= /` 
                 document.cookie = `userAnswers=${cookie}; path= /`
                 document.cookie= `userTimers=${newUserTimers}; path = /`
             }       
@@ -222,7 +250,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             
             button.addEventListener(
                 type= "click" ,
-                listener= function ( event ) {
+                listener= function (event) {
                     if (button.className == "multiple-answer"){
                         button.className= "active-multiple-answer"
                     }
@@ -234,12 +262,17 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
         }
 
         multipleChoiceButton.addEventListener("click", function(event) {
-            let userAnswer= getCookie("userAnswers")
+            curTime= getCookie("time");
             let state= getCookie("state")
+            let userAnswer= getCookie("userAnswers")
             let answerValue= ""
             let arreyUserMultipleChoice= document.querySelectorAll(".active-multiple-answer")
-            curTime= getCookie("time");
-            userTimer= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time- curTime
+            allTime= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time
+            userTimer= allTime- curTime
+            token= tokenTimePrecent(userTimer, allTime)
+            console.log(token)
+
+            newUserTokens= userTokens+ `|${token}`
             newUserTimers= userTimers+ `|${userTimer}`
 
             for (const button of arreyUserMultipleChoice){
@@ -256,21 +289,25 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             if (typeof answerValue === "undefined"){
                 answerValue= "not_answer"
                 if (typeof userAnswer === "undefined"){
-                    document.cookie= `userTimers=${userTimer}; path = /`     
+                    document.cookie= `userTimers=${userTimer}; path= /`   
+                    document.cookie= `userTokens=${token}; path= /`
                 }
                 else{
-                    document.cookie= `userTimers=${newUserTimers}; path = /`     
+                    document.cookie= `userTimers=${newUserTimers}; path= /`    
+                    document.cookie= `userTokens=${newUserTokens}; path= /`  
                 } 
             }
             
             if (typeof userAnswer === "undefined"){
-                document.cookie = `userAnswers=${answerValue}; path = /`   
-                document.cookie= `userTimers=${userTimer}; path = /`       
+                document.cookie = `userAnswers=${answerValue}; path= /`   
+                document.cookie= `userTimers=${userTimer}; path= /`     
+                document.cookie= `userTokens=${token}; path= /`  
             }
             else{
                 cookie= userAnswer + `|${answerValue}|`
                 document.cookie = `userAnswers=${cookie}; path= /`
-                document.cookie= `userTimers=${newUserTimers}; path = /`     
+                document.cookie= `userTimers=${newUserTimers}; path= /`     
+                document.cookie= `userTokens=${newUserTokens}; path= /` 
             }       
 
             renderWaiteQuestion("test");

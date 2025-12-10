@@ -129,7 +129,7 @@
                             ip: ip
                         });
                     })
-                        .catch(e => console.error("Ошибка IP:", e));
+                    .catch(e => console.error("Ошибка IP:", e));
             }
         });
 
@@ -202,17 +202,19 @@
         socket.on("result_test", function(data) {      
             checkAnswers();
 
-            renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
+            renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId)
 
-            userAnswers= getCookie("userAnswers");
-            userTimers= getCookie("userTimers");
+            userAnswers= getCookie("userAnswers")
+            userTimers= getCookie("userTimers")
+            userTokens= getCookie("userTokens")
 
             socket.emit("user_answers", {
                     room: room,
                     username: username,
                     author_name: authorName,
                     user_answers: userAnswers,
-                    user_timers: userTimers
+                    user_timers: userTimers,
+                    user_tokens: userTokens
                 });
 
             document.cookie = `state= resultTest; path=/`;
@@ -433,9 +435,12 @@
             state = getCookie("state");
             let answers = getCookie("userAnswers")
             let userTimers= getCookie("userTimers")
+            let userTokens= getCookie("userTokens")
             let curTime= getCookie("time");
-            let userTimer= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time- curTime
-            
+            let allTime= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time
+            let userTimer= allTime- curTime
+            let token= 0
+
             if (answers) {
                 let answersList = answers.split("|")
                 let userAnswers = []
@@ -452,16 +457,18 @@
                 }
                 
                 if (userAnswersList.length !== Number(state.slice(-1)) + 1) {
-    
                     answers += "|not_answer|"
-                    document.cookie = `userAnswers= ${answers}; path=/`;
+                    document.cookie = `userAnswers=${answers}; path=/`;
                     newUserTimers= userTimers+ `|${userTimer}`
                     document.cookie= `userTimers=${newUserTimers}; path = /`  
+                    newUserTokens= userTokens+ `|${token}`
+                    document.cookie= `userTokens=${newUserTokens}; path = /` 
                 }
             }
             else {
+                document.cookie= `userTokens=${token}; path = /`
                 document.cookie= `userTimers=${userTimer}; path = /`
-                document.cookie = `userAnswers= |not_answer|; path=/`;
+                document.cookie = `userAnswers=|not_answer|; path=/`;
             }
         }
 
@@ -502,8 +509,11 @@
         function kickUser(kick_user, ip, type) {   
             let UserList= getCookie("userList") || ""
             let users= UserList.split("</>").filter(username => username.trim() !== "")
-            users= UserList.split("()").filter(username => username.trim() !== "")
-            users = users.filter(username => username !== kick_user)
+
+            users= users.filter(userStr => {
+                const [name, userIp]= userStr.split("()")
+                return name !== kick_user
+            })
 
             const newUserList = users.join("</>")
 
@@ -531,9 +541,12 @@
         }
 
         function authorStartTest() {
-            socket.emit("author_start_test", {
-                room: room,
-            });
+            let userList= getCookie("userList")
+            if (userList){
+                socket.emit("author_start_test", {
+                    room: room,
+                });
+            }
         }
 
         </script>

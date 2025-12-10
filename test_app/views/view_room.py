@@ -43,22 +43,28 @@ def room_get_result(room, author_name, username):
         answers_str= ""
         correct_answers_list= []
         timers_list= []
+        token_list= []
 
         for score in SCORE_LIST:
             try:
                 if score.user_id == user.id:
                     timers_list= score.user_timers.split("|")
+                    token_list= score.user_tokens.split("|")
                     answers_str= score.user_answer
                     break
             except:
                 if score.user_name == user:
                     timers_list= score.user_timers.split("|")
+                    token_list= score.user_tokens.split("|")
                     answers_str= score.user_answer
                     break
         
         answers_list= answers_str.strip('|').split('||')
 
+        print(answers_list)
         for index, quiz in enumerate(QUIZ_LIST):
+            print(index, quiz)
+            print(answers_list[index])
             if answers_list[index] == "not_answer":
                 correct_answers_list.append(2)
                 continue
@@ -80,12 +86,14 @@ def room_get_result(room, author_name, username):
         try:
             room_get_result_data[user.username]= {
                 "correct_answers_list": correct_answers_list,
-                "timers_list": timers_list            
+                "timers_list": timers_list,
+                "token_list": token_list       
             }
         except:
             room_get_result_data[user]= {
                 "correct_answers_list": correct_answers_list,
-                "timers_list": timers_list            
+                "timers_list": timers_list,
+                "token_list": token_list         
             }
     
     BEST_SCORE= None
@@ -180,7 +188,7 @@ def handle_disconnect():
 def handle_clear_test_code(data):
     room = data['room']
     ROOM= Room.query.filter_by(test_code= room).first()
-    # ROOM.active = 0
+
     if ROOM:
         db.session.delete(ROOM)
 
@@ -231,6 +239,8 @@ def handle_send_usernames(data):
 def handle_message(data):
     room= data["room"]
     user_name= data["username"]
+    user_tokens= data["user_tokens"]
+    tokens= 0
     ROOM = Room.query.filter_by(test_code= room).first()
     TEST = Test.query.filter_by(id= ROOM.test_id).first()
     QUIZ_LIST = Quiz.query.filter_by(test_id= ROOM.test_id).all()
@@ -255,6 +265,7 @@ def handle_message(data):
     SCORE = Score(
         user_answer= data["user_answers"],
         user_timers= data["user_timers"],
+        user_tokens= user_tokens,
         accuracy= accuracy,
         test_id= TEST.id,
         date_complete = datetime.date.today(),
@@ -263,6 +274,15 @@ def handle_message(data):
         user_name= user_name,
         test_code= room
     )
+
+    for token in user_tokens.split("|"):
+        if token:
+            tokens += int(token)
+
+    if USER.tokens:
+        USER.tokens = int(USER.tokens) + tokens
+    else:
+        USER.tokens= tokens
 
     db.session.add(SCORE)
     db.session.commit()

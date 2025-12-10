@@ -100,6 +100,7 @@ function chartManager(resultData, accuracyAquestionsArray, accurancyArray, total
             <option value="1">${userName} успішність</option>
             <option value="3">${userName} відсоток правильності проходження</option>
             <option value="4">${userName} витрачений час на питання</option>
+            <option value="5">${userName} зароблено монет за питання</option>
         `
 
         selectUserName= userName
@@ -117,7 +118,10 @@ function chartManager(resultData, accuracyAquestionsArray, accurancyArray, total
             createChart3('authorAccuracyChart', resultData, totalQuestion, selectUserName)
             break; 
         case 4:
-            createChart4('authorAccuracyChart', resultData, totalQuestion, selectUserName)
+            createChart4('authorAccuracyChart', resultData, totalQuestion, selectUserName, "time")
+            break; 
+        case 5:
+            createChart4('authorAccuracyChart', resultData, totalQuestion, selectUserName, "token")
             break; 
     }
 
@@ -391,7 +395,7 @@ function createChart3(canvasId, resultData, totalQuestion, userName= null){
     })
 }
 
-function createChart4(canvasId, resultData, totalQuestion, userName= null){
+function createChart4(canvasId, resultData, totalQuestion, userName= null, type){
     const ctx= document.getElementById(canvasId).getContext('2d');
     if (charts[canvasId]) {
         charts[canvasId].destroy();
@@ -409,10 +413,15 @@ function createChart4(canvasId, resultData, totalQuestion, userName= null){
         return
     }
 
+    let type_list= []
     users.forEach(user => {
-        const timers= resultData[user].timers_list
+        if (type === "token"){
+            type_list= resultData[user].token_list
+        } else if (type === "time"){
+            type_list= resultData[user].timers_list
+        }
         for (let number= 0; number < totalQuestion; number++){
-            const time= parseFloat(timers[number])
+            const time= parseFloat(type_list[number])
             totalTimers[number] += time
         }
     })
@@ -531,6 +540,7 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
                 <option value="2">Кількість правильних/неправильних відповідей</option>
                 <option value="3">Відсоткове співвідношення правильних відповідей</option>
                 <option value="4">Витрачено часу на запитання</option>
+                <option value="5">Зароблено монет за питання</option>
             `
             selectBlock= true
             createChart1('authorAccuracyChart', resultData, accuracyAquestionsArray, accurancyArray, totalQuestion);
@@ -574,6 +584,7 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
                 <option value="2">Кількість правильних/неправильних відповідей</option>
                 <option value="3">Відсоткове співвідношення правильних відповідей</option>
                 <option value="4">Витрачено часу на запитання</option>
+                <option value="5">Зароблено монет за питання</option>
             </select>
         `
 
