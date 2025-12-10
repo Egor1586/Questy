@@ -3,7 +3,7 @@ const arreyMultipleChoiceButton= document.querySelectorAll(".multiple-answer")
 
 const inputButton = document.querySelector(".input-answer")
 const multipleChoiceButton = document.querySelector(".multiple-choice-answer")
-let addToken= 0
+let token= 500
 
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
@@ -16,6 +16,7 @@ if (inputButton) {
     inputButton.addEventListener("click", function(event) {   
         let user_answer= getCookie("userAnswers")
         let answerValue= document.querySelector(".input-with-answer").value
+
         if (!answerValue){
             answerValue= "not_answer"
         }
@@ -48,11 +49,10 @@ if (multipleChoiceButton){
         }
         
         if (!currentAnswers){
-            document.cookie = `userAnswers=${answerValue}; path = /`     
+            document.cookie = `userAnswers=${answerValue}; path = /`    
         }
         else{
-            user_answer = getCookie("userAnswers");
-            document.cookie = `userAnswers=${user_answer}|${answerValue}; path= /`
+            document.cookie = `userAnswers=${currentAnswers}|${answerValue}; path= /`
         }      
     })
 }

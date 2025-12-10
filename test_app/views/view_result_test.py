@@ -5,7 +5,7 @@ from ..models import Test, Quiz
 from Project.database import db
 from flask_login import current_user
 from Project.clear_cookie import clear_cookies
-from user.models import Score
+from user.models import Score, User
 
 def render_test_result():
     list_answers= []
@@ -24,7 +24,7 @@ def render_test_result():
         else :
             list_answers.append(quiz.answer_options.split("%$№"))
             
-    user_answers_cookies = flask.request.cookies.get(key= 'user_answers')
+    user_answers_cookies = flask.request.cookies.get(key= 'userAnswers')
     task_test_id = flask.request.cookies.get(key= 'taskTestId') or None
     class_id = flask.request.cookies.get(key= 'classId') or None
 
@@ -32,6 +32,9 @@ def render_test_result():
         user_answers_cookies = unquote(user_answers_cookies)
         user_answers_cookies= user_answers_cookies.encode('latin1').decode('utf-8')
         user_answers_list= user_answers_cookies.split("|")
+
+        if len(user_answers_list) < len(quizzes_list):
+            return flask.redirect("/")
 
         print(user_answers_list)
 
@@ -49,6 +52,10 @@ def render_test_result():
                 if sorted(quiz.correct_answer.split("%$№")) == sorted(user_answers_list[number]):
                     count_correct_answers += 1
 
+        USER= User.query.filter_by(id= current_user.id).first()
+        if (USER):
+            USER.tokens= int(USER.tokens) + (count_correct_answers * 500)
+
         if current_user.is_authenticated:
             score = Score(
                 user_answer= str_user_answers,
@@ -63,11 +70,13 @@ def render_test_result():
             )
 
             db.session.add(score)
-            db.session.commit()
+
+        db.session.commit()
 
         result_test_page = flask.render_template(
             'result_test.html',
             test = test,
+            tokens= count_correct_answers * 500,
             accuracy=count_correct_answers / len(quizzes_list) * 100 // 1,
             count_correct_answers=count_correct_answers,
             list_quiz= quizzes_list,

@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable= False)
     email = db.Column(db.String(50), nullable= False)
     password = db.Column(db.String(20), nullable= False)
-    tokens= db.Column(db.Integer)
+    tokens= db.Column(db.Integer, default= 0)
     is_teacher = db.Column(db.Boolean)
     is_admin= db.Column(db.Boolean, default= 0)
 
