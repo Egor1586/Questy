@@ -78,7 +78,6 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
     }
 
     if (quiz.question_type == "choice" || quiz.question_type == "image"){
-
         answers.forEach(answer => {
             const link = document.createElement("button");
             link.className= "passing-answer";

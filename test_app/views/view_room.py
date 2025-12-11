@@ -26,76 +26,104 @@ def room_get_result(room, author_name, username):
      
     users_list= ROOM.all_members.strip('|').split('||')
     USER_LIST= []
+    UNREG_USER_LIST= []
     SCORE_LIST= []
 
     for user in users_list:
         if user:
             USER= User.query.filter_by(username= user).first()
             if not USER and user != author_name:
-                USER_LIST.append(user)
+                UNREG_USER_LIST.append(user)
             elif USER.username != author_name:
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
-    
-    for user in USER_LIST:
-        answers_list= []
-        answers_str= ""
-        correct_answers_list= []
-        timers_list= []
-        token_list= []
+    if (USER_LIST):
+        for user in USER_LIST:
+            answers_list= []
+            answers_str= ""
+            correct_answers_list= []
+            timers_list= []
+            token_list= []
 
-        for score in SCORE_LIST:
-            try:
+            for score in SCORE_LIST:
                 if score.user_id == user.id:
                     timers_list= score.user_timers.split("|")
                     token_list= score.user_tokens.split("|")
                     answers_str= score.user_answer
-                    break
-            except:
+            
+            if (answers_str):
+                answers_list= answers_str.strip('|').split('||')
+
+                for index, quiz in enumerate(QUIZ_LIST):
+                    if answers_list[index] == "not_answer":
+                        correct_answers_list.append(2)
+                        continue
+                    
+                    if quiz.question_type  == "multiple_choice":
+                        multi_choice_correct= quiz.correct_answer.split("%$№")
+                        multi_choice_answer= answers_list[index].split("$$$")
+                        sorted_multi_choice_correct= sorted(multi_choice_correct)
+                        sorted_multi_choice_answer= sorted(multi_choice_answer)
+                        if sorted_multi_choice_correct == sorted_multi_choice_answer:
+                            correct_answers_list.append(1)
+                        else:
+                            correct_answers_list.append(0)
+                    else:
+                        if quiz.correct_answer == answers_list[index]:
+                            correct_answers_list.append(1)
+                        else:
+                            correct_answers_list.append(0)
+
+                    room_get_result_data[user.username]= {
+                        "correct_answers_list": correct_answers_list,
+                        "timers_list": timers_list,
+                        "token_list": token_list       
+                    }
+
+    if(UNREG_USER_LIST):
+        for user in UNREG_USER_LIST:
+            answers_list= []
+            answers_str= ""
+            correct_answers_list= []
+            timers_list= []
+            token_list= []
+
+            for score in SCORE_LIST:        
                 if score.user_name == user:
                     timers_list= score.user_timers.split("|")
                     token_list= score.user_tokens.split("|")
                     answers_str= score.user_answer
-                    break
-        
-        answers_list= answers_str.strip('|').split('||')
-
-        print(answers_list)
-        for index, quiz in enumerate(QUIZ_LIST):
-            print(index, quiz)
-            print(answers_list[index])
-            if answers_list[index] == "not_answer":
-                correct_answers_list.append(2)
-                continue
             
-            if quiz.question_type  == "multiple_choice":
-                multi_choice_correct= quiz.correct_answer.split("%$№")
-                multi_choice_answer= answers_list[index].split("$$$")
-                sorted_multi_choice_correct= sorted(multi_choice_correct)
-                sorted_multi_choice_answer= sorted(multi_choice_answer)
-                if sorted_multi_choice_correct == sorted_multi_choice_answer:
-                    correct_answers_list.append(1)
-                else:
-                    correct_answers_list.append(0)
-            else:
-                if quiz.correct_answer == answers_list[index]:
-                    correct_answers_list.append(1)
-                else:
-                    correct_answers_list.append(0)
-        try:
-            room_get_result_data[user.username]= {
-                "correct_answers_list": correct_answers_list,
-                "timers_list": timers_list,
-                "token_list": token_list       
-            }
-        except:
-            room_get_result_data[user]= {
-                "correct_answers_list": correct_answers_list,
-                "timers_list": timers_list,
-                "token_list": token_list         
-            }
-    
+            if (answers_str):
+                answers_list= answers_str.strip('|').split('||')
+
+                for index, quiz in enumerate(QUIZ_LIST):
+                    if answers_list[index] == "not_answer":
+                        correct_answers_list.append(2)
+                        continue
+                    
+                    if quiz.question_type  == "multiple_choice":
+                        multi_choice_correct= quiz.correct_answer.split("%$№")
+                        multi_choice_answer= answers_list[index].split("$$$")
+                        sorted_multi_choice_correct= sorted(multi_choice_correct)
+                        sorted_multi_choice_answer= sorted(multi_choice_answer)
+                        if sorted_multi_choice_correct == sorted_multi_choice_answer:
+                            correct_answers_list.append(1)
+                        else:
+                            correct_answers_list.append(0)
+                    else:
+                        if quiz.correct_answer == answers_list[index]:
+                            correct_answers_list.append(1)
+                        else:
+                            correct_answers_list.append(0)
+
+                    room_get_result_data[user]= {
+                        "correct_answers_list": correct_answers_list,
+                        "timers_list": timers_list,
+                        "token_list": token_list         
+                    }
+
     BEST_SCORE= None
     best_accuracy= 0
     averega_accuracy= 0
@@ -111,6 +139,11 @@ def room_get_result(room, author_name, username):
     else:
         averega_score= 0
 
+    best_score_data= {
+            "user_name": "None",
+            "accuracy": 0
+        }
+
     if BEST_SCORE:
         best_score_data= {
             "user_name": BEST_SCORE.user_name,
@@ -121,10 +154,6 @@ def room_get_result(room, author_name, username):
             "user_name": SCORE_LIST[0].user_name,
             "accuracy": SCORE_LIST[0].accuracy,
         }
-
-    print(room_get_result_data)
-    print(best_score_data)
-    print(averega_score)
 
     return room_get_result_data, best_score_data, averega_score
 
@@ -140,11 +169,6 @@ def handle_join(data):
     ROOM= Room.query.filter_by(test_code = room).first()
 
     if not ROOM:
-        print(f'Це тест id: {test.id}')
-        print(f'Кімната: {room}')
-        print(f'Це user_list: {username}')
-        print(f'Це author_name: {test.author_name}')
-
         NEW_ROOM = Room(
             test_id= test.id,
             test_code= room,
@@ -160,7 +184,6 @@ def handle_join(data):
         if new_user not in ROOM.user_list:
             ROOM.user_list += new_user
             if username != test.author_name and username not in ROOM.all_members:
-                print(f"new user{username}")
                 ROOM.all_members += new_user
 
     db.session.commit()
@@ -171,9 +194,8 @@ def handle_disconnect():
     users.pop(flask.request.sid, None)
 
     if username:
-        print(f"disconected {username}")
-
         ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
+
         if ROOM.user_list:
             ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
             db.session.commit()
@@ -222,17 +244,14 @@ def handle_send_usernames(data):
     author = data['authorname']
     author_sid = get_sid(author)
 
-    print(room)
     ROOM = Room.query.filter_by(test_code = room).first()
 
     users_in_room = ROOM.user_list.split('|')
-    print(f'Это автор: {author}')
     clean_users_in_room = []
     for user in users_in_room:
         if user != author and user:
             clean_users_in_room.append(user)
 
-    print(clean_users_in_room)
     emit("get_usernames", clean_users_in_room, room= author_sid)
 
 @Project.settings.socketio.on('user_answers')
@@ -241,6 +260,7 @@ def handle_message(data):
     user_name= data["username"]
     user_tokens= data["user_tokens"]
     tokens= 0
+    new_token_list= None
     ROOM = Room.query.filter_by(test_code= room).first()
     TEST = Test.query.filter_by(id= ROOM.test_id).first()
     QUIZ_LIST = Quiz.query.filter_by(test_id= ROOM.test_id).all()
@@ -251,21 +271,32 @@ def handle_message(data):
     for answer in user_answers:
         if answer != "":
             user_answers_list.append(answer)
+
+    for token in user_tokens.split("|"):
+        if token:
+            tokens += int(token)
     
     number_of_correct_answers = 0
-    for i in range(len(QUIZ_LIST)):
-        if user_answers_list[i] == QUIZ_LIST[i].correct_answer:
+    user_tokens= user_tokens.split("|")
+    for index, quiz in enumerate(range(len(QUIZ_LIST))):
+        if user_answers_list[quiz] == QUIZ_LIST[quiz].correct_answer:
             number_of_correct_answers += 1
+            user_tokens[index]= 0
+
+    for token in user_tokens:
+        if new_token_list == None:
+            new_token_list = f"{token}"
+        else:
+            new_token_list += f"|{token}"
+
     accuracy = number_of_correct_answers / len(QUIZ_LIST) * 100
-    
     accuracy = int(accuracy)
     USER = User.query.filter_by(username= user_name).first()
-    print(data["user_timers"])
-    
+
     SCORE = Score(
         user_answer= data["user_answers"],
         user_timers= data["user_timers"],
-        user_tokens= user_tokens,
+        user_tokens= new_token_list,
         accuracy= accuracy,
         test_id= TEST.id,
         date_complete = datetime.date.today(),
@@ -275,14 +306,11 @@ def handle_message(data):
         test_code= room
     )
 
-    for token in user_tokens.split("|"):
-        if token:
-            tokens += int(token)
-
-    if USER.tokens:
-        USER.tokens = int(USER.tokens) + tokens
-    else:
-        USER.tokens= tokens
+    if (USER):
+        if USER.tokens:
+            USER.tokens = int(USER.tokens) + tokens
+        else:
+            USER.tokens= tokens
 
     db.session.add(SCORE)
     db.session.commit()
@@ -312,8 +340,6 @@ def handle_message(data):
         if user != "":
             count_users = count_users + 1
 
-    print(f"Кількістю людей в тесті: {count_users}")
-    
     count_users = count_users - 1
     
     emit("recieve_count_users", {
@@ -331,7 +357,6 @@ def handle_start_test(data):
     user_list= ROOM.user_list.replace(f"|{ROOM.author_name}|", "")
 
     if (user_list):
-        print(ROOM)
         ROOM.active_test= True
         db.session.commit()
         
@@ -361,7 +386,6 @@ def handle_message(data):
     compound= data.get("compound", 0)
 
     author_sid = get_sid(author_name)
-    print(data["username"], data["ip"], "jjjjj")
     emit("new_user_admin", {"username": data["username"], "ip": data["ip"], "compound": compound}, to= author_sid)
 
 @Project.settings.socketio.on('next_question')
@@ -415,8 +439,6 @@ def render_room(test_code):
             list_quiz.append(quiz.dict()) 
 
     test = Test.query.filter_by(test_code= test_code).first()
-    
-    print(test.test_code)
 
     return {
         "test": test,

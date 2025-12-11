@@ -100,6 +100,9 @@ class Score(db.Model):
 
     test_code= db.Column(db.Integer, nullable= True)
 
+    def __repr__(self):
+        return f"{self.user_answer}\n{self.user_timers}\n{self.user_tokens}"
+
     def dict(self):
         return {
             "id": self.id,

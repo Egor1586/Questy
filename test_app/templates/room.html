@@ -232,12 +232,35 @@
 
         socket.on("new_user_admin", function(data) {  
             let addUser= true
+            let userList= getCookie("userList")
             let blockedUsers= getCookie("blockedUsers")
+            let waiteUserIp= document.querySelectorAll(".user-ip")
             if (blockedUsers){
                 blockedUsers= blockedUsers.split("$%^")
                 
                 blockedUsers.forEach(blockIp =>{
                     if (data.ip === blockIp){
+                        addUser= false
+                    }
+                })
+            }
+
+            if (userList){
+                userList= userList.split("</>")
+                userList= userList.map(user => user.split("()"))
+
+                userList.forEach(user =>{
+                    console.log(user, data.ip)
+                    if (user === data.ip){
+                        addUser= false
+                    }
+                })
+            }
+
+            if (waiteUserIp){
+                waiteUserIp.forEach(userIp =>{
+                    console.log(userIp, data.ip)
+                    if (userIp.textContent === data.ip){
                         addUser= false
                     }
                 })
@@ -496,10 +519,12 @@
         }
 
         function leaveTest(){
+            document.cookie = `temporaryName=; max-age=0; path=/;`;
             window.location.href = `/`;
         }
 
         function leaveTestBlock(kick_user, ip, type){
+            document.cookie = `temporaryName=; max-age=0; path=/;`;
             document.cookie = `compound=; max-age=0; path=/;`;
             document.cookie = `time=; max-age=0; path=/;`;
 
