@@ -82,7 +82,7 @@
                                 {% if task.online %}       
                                     {% if test.test_code != 0 %}
                                         <form action="/reset_test{{ test.id }}" >
-                                            <button >Скинути тест</button>
+                                            <button>Скинути тест</button>
                                         </form>
                                         {% if test.test_code != 0 and not can_start %}
                                             <a href="/room{{ test.test_code }}?online_test='{{ task.id }}'">

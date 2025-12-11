@@ -115,9 +115,8 @@
                                 const count_cmpl_quiz = {{ count_cmpl_quiz | default([]) | tojson }};
                                 const date_complete = {{ date_complete | default([]) | tojson }};
                                 const time_complete = {{ time_complete | default([]) | tojson }};
-                                console.log(time_complete)
-                                console.log(count_cmpl_quiz)
-
+                                //console.log(time_complete)
+                                //console.log(count_cmpl_quiz)
 
                                 const accuracyCanvas = document.getElementById('accuracyChart');
                                 if (accuracyCanvas) {
@@ -132,7 +131,6 @@
                                 }
                                 
                                 const activeCanvas = document.getElementById('activeChart');
-                                console.log('=====================================')
                                 if (activeCanvas) {
                                     const ctx2_a = activeCanvas.getContext('2d');
                                     

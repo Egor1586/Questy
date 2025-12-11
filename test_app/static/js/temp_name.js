@@ -5,7 +5,5 @@ const room = window.room;
 
 tempButton.addEventListener('click', function() {
     document.cookie = `temporaryName = ${tempInput.value}; path= /`
-    console.log(`Кнопка нажата! /room${room}`);
-
     window.location.href = `/room${room}`; 
 });

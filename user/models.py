@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable= False)
     email = db.Column(db.String(50), nullable= False)
     password = db.Column(db.String(20), nullable= False)
+    tokens= db.Column(db.Integer, default= 0)
     is_teacher = db.Column(db.Boolean)
     is_admin= db.Column(db.Boolean, default= 0)
 
@@ -83,6 +84,8 @@ class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     user_answer = db.Column(db.String, nullable = False)
+    user_timers = db.Column(db.String)
+    user_tokens = db.Column(db.String)
     accuracy = db.Column(db.Integer, nullable = False)
     test_id= db.Column(db.Integer, db.ForeignKey('test.id'))
 
@@ -96,6 +99,9 @@ class Score(db.Model):
     user_name = db.Column(db.String, nullable= False)
 
     test_code= db.Column(db.Integer, nullable= True)
+
+    def __repr__(self):
+        return f"{self.user_answer}\n{self.user_timers}\n{self.user_tokens}"
 
     def dict(self):
         return {

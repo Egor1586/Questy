@@ -14,6 +14,7 @@
             <div class="test-info">
                 {% if username %}
                     <p><strong>{{ username }}</strong>, ваш результат: <strong>{{ count_correct_answers }} </strong>/ {{ list_quiz|length }}</p>
+                    <p>Зароблено <strong>монет</strong>за проходження тесту: {{tokens}}</p>
                 {% else %}
                     <p>Ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ list_quiz|length }}</p>
                 {% endif %}

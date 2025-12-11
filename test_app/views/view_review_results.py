@@ -38,9 +38,11 @@ def render_review_results(id):
         if quiz.correct_answer == user_answers_list[number]:
             count_correct_answers += 1
 
+    tokens= count_correct_answers * 500
     return {
         "test": TEST,
         "accuracy": SCORE.accuracy,
+        "tokens": tokens,
         "list_quiz": quizzes_list,
         "list_answers": list_answers,
         "user_answers": user_answers_list,

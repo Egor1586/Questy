@@ -1,19 +1,24 @@
-function authorLeaveTest(){
+let charts= {}
+let selectUserName= null
+let selectBlock= true
+
+function authorLeaveTest(type){
     let currentURL = window.location.href;
     let roomCode = currentURL.split('room')[1];
     roomCode= roomCode.split("?")[0]
-    
-    socket.emit("end_test", {
-        room: room,         
-        username: username  
-    });
+   
+    if (type === "waite"){
+        socket.emit("end_test", {
+            room: room,         
+            username: username  
+        });
+    }
      
     socket.emit("test_end", {
         room: roomCode
     });
     
     document.cookie = `state=; max-age=0; path=/;`;
-    document.cookie = `userAnswers=; max-age=0; path=/;`;
     document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
     document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
     document.cookie = `timeStop=; max-age=0; path=/;`;
@@ -26,17 +31,67 @@ function authorLeaveTest(){
     }, 200);
 }
 
-function appendResultRow(resultTable, username, answersArrey) {
+function exel_table(username, authorName, resultData, best_score_data){
+    const firstUser = Object.keys(resultData)[0];
+    const totalQuestions = resultData[firstUser].length;
+
+    let headerRow = ["Учень"];
+    for (let i = 1; i <= totalQuestions; i++) {
+        headerRow.push(`Q${i}`);
+    }
+    headerRow.push("Точність");
+
+    let table = [];
+    table.push(headerRow);
+
+    let totalAccuracy = 0;
+    let usersCount = 0;
+    for (const user in resultData) {
+        const answers = resultData[user].correct_answers_list;
+        const correct = answers.filter(a => a === 1).length;
+        const accuracyNumber = correct / answers.length;
+        const accuracy = (accuracyNumber * 100).toFixed(1) + "%";
+
+        totalAccuracy += accuracyNumber;
+        usersCount++;
+
+        let row = [user];
+
+        answers.forEach(a => {
+            if (a === 1) row.push("✅");
+            else if (a === 0) row.push("❌");
+            else row.push("➖"); 
+        });
+
+        row.push(accuracy);
+        table.push(row);
+    }
+    const averageAccuracy = ((totalAccuracy / usersCount) * 100).toFixed(1) + "%";
+    console.log(totalAccuracy)
+    table.push([]);
+    table.push(["Найкращий результат", best_score_data.user_name,`${best_score_data.accuracy}%`]);
+    table.push(["Середній результат", averageAccuracy]);
+    
+
+    const worksheet = XLSX.utils.aoa_to_sheet(table);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
+
+    XLSX.writeFile(workbook, "results.xlsx");
+}
+
+function appendResultRow(resultTable, username, answersArray, resultData, accuracyAquestionsArray, accurancyArray, totalQuestion) {
     const resultRow = document.createElement('div');
     resultRow.className = 'results-row';
+    resultRow.id= `row_${username}`
 
     const studentName = document.createElement('div');
     studentName.className = 'cell student-name';
     studentName.textContent = `${username}`;
 
     let numberCorrectAnswers = 0;
-    for (let index= 0; index < answersArrey.length; index++) {
-        if (answersArrey[index] == 1){
+    for (let index= 0; index < answersArray.length; index++) {
+        if (answersArray[index] == 1){
             numberCorrectAnswers++;
         }
     }
@@ -49,7 +104,7 @@ function appendResultRow(resultTable, username, answersArrey) {
 
     resultRow.appendChild(studentName);
 
-    answersArrey.forEach(correct => {
+    answersArray.forEach(correct => {
         const answerBox = document.createElement('div');
         answerBox.className = 'cell';
 
@@ -73,20 +128,117 @@ function appendResultRow(resultTable, username, answersArrey) {
     });
 
     resultRow.appendChild(studentAccuracy);
-
     resultTable.appendChild(resultRow);
+
+    resultRow.addEventListener('click', function(){
+        chartManager(resultData, accuracyAquestionsArray, accurancyArray, totalQuestion, this.id.slice(4))
+    })
 }
 
-function renderAccuracyChart(canvasId, accuracy_aquestions){
+function chartManager(resultData, accuracyAquestionsArray, accurancyArray, totalQuestion, userName= null){
+    const selectElement = document.getElementById("choice");
+
+    if (userName){
+        choiceSelector= document.getElementById('choice')
+        chartBoxLable= document.querySelector('.chart-box-label')
+        console.log(chartBoxLable)
+        chartBoxLable.textContent= `Успішність ${userName}`
+
+        selectBlock= false
+        choiceSelector.innerHTML= `
+            <option value="1">${userName} успішність</option>
+            <option value="3">${userName} відсоток правильності проходження</option>
+            <option value="4">${userName} витрачений час на питання</option>
+            <option value="5">${userName} зароблено монет за питання</option>
+        `
+
+        selectUserName= userName
+        createChart1('authorAccuracyChart', resultData, accuracyAquestionsArray, accurancyArray, userName)
+    }
+
+    switch (Number(selectElement.value)){
+        case 1:
+            createChart1('authorAccuracyChart', resultData, accuracyAquestionsArray, accurancyArray, selectUserName)
+            break;
+        case 2:
+            createChart2('authorAccuracyChart', resultData, totalQuestion, selectUserName)
+            break;
+        case 3:
+            createChart3('authorAccuracyChart', resultData, totalQuestion, selectUserName)
+            break; 
+        case 4:
+            createChart4('authorAccuracyChart', resultData, totalQuestion, selectUserName, "time")
+            break; 
+        case 5:
+            createChart4('authorAccuracyChart', resultData, totalQuestion, selectUserName, "token")
+            break; 
+    }
+
+    selectBlock= true
+}
+
+
+function accuracyAquestions(resultData, totalQuestion){
+    let accurancyArray= []
+    let accuracyAquestionsArray= []
+    let allAnswersArray= Object.values(resultData)
+    const userCount = Object.keys(allAnswersArray).length;
+
+    for (let question_number= 0; question_number < totalQuestion; question_number++){
+        let pas_accurasy= 0;
+        for (let array= 0; array < allAnswersArray.length; array++){
+            if (allAnswersArray[array].correct_answers_list[question_number] == 1){
+                pas_accurasy++
+            }
+        }
+        
+        const accuracy= (pas_accurasy / userCount) * 100;
+        accurancyArray.push(accuracy.toFixed(1));
+    } 
+
+    for (number=0; number < totalQuestion; number++){
+        accuracyAquestionsArray.push({
+            question: `Q${number + 1}`,
+            accuracy: `${accurancyArray[number]}`
+        });
+    }
+
+    return {accuracyAquestionsArray, accurancyArray}
+}
+
+function createChart1(canvasId, resultData, accuracyAquestionsArray, accurancyArray, userName= null){
+    let accurancyNumbers= []
+    let labels= []
+
+    if (userName && resultData[userName]){
+        accurancyNumbers= resultData[userName].correct_answers_list.map(result =>{
+            switch (result){
+                case 0:
+                    return 0
+                case 1:
+                    return 100
+                case 2:
+                    return 0 
+            }
+        })
+    } else{
+        accurancyNumbers= accurancyArray.map(Number)
+        labels= accuracyAquestionsArray.map(item => item.question)
+    }
 
     const ctx= document.getElementById(canvasId).getContext('2d');
-    new Chart(ctx, {
+
+    if (charts[canvasId]) {
+        charts[canvasId].destroy();
+    }
+  
+    charts[canvasId]= new Chart(ctx, {
         type: 'line',
         data: {
-            labels: accuracy_aquestions.map(item => item.question),
+            labels: accuracyAquestionsArray.map(item => item.question),
             datasets: [{
                 label: 'Точність відповідей (%)',
-                data: accuracy_aquestions.map(item => parseFloat(item.accuracy)),
+                data: accurancyNumbers,
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 fill: true,
@@ -99,7 +251,7 @@ function renderAccuracyChart(canvasId, accuracy_aquestions){
             scales: {
                 y:{
                     beginAtZero: true,
-                    max: 100,
+                    suggestedMax: 100,
                     title: {
                         display: true,
                         text:'Точність (%)'
@@ -122,69 +274,251 @@ function renderAccuracyChart(canvasId, accuracy_aquestions){
     });
 }
 
-function exel_table(username, author_name){
-    setTimeout(function() {
-        socket.emit("room_get_result", {
-            room: room,
-            username: username,
-            author_name: author_name
-        });
-    }, 100); 
+function createChart2(canvasId, resultData, totalQuestion, userName= null){
+    const ctx= document.getElementById(canvasId).getContext('2d');
+    if (charts[canvasId]) {
+        charts[canvasId].destroy();
+    }
+
+    const labels= []
+    const correctCounts= new Array(totalQuestion).fill(0)
+    let wrongCounts= new Array(totalQuestion).fill(0)
+
+    let users= Object.keys(resultData)
+    if(userName){
+        users= users.includes(userName) ? [userName] : []
+    }
+
+    if (!users.length){
+        return
+    }
+
+    users.forEach(user =>{
+        let answers= resultData[user].correct_answers_list
+        for (let number=0; number < totalQuestion; number++){
+            let answer= answers[number]
+            if (answer === 1){
+                correctCounts[number]++
+            } else{
+                wrongCounts[number]++
+            }
+        }
+    })
+
+    let newWrongCounts= wrongCounts.map(count => -count)
+
+    for (let label= 0; label < totalQuestion; label++){
+        labels.push(`Q${label+ 1}`)
+    }
+
+    charts[canvasId]= new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Правильно",
+                    data: correctCounts,
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Неправильно / пропущено',
+                    data: newWrongCounts,
+                    backgroundColor: 'red',
+                    borderColor: 'red',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Номер питання'
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    min: -Math.ceil(Math.max(...wrongCounts) * 1.2),
+                    max: Math.ceil(Math.max(...correctCounts) * 1.2),
+                    title: {
+                        display: true, 
+                        text: 'Кількість користувачів'
+                    },
+                    ticks: {
+                        callbacks: value => Math.abs(value)
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ctx.datasets.label+ ': '+ Math.abs(ctx.parsed.y) 
+                    }
+                }
+            }
+        }
+    })
+}
+
+function createChart3(canvasId, resultData, totalQuestion, userName= null){
+    const colors = [
+        '#1f77b4','#ff7f0e','#2ca02c','#9467bd','#8c564b',
+        '#e377c2','#7f7f7f','#bcbd22','#17becf','#393b79',
+        '#637939','#8c6d31','#843c39','#7b4173','#5254a3',
+        '#6b6ecf','#9c9ede','#ce6dbd','#de9ed6','#31a354'
+    ];
+
+    const ctx= document.getElementById(canvasId).getContext('2d');
+    if (charts[canvasId]) {
+        charts[canvasId].destroy();
+    }
+
+    const dataValues= []
+    const dataColors= []
     
-    socket.once('room_get_result_data', function(data) {  
-        const resultData = data.room_get_result_data;
-        const best_score_data = data.best_score_data;
+    let correctTotal= 0
+    let users= Object.keys(resultData)
+    let totalSlices= users.length* totalQuestion
+    if(userName){
+        users= users.includes(userName) ? [userName] : []
+        totalSlices= totalQuestion
+    }
 
-        const firstUser = Object.keys(resultData)[0];
-        const totalQuestions = resultData[firstUser].length;
+    users.forEach((user, index) => {
+        const answers= resultData[user].correct_answers_list
+        const correctCount= answers.filter(answer => answer === 1).length
+        correctTotal += correctCount
 
-        let headerRow = ["Учень"];
-        for (let i = 1; i <= totalQuestions; i++) {
-            headerRow.push(`Q${i}`);
+        dataValues.push(correctCount)
+        dataColors.push(colors[index])
+    })
+
+    let remaining= totalSlices- correctTotal
+    if (remaining > 0){
+        dataValues.push(remaining)
+        dataColors.push('rgba(255,0,0,0.6)')
+    }
+
+    const labels= [...users]
+    if (remaining > 0){
+        labels.push("Неправильні / пропущені")
+    }
+
+    charts[canvasId]= new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: dataValues,
+                backgroundColor: dataColors,
+                borderColor: 'green',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context){
+                            const label= context.label
+                            const value= context.parsed
+                            const percent= ((value/ totalSlices) * 100).toFixed(1)
+                            return `${label}: ${value} (${percent}%)`
+                        }
+                    }
+                }
+            }
         }
-        headerRow.push("Точність");
+    })
+}
 
-        let table = [];
-        table.push(headerRow);
+function createChart4(canvasId, resultData, totalQuestion, userName= null, type){
+    const ctx= document.getElementById(canvasId).getContext('2d');
+    if (charts[canvasId]) {
+        charts[canvasId].destroy();
+    }
 
-        let totalAccuracy = 0;
-        let usersCount = 0;
-        for (const user in resultData) {
-            const answers = resultData[user];
-            const correct = answers.filter(a => a === 1).length;
-            const accuracyNumber = correct / answers.length;
-            const accuracy = (accuracyNumber * 100).toFixed(1) + "%";
+    let labels= []
+    const totalTimers= new Array(totalQuestion).fill(0)
 
-            totalAccuracy += accuracyNumber;
-            usersCount++;
+    let users= Object.keys(resultData)
+    if(userName){
+        users= users.includes(userName) ? [userName] : []
+    }
 
-            let row = [user];
+    if (!users.length){
+        return
+    }
 
-            answers.forEach(a => {
-                if (a === 1) row.push("✅");
-                else if (a === 0) row.push("❌");
-                else row.push("➖"); 
-            });
-
-            row.push(accuracy);
-            table.push(row);
+    let type_list= []
+    users.forEach(user => {
+        if (type === "token"){
+            type_list= resultData[user].token_list
+        } else if (type === "time"){
+            type_list= resultData[user].timers_list
         }
-        const averageAccuracy = ((totalAccuracy / usersCount) * 100).toFixed(1) + "%";
-        console.log(totalAccuracy)
-        table.push([]);
-        table.push(["Найкращий результат", best_score_data.user_name,`${best_score_data.accuracy}%`]);
-        table.push(["Середній результат", averageAccuracy]);
-        
+        for (let number= 0; number < totalQuestion; number++){
+            const time= parseFloat(type_list[number])
+            totalTimers[number] += time
+        }
+    })
 
-        const worksheet = XLSX.utils.aoa_to_sheet(table);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
+    for (let label= 0; label < totalQuestion; label++){
+        labels.push(`Q${label+ 1}`)
+    }
 
-        XLSX.writeFile(workbook, "results.xlsx");
+    charts[canvasId] = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Суммарное время (сек) на вопрос',
+                data: totalTimers,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Номер вопроса'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Суммарное время (сек)'
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: true }
+            }
+        }
     });
 }
-function renderAuthorResultTest(username, author_name, total_question) {
 
+function renderAuthorResultTest(username, authorName, totalQuestion) {
     let container = document.getElementById("container-question");
     
     if (container === null){
@@ -198,16 +532,15 @@ function renderAuthorResultTest(username, author_name, total_question) {
         socket.emit("room_get_result", {
             room: room,
             username: username,
-            author_name: author_name
+            author_name: authorName
         });
     }, 100); 
-
-    let accurancyArray= []
     
     socket.once('room_get_result_data', function(data) {  
         const resultData= data.room_get_result_data
         const best_score_data= data.best_score_data
         const averega_score= data.averega_score
+        const {accuracyAquestionsArray, accurancyArray}= accuracyAquestions(resultData, totalQuestion)
 
         const header = document.createElement('div');
         header.className = 'results-header-block';
@@ -223,6 +556,57 @@ function renderAuthorResultTest(username, author_name, total_question) {
         container.appendChild(header);
 
         //
+        const buttonBox = document.createElement('div');
+        buttonBox.className = 'button-box';
+  
+        const leftButtonBox = document.createElement('div');
+        leftButtonBox.className = 'left-button-box';
+        
+        const rigthButtonBox = document.createElement('div');
+        rigthButtonBox.className = 'right-button-box';
+
+        const leaveButton= document.createElement('button');
+        leaveButton.className= 'leave-btn';
+        leaveButton.textContent = 'Покинути тест';
+        leaveButton.addEventListener("click", () => {
+            authorLeaveTest("test")
+        });
+
+        const allInfoButton= document.createElement('button');
+        allInfoButton.className= 'all-info-btn';
+        allInfoButton.textContent = 'Загальна успішність'
+        allInfoButton.addEventListener("click", () => {
+            chartBoxLable= document.querySelector('.chart-box-label')
+            console.log(chartBoxLable)
+            chartBoxLable.textContent= 'Загальна успішність'
+            
+            selectUserName= null
+            choiceSelector= document.getElementById('choice')
+
+            selectBlock= false
+            choiceSelector.innerHTML= `
+                <option value="1">Загальна успішність</option>
+                <option value="2">Кількість правильних/неправильних відповідей</option>
+                <option value="3">Відсоткове співвідношення правильних відповідей</option>
+                <option value="4">Витрачено часу на запитання</option>
+                <option value="5">Зароблено монет за питання</option>
+            `
+            selectBlock= true
+            createChart1('authorAccuracyChart', resultData, accuracyAquestionsArray, accurancyArray, totalQuestion);
+        });
+
+        const exelButton= document.createElement('button');
+        exelButton.className= 'exel-btn';
+        exelButton.textContent = 'Exel table';
+        exelButton.addEventListener("click", () => exel_table(username, authorName, resultData, best_score_data));
+
+        leftButtonBox.appendChild(allInfoButton)
+        rigthButtonBox.appendChild(exelButton)
+        rigthButtonBox.appendChild(leaveButton)
+        buttonBox.appendChild(leftButtonBox)
+        buttonBox.appendChild(rigthButtonBox)
+        container.appendChild(buttonBox);
+
         const contentBox = document.createElement('div');
         contentBox.className = 'content-box';
 
@@ -230,6 +614,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
         chartBox.className = 'chart-box';
 
         const headerTitle2 = document.createElement('h2');
+        headerTitle2.className= "chart-box-label"
         headerTitle2.textContent = "Загальна успішність";
 
         const chartWrapper = document.createElement('div');
@@ -242,6 +627,17 @@ function renderAuthorResultTest(username, author_name, total_question) {
         chartCanvas.height = 500;
 
         chartBox.appendChild(headerTitle2);
+
+        chartBox.innerHTML += `
+            <select name="choice" id="choice">
+                <option value="1">Загальна успішність</option>
+                <option value="2">Кількість правильних/неправильних відповідей</option>
+                <option value="3">Відсоткове співвідношення правильних відповідей</option>
+                <option value="4">Витрачено часу на запитання</option>
+                <option value="5">Зароблено монет за питання</option>
+            </select>
+        `
+
         chartWrapper.appendChild(chartCanvas);
         chartBox.appendChild(chartWrapper);
         contentBox.appendChild(chartBox);
@@ -258,32 +654,6 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         const headerTitle3 = document.createElement('h3');
         headerTitle3.textContent = "Підсумок";  
-
-        //
-        let allAnswersArray= Object.values(resultData)
-        const userCount = Object.keys(allAnswersArray).length;
-
-        let answersArray= []
-        let accuracy_aquestions= []
-
-        for (let question_number= 0; question_number < total_question; question_number++){
-            let pas_accurasy= 0;
-            for (let array= 0; array < allAnswersArray.length; array++){
-                if (allAnswersArray[array][question_number] == 1){
-                    pas_accurasy++
-                }
-            }
-            
-            const accuracy= (pas_accurasy / userCount) * 100;
-            accurancyArray.push(accuracy.toFixed(1));
-        } 
-
-        for (number=0; number < total_question; number++){
-            accuracy_aquestions.push({
-                question: `Q${number + 1}`,
-                accuracy: `${accurancyArray[number]}`
-            });
-        }
 
         // посчитать средний результат 
         const resultsInfoBoxText = document.createElement('p')
@@ -305,7 +675,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
 
         resultTable.style.setProperty(
             'grid-template-columns',
-            `8vw repeat(${total_question}, ${32 /total_question}vw) 5.9vw`
+            `8vw repeat(${totalQuestion}, ${32 /totalQuestion}vw) 5.9vw`
         )
 
         const resultHeader = document.createElement('div');
@@ -316,8 +686,7 @@ function renderAuthorResultTest(username, author_name, total_question) {
         headerUsers.textContent= "Учні"
 
         resultHeader.appendChild(headerUsers);
-        
-        accuracy_aquestions.forEach(questionFor => {
+        accuracyAquestionsArray.forEach(questionFor => {
             const div = document.createElement('div');
             div.className= "cell";
             div.innerHTML = `${questionFor.question}`;
@@ -328,13 +697,12 @@ function renderAuthorResultTest(username, author_name, total_question) {
         headerAccyracy.className = 'label';  
         headerAccyracy.textContent= "Точність"
         
-
         resultHeader.appendChild(headerAccyracy);
         resultTable.appendChild(resultHeader);
         
         for (const username in resultData) {
-            answersArray = resultData[username]; 
-            appendResultRow(resultTable, username, answersArray);
+            answersArray = resultData[username].correct_answers_list; 
+            appendResultRow(resultTable, username, answersArray, resultData, accuracyAquestionsArray, accurancyArray, totalQuestion);
         }  
         
         const legenBox = document.createElement('div');
@@ -353,24 +721,23 @@ function renderAuthorResultTest(username, author_name, total_question) {
         legenBox.appendChild(legenBoxTitle);
         legenBox.appendChild(legend);
         baseInfo.appendChild(legenBox);
-     
-        const leaveButton= document.createElement('button');
-        leaveButton.className= 'leave-btn';
-        leaveButton.textContent = 'Покинути тест';
-        leaveButton.addEventListener("click", authorLeaveTest);
-
-        const exelButton= document.createElement('button');
-        exelButton.className= 'exel_table';
-        exelButton.textContent = 'exel_table';
-        exelButton.addEventListener("click", () => exel_table(username, author_name));
         
         infoBox.appendChild(baseInfo)
         infoBox.appendChild(resultTable);
-        infoBox.appendChild(leaveButton)
-        infoBox.appendChild(exelButton)
+        
+        infoBox.appendChild(baseInfo)
+        infoBox.appendChild(resultTable);
         contentBox.appendChild(infoBox)
         container.appendChild(contentBox)
+        
 
-        renderAccuracyChart('authorAccuracyChart', accuracy_aquestions);
+        document.getElementById('choice').addEventListener('change', function() {
+            if (selectBlock){
+                chartManager(resultData, accuracyAquestionsArray, accurancyArray, totalQuestion)
+            }
+        })
+
+        createChart1('authorAccuracyChart', resultData, accuracyAquestionsArray, accurancyArray, totalQuestion);
     });
 }
+

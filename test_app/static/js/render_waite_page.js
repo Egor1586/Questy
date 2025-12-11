@@ -138,7 +138,9 @@ function renderRoomMain(testCode, authorName, username, quizzes, userListName) {
         buttonEnd.type = "button";
         buttonEnd.className = "btn-end";
         buttonEnd.textContent = "Завершити тест";
-        buttonEnd.addEventListener("click", authorLeaveTest);
+        buttonEnd.addEventListener("click", () => {
+            authorLeaveTest("waite")
+        });
         waiteSideBottom.appendChild(buttonEnd);
     } else{
         const leaveButton = document.createElement("button");
@@ -184,7 +186,7 @@ function renderRoomMain(testCode, authorName, username, quizzes, userListName) {
     if (userListName){
         let userListBlocks= userListName.split("</>")
         userListBlocks.forEach(block => {
-            createUserBlock(username, authorName, block, 0, "not");
+            createUserBlock(username, authorName, block.split("()")[0], 0, "not");
         })
     }
 

@@ -1296,14 +1296,14 @@ main {
 .leave-btn{
     background-color: #f44336;
     border: none;
-    padding: 0.8vh;
-    font-size: 2.5vh;
+    padding: 0.8vh 0.5vw;
+    font-size: 3.5vh;
     border-radius: 1.5vh;
     box-shadow: inset;
     text-align: center;
 
     box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
-    width: 40vw;
+    width: fit-content;
     display: flex;
     align-self: center;
     justify-content: center;
@@ -1311,15 +1311,23 @@ main {
     margin-bottom: 1vh; 
 }
 
-/* .wrapper-author-results-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.all-info-btn, .exel-btn{
+    background-color: #36f456;
+    border: none;
+    padding: 0.8vh 0.5vw;
+    font-size: 3.5vh;
+    border-radius: 1.5vh;
+    box-shadow: inset;
+    text-align: center;
 
-    gap: 2vh;
-    padding: 3vw;
-} */
+    box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
+    width: fit-content;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    margin-top: auto; 
+    margin-bottom: 1vh; 
+}
 
 .chart-wrapper {
     display: flex;
@@ -1344,11 +1352,11 @@ main {
 /* TIME */
 #timer{
     color: #837d7d;
-    font-size: 4vh;
+    font-size: 4.5vh;
     font-weight: bold;
     text-align: center;
     background-color: var(--green-light);
-    padding: 1vw 1vh;
+    padding: 0.8vh 1vw;
     border-radius: 1vh;
     box-shadow: 0 2px 6px var(--shadow);
     width: fit-content;

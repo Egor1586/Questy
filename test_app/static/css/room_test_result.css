@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 2vh;
-  gap: 4vh;
+  gap: 2vh;
   font-family: "Segoe UI", sans-serif;
 }
 
@@ -29,6 +29,31 @@
   flex-direction: column;
   align-self: center;
   gap: 1vh;
+}
+
+.button-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin: 0vh 1vw;
+    height: 8vh;
+    width: 98vw;
+}
+
+.right-button-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+}
+
+.left-button-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
 }
 
 .results-header-block h1 {
