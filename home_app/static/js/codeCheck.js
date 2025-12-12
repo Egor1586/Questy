@@ -1,6 +1,14 @@
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
 $(() => {
     let testId= ""
     let currentCodes = [];
+    let saevedRoom= getCookie("room")
     
     async function updateCodes() {
         try {
@@ -11,6 +19,16 @@ $(() => {
             console.log(error);
         }
     }
+
+    if (saevedRoom){
+        $('#modal-bg-connect').fadeIn(200);
+    }
+
+    $('#connect-test-btn').on('click', () => {
+        if (saevedRoom){
+            window.location.href= `/room${saevedRoom}`
+        }
+    })
         
     updateCodes();
     setInterval(updateCodes, 5000);
@@ -40,6 +58,7 @@ $(() => {
 
     $('.back-btn').on('click', function(){
         $('#modal-bg').fadeOut(200)
+        $('#modal-bg-connect').fadeOut(200)
     }) 
 
     $('#modal-bg').on('click', function(element) {

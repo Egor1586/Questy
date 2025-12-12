@@ -419,7 +419,7 @@
             listener= function ( event ) {
                 let cookie= getCookie("user_answers")
                 let state= getCookie("state")
-                document.cookie = `state= waite${state.slice(-1)}; path=/`;
+                document.cookie= `state=waite${state.slice(-1)}; path=/`;
                 if (typeof cookie === "undefined"){
                     document.cookie = `user_answers= |${button.id}|; path = /`     
                 }

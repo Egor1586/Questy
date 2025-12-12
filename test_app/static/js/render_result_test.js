@@ -1,19 +1,13 @@
-function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}()\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
 function userLeaveTest() {
-    document.cookie = `state=; max-age=0; path=/;`;
-    document.cookie = `userAnswers=; max-age=0; path=/;`;
-    document.cookie = `userTimers=; max-age=0; path=/;`;
-    document.cookie = `userTokens=; max-age=0; path=/;`;
-    document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-    document.cookie = `temporaryName=; max-age=0; path=/;`;
-    document.cookie = `timeStop=; max-age=0; path=/;`;
-    document.cookie = `time=; max-age=0; path=/;`;
+    document.cookie= `state=; max-age=0; path=/;`;
+    document.cookie= `userAnswers=; max-age=0; path=/;`;
+    document.cookie= `userTimers=; max-age=0; path=/;`;
+    document.cookie= `userTokens=; max-age=0; path=/;`;
+    document.cookie= `countUsersAnswer=; max-age=0; path=/;`;
+    document.cookie= `temporaryName=; max-age=0; path=/;`;
+    document.cookie= `timeStop=; max-age=0; path=/;`;
+    document.cookie= `time=; max-age=0; path=/;`;
+    document.cookie= `room=; max-age=0; path=/`;
 
     window.location.href = '/';
 }

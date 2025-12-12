@@ -82,7 +82,7 @@ function addUserAnswer(username, answer, authorname, quiz) {
 
     socket.emit("get_usernames", {
         room: room,
-        authorname: authorname
+        author_name: authorname
     });
 
     socket.once('get_usernames', function(data){
@@ -96,13 +96,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
             renderDoughnutChart("donat-chart", lengthArrey, correctAnswerChart)
         }
     })
-}
-
-function getCookie(name) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
 function plusTime(){
@@ -274,7 +267,7 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
 
     socket.emit("get_usernames", {
         room: room,
-        authorname: authorname
+        author_name: authorname
     });
 
     let quizTime= getCookie("time");

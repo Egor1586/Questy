@@ -1,10 +1,3 @@
-function getCookie(name) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
 function tokenTimePrecent(userTimer, allTime){
     let timePrecent= (userTimer/ allTime)
     let max_token= 1200
@@ -124,7 +117,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                     token= tokenTimePrecent(userTimer, allTime)
                     console.log(token)
 
-                    document.cookie= `state= waite${state.slice(-1)}; path=/`;
+                    document.cookie= `state=waite${state.slice(-1)}; path=/`;
                     
                     if (typeof cookie === "undefined"){
                         document.cookie= `userAnswers=|${button.id}|; path = /`     
@@ -179,7 +172,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             token= tokenTimePrecent(userTimer, allTime)
             console.log(token)
 
-            document.cookie = `state= waite${state.slice(-1)}; path=/`;
+            document.cookie= `state=waite${state.slice(-1)}; path=/`;
             newUserTokens= userTokens+ `|${token}`
             newUserTimers= userTimers+ `|${userTimer}`
 
@@ -283,7 +276,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 }
             }
 
-            document.cookie = `state= waite${state.slice(-1)}; path=/`;
+            document.cookie= `state=waite${state.slice(-1)}; path=/`;
 
             if (typeof answerValue === "undefined"){
                 answerValue= "not_answer"

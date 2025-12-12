@@ -16,6 +16,7 @@
     </div>
     
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
     <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_waite_page.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
@@ -37,8 +38,8 @@
         
         const socket= io({reconnection: true});
 
-        const totalQuestion = Number("{{ test.total_questions }}");
         const testId = Number("{{ test.id }}");
+        const totalQuestion = Number("{{ test.total_questions }}");
         const authorName= "{{ test.author_name }}";
 
         const listQuiz = {{ list_quiz | tojson }};
@@ -71,32 +72,48 @@
         else if (state === "resultTest") {
             renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
         } 
-        else if (state && state=== "authorLeave"){
-            let currentURL = window.location.href;
-            let roomCode = currentURL.split('room')[1]
-            
-            socket.emit("test_end", {
-                room: roomCode
-            });
-            
-            document.cookie = `state=; max-age=0; path=/;`;
-            window.location.href = '/';  
-        }
-        else if (state && state=== "userLeave"){
-            document.cookie = `state=; max-age=0; path=/;`;
-            window.location.href = '/';  
-        }
+        //else if (state && state=== "authorLeave"){
+        //    let currentURL = window.location.href;
+        //    let roomCode = currentURL.split('room')[1]
+        //    
+        //    socket.emit("test_end", {
+        //        room: roomCode
+        //    });
+        //    
+        //    document.cookie= `state=; max-age=0; path=/;`;
+        //    window.location.href = '/';  
+        //}
+        //else if (state && state=== "userLeave"){
+        //    document.cookie= `state=; max-age=0; path=/;`;
+        //    window.location.href = '/';  
+        //}
         else if (state && state.includes("question")) {
             let time= getCookie("time")
+
+            console.log("reconnect_user")
+            socket.emit("reconnect_user", {
+                room: room,
+                username: username,
+                author_name: authorName
+            });
+
             renderQuestion(Number("{{ test.id }}"), listQuiz[Number(state.slice(-1))], listAnswers[Number(state.slice(-1))], room, authorName);
         } 
         else if (state && state.includes("waite")) {
+            console.log("reconnect_user")
+            socket.emit("reconnect_user", {
+                room: room,
+                username: username,
+                author_name: authorName
+            });
+
             renderWaiteQuestion("test");
         } 
         else {
             if (authorName === username || compound){
                 let userList= getCookie("userList")
                 renderRoomMain(room, authorName, username, listQuiz, userList);
+                document.cookie= `room=${room}; path=/`;
     
                 let messages= document.getElementById("messages");
                 
@@ -171,6 +188,35 @@
             state = getCookie("state");
         });
 
+        socket.on("reconnect_ping", function(data) {  
+            state = getCookie("state");
+            let new_state= ""
+            
+            if (state === "authorResultTest"){
+                new_state= -1
+            } else{
+                new_state= Number(state.slice(-1))
+            }
+
+            socket.emit("new_state", {
+                room: room,
+                username: data.username,
+                author_name: authorName,
+                new_state: new_state
+            });
+        });
+
+        socket.on("new_state", function(data) {  
+            console.log(data["new_state"], "NEWNWE STATE")
+            let new_state= Number(data["new_state"])
+
+            if (new_state === -1){
+                console.log("resultTest end", new_state)
+            } else{
+                console.log("test question", new_state)
+            }
+        });
+
         socket.on("next_question", function(data) {  
             state = getCookie("state");
             document.cookie = `timeStop=false; path=/;`;
@@ -217,13 +263,14 @@
                     user_tokens: userTokens
                 });
 
-            document.cookie = `state= resultTest; path=/`;
+            document.cookie= `state=resultTest; path=/`;
         });
 
         socket.on("create_user_block", function(data) {  
             if (!state){    
                 if (username === data["username"]){
                     document.cookie= `compound= 1; path=/`;
+                    document.cookie= `room=${room}; path=/`
                     renderRoomMain(room, authorName, username, listQuiz);
                 }  
                 createUserBlock(username, authorName, data['username'], data['user_ip'], "not");
@@ -272,13 +319,14 @@
         });
 
         socket.on('kicked', function(data) {
-            document.cookie = `state=; max-age=0; path=/;`;
-            document.cookie = `userAnswers=; max-age=0; path=/;`;
-            document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-            document.cookie = `temporaryName=; max-age=0; path=/;`;
-            document.cookie = `timeStop=; max-age=0; path=/;`;
-            document.cookie = `time=; max-age=0; path=/;`;
-            document.cookie = `compound=; max-age=0; path=/;`;
+            document.cookie= `state=; max-age=0; path=/;`;
+            document.cookie= `userAnswers=; max-age=0; path=/;`;
+            document.cookie= `countUsersAnswer=; max-age=0; path=/;`;
+            document.cookie= `temporaryName=; max-age=0; path=/;`;
+            document.cookie= `timeStop=; max-age=0; path=/;`;
+            document.cookie= `time=; max-age=0; path=/;`;
+            document.cookie= `compound=; max-age=0; path=/;`;
+            document.cookie= `room=; max-age=0; path=/;`;
 
             window.location.href = '/'; 
         });
@@ -372,8 +420,8 @@
             const countAnswer = document.getElementById("count-answer-span");
             countAnswer.textContent= 0;
              
-            document.cookie = `state= authorStart${numberOfQuestion}; path=/`;
-            document.cookie = `countCorrectAnswer= 0; path=/`;
+            document.cookie= `state= authorStart${numberOfQuestion}; path=/`;
+            document.cookie= `countCorrectAnswer= 0; path=/`;
 
             if (numberOfQuestion == totalQuestion- 1) {
                 nextButton.textContent = 'Кінець тесту'
@@ -450,7 +498,7 @@
                 author_name: authorName
             });
 
-            document.cookie = `state= authorResultTest; path=/`;
+            document.cookie= `state=authorResultTest; path=/`;
             renderAuthorResultTest(username, authorName, totalQuestion);
         }
 
@@ -527,6 +575,7 @@
             document.cookie = `temporaryName=; max-age=0; path=/;`;
             document.cookie = `compound=; max-age=0; path=/;`;
             document.cookie = `time=; max-age=0; path=/;`;
+            document.cookie= `room=; max-age=0; path=/`;
 
             window.location.href = `/`;
         }

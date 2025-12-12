@@ -196,7 +196,7 @@ def handle_disconnect():
     if username:
         ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
 
-        if ROOM.user_list:
+        if ROOM and ROOM.user_list:
             ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
             db.session.commit()
 
@@ -205,7 +205,22 @@ def handle_disconnect():
                 "username": f"{username}"
                 }, 
             to=ROOM.test_code)
-        
+
+@Project.settings.socketio.on('reconnect_user')
+def handle_disconnect(data):
+    author = data['author_name']
+    author_sid = get_sid(author)
+
+    emit("reconnect_ping", {"room": data["room"], "username": data["username"]}, room= author_sid)
+
+@Project.settings.socketio.on('new_state')
+def handle_disconnect(data):
+    new_state= data["new_state"]
+    username= data["username"]
+    user_sid= get_sid(username)
+    print(new_state)
+    emit("new_state", {"room": data["room"], "username": username, "new_state": new_state}, room= user_sid)
+
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
     room = data['room']
@@ -241,7 +256,7 @@ def handle_kick_user(data):
 @Project.settings.socketio.on('get_usernames')
 def handle_send_usernames(data):
     room = data['room']
-    author = data['authorname']
+    author = data['author_name']
     author_sid = get_sid(author)
 
     ROOM = Room.query.filter_by(test_code = room).first()
