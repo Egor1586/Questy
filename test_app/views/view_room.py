@@ -38,6 +38,8 @@ def room_get_result(room, author_name, username):
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
+    print("all lists")
+    print(SCORE_LIST, UNREG_USER_LIST, USER_LIST, QUIZ_LIST)
     if (USER_LIST):
         for user in USER_LIST:
             answers_list= []
@@ -75,11 +77,11 @@ def room_get_result(room, author_name, username):
                         else:
                             correct_answers_list.append(0)
 
-                    room_get_result_data[user.username]= {
-                        "correct_answers_list": correct_answers_list,
-                        "timers_list": timers_list,
-                        "token_list": token_list       
-                    }
+                room_get_result_data[user.username]= {
+                    "correct_answers_list": correct_answers_list,
+                    "timers_list": timers_list,
+                    "token_list": token_list       
+                }
 
     if(UNREG_USER_LIST):
         for user in UNREG_USER_LIST:
@@ -118,11 +120,11 @@ def room_get_result(room, author_name, username):
                         else:
                             correct_answers_list.append(0)
 
-                    room_get_result_data[user]= {
-                        "correct_answers_list": correct_answers_list,
-                        "timers_list": timers_list,
-                        "token_list": token_list         
-                    }
+                room_get_result_data[user]= {
+                    "correct_answers_list": correct_answers_list,
+                    "timers_list": timers_list,
+                    "token_list": token_list         
+                }
 
     BEST_SCORE= None
     best_accuracy= 0
@@ -130,7 +132,7 @@ def room_get_result(room, author_name, username):
     averega_score= 0
 
     for score in SCORE_LIST:
-        averega_accuracy =+ score.accuracy
+        averega_accuracy += score.accuracy
         if score.accuracy > best_accuracy:
             BEST_SCORE= score
 
@@ -155,6 +157,8 @@ def room_get_result(room, author_name, username):
             "accuracy": SCORE_LIST[0].accuracy,
         }
 
+    print("room_get_result_data, best_score_data, averega_score")
+    print(room_get_result_data, best_score_data, averega_score)
     return room_get_result_data, best_score_data, averega_score
 
 @Project.settings.socketio.on('join')
@@ -200,11 +204,11 @@ def handle_disconnect():
             ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
             db.session.commit()
 
-        emit('user_disconnected', {
-                'msg': f'{username} відключився',
-                "username": f"{username}"
-                }, 
-            to=ROOM.test_code)
+            emit('user_disconnected', {
+                    'msg': f'{username} відключився',
+                    "username": f"{username}"
+                    }, 
+                to=ROOM.test_code)
 
 @Project.settings.socketio.on('reconnect_user')
 def handle_disconnect(data):
@@ -219,7 +223,7 @@ def handle_disconnect(data):
     username= data["username"]
     user_sid= get_sid(username)
     print(new_state)
-    emit("new_state", {"room": data["room"], "username": username, "new_state": new_state}, room= user_sid)
+    emit("new_state", {"room": data["room"], "username": username, "new_state": new_state, "new_time": data["new_time"]}, room= user_sid)
 
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
@@ -321,6 +325,7 @@ def handle_message(data):
         test_code= room
     )
 
+    print(data["user_answers"], "\n", data["user_timers"], "\n", new_token_list, "\n", accuracy, "\n", TEST.id, "\n", USER.id, "\n", user_name, "\n", room)
     if (USER):
         if USER.tokens:
             USER.tokens = int(USER.tokens) + tokens

@@ -15,10 +15,10 @@ if (inputButton) {
         }
             
         if (!user_answer){
-            document.cookie = `userAnswers=${answerValue}; path = /`    
+            setCookie("userAnswers", answerValue) 
         } 
         else{
-            document.cookie = `userAnswers=${user_answer}|${answerValue}; path= /`
+            setCookie("userAnswers", `${user_answer}|${answerValue}`) 
         }  
     })
 }
@@ -42,10 +42,10 @@ if (multipleChoiceButton){
         }
         
         if (!currentAnswers){
-            document.cookie = `userAnswers=${answerValue}; path = /`    
+            setCookie("userAnswers", answerValue) 
         }
         else{
-            document.cookie = `userAnswers=${currentAnswers}|${answerValue}; path= /`
+            setCookie("userAnswers", `${user_answer}|${answerValue}`) 
         }      
     })
 }
@@ -74,11 +74,11 @@ for (let count = 0; count < arreyButton.length; count++ ) {
             let currentAnswers= getCookie("userAnswers");
             
             if (!currentAnswers){
-                document.cookie = `userAnswers=${button.id}; path = /`  
+                setCookie("userAnswers", button.id) 
             }
             else{
                 user_answer = getCookie("userAnswers");
-                document.cookie = `userAnswers=${user_answer}|${button.id}; path= /`
+                setCookie("userAnswers", `${user_answer}|${button.id}`) 
             }      
         }
     )

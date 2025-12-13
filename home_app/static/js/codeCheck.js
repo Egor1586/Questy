@@ -1,14 +1,8 @@
-function getCookie(name) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
 $(() => {
     let testId= ""
     let currentCodes = [];
-    let saevedRoom= getCookie("room")
+    let saevedRoom= ""
+    // let saevedRoom= getCookie("room")
     
     async function updateCodes() {
         try {
@@ -26,10 +20,16 @@ $(() => {
 
     $('#connect-test-btn').on('click', () => {
         if (saevedRoom){
+            setCookie("recconect", "1")
             window.location.href= `/room${saevedRoom}`
         }
     })
-        
+
+    $('#leave-test-btn').on('click', () => {
+        clearCookie(["room", "state", "userAnswers", "userTimers", "userTokens", "countUsersAnswer", "temporaryName", "timeStop", "time"])
+        $('#modal-bg-connect').fadeOut(200)
+    })
+
     updateCodes();
     setInterval(updateCodes, 5000);
         

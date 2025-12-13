@@ -11,23 +11,27 @@
     
 {% block content %}
 
-    <div class="room-content" id="room-content">
-
-    </div>
+    <div class="room-content" id="room-content"></div>
     
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
-    <script src="{{ url_for('test_app.static', filename= 'js/add_user_block.js') }}"></script>
-    <script src="{{ url_for('test_app.static', filename= 'js/render_waite_page.js') }}"></script>
-    <script src="{{ url_for('test_app.static', filename= 'js/render_author_start.js') }}"></script>
-    <script src="{{ url_for('test_app.static', filename= 'js/render_question.js') }}"></script>
-    <script src="{{ url_for('test_app.static', filename= 'js/render_result_test.js') }}"></script>
-    <script src="{{ url_for('test_app.static', filename= 'js/render_author_result_test.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomFiles/add_user_block.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomFiles/chart_manager.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomFiles/timer_manager.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomFiles/exel_table.js') }}"></script>
+
+    <script src="{{ url_for('test_app.static', filename= 'js/roomFiles/test_states.js') }}"></script>
+
+    <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_waite_page.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_author_start.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_question.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_result_test.js') }}"></script>
+    <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_author_result_test.js') }}"></script>
 
     <script>
-
         let username = "{{ username }}"; 
         const room = "{{ test.test_code }}"; 
+        const recconect= getCookie("recconect")
         
         if (!username) {
             username= getCookie("temporaryName")
@@ -36,7 +40,13 @@
             }
         }
         
-        const socket= io({reconnection: true});
+        const socket= io("/room", 
+            {
+                reconnection: true,
+                reconnection: 7,
+                reconnectionDelay: 1000
+            }
+        );
 
         const testId = Number("{{ test.id }}");
         const totalQuestion = Number("{{ test.total_questions }}");
@@ -53,7 +63,7 @@
         let plusTimeCount= 15
 
         if (timerPaused === NaN){
-            document.cookie = `timeStop= false; path=/;`;
+            setCookie("timeStop", "false")
             timerPaused= false
         }else if (timerPaused == 'true'){
             timerPaused= true
@@ -71,49 +81,28 @@
         } 
         else if (state === "resultTest") {
             renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
-        } 
-        //else if (state && state=== "authorLeave"){
-        //    let currentURL = window.location.href;
-        //    let roomCode = currentURL.split('room')[1]
-        //    
-        //    socket.emit("test_end", {
-        //        room: roomCode
-        //    });
-        //    
-        //    document.cookie= `state=; max-age=0; path=/;`;
-        //    window.location.href = '/';  
-        //}
-        //else if (state && state=== "userLeave"){
-        //    document.cookie= `state=; max-age=0; path=/;`;
-        //    window.location.href = '/';  
-        //}
-        else if (state && state.includes("question")) {
-            let time= getCookie("time")
+        } else if (recconect){
+            console.log("USER RECCONECT")
+            clearCookie(["recconect"])
 
-            console.log("reconnect_user")
             socket.emit("reconnect_user", {
                 room: room,
                 username: username,
                 author_name: authorName
             });
-
+        }
+        else if (state && state.includes("question")) {
+            let time= getCookie("time")
             renderQuestion(Number("{{ test.id }}"), listQuiz[Number(state.slice(-1))], listAnswers[Number(state.slice(-1))], room, authorName);
         } 
         else if (state && state.includes("waite")) {
-            console.log("reconnect_user")
-            socket.emit("reconnect_user", {
-                room: room,
-                username: username,
-                author_name: authorName
-            });
-
             renderWaiteQuestion("test");
-        } 
+        }
         else {
             if (authorName === username || compound){
                 let userList= getCookie("userList")
                 renderRoomMain(room, authorName, username, listQuiz, userList);
-                document.cookie= `room=${room}; path=/`;
+                setCookie("room", room)
     
                 let messages= document.getElementById("messages");
                 
@@ -169,7 +158,7 @@
             let answer= data["answer"]           
             let countUsersAnswer= getCookie("countUsersAnswer");
             countUsersAnswer = Number(countUsersAnswer) + 1  
-            document.cookie = `countUsersAnswer= ${countUsersAnswer}; path=/`;
+            setCookie("countUsersAnswer", countUsersAnswer)
 
             state = getCookie("state");    
             addUserAnswer(data["username"], answer, authorName, listQuiz[Number(state.slice(-1))]);
@@ -188,21 +177,27 @@
             state = getCookie("state");
         });
 
-        socket.on("reconnect_ping", function(data) {  
-            state = getCookie("state");
-            let new_state= ""
-            
-            if (state === "authorResultTest"){
-                new_state= -1
-            } else{
-                new_state= Number(state.slice(-1))
+        socket.on("reconnect_ping", function(data) {          
+            state = getCookie("state");        
+            let new_state= -2
+            let new_time= getCookie("time")      
+            if (username === authorName){  
+                if (state === "authorResultTest"){
+                    new_state= -1
+                    renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
+                } else{
+                    new_state= Number(state.slice(-1))
+                }
+                console.log("AUTHOER DONE", Number(state.slice(-1)))
             }
-
+            console.log("ALLL WHYYY DONE")
+            alert(new_state)
             socket.emit("new_state", {
                 room: room,
                 username: data.username,
                 author_name: authorName,
-                new_state: new_state
+                new_state: new_state,
+                new_time: new_time
             });
         });
 
@@ -212,24 +207,38 @@
 
             if (new_state === -1){
                 console.log("resultTest end", new_state)
+            } else if (new_state === -2){ 
+                userLeaveTest()
+            }else if (new_state >= 0){
+                console.log("test", new_state)
+                if (Number(data["new_time"]) > 1){
+                    setCookie("state", `question${new_state}`)
+                    console.log(new_state, "question reccconte")
+                    renderQuestion(Number("{{ test.id }}"), listQuiz[Number(new_state)], listAnswers[Number(new_state)], room, authorName);
+                } else{
+                    setCookie("state", `waite${new_state}`)
+                    console.log(new_state, "waite recconect")
+                    renderWaiteQuestion("test");
+                }
+
+                checkAnswers()
             } else{
-                console.log("test question", new_state)
+                console.log("BAD REQUEST NEW STATE")
             }
         });
 
         socket.on("next_question", function(data) {  
             state = getCookie("state");
-            document.cookie = `timeStop=false; path=/;`;
+            setCookie("timeStop", "false")
             timerPaused= false
             
             checkAnswers();
             plusAnswerTime= 0
             if (state != "authorResultTest") {
                 let numberOfQuestion= Number(state.slice(-1));
-
-                document.cookie= `time=${Number(listQuiz[numberOfQuestion + 1].time)}; path=/`
+                setCookie("time", Number(listQuiz[numberOfQuestion + 1].time))
                 if (numberOfQuestion != totalQuestion - 1) {
-                    document.cookie= `state=question${numberOfQuestion + 1}; path=/`;
+                    setCookie("state", `question${numberOfQuestion + 1}`)
                     renderQuestion(Number("{{ test.id }}"), listQuiz[numberOfQuestion + 1], listAnswers[numberOfQuestion + 1], room, authorName);
                 }
                 else {
@@ -238,8 +247,7 @@
                         author_name: authorName
                     });
                     
-                    document.cookie= `state=authorResultTest; path=/`;
-
+                    setCookie("state", "authorResultTest")
                     renderAuthorResultTest(username, authorName, totalQuestion);
                 }
             }
@@ -255,22 +263,22 @@
             userTokens= getCookie("userTokens")
 
             socket.emit("user_answers", {
-                    room: room,
-                    username: username,
-                    author_name: authorName,
-                    user_answers: userAnswers,
-                    user_timers: userTimers,
-                    user_tokens: userTokens
-                });
+                room: room,
+                username: username,
+                author_name: authorName,
+                user_answers: userAnswers,
+                user_timers: userTimers,
+                user_tokens: userTokens
+            });
 
-            document.cookie= `state=resultTest; path=/`;
+            setCookie("state", "resultTest")
         });
 
         socket.on("create_user_block", function(data) {  
             if (!state){    
                 if (username === data["username"]){
-                    document.cookie= `compound= 1; path=/`;
-                    document.cookie= `room=${room}; path=/`
+                    setCookie("compound", "1")
+                    setCookie("room", room)
                     renderRoomMain(room, authorName, username, listQuiz);
                 }  
                 createUserBlock(username, authorName, data['username'], data['user_ip'], "not");
@@ -319,15 +327,7 @@
         });
 
         socket.on('kicked', function(data) {
-            document.cookie= `state=; max-age=0; path=/;`;
-            document.cookie= `userAnswers=; max-age=0; path=/;`;
-            document.cookie= `countUsersAnswer=; max-age=0; path=/;`;
-            document.cookie= `temporaryName=; max-age=0; path=/;`;
-            document.cookie= `timeStop=; max-age=0; path=/;`;
-            document.cookie= `time=; max-age=0; path=/;`;
-            document.cookie= `compound=; max-age=0; path=/;`;
-            document.cookie= `room=; max-age=0; path=/;`;
-
+            clearCookie(["room", "state", "userAnswers", "compound", "countUsersAnswer", "temporaryName", "timeStop", "time"])
             window.location.href = '/'; 
         });
 
@@ -339,13 +339,13 @@
             plusAnswerTime += 15
             if (timerCount && timer.textContent != "Час закінчений"){
                 timer.textContent = parseInt(timerCount) + plusTimeCount
-                document.cookie = `time=${parseInt(timerCount) + plusTimeCount}; path=/;`;
+                setCookie("time", parseInt(timerCount) + plusTimeCount)
             }
         });
 
         socket.on('change_time', function(data) {          
             timerPaused= !timerPaused
-            document.cookie = `timeStop=${timerPaused}; path=/;`;
+            setCookie("timeStop", timerPaused)
             const playBtn= document.getElementById("play-btn")
 
             if (playBtn){
@@ -387,242 +387,23 @@
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
             }     
             
-            document.cookie= `time=${listQuiz[0].time}; path=/`
+            setCookie("time", listQuiz[0].time)
             let compoundStart= getCookie("compound")
-            document.cookie = `compound=; max-age=0; path=/`;
+            clearCookie(["compound"])
 
-            if (username === data["author_name"]) {          
-                document.cookie = "state= authorStart0; path=/";
-                document.cookie = "countUsersAnswer= 0; path=/";
-                document.cookie = `countCorrectAnswer= 0; path=/`;
+            if (username === data["author_name"]) {        
+                setCookie("state", "authorStart0")  
+                setCookie("countUsersAnswer", 0)  
+                setCookie("countCorrectAnswer", 0)  
                 renderAuthorStart(listQuiz[0], room, authorName, state, totalQuestion);
             }
             else if(compoundStart) {
-                document.cookie = "state= question0; path=/";
+                setCookie("state", "question0")  
                 renderQuestion(Number("{{ test.id }}"), listQuiz[state], listAnswers[state], room, authorName);
             } else{
                 window.location.href = '/'; 
             }
         });
-
-        function nextQuestion(){
-            const nextButton = document.getElementById("next-q");
-
-            state = getCookie("state");
-            let numberOfQuestion= Number(state.slice(-1)) + 1;
-            let countUsersAnswer= getCookie("countUsersAnswer");
-            
-            document.cookie = `timeStop=false; path=/;`;
-
-            const userAnswers = document.getElementById("user-answers");
-            userAnswers.innerHTML = ""
-
-            const countAnswer = document.getElementById("count-answer-span");
-            countAnswer.textContent= 0;
-             
-            document.cookie= `state= authorStart${numberOfQuestion}; path=/`;
-            document.cookie= `countCorrectAnswer= 0; path=/`;
-
-            if (numberOfQuestion == totalQuestion- 1) {
-                nextButton.textContent = 'Кінець тесту'
-                nextButton.removeEventListener("click", nextQuestion)
-                nextButton.addEventListener("click", testStop);
-            }
-            
-            if (donatChart){
-                donatChart.destroy()
-            }
-    
-            if (!listQuiz[numberOfQuestion]){
-                return
-            }
-
-            document.cookie = `countUsersAnswer= 0; path=/`;
-            
-            const question_text = document.getElementById("author-question")
-            question_text.textContent = `${listQuiz[numberOfQuestion].question_text}`
-        
-            const correct_answer = document.getElementById("author-correct-answer")
-
-            if (listQuiz[numberOfQuestion].question_type == "multiple_choice"){
-                correct_answer.textContent= `${listQuiz[numberOfQuestion].correct_answer.replace("%$№", " та ")}`
-            }
-            else{
-                correct_answer.textContent= `${listQuiz[numberOfQuestion].correct_answer}`
-            }
-
-            document.cookie= `time=${Number(listQuiz[numberOfQuestion].time)}; path=/`
-            resetTimer(Number(listQuiz[numberOfQuestion].time))
-
-            const newTime = document.getElementById("timer")
-            newTime.textContent =`${listQuiz[numberOfQuestion].time}`
-
-            timerPaused= false
-            plusAnswerTime= 0
-            
-            socket.emit("next_question", {
-                room: room,
-                author_name: authorName
-            });
-        }
-
-        function sendMessage() {
-            let msgInput = document.getElementById("msg");
-            let messages = document.getElementById("messages");
-            let message = msgInput.value;
-
-            if (message != ""){
-                let messages = document.getElementById("messages");
-
-                messages.innerHTML += `<p class="my-msg">${username}: ${msgInput.value}</p>`;  
-
-                if (messages && messages.children.length != 1){
-                    const emptyMessages= document.getElementById("no-messages");
-                    if (emptyMessages){
-                        emptyMessages.remove()
-                    }
-                }
-
-                socket.emit("message_to_chat", {
-                    message: message,
-                    room: room,         
-                    username: username  
-                });
-            }
-            msgInput.value = "";
-        }
-
-        function testStop(){    
-            socket.emit("stop_test", {
-                room: room,
-                author_name: authorName
-            });
-
-            document.cookie= `state=authorResultTest; path=/`;
-            renderAuthorResultTest(username, authorName, totalQuestion);
-        }
-
-        function checkAnswers(){
-            state = getCookie("state");
-            let answers = getCookie("userAnswers")
-            let userTimers= getCookie("userTimers")
-            let userTokens= getCookie("userTokens")
-            let curTime= getCookie("time");
-            let allTime= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time
-            let userTimer= allTime- curTime
-            let token= 0
-
-            if (answers) {
-                let answersList = answers.split("|")
-                let userAnswers = []
-                let userAnswersList = []
-                for (let answer of answersList){
-                    if (answer != "|"){
-                        userAnswers.push(answer)
-                    }
-                }
-                for (let answer of userAnswers){
-                    if (answer != ""){
-                        userAnswersList.push(answer)
-                    }
-                }
-                
-                if (userAnswersList.length !== Number(state.slice(-1)) + 1) {
-                    answers += "|not_answer|"
-                    document.cookie = `userAnswers=${answers}; path=/`;
-                    newUserTimers= userTimers+ `|${userTimer}`
-                    document.cookie= `userTimers=${newUserTimers}; path = /`  
-                    newUserTokens= userTokens+ `|${token}`
-                    document.cookie= `userTokens=${newUserTokens}; path = /` 
-                }
-            }
-            else {
-                document.cookie= `userTokens=${token}; path = /`
-                document.cookie= `userTimers=${userTimer}; path = /`
-                document.cookie = `userAnswers=|not_answer|; path=/`;
-            }
-        }
-
-        function addUesrBlock(username, button){
-            const userBlock= button.closest(".user-block")
-            const userIP= userBlock.querySelector(".user-ip").textContent.trim()
-            let addUserList= getCookie("userList")
-
-            if (!addUserList){
-                document.cookie= `userList= ${username}()${userIP}; path=/`
-            } else {
-                document.cookie= `userList= ${addUserList}</>${username}()${userIP}`
-            }
-
-            if (userBlock){
-                userBlock.remove()
-            }
-            
-            socket.emit("new_user", {
-                room: room,
-                username: username,
-                author_name: authorName,
-                user_ip: userIP ?? null
-            });
-        }
-
-        function leaveTest(){
-            document.cookie = `temporaryName=; max-age=0; path=/;`;
-            window.location.href = `/`;
-        }
-
-        function leaveTestBlock(kick_user, ip, type){
-            document.cookie = `temporaryName=; max-age=0; path=/;`;
-            document.cookie = `compound=; max-age=0; path=/;`;
-            document.cookie = `time=; max-age=0; path=/;`;
-            document.cookie= `room=; max-age=0; path=/`;
-
-            window.location.href = `/`;
-        }
-
-        function kickUser(kick_user, ip, type) {   
-            let UserList= getCookie("userList") || ""
-            let users= UserList.split("</>").filter(username => username.trim() !== "")
-
-            users= users.filter(userStr => {
-                const [name, userIp]= userStr.split("()")
-                return name !== kick_user
-            })
-
-            const newUserList = users.join("</>")
-
-            document.cookie= `userList=${newUserList}; path=/`
-            socket.emit("kick_user", {
-                room: room,
-                user: kick_user
-            });
-
-            if (type === "block"){
-                let blockUserArray= getCookie("blockedUsers")
-                
-                if (!blockUserArray){
-                    document.cookie = `blockedUsers=${ip}; path=/;`;
-                } else{
-                    document.cookie = `blockedUsers=${blockUserArray}$%^${ip}; path=/;`;
-                }
-            }
-
-            let removeUserBlock= document.getElementById(`user${kick_user}`)
-
-            if (removeUserBlock) {
-                removeUserBlock.remove()
-            }
-        }
-
-        function authorStartTest() {
-            let userList= getCookie("userList")
-            if (userList){
-                socket.emit("author_start_test", {
-                    room: room,
-                });
-            }
-        }
-
-        </script>
+    </script>
     
 {% endblock %}

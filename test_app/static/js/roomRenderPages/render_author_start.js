@@ -1,45 +1,5 @@
 let donatChart;
 
-function renderDoughnutChart(canvasId, totalAnswer, correctCount){
-    let correctPercent= (correctCount/totalAnswer) * 100;
-    let incorrectPercent= 100- correctPercent;
-
-    try {
-        let existing_chart = Chart.getChart('donat-chart')
-        existing_chart.destroy();
-
-        let lastChart = Chart.getChart('authorAccuracyChart')
-        if (lastChart){
-            lastChart.destroy()
-        }
-    } catch(error) {
-    }
-
-    const ctx= document.getElementById(canvasId).getContext('2d');
-    donatChart= new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Правильні (%)', 'Неправильні (%)'],
-            datasets: [{
-                data: [correctPercent, incorrectPercent],
-                borderColor: ['rgba(69, 184, 46, 0.6)', 'rgba(186, 47, 60, 0.6)'],
-                backgroundColor: ['rgba(69, 184, 46, 1)', 'rgba(186, 47, 60, 1)'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom'
-                },
-            cutout:'50%'
-            }
-        }
-    });
-}
-
 function addUserAnswer(username, answer, authorname, quiz) {
     const userAnswers = document.getElementById("user-answers");
     const countAnswerSpan  = document.getElementById("count-answer-span");
@@ -63,7 +23,7 @@ function addUserAnswer(username, answer, authorname, quiz) {
 
     if (answer == correctAnswer){
         countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
-        document.cookie = `countCorrectAnswer=${countCorrect}; path=/`;
+        setCookie("countCorrectAnswer", countCorrect)
     }
 
     if (quiz.question_type){
@@ -96,70 +56,6 @@ function addUserAnswer(username, answer, authorname, quiz) {
             renderDoughnutChart("donat-chart", lengthArrey, correctAnswerChart)
         }
     })
-}
-
-function plusTime(){
-    socket.emit("plus_time", {
-        room: room,
-        author_name: authorName
-    });
-}
-
-function stopTime(){
-    socket.emit("change_time", {
-        room: room,
-        author_name: authorName
-    });
-}
-
-function startTimer() {
-    const timerText= document.getElementById("timer")
-    let state= getCookie("state")
-    
-    if(!timerText){
-        return
-    }
-
-    if (timerInterval){
-        clearInterval(timerInterval)
-    }
-
-    timerInterval= setInterval(() =>{
-        const cookieTime= parseInt(getCookie("time"));
-        let time= parseInt(timerText.textContent);
-
-        timerText.textContent= time;
-
-        if (isNaN(cookieTime) && username != authorName){
-            renderWaiteQuestion("test");
-        }
-
-        if (!timerPaused){
-            time -= 1
-            timerText.textContent= time
-            document.cookie = `time=${time}; path=/;`;      
-        }
-        
-        if (time < 0){
-                clearInterval(timerInterval);
-                timerText.textContent = "Час закінчився"
-        
-                setTimeout(() => {
-                    if (username != authorName){
-                        renderWaiteQuestion("test");
-                    }
-            }, 2000)}
-    }, 1000);
-}
-
-function resetTimer(newTime){
-    const timerText= document.getElementById("timer") 
-
-    if (timerText){
-        timerText.textContent= newTime
-        document.cookie = `time=${newTime}; path=/;`;   
-        startTimer()
-    }
 }
 
 function renderAuthorStart(quiz, room, authorname, number_of_question, total_question) {
