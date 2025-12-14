@@ -3,67 +3,78 @@
     --green-dark: #3e8641;
     --green-light: #aad8af;
     --bg-light: #f9fdf9;
-    --bg-aside: #f0f7f0;
     --text-dark: #454343;
     --shadow: rgba(0, 0, 0, 0.08);
 }
 
 .edit-question-form {
-    background-color: var(--bg-light);
+    width: 42vw;
+    min-width: 480px;
     margin: 6vh auto;
-    padding: 4vh;
-    border-radius: 3.2vh;
-    box-shadow: 0 1.6vh 4vh var(--shadow);
-    max-width: 60vw;
-    width: 100%;
+
+    background-color: var(--bg-light);
+    border: 0.2vh solid var(--green-light);
+    border-radius: 3vh;               
+    box-shadow: 0 1.4vh 3vh var(--shadow);
+
+    padding: 4vh 3vw;
+}
+
+.edit-form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 3vh;
-    border: 0.2vh solid var(--green-light);
 }
 
-.edit-question-form h1 {
-    font-size: 7vh;
-    margin-bottom: 3.2vh;
+.edit-form h1 {
+    font-size: 3.8vh;
+    font-weight: 600;
     text-align: center;
     color: var(--text-dark);
+    margin-bottom: 1.6vh;
 }
 
-.edit-question-form input[type="text"] {
-    padding: 2vh 2.8vh;
-    font-size: 3.2vh;
-    border: 0.2vh solid #ccc;
-    border-radius: 1.6vh;
+.input-group input[type="text"] {
     width: 100%;
-    box-sizing: border-box;
-    background-color: #fff;
-    transition: all 0.25s ease;
-    margin: 2vh 0;
+    padding: 1.8vh 1.6vw;
+
+    font-size: 2.6vh;
+    color: var(--text-dark);
+
+    background-color: #ffffff;
+    border: 0.2vh solid #cfd8cf;
+    border-radius: 1.4vh;
+
+    transition: border-color 0.2s ease;
 }
 
-.edit-question-form input[type="text"]:focus {
+.input-group input[type="text"]::placeholder {
+    color: #9aa3a0;
+}
+
+.input-group input[type="text"]:focus {
     border-color: var(--green-main);
-    box-shadow: 0 0 1.2vh var(--green-light);
     outline: none;
 }
 
-.edit-question-form button[type="submit"] {
-    align-self: center;
-    margin-top: 3.2vh;
-    padding: 2.4vh 6.4vh;
-    background-color: var(--green-main);
-    color: white;
-    border: none;
-    border-radius: 14vh;
-    font-size: 3.2vh;
-    font-weight: 600;
-    cursor: pointer;
+.edit-btn {
+    margin-top: 2.4vh;
+    padding: 1.8vh 0;
+
     width: 100%;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    background-color: var(--green-main);
+    color: #ffffff;
+
+    border: none;
+    border-radius:1.2vh;
+    font-size: 2.6vh;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background-color 0.25s ease;
 }
 
-.edit-question-form button[type="submit"]:hover {
+.edit-btn:hover {
     background-color: var(--green-dark);
-    transform: scale(1.00);
 }

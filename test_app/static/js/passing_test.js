@@ -3,7 +3,6 @@ const arreyMultipleChoiceButton= document.querySelectorAll(".multiple-answer")
 
 const inputButton = document.querySelector(".input-answer")
 const multipleChoiceButton = document.querySelector(".multiple-choice-answer")
-let token= 500
 
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
@@ -36,6 +35,7 @@ if (multipleChoiceButton){
         let currentAnswers= getCookie("userAnswers");
 
         for (const value of document.querySelectorAll(".active-multiple-answer")){
+
             if (!answerValue){
                 answerValue += value.id
             }
@@ -52,19 +52,26 @@ if (multipleChoiceButton){
             document.cookie = `userAnswers=${answerValue}; path = /`    
         }
         else{
-            document.cookie = `userAnswers=${currentAnswers}|${answerValue}; path= /`
-        }      
+            user_answer = getCookie("userAnswers");
+            document.cookie = `userAnswers=${user_answer}|${answerValue}; path= /`
+        }       
     })
 }
 
 for (let count = 0; count < arreyMultipleChoiceButton.length; count++ ) {
     let button= arreyMultipleChoiceButton[count];
+
+    const checkmark = document.createElement("span")
+    checkmark.classList.add("checkmark")
+    checkmark.textContent = "✓"
     
     button.addEventListener(
         type= "click" ,
         listener= function (event) {
             if (button.className == "multiple-answer"){
                 button.className= "active-multiple-answer"
+                button.appendChild(checkmark)
+
             }
             else{
                 button.className= "multiple-answer"
@@ -72,6 +79,7 @@ for (let count = 0; count < arreyMultipleChoiceButton.length; count++ ) {
         }
     )
 }
+
 
 for (let count = 0; count < arreyButton.length; count++ ) {
     let button= arreyButton[count];

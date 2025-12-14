@@ -36,14 +36,14 @@
 }
 
 h1 {
-    font-size: 5.2vh;
+    font-size: 3vh;
     margin-bottom: 1.2vh;
     text-align: center;
     color: #555;;
 }
 
 h2 {
-    font-size: 4.8vh;
+    font-size: 2.5vh;
     margin-bottom: 1.2vh;
     text-align: center;
     color: #333;;
@@ -51,8 +51,7 @@ h2 {
 
 .correct-answer-p {
     margin: 0;
-    font-size: 2.4vh;
-    font-weight: 45wh;
+    font-size: 2vh;
     text-transform: capitalize;
     border: 0.15vh solid #ccc;
     border-radius: 1.2vh;
@@ -66,14 +65,14 @@ h2 {
 
 .correct-answer-p:focus {
     border-color: var(--green-main);
-    box-shadow: 0 0 0.9vh var(--green-light);
+    /* box-shadow: 0 0 0.9vh var(--green-light); */
     outline: none;
 }
 
 .incorrect-answer-p{
     margin: 0;
-    font-size: 2.4vh;
-    font-weight: 45wh;
+    font-size: 2vh;
+    /* font-weight: 45wh; */
     text-transform: capitalize;
     border: 0.15vh solid #ccc;
     border-radius: 1.2vh;
@@ -87,48 +86,26 @@ h2 {
 
 .incorrect-answer-p:focus {
     border-color: rgb(228, 140, 140);
-    box-shadow: 0 0 0.9vh rgb(228, 140, 140);
+    /* box-shadow: 0 0 0.9vh rgb(228, 140, 140); */
     outline: none;
 }
 
 
-
-
-/* input[type="text"] {
-    padding: 0.65rem 0.9rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #fff;
-    transition: all 0.25s ease;
-
-    width: 100%;
-} */
-
-
-/* input[type="text"]:focus {
-    border-color: var(--green-main);
-    box-shadow: 0 0 6px var(--green-light);
-    outline: none;
-} */
-
 button[type="submit"] {
+    width: 100%;
     align-self: center;
-    margin-top: 2.4vh;
+    margin-top: 2vh;
     padding: 1.8vh 4.8vh;
     background-color: var(--green-main);
     color: white;
     border: none;
-    border-radius: 75vw;
+    border-radius: 1vh;
     font-size: 2.4vh;
-    font-weight: 45wh;
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button[type="submit"]:hover {
     background-color: var(--green-dark);
-    transform: scale(1.03);
 }

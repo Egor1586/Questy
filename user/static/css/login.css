@@ -14,10 +14,11 @@ main {
     width: 75vw;
     height: 84vh;
     background: white;
-    border: 0.32vh solid black;
     border-radius: 1.6vh;
-    box-shadow:  0 0 2vh black;
     overflow: hidden;
+
+    border: 0.32vh solid rgba(89, 114, 84, 0.652); 
+    box-shadow: 0 1.2vh 4vh rgba(0, 0, 0, 0.28); 
 }
 
 .wrapper .form-box{
@@ -199,4 +200,30 @@ form .linkTxt{
 
 .wrapper {
     margin: 4vh;
+}
+
+/* інпути */
+
+
+.input-box input {
+    border-bottom: 0.32vh solid #b5bfd1;
+}
+
+.input-box input:focus,
+.input-box input:valid {
+    border-bottom-color: #3b496d;
+}
+
+.input-box label {
+    color: #6b7280;
+}
+
+
+.input-box i {
+    color: #9ca3af;
+}
+
+.input-box input:focus ~ i,
+.input-box input:valid ~ i {
+    color: #3b496d;
 }

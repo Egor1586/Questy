@@ -14,14 +14,23 @@
             <h2 class="class-btn-title">Виберіть категорію класів</h2>
             <div class="class-btn-div">
                 {% if is_teacher %}
+                <div class="classes-card-chooser">
+                    <i class='bxr  bx-bookmark-alt'></i> 
                     <button class="my-classes">Доступні класи</button>
+                    <p>Перегляньте класи, до яких ви вже долучилися.</p>
+                </div>
                 {% endif %}
-                <button class="classes">Мої класи</button>
+
+                <div class="classes-card-chooser">
+                    <i class='bxr  bx-book'></i> 
+                    <button class="classes">Мої класи</button>
+                    <p>Перегляньте відкриті класи та приєднуйтеся.</p>
+                </div>
             </div>
             <p class="class-btn-subtitle">Перегляньте всі ваші класи або приєднайтесь до нових</p>
         </div>
 
-        {% if is_teacher%}
+        {% if is_teacher %}
         <hr>
             <div class="class-div">
                 {% if my_classes_list %}
@@ -92,21 +101,15 @@
                             </div>
                         {% endfor %}
                     </div>
-
-                    <!-- {% if not classes_list %}
-                        <div class="no-classes-block">
-                            <img src="/static/img/no-classes.svg" alt="No classes">
-                            <h3>Ви ще не приєднані до жодного курсу</h3>
-                            <p>Попросіть учителя надіслати код курсу або введіть його нижче</p>
-
-                            <button class="join-class-btn">Приєднатися за кодом</button>
-                        </div>
-                    {% endif %} -->
                 {% endif %}
 
             </div>
         {% else %}       
         <hr>
+            <div id="select-info" class="select-info-text">
+                <p>Оберіть категорію, щоб переглянути доступні або ваші класи.</p>
+            </div>
+
             {% if classes_list%}
                 <div class="class-div">
                     <h2>Мої класи</h2>
@@ -153,15 +156,7 @@
                     </div>
                 </div>
 
-                <!-- {% if not my_classes_list %}
-                    <div class="no-classes-block">
-                        <img src="/static/img/no-classes.svg" alt="No classes">
-                        <h3>У вас ще немає створених курсів</h3>
-                        <p>Створіть свій перший курс, щоб додати завдання та керувати студентами</p>
 
-                        <button class="create-first-class-btn">Створити курс</button>
-                    </div>
-                {% endif %} -->
             {% endif %}
         {% endif %}
     </main>

@@ -28,7 +28,7 @@ aside {
     width: 20vw;
     height: 92vh;
     background-color: var(--bg-aside);
-    padding: 2.5vh 1vw 1vh 1vw;
+    padding: 3.2vh 1vw 1vh 1vw;
     box-shadow: 0 0 1vw var(--shadow);
 
     display: flex;
@@ -44,8 +44,8 @@ aside {
 
 .create-btn {
     width: 18vw;
-    padding: 1.5vh 1.5vw;
-    font-size: 2vh;
+    padding: 1.75vh 1.5vw;
+    font-size: 2.2vh;
     background-color: var(--green-main);
     color: white;
     border: none;
@@ -77,16 +77,16 @@ aside {
 
 .create-btn:hover {
     background-color: var(--green-dark);
-    transform: translateY(-0.3vh);
+    /* transform: translateY(-0.3vh); */
 }
 
 .library {
-    width: 16vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
 
     left: 0;
-    /* padding: 20px; */
+    padding: 2.2vh 0 ;
 }
 
 .library h2 {
@@ -100,13 +100,14 @@ aside {
 
 
 .code-p span{
-    background: linear-gradient(135deg, #80b48a, #56c591);
+    /* background: linear-gradient(135deg, #80b48a, #56c591); */
     padding: 0.5vh 0.5vw;
+    font-size: 2vh;
     border-radius: 1vh;
 }
 
 .quiz-card {
-    width: 14vw;
+    width: 100%;
     padding: 1.5vh;
     font-size: 2.5vh;
     margin-bottom: 1.2vh;
@@ -118,7 +119,7 @@ aside {
 
 .quiz-card:hover {
     background-color: #e0f0e5;
-    transform: translateY(0.3vh);
+    /* transform: translateY(0.3vh); */
 }
 
 .quiz-list {
@@ -159,14 +160,12 @@ aside {
     align-items: center;
 }
 
-.quiz-item:hover {
-    transform: translateY(0.3vh);
-}
+
 
 .quiz-item p {
     margin: 0;
     font-size: 2vh;
-    color: var(--text-dark);
+    /* color: var(--text-dark); */
 }
 
 .actions {
@@ -212,9 +211,6 @@ aside {
     flex-wrap: wrap;
 }
 
-.quiz-item:hover {
-    transform: translateY(-0.3vh);
-}
 
 .quiz-item .info {
     flex: 1;
@@ -251,25 +247,26 @@ aside {
     border: none;
     border-radius: 1vh;
     background-color: #e0eee2;
-    color: #2f2f2f;
-    font-size: 1.8vh;
+    color: rgba(35, 139, 69, 1);
+    font-size: 1.95vh;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
 
 .actions button:hover {
-    background-color: var(--green-main);
     color: white;
-    transform: translateY(-0.3vh);
+    background-color: rgba(35, 139, 69, 1);
 }
 
-/* button.edit {
-    background: linear-gradient(135deg, #ffd54f, #ffb300);
-} */
 
 button.delete {
-    background: linear-gradient(135deg, #ef5350, #c62828);
+    color: rgba(171, 49, 48, 1);
+    background: rgba(247, 108, 108, 1);
+}
+button.delete:hover {
+    background-color: rgba(171, 49, 48, 1);
+    color: white;
 }
 
 header{
@@ -279,18 +276,19 @@ header{
 .info-code{
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    align-items: left;
+    justify-content: flex-start;
+    align-items: flex-start;
 
-    gap: 1vh;
+    gap: 1.3vh;
 }
 
 /*  */
 .devider-p {
-    font-size: 2vh;
+    font-size: 2.4vh;
     font-style: italic;
     color: #606974ce;
     line-height: 1.5;
     text-align: center;
-    margin: 1vw 0;
+    margin: 0.8vw 0;
 }
+

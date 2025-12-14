@@ -15,13 +15,9 @@ body {
     color: var(--text-dark);
 }
 
-main {
-    display: flex;
-    height: inherit;
-}
 
 .container {
-    max-width: 40wv;
+    max-width: 60vw;
     margin: auto;
 }
 
@@ -42,14 +38,15 @@ main {
 .test-details {
     flex-grow: 0.1vh;
 }
+
 .test-title {
-    font-size: 2vh;
+    font-size: 2.5vh;
     padding-right: 2vh;
     font-weight: bold;
     margin-bottom: 0.8vh;
 }
 .test-description {
-    font-size: 1.4vh;
+    font-size: 2.5vh;
     color: #555;
     margin-bottom: 1vh;
 }
@@ -59,13 +56,13 @@ main {
     border: 0.1vh solid var(--green-main);
     border-radius: 0.6vh;
     padding: 0.6vh 1.2vh;
-    font-size: 1.4vh;
+    font-size: 2.2vh;
     cursor: pointer;
     height: fit-content;
 }
 
 .meta-info{
-    font-size: 2vh;
+    font-size: 2.5vh;
 }
 
 .edit-btn a{
@@ -83,23 +80,26 @@ main {
     margin-bottom: 2vh;
     box-shadow: 0 0.2vh 0.4vh var(--shadow);
 }
+
 .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.6vh;
+    width: 100%;
+    font-size: 2.5vh;
     font-weight: bold;
     margin-bottom: 1vh;
 }
+
 .question-text {
     margin-bottom: 1.5vh;
-    font-size: 1.5vh;
+    font-size: 2.1vh;
 }
 .answer {
     padding: 1vh 1.5vh;
     border-radius: 0.8vh;
     margin-bottom: 1vh;
-    font-size: 1.5vh;
+    font-size: 2.3vh;
     border-left: 0.5vh solid transparent;
 }
 .correct {
@@ -119,7 +119,7 @@ main {
     border: none;
     border-radius: 0.6vh;
     padding-bottom: 0.5vh;
-    font-size: 1.4vh;
+    font-size: 2.3vh;
     cursor: pointer;
     height: fit-content;
 }

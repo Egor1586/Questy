@@ -60,3 +60,18 @@ $(() => {
         }
     });
 })
+
+document.addEventListener("DOMContentLoaded", () => {
+    const infoText = document.getElementById("select-info")
+    const btnMyClasses = document.querySelector(".my-classes")
+    const btnClasses = document.querySelector(".classes")
+
+    function hideInfo() {
+        if (infoText) infoText.classList.add("hidden")
+    }
+
+    if (btnMyClasses) btnMyClasses.addEventListener("click", hideInfo)
+    if (btnClasses) btnClasses.addEventListener("click", hideInfo)
+})
+
+// 

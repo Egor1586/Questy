@@ -154,6 +154,11 @@ def render_class_page():
                 tasks_list.append(task)
         
         tasks_class_teacher_list.append(tasks_list)
+        
+    print('List classes', classes_list)
+    print("User:", user)
+    print("User classes:", user.classes)
+
     
     return {"classes_list": classes_list,
             "my_classes_list": my_classes_list,

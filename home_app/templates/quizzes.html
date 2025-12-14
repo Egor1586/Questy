@@ -63,17 +63,17 @@
                                         <button class="edit">Редагувати</button>
                                     </a>
                                     
-                                    <form action="/delete_test{{ test.id }}" >
-                                        <button class="delete">
-                                            Видалити тест
-                                        </button>
-                                    </form>
-                                    
                                     {% if test.test_code == 0 %}
                                         <a href="/create_code{{ test.id }}" class="btn">
                                             <button class="edit">Створити код</button>
                                         </a>
                                     {% endif %}
+
+                                    <form action="/delete_test{{ test.id }}" >
+                                        <button class="delete">
+                                            Видалити тест
+                                        </button>
+                                    </form>
                                 {% endif %}                    
                             </div>
                             {% if test.test_code != 0 %}

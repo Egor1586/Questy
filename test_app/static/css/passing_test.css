@@ -61,6 +61,8 @@ body {
     box-sizing: border-box;
 }
 
+
+
 .answer {
     width: 100%;
     height: 100%;
@@ -160,7 +162,7 @@ body {
 
 .multiple-choice-answer{
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     background-color: var(--green-main);
     border: none;
     border-radius: 16px;
@@ -240,11 +242,10 @@ body {
     text-align: center;
 }
 .multiple-choice-answer,
-.input-answer {
-    /* width: 100%;               */
+.input-answer {             
     /* max-width: 951px;          */
-    margin: 40px auto;
-    padding: 15px 20px;     
+    /* margin: 40px auto; */
+    /* padding: 15px 20px;      */
     font-size: 1.5rem;
     font-weight: 700;
     border-radius: 12px;   
@@ -337,3 +338,53 @@ body {
     transform: scale(0.97);
     box-shadow: 0 6px 14px rgba(0,0,0,0.2);
 }
+
+/*  */
+.multiple-answer {
+    position: relative;
+    padding: 10px 15px;
+    margin: 8px 0;
+    width: 100%;
+    border: 2px solid var(--green-main);
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+
+.active-multiple-answer {
+    position: relative;
+    padding: 10px 15px;
+    margin: 8px 0;
+    width: 100%;
+    border: 2px solid var(--green-main);
+    border-radius: 10px;
+    background-color: rgb(122, 223, 156);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.active-multiple-answer:active {
+    transform: scale(0.95);
+    background-color: rgb(136, 248, 173);
+
+}
+
+.active-multiple-answer:hover {
+    background-color: rgb(92, 200, 128);
+}
+.multiple-answer:hover {
+    background-color: #d4e7dd;
+}
+
+.checkmark {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(5, 57, 22);
+}
+
+/*  */

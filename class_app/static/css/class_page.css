@@ -10,6 +10,9 @@
 
 /* --- Контент --- */
 
+.hidden {
+    display: none;
+}
 
 .full-content {
     width: 95vw ;
@@ -22,7 +25,6 @@
     justify-items: center;
 
     width: fit-content;
-    height: 8vh;
     align-self: center;
 
     gap: 2vw;
@@ -638,7 +640,7 @@
     justify-content: center;
     gap: 2vh;
     width: 100%;
-    margin: 5vh 0;
+    margin: 3.5vh 0 0 0;
     text-align: center;
 }
 
@@ -648,7 +650,7 @@
 }
 
 .class-btn-subtitle {
-    font-size: 2vh;
+    font-size: 2.3vh;
     color: #666;
     max-width: 50vw;
 }
@@ -775,3 +777,72 @@ hr {
     transform: translateY(-0.4vh);
     background-color: var(--green-dark);
 }
+
+/*  */
+.select-info-text {
+    width: 100%;
+    text-align: center;
+    font-size: 1.25vw;   
+    color: #555;
+    opacity: 1;
+    transition: 0.3s;
+}
+
+.select-info-text.hidden {
+    opacity: 0;
+    height: 0vh;
+    overflow: hidden;
+    margin: 0vh;
+}
+
+/* class chooser */
+.classes-card-chooser {
+    width: 28vw;
+    padding: 4vh 2vw;
+    background: #ffffff;
+    border-radius: 1.2vw;
+    text-align: center;
+    box-shadow: 0 1.2vh 3vh rgba(0, 0, 0, 0.08);
+    transition: 0.35s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.classes-card-chooser:hover {
+    box-shadow: 0 1.6vh 4vh rgba(0, 0, 0, 0.13);
+}
+
+.classes-card-chooser i {
+    font-size: 4vw;
+    color: #1f7a3c;
+    margin-bottom: 2vh;
+}
+
+.classes-card-chooser .my-classes {
+    font-size: 1.6vw;
+    font-weight: 600;
+    background: #1f7a3c;
+    color: white;
+    border: none;
+    padding: 1.2vh 2vw;
+    border-radius: 0.7vw;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.classes-card-chooser .my-classes:hover {
+    background: #249649;
+    transform: scale(1.04);
+}
+
+/* Опис */
+.classes-card-chooser p {
+    font-size: 1vw;
+    color: #555;
+    margin-top: 2vh;
+    width: 80%;
+}
+
+

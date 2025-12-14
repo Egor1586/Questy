@@ -374,7 +374,7 @@ header {
 .modal {
     background-color: #fff;
     font-size: 1.9vh;
-    padding: 2vh;
+    padding: 2.9vh;
     border-radius: 1.3vh;
     width: 35vw;
     animation: popIn 0.3s ease-in-out;
@@ -500,7 +500,7 @@ header {
 }
 
 .back-btn {
-    padding: 1vh;
+    /* padding: 1vh; */
     position: absolute;
     top: 1vh;
     right: 1vh;
@@ -509,6 +509,8 @@ header {
     border-radius: 0.8vh;
     cursor: pointer;
     color: #888;
+
+    width: 2vw;
 }
 
 .back-btn:hover {
