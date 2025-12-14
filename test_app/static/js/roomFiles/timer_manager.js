@@ -42,7 +42,7 @@ function startTimer() {
         
         if (time < 0){
                 clearInterval(timerInterval);
-                timerText.textContent = "Час закінчився"
+                timerText.textContent = "Час"
         
                 setTimeout(() => {
                     if (username != authorName){

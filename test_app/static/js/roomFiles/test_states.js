@@ -21,7 +21,7 @@ function nextQuestion(){
     const nextButton = document.getElementById("next-q");
 
     state = getCookie("state");
-    let numberOfQuestion= Number(state.slice(-1)) + 1;
+    let numberOfQuestion= Number(state.slice(questionNumber)) + 1;
     // let countUsersAnswer= getCookie("countUsersAnswer");
     
     setCookie("timeStop", "false") 
@@ -35,7 +35,7 @@ function nextQuestion(){
     setCookie("state", `authorStart${numberOfQuestion}`)
     setCookie("countCorrectAnswer", 0)
 
-    if (numberOfQuestion == totalQuestion- 1) {
+    if (numberOfQuestion === totalQuestion- 1) {
         nextButton.textContent = 'Кінець тесту'
         nextButton.removeEventListener("click", nextQuestion)
         nextButton.addEventListener("click", testStop);
@@ -50,17 +50,20 @@ function nextQuestion(){
     }
 
     setCookie("countUsersAnswer", 0)
+
+    const questionTitle = document.getElementById("question-title")
+    questionTitle.textContent = `Питання: ${numberOfQuestion + 1} з ${totalQuestion}`
     
-    const question_text = document.getElementById("author-question")
-    question_text.textContent = `${listQuiz[numberOfQuestion].question_text}`
+    const questionText = document.getElementById("author-question")
+    questionText.textContent = `${listQuiz[numberOfQuestion].question_text}`
 
-    const correct_answer = document.getElementById("author-correct-answer")
+    const correctAnswer = document.getElementById("author-correct-answer")
 
-    if (listQuiz[numberOfQuestion].question_type == "multiple_choice"){
-        correct_answer.textContent= `${listQuiz[numberOfQuestion].correct_answer.replace("%$№", " та ")}`
+    if (listQuiz[numberOfQuestion].question_type === "multiple_choice"){
+        correctAnswer.textContent= `${listQuiz[numberOfQuestion].correct_answer.replace("%$№", " та ")}`
     }
     else{
-        correct_answer.textContent= `${listQuiz[numberOfQuestion].correct_answer}`
+        correctAnswer.textContent= `${listQuiz[numberOfQuestion].correct_answer}`
     }
 
     setCookie("time", Number(listQuiz[numberOfQuestion].time))
@@ -78,36 +81,65 @@ function nextQuestion(){
     });
 }
 
-function checkAnswers(){
+function checkAnswers(type){
     state = getCookie("state");
     let token= 0
-    const questionIndex= Number(state.slice(-1))
+    const questionIndex= Number(state.slice(questionNumber))
 
     let answers = getCookie("userAnswers") || ""
     let userTimers= getCookie("userTimers") || ""
     let userTokens= getCookie("userTokens") || ""
 
     const curTime= Number(getCookie("time")) || 0
-    const allTime= plusAnswerTime+ listQuiz[Number(state.slice(-1))].time
+    const allTime= plusAnswerTime+ listQuiz[Number(state.slice(questionNumber))].time
     const userTimer= allTime -curTime
     
     let answerList= answers.split("|")
     answerList= answerList.filter(answer => answer && answer !== " ")
 
-    const missingCount= 1 + questionIndex- answerList.length
+    let missingCount= 1+ questionIndex- answerList.length
+    console.log(missingCount, questionIndex, answerList.length)
 
-    for (let miss = 0; miss < missingCount; miss++) {
-        answers += "|not_answer|";
-        userTimers += `|${userTimer}`;
-        userTokens += `|${token}`;
+    if (missingCount < 0){
+        return
+    } else if (missingCount === 0 && answerList.length === 0){
+        missingCount= 1
     }
 
-    console.log("checkANSWER")
-    console.log(missingCount, answers, userTimers, userTokens)
+    console.log("CHECK ANSWERS")
+    console.log(userTokens, userTimers)
 
+    if (type === "test"){
+        for (let miss = 0; miss < missingCount; miss++) {
+            answers += "|not_answer|";
+            if (userTimers === "" && userTokens === ""){
+                userTimers += `${userTimer}`;
+                userTokens += `${token}`;
+            } else{
+                userTimers += `|${userTimer}`;
+                userTokens += `|${token}`;
+            }
+        }
+    } else if (type === "recconect"){
+        console.log("RECONNECT")
+        for (let miss = 0; miss < missingCount- 1; miss++) {
+            answers += "|not_answer|";
+            if (userTimers === "" && userTokens === ""){
+                userTimers += `0`;
+                userTokens += `0`;
+            } else{
+                userTimers += `|0`;
+                userTokens += `|0`;
+            }
+        }
+    }
+
+    console.log(missingCount, answers, userTimers, userTokens)
+    console.log("Before setCookie", userTimers, userTokens);
     setCookie("userAnswers", answers)
     setCookie("userTimers", userTimers)
     setCookie("userTokens", userTokens)
+    console.log("After setCookie", document.cookie);
 }
 
 function sendMessage() {

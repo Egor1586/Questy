@@ -1,6 +1,6 @@
 function renderResultTest(username, total_question, list_quiz, list_answers, test_id) {
     let answersStr = getCookie("userAnswers");
-    let answers_list = answersStr.split("|");
+    let answers_list= answersStr.split("|");
     let userAnswers = [];
     let answersArrey = [];
 
@@ -21,7 +21,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
     for (let count = 0; count < list_quiz.length; count++) {
         let arrayCorrectAnswers= []
         let arrayUserAnswers= []
-        if (list_quiz[count].question_type == "multiple_choice"){
+        if (list_quiz[count].question_type === "multiple_choice"){
             arrayCorrectAnswers= list_quiz[count].correct_answer.split("%$№")
             arrayUserAnswers= answersArrey[count].split("$$$")
             let correctAnswerAccept= true
@@ -146,7 +146,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
 
         questionBlock.appendChild(questionHeader);
 
-        if (quiz.question_type == "image"){
+        if (quiz.question_type === "image"){
             const imageDiv = document.createElement("div");
             imageDiv.className = "image-result-div";
 
@@ -162,10 +162,10 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
         questionText.className = 'question-text';
         questionBlock.appendChild(questionText);
 
-        if (quiz.question_type == "choice" || quiz.question_type == "image"){
+        if (quiz.question_type === "choice" || quiz.question_type === "image"){
             let answers= answersArrey[quiz_number]
 
-            if (answers == "not_answer"){
+            if (answers === "not_answer"){
                 const notAnswerDiv = document.createElement('div');
                 notAnswerDiv.className = 'answer no-answe';
                 notAnswerDiv.textContent = `Відповідь відсутня`;
@@ -196,11 +196,11 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
                 }
             }
         }
-        else if (quiz.question_type == "input"){
+        else if (quiz.question_type === "input"){
             let answerText = list_answers[quiz_number];
             let answers= answersArrey[quiz_number]
 
-            if (answers == "not_answer"){
+            if (answers === "not_answer"){
                 const notAnswerDiv = document.createElement('div');
                 notAnswerDiv.className = 'answer no-answe';
                 notAnswerDiv.textContent = `Відповідь відсутня`;
@@ -230,12 +230,12 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
                 questionBlock.appendChild(answerCorrect);
             }
         }
-        else if (quiz.question_type == "multiple_choice"){
+        else if (quiz.question_type === "multiple_choice"){
             let answerText = list_answers[quiz_number];
             let answers= answersArrey[quiz_number].split("$$$");
             let correct_answer_list= quiz.correct_answer.split("%$№");
 
-            if (answers == "not_answer"){
+            if (answers === "not_answer"){
                 const notAnswerDiv = document.createElement('div');
                 notAnswerDiv.className = 'answer no-answe';
                 notAnswerDiv.textContent = `Відповідь відсутня`;

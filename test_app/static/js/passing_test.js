@@ -56,7 +56,7 @@ for (let count = 0; count < arreyMultipleChoiceButton.length; count++ ) {
     button.addEventListener(
         type= "click" ,
         listener= function (event) {
-            if (button.className == "multiple-answer"){
+            if (button.className === "multiple-answer"){
                 button.className= "active-multiple-answer"
             }
             else{

@@ -56,30 +56,30 @@ createQuestionButtonDiv.addEventListener('click', function(event) {
     `
 
     let questionHTML= 
-            `<div class="question-block" id="q${countQuestion}">
-                <div class="question-header">
-                    <span>Питання ${countQuestion}</span>
-                    <button type="button" class="delete-question">Видалити питання?</button>
-                </div>
+        `<div class="question-block" id="q${countQuestion}">
+            <div class="question-header">
+                <span>Питання ${countQuestion}</span>
+                <button type="button" class="delete-question">Видалити питання?</button>
+            </div>
 
-                <label>Формулювання питання:</label>
-                <input type="text" class="question-text" name="question-text">
+            <label>Формулювання питання:</label>
+            <input type="text" class="question-text" name="question-text">
 
-                <label>Час на виконання</label>
-                <input type="text" class="question-time" name="question-time">
-            `
+            <label>Час на виконання</label>
+            <input type="text" class="question-time" name="question-time">
+        `
 
 
-    if (questionType == "choice"){
+    if (questionType === "choice"){
         questionHTML += (choiceQuestion)
     }
-    else if (questionType == "input"){
+    else if (questionType === "input"){
         questionHTML += (inputQuestion)
     }
-    else if (questionType == "multiple-choice"){
+    else if (questionType === "multiple-choice"){
         questionHTML += (multiChoiceQuestion)
     }
-    else if (questionType == "image"){
+    else if (questionType === "image"){
         questionHTML += (imageQuestion)
     }
     questionHTML += "</div>"

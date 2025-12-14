@@ -28,7 +28,7 @@ $(() => {
 
     $('.back-btn').on('click', () => {
         modalBg.fadeOut(200)
-    })  
+    })   
 
     $('#modal-bg').on('click', function(element) {
         if ($(element.target).is('#modal-bg')){

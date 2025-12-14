@@ -1,8 +1,7 @@
 $(() => {
     let testId= ""
     let currentCodes = [];
-    let saevedRoom= ""
-    // let saevedRoom= getCookie("room")
+    let saevedRoom= getCookie("room")
     
     async function updateCodes() {
         try {
@@ -35,7 +34,7 @@ $(() => {
         
     $('.search-btn').on('click', () => {
         const room = $('#room').val().trim();
-        
+        console.log(room, currentCodes.includes(room), currentCodes)
         if (currentCodes.includes(room)) {
             window.location.href = `/room${room}`; 
         } 
@@ -66,6 +65,12 @@ $(() => {
             $(this).fadeOut(200)
         }
     })
+
+    $('.recconect-back-btn').on('click', () => {
+        console.log("GSDGGggggg")
+        clearCookie(["room", "state", "userAnswers", "userTimers", "userTokens", "temporaryName", "timeStop", "time"])
+        $('#modal-bg-connect').fadeOut(200)
+    }) 
 
     $('#room').on('keydown', function(event){
         if (event.key === "Enter"){

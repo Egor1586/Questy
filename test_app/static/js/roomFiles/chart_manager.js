@@ -50,7 +50,7 @@ function accuracyAquestions(resultData, totalQuestion){
     for (let question_number= 0; question_number < totalQuestion; question_number++){
         let pas_accurasy= 0;
         for (let array= 0; array < allAnswersArray.length; array++){
-            if (allAnswersArray[array].correct_answers_list[question_number] == 1){
+            if (allAnswersArray[array].correct_answers_list[question_number] === 1){
                 pas_accurasy++
             }
         }
@@ -384,7 +384,7 @@ function createChart4(canvasId, resultData, totalQuestion, userName= null, type)
 function renderDoughnutChart(canvasId, totalAnswer, correctCount){
     let correctPercent= (correctCount/totalAnswer) * 100;
     let incorrectPercent= 100- correctPercent;
-
+    
     try {
         let existing_chart = Chart.getChart('donat-chart')
         existing_chart.destroy();

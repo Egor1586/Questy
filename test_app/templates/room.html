@@ -27,7 +27,7 @@
     <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_question.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_result_test.js') }}"></script>
     <script src="{{ url_for('test_app.static', filename= 'js/roomRenderPages/render_author_result_test.js') }}"></script>
-
+    
     <script>
         let username = "{{ username }}"; 
         const room = "{{ test.test_code }}"; 
@@ -40,7 +40,7 @@
             }
         }
         
-        const socket= io("/room", 
+        const socket= io("/", 
             {
                 reconnection: true,
                 reconnection: 7,
@@ -61,6 +61,13 @@
         let plusAnswerTime= 0;
         let timerInterval= null;
         let plusTimeCount= 15
+        let questionNumber= 0
+
+        if (totalQuestion <= 9){
+            questionNumber= -1
+        } else if (totalQuestion <= 99){
+            questionNumber= -2
+        }
 
         if (timerPaused === NaN){
             setCookie("timeStop", "false")
@@ -74,7 +81,7 @@
         if (state && state.includes("authorStart")) {
             state= getCookie("state")
             let time= getCookie("time")
-            renderAuthorStart(listQuiz[Number(state.slice(-1))], room, authorName, Number(state.slice(-1)), totalQuestion);
+            renderAuthorStart(listQuiz[Number(state.slice(questionNumber))], room, authorName, Number(state.slice(questionNumber)), totalQuestion, Number(state.slice(questionNumber)));
         } 
         else if (state === "authorResultTest") {
             renderAuthorResultTest(username, authorName, totalQuestion);
@@ -82,7 +89,6 @@
         else if (state === "resultTest") {
             renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
         } else if (recconect){
-            console.log("USER RECCONECT")
             clearCookie(["recconect"])
 
             socket.emit("reconnect_user", {
@@ -90,10 +96,12 @@
                 username: username,
                 author_name: authorName
             });
+
+            renderWaiteQuestion("recconect")
         }
         else if (state && state.includes("question")) {
             let time= getCookie("time")
-            renderQuestion(Number("{{ test.id }}"), listQuiz[Number(state.slice(-1))], listAnswers[Number(state.slice(-1))], room, authorName);
+            renderQuestion(Number("{{ test.id }}"), listQuiz[Number(state.slice(questionNumber))], listAnswers[Number(state.slice(questionNumber))], room, authorName);
         } 
         else if (state && state.includes("waite")) {
             renderWaiteQuestion("test");
@@ -116,7 +124,7 @@
                 renderWaiteQuestion("waite");
             }
         }
- 
+
         socket.on("connect", function () {     
             socket.emit("join", {
                 room: room,
@@ -154,6 +162,32 @@
             }
         });
 
+        socket.on('user_disconnected', function(data) {  
+            
+            let messages = document.getElementById("messages");
+            if (messages) {
+                messages.innerHTML += `<p class="other-msg">${data['msg']}</p>`;  
+            }  
+
+            if (messages && messages.children.length != 1){
+                const emptyMessages= document.getElementById("no-messages");
+                if (emptyMessages){
+                    emptyMessages.remove()
+                }
+            }
+
+            let removeUserBlock= document.getElementById(`user${data['username']}`)
+
+            if (removeUserBlock) {
+                removeUserBlock.remove()
+            }
+        });
+
+        socket.on('kicked', function(data) {
+            clearCookie(["room", "state", "userAnswers", "compound", "countUsersAnswer", "temporaryName", "timeStop", "time"])
+            window.location.href = '/'; 
+        });    
+        
         socket.on("author_receive_answer", function(data) {     
             let answer= data["answer"]           
             let countUsersAnswer= getCookie("countUsersAnswer");
@@ -161,7 +195,7 @@
             setCookie("countUsersAnswer", countUsersAnswer)
 
             state = getCookie("state");    
-            addUserAnswer(data["username"], answer, authorName, listQuiz[Number(state.slice(-1))]);
+            addUserAnswer(data["username"], answer, authorName, listQuiz[Number(state.slice(questionNumber))]);
             
             socket.emit("get_room_size", {
                 room: room,
@@ -186,12 +220,11 @@
                     new_state= -1
                     renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
                 } else{
-                    new_state= Number(state.slice(-1))
+                    new_state= Number(state.slice(questionNumber))
                 }
-                console.log("AUTHOER DONE", Number(state.slice(-1)))
+                console.log("AUTHOER DONE", Number(state.slice(questionNumber)))
             }
-            console.log("ALLL WHYYY DONE")
-            alert(new_state)
+
             socket.emit("new_state", {
                 room: room,
                 username: data.username,
@@ -204,6 +237,7 @@
         socket.on("new_state", function(data) {  
             console.log(data["new_state"], "NEWNWE STATE")
             let new_state= Number(data["new_state"])
+            console.log("resultTest end", new_state)
 
             if (new_state === -1){
                 console.log("resultTest end", new_state)
@@ -221,10 +255,12 @@
                     renderWaiteQuestion("test");
                 }
 
-                checkAnswers()
+                checkAnswers("recconect")
             } else{
                 console.log("BAD REQUEST NEW STATE")
             }
+
+            console.log("resultTest end", new_state)
         });
 
         socket.on("next_question", function(data) {  
@@ -232,10 +268,10 @@
             setCookie("timeStop", "false")
             timerPaused= false
             
-            checkAnswers();
+            checkAnswers("test");
             plusAnswerTime= 0
             if (state != "authorResultTest") {
-                let numberOfQuestion= Number(state.slice(-1));
+                let numberOfQuestion= Number(state.slice(questionNumber));
                 setCookie("time", Number(listQuiz[numberOfQuestion + 1].time))
                 if (numberOfQuestion != totalQuestion - 1) {
                     setCookie("state", `question${numberOfQuestion + 1}`)
@@ -254,13 +290,16 @@
         });
 
         socket.on("result_test", function(data) {      
-            checkAnswers();
+            checkAnswers("test");
 
             renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId)
 
             userAnswers= getCookie("userAnswers")
             userTimers= getCookie("userTimers")
             userTokens= getCookie("userTokens")
+
+            console.log("result_test result_test result_test")
+            console.log(userAnswers, userTimers, userTokens)
 
             socket.emit("user_answers", {
                 room: room,
@@ -326,11 +365,6 @@
             }
         });
 
-        socket.on('kicked', function(data) {
-            clearCookie(["room", "state", "userAnswers", "compound", "countUsersAnswer", "temporaryName", "timeStop", "time"])
-            window.location.href = '/'; 
-        });
-
         socket.on('plus_time', function(data) {          
             const timer= document.getElementById("timer")
             if (!timer) return;
@@ -350,38 +384,17 @@
 
             if (playBtn){
                 if (timerPaused){
-                    playBtn.textContent= "Play"
+                    playBtn.textContent= "Почати"
                 }
                 else{
-                    playBtn.textContent= "Stop"
+                    playBtn.textContent= "Зупинити"
                 }
-            }
-        });
-
-        socket.on('user_disconnected', function(data) {  
-            
-            let messages = document.getElementById("messages");
-            if (messages) {
-                messages.innerHTML += `<p class="other-msg">${data['msg']}</p>`;  
-            }  
-
-            if (messages && messages.children.length != 1){
-                const emptyMessages= document.getElementById("no-messages");
-                if (emptyMessages){
-                    emptyMessages.remove()
-                }
-            }
-
-            let removeUserBlock= document.getElementById(`user${data['username']}`)
-
-            if (removeUserBlock) {
-                removeUserBlock.remove()
             }
         });
 
         socket.on('start_test', function(data) {   
             let stateCookies= getCookie("state")
-            let state= stateCookies ? Number(stateCookies.slice(-1)) : 0;
+            let state= stateCookies ? Number(stateCookies.slice(questionNumber)) : 0;
             let messages = document.getElementById("messages");         
             if (messages){
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
@@ -395,7 +408,7 @@
                 setCookie("state", "authorStart0")  
                 setCookie("countUsersAnswer", 0)  
                 setCookie("countCorrectAnswer", 0)  
-                renderAuthorStart(listQuiz[0], room, authorName, state, totalQuestion);
+                renderAuthorStart(listQuiz[0], room, authorName, state, totalQuestion, state);
             }
             else if(compoundStart) {
                 setCookie("state", "question0")  
@@ -405,5 +418,4 @@
             }
         });
     </script>
-    
 {% endblock %}

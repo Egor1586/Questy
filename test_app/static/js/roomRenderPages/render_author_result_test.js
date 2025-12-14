@@ -13,7 +13,7 @@ function appendResultRow(resultTable, username, answersArray, resultData, accura
 
     let numberCorrectAnswers = 0;
     for (let index= 0; index < answersArray.length; index++) {
-        if (answersArray[index] == 1){
+        if (answersArray[index] === 1){
             numberCorrectAnswers++;
         }
     }
@@ -136,7 +136,7 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
 
         const exelButton= document.createElement('button');
         exelButton.className= 'exel-btn';
-        exelButton.textContent = 'Exel table';
+        exelButton.textContent = 'Завантажити Exel таблицю';
         exelButton.addEventListener("click", () => exel_table(username, authorName, resultData, best_score_data));
 
         leftButtonBox.appendChild(allInfoButton)

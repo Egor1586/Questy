@@ -21,7 +21,7 @@ function addUserAnswer(username, answer, authorname, quiz) {
         answer= sortedAnswers
     }
 
-    if (answer == correctAnswer){
+    if (answer === correctAnswer){
         countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
         setCookie("countCorrectAnswer", countCorrect)
     }
@@ -52,13 +52,13 @@ function addUserAnswer(username, answer, authorname, quiz) {
         countUsersAnswer= getCookie("countUsersAnswer")
         correctAnswerChart= getCookie("countCorrectAnswer")
         
-        if (lengthArrey == countUsersAnswer){
+        if (lengthArrey === Number(countUsersAnswer)){
             renderDoughnutChart("donat-chart", lengthArrey, correctAnswerChart)
         }
     })
 }
 
-function renderAuthorStart(quiz, room, authorname, number_of_question, total_question) {
+function renderAuthorStart(quiz, room, authorname, number_of_question, totalQuestion, questionNumber) {
     const waiteContent = document.getElementById("room-content");
     waiteContent.innerHTML = ""; 
     waiteContent.id = 'container-question'
@@ -72,7 +72,8 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
 
     const headerRow= document.createElement('tr')
     const questionHeader= document.createElement('th')
-    questionHeader.textContent= "Питання:"
+    questionHeader.id= "question-title"
+    questionHeader.textContent= `Питання: ${questionNumber + 1} з ${totalQuestion}`
     const answerHeader= document.createElement('th')
     answerHeader.textContent= "Правильна відповідь:"
 
@@ -93,8 +94,8 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
     correctAnswer.className= 'author-correct-answer'
     correctAnswer.style.display= "none"
 
-    if (quiz.question_type == "multiple_choice"){
-        correctAnswer.textContent= `${quiz.correct_answer.replace("%$№", " ")}`
+    if (quiz.question_type === "multiple_choice"){
+        correctAnswer.textContent= `${quiz.correct_answer.replace("%$№", " та ")}`
     }
     else{
         correctAnswer.textContent= `${quiz.correct_answer}`
@@ -173,14 +174,14 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
         let nextButton= '';
         lengthArrey = userArrey.length
 
-        if (number_of_question == total_question- 1){
+        if (number_of_question === totalQuestion- 1){
             nextButton= `<button id="next-q" class="next-q" onclick="testStop()">Кінець тесту</button>`
         }
         else{
             nextButton= `<button id="next-q" class="next-q" onclick="nextQuestion()">Наступне питання</button>`
         }
         studInfoBox.innerHTML = `
-            <div> 
+            <div class= "test-nav-info"> 
                 <h3>Інформація для вчителя</h3>
                 <ul>
                     <li>Всього учнів: <strong></strong>${lengthArrey}</li>
@@ -190,8 +191,8 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, total_que
             <div class="test-nav-btn"> 
                 ${nextButton}
                 <div class="test-time-btn"> 
-                    <button onclick="plusTime()" class="timer-btn">Plus +15</button>
-                    <button onclick="stopTime()" id="play-btn" class="timer-btn">Stop</button>
+                    <button onclick="plusTime()" class="timer-btn">Плюс +15сек.</button>
+                    <button onclick="stopTime()" id="play-btn" class="timer-btn">Зупинити</button>
                     <p id="timer">${quizTime}</p>
                 </div>
             </div>

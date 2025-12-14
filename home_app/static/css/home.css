@@ -508,7 +508,7 @@ header {
     background-color: "red";
 }
 
-.back-btn {
+.back-btn, .recconect-back-btn {
     padding: 1vh;
     position: absolute;
     top: 1vh;
@@ -521,6 +521,10 @@ header {
 }
 
 .back-btn:hover {
+    color: #333;
+}
+
+.recconect-back-btn:hover {
     color: #333;
 }
 
