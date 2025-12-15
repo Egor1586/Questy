@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    edit avatar
+{% endblock %}
+
+{% block links %}
+    
+{% endblock %}
+
+{% block content %}
+    <form action="" method="POST" class="form">
+        {% for index_cloth in range(5) %}
+        <div class="{{name_classes[index_cloth]}}">
+            {% for index in range(3) %}
+                {% if index + 1 == list_clothes[index_cloth] %}
+                    <input type="radio" name="{{name_classes[index_cloth]}}" checked value="{{index + 1}}">
+                {% else %}
+                    <input type="radio" name="{{name_classes[index_cloth]}}" value="{{index + 1}}">
+                {% endif %}
+            {% endfor %}
+            </div> 
+        {% endfor %}
+        <div class="input-group">
+            <button type="submit" class="submit-btn">Пiдтвердити</button>
+        </div>
+    </form>
+{% endblock %}
+
