@@ -34,8 +34,8 @@
         <hr>
             <div class="class-div">
                 {% if my_classes_list %}
+                    <h2>Доступні класи</h2>
                     <div class="card-div">
-                        <h2>Доступні класи</h2>
                         {% for class in my_classes_list %} 
                             {% set tasks = tasks_class_teacher_list[loop.index0] %}
 

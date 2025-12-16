@@ -24,13 +24,12 @@ def render_test_result():
         else :
             list_answers.append(quiz.answer_options.split("%$№"))
             
-    user_answers_cookies = flask.request.cookies.get(key= 'userAnswers')
+    user_answers_cookies = flask.request.cookies.get("userAnswers")
     task_test_id = flask.request.cookies.get(key= 'taskTestId') or None
     class_id = flask.request.cookies.get(key= 'classId') or None
-
+    print(user_answers_cookies, "user_answers_cookies")
     if user_answers_cookies:
-        user_answers_cookies = unquote(user_answers_cookies)
-        user_answers_cookies= user_answers_cookies.encode('latin1').decode('utf-8')
+        user_answers_cookies= unquote(user_answers_cookies)
         user_answers_list= user_answers_cookies.split("|")
 
         if len(user_answers_list) < len(quizzes_list):

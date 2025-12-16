@@ -9,7 +9,7 @@ function leaveTestBlock(kick_user, ip, type){
 }
 
 function userLeaveTest() {
-    clearCookie(["room", "state", "userAnswers", "userTimers", "userTokens", "countUsersAnswer", "temporaryName", "timeStop", "time"])
+    clearCookie(["room", "state", "userAnswers", "userTimers", "userTokens", "countUsersAnswer", "temporaryName", "timeStop", "time", "recconect"])
     window.location.href = '/';
 }
 
