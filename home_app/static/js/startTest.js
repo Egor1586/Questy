@@ -9,12 +9,6 @@ $(() => {
     })
 
     $('#clear').on('click', () => {
-        document.cookie = `state=; max-age=0; path=/;`;
-        document.cookie = `countUsersAnswer=; max-age=0; path=/;`;
-        document.cookie = `countCorrectAnswer=; max-age=0; path=/;`;
-        document.cookie = `timeStop=; max-age=0; path=/;`;
-        document.cookie = `time=; max-age=0; path=/;`;
-        document.cookie = `blockedUsers=; max-age=0; path=/;`;
-        document.cookie = `userList=; max-age=0; path=/;`;
+        clearCookie(["room", "state", "userList", "countCorrectAnswer", "countUsersAnswer", "blockedUsers", "timeStop", "time"])
     })
 })

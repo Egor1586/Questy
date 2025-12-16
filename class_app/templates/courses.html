@@ -125,8 +125,10 @@
 
     <script>
         function passingTaskTest(testId, classId){
-            document.cookie = `taskTestId= ${testId}; path = /`; 
-            document.cookie = `classId= ${classId}; path = /`; 
+            setCookie("taskTestId", testId)
+            setCookie("classId", classId)
+            //document.cookie = `taskTestId= ${testId}; path = /`; 
+            //document.cookie = `classId= ${classId}; path = /`; 
         }
     </script>
 {% endblock %}

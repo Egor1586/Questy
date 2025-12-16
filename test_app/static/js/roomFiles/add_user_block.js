@@ -1,3 +1,98 @@
+function leaveTest(){
+    clearCookie(["temporaryName"])
+    window.location.href = `/`;
+}
+
+function leaveTestBlock(kick_user, ip, type){
+    clearCookie(["temporaryName", "compound", "time", "room"])
+    window.location.href = `/`;
+}
+
+function userLeaveTest() {
+    clearCookie(["room", "state", "userAnswers", "userTimers", "userTokens", "countUsersAnswer", "temporaryName", "timeStop", "time"])
+    window.location.href = '/';
+}
+
+function authorLeaveTest(type){
+    let currentURL = window.location.href;
+    let roomCode = currentURL.split('room')[1];
+    roomCode= roomCode.split("?")[0]
+   
+    if (type === "waite"){
+        socket.emit("end_test", {
+            room: room,         
+            username: username  
+        });
+    }
+     
+    socket.emit("test_end", {
+        room: roomCode
+    });
+    
+    clearCookie(["room", "state", "userList", "countCorrectAnswer", "countUsersAnswer", "blockedUsers", "timeStop", "time"])
+
+    setTimeout(() => {
+        window.location.href = '/'; 
+    }, 200);
+}
+
+function kickUser(kick_user, ip, type) {   
+    let UserList= getCookie("userList") || ""
+    let users= UserList.split("</>").filter(username => username.trim() !== "")
+
+    users= users.filter(userStr => {
+        const [name, userIp]= userStr.split("()")
+        return name !== kick_user
+    })
+
+    const newUserList = users.join("</>")
+
+    setCookie("userList", newUserList)
+    socket.emit("kick_user", {
+        room: room,
+        user: kick_user
+    });
+
+    if (type === "block"){
+        let blockUserArray= getCookie("blockedUsers")
+        
+        if (!blockUserArray){
+            setCookie("blockedUsers", ip)
+        } else{
+            setCookie("blockedUsers", `${blockUserArray}$%^${ip}`)
+        }
+    }
+
+    let removeUserBlock= document.getElementById(`user${kick_user}`)
+
+    if (removeUserBlock) {
+        removeUserBlock.remove()
+    }
+}
+
+function addUesrBlock(username, button){
+    const userBlock= button.closest(".user-block")
+    const userIP= userBlock.querySelector(".user-ip").textContent.trim()
+    let addUserList= getCookie("userList")
+
+    if (!addUserList){
+        setCookie("userList", `${username}()${userIP}`)
+    } else {
+        setCookie("userList", `${addUserList}</>${username}()${userIP}`)
+    }
+
+    if (userBlock){
+        userBlock.remove()
+    }
+    
+    socket.emit("new_user", {
+        room: room,
+        username: username,
+        author_name: authorName,
+        user_ip: userIP ?? null
+    });
+}
+
 function createUserBlock(username, authorName, blockUsername, ip, type) {   
     let userListDiv
     let checkingUserBlock

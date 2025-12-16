@@ -126,7 +126,6 @@ function renderRoomMain(testCode, authorName, username, quizzes, userListName) {
     waiteSideBottom = document.createElement("div");
     waiteSideBottom.className = "waite-side-bottom";
     if (authorName === username) {
-
         const buttonStart = document.createElement("button");
         buttonStart.type = "button";
         buttonStart.className = "btn-start";

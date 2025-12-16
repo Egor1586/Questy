@@ -38,6 +38,8 @@ def room_get_result(room, author_name, username):
                 USER_LIST.append(USER)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
+    print("all lists")
+    print(SCORE_LIST, UNREG_USER_LIST, USER_LIST, QUIZ_LIST)
     if (USER_LIST):
         for user in USER_LIST:
             answers_list= []
@@ -75,11 +77,11 @@ def room_get_result(room, author_name, username):
                         else:
                             correct_answers_list.append(0)
 
-                    room_get_result_data[user.username]= {
-                        "correct_answers_list": correct_answers_list,
-                        "timers_list": timers_list,
-                        "token_list": token_list       
-                    }
+                room_get_result_data[user.username]= {
+                    "correct_answers_list": correct_answers_list,
+                    "timers_list": timers_list,
+                    "token_list": token_list       
+                }
 
     if(UNREG_USER_LIST):
         for user in UNREG_USER_LIST:
@@ -118,11 +120,11 @@ def room_get_result(room, author_name, username):
                         else:
                             correct_answers_list.append(0)
 
-                    room_get_result_data[user]= {
-                        "correct_answers_list": correct_answers_list,
-                        "timers_list": timers_list,
-                        "token_list": token_list         
-                    }
+                room_get_result_data[user]= {
+                    "correct_answers_list": correct_answers_list,
+                    "timers_list": timers_list,
+                    "token_list": token_list         
+                }
 
     BEST_SCORE= None
     best_accuracy= 0
@@ -130,7 +132,7 @@ def room_get_result(room, author_name, username):
     averega_score= 0
 
     for score in SCORE_LIST:
-        averega_accuracy =+ score.accuracy
+        averega_accuracy += score.accuracy
         if score.accuracy > best_accuracy:
             BEST_SCORE= score
 
@@ -155,6 +157,8 @@ def room_get_result(room, author_name, username):
             "accuracy": SCORE_LIST[0].accuracy,
         }
 
+    print("room_get_result_data, best_score_data, averega_score")
+    print(room_get_result_data, best_score_data, averega_score)
     return room_get_result_data, best_score_data, averega_score
 
 @Project.settings.socketio.on('join')
@@ -167,7 +171,7 @@ def handle_join(data):
 
     test= Test.query.filter_by(test_code = room).first()
     ROOM= Room.query.filter_by(test_code = room).first()
-
+    
     if not ROOM:
         NEW_ROOM = Room(
             test_id= test.id,
@@ -196,16 +200,31 @@ def handle_disconnect():
     if username:
         ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
 
-        if ROOM.user_list:
+        if ROOM and ROOM.user_list:
             ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
             db.session.commit()
 
-        emit('user_disconnected', {
-                'msg': f'{username} відключився',
-                "username": f"{username}"
-                }, 
-            to=ROOM.test_code)
-        
+            emit('user_disconnected', {
+                    'msg': f'{username} відключився',
+                    "username": f"{username}"
+                    }, 
+                to=ROOM.test_code)
+
+@Project.settings.socketio.on('reconnect_user')
+def handle_reconnect_user(data):
+    author = data['author_name']
+    author_sid = get_sid(author)
+
+    emit("reconnect_ping", {"room": data["room"], "username": data["username"]}, room= author_sid)
+
+@Project.settings.socketio.on('new_state')
+def handle_new_state(data):
+    new_state= data["new_state"]
+    username= data["username"]
+    user_sid= get_sid(username)
+    print(new_state)
+    emit("new_state", {"room": data["room"], "username": username, "new_state": new_state, "new_time": data["new_time"]}, room= user_sid)
+
 @Project.settings.socketio.on('test_end')
 def handle_clear_test_code(data):
     room = data['room']
@@ -241,7 +260,7 @@ def handle_kick_user(data):
 @Project.settings.socketio.on('get_usernames')
 def handle_send_usernames(data):
     room = data['room']
-    author = data['authorname']
+    author = data['author_name']
     author_sid = get_sid(author)
 
     ROOM = Room.query.filter_by(test_code = room).first()
@@ -255,7 +274,7 @@ def handle_send_usernames(data):
     emit("get_usernames", clean_users_in_room, room= author_sid)
 
 @Project.settings.socketio.on('user_answers')
-def handle_message(data):
+def handle_user_answers(data):
     room= data["room"]
     user_name= data["username"]
     user_tokens= data["user_tokens"]
@@ -278,6 +297,8 @@ def handle_message(data):
     
     number_of_correct_answers = 0
     user_tokens= user_tokens.split("|")
+
+    print(user_tokens, user_answers_list, data["user_timers"])
     for index, quiz in enumerate(range(len(QUIZ_LIST))):
         if user_answers_list[quiz] == QUIZ_LIST[quiz].correct_answer:
             number_of_correct_answers += 1
@@ -306,6 +327,7 @@ def handle_message(data):
         test_code= room
     )
 
+    print(data["user_answers"], "\n", data["user_timers"], "\n", new_token_list, "\n", accuracy, "\n", TEST.id, "\n", USER.id, "\n", user_name, "\n", room)
     if (USER):
         if USER.tokens:
             USER.tokens = int(USER.tokens) + tokens
@@ -316,7 +338,7 @@ def handle_message(data):
     db.session.commit()
 
 @Project.settings.socketio.on('user_answer')
-def handle_message(data):
+def handle_user_answer(data):
     author_name = data['author_name']
     username= data['username']
     answer= data['answer']
@@ -326,7 +348,7 @@ def handle_message(data):
     emit("author_receive_answer", {"username": username, "answer": answer}, room= author_sid)
 
 @Project.settings.socketio.on('get_room_size')
-def handle_message(data):
+def handle_get_room_size(data):
     room= data["room"]
     author_name= data["author_name"]
 
@@ -368,11 +390,11 @@ def handle_start_test(data):
         , to=room)
 
 @Project.settings.socketio.on('message_to_chat')
-def handle_message(data):
+def handle_message_to_chat(data):
     emit("listening_to_messages", f"{data['username']}: {data['message']}", include_self= False, to= data['room'])
 
 @Project.settings.socketio.on('new_user')
-def handle_message(data):
+def handle_new_user(data):
     room= data['room']
     username= data['username']
 
@@ -381,7 +403,7 @@ def handle_message(data):
     emit("create_user_block", {"username": username, "user_ip": data["user_ip"]}, to= room)
 
 @Project.settings.socketio.on('new_user_admin')
-def handle_message(data):
+def handle_new_user_admin(data):
     author_name= data["author_name"]
     compound= data.get("compound", 0)
 
@@ -389,20 +411,20 @@ def handle_message(data):
     emit("new_user_admin", {"username": data["username"], "ip": data["ip"], "compound": compound}, to= author_sid)
 
 @Project.settings.socketio.on('next_question')
-def handle_message(data):
+def handle_next_question(data):
     emit("next_question", f"Next question in {data['room']} author {data['author_name']}", include_self= False, to= data['room'])
 
 @Project.settings.socketio.on('stop_test')
-def handle_message(data):
+def handle_stop_test(data):
     emit("result_test", f"Stop test {data['room']} result_test page author {data['author_name']}", include_self= False, to= data['room'])
 
 @Project.settings.socketio.on('end_test')
-def handle_message(data):
+def handle_end_test(data):
     room= data["room"]
     emit("kicked", room, include_self= False, to= room)
 
 @Project.settings.socketio.on('room_get_result')
-def handle_message(data):
+def handle_room_get_result(data):
     user_sid= get_sid(data["username"])
     room_get_result_data, best_score_data, averega_score= room_get_result(data["room"], data["author_name"], data["username"])
    
@@ -411,11 +433,11 @@ def handle_message(data):
                                   "averega_score": averega_score}, to= user_sid)
 
 @Project.settings.socketio.on('plus_time')
-def handle_message(data):
+def handle_plus_time(data):
     emit("plus_time", to= data['room'])
 
 @Project.settings.socketio.on('change_time')
-def handle_message(data):
+def handle_change_time(data):
     emit("change_time", to= data['room'])
 
 @render_page(template_name = 'room.html')

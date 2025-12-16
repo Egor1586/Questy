@@ -57,7 +57,7 @@ function buildTest(){
                 })
                 
                 arrayAnswersInput.forEach(answerInput => {
-                    if(questionBlock.querySelector(".answers").id == "choice"){
+                    if(questionBlock.querySelector(".answers").id === "choice"){
                         
                         let answerText = answerInput.querySelector(".answer-text")
                         let answerRadio = answerInput.querySelector(".question-radio")
@@ -77,7 +77,7 @@ function buildTest(){
                         }
                         
                     }
-                    if(questionBlock.querySelector(".answers").id == "input"){
+                    if(questionBlock.querySelector(".answers").id === "input"){
                         let answerText = answerInput.querySelector(".answer-text")
                         if (answerText.value != ""){
                             countAnswers = countAnswers + 2
@@ -90,7 +90,7 @@ function buildTest(){
                         }
                         
                     }
-                    if(questionBlock.querySelector(".answers").id == "multiple_choice"){
+                    if(questionBlock.querySelector(".answers").id === "multiple_choice"){
                         
                         let answerText = answerInput.querySelector(".answer-text")
                         let answerRadio = answerInput.querySelector(".checkbox")
@@ -116,7 +116,7 @@ function buildTest(){
                     }
                     
                 }
-                if(questionBlock.querySelector(".answers").id == "image"){
+                if(questionBlock.querySelector(".answers").id === "image"){
                     
                     let answerText = answerInput.querySelector(".answer-text")
                     let answerRadio = answerInput.querySelector(".question-radio")
@@ -153,10 +153,10 @@ function buildTest(){
         }
         else{
             flagError = true
-            if(messageError == "")(messageError = "Ви не задали назву тесту або опис")
+            if(messageError === "")(messageError = "Ви не задали назву тесту або опис")
         }})
     
-    if(flagError == false && questionCount > 2){
+    if(flagError === false && questionCount > 2){
         correctData = data
     }
     

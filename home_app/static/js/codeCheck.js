@@ -1,6 +1,7 @@
 $(() => {
     let testId= ""
     let currentCodes = [];
+    let saevedRoom= getCookie("room")
     
     async function updateCodes() {
         try {
@@ -11,13 +12,29 @@ $(() => {
             console.log(error);
         }
     }
-        
+
+    if (saevedRoom){
+        $('#modal-bg-connect').fadeIn(200);
+    }
+
+    $('#connect-test-btn').on('click', () => {
+        if (saevedRoom){
+            setCookie("recconect", "1")
+            window.location.href= `/room${saevedRoom}`
+        }
+    })
+
+    $('#leave-test-btn').on('click', () => {
+        clearCookie(["room", "state", "userAnswers", "userTimers", "userTokens", "countUsersAnswer", "temporaryName", "timeStop", "time"])
+        $('#modal-bg-connect').fadeOut(200)
+    })
+
     updateCodes();
     setInterval(updateCodes, 5000);
         
     $('.search-btn').on('click', () => {
         const room = $('#room').val().trim();
-        
+        console.log(room, currentCodes.includes(room), currentCodes)
         if (currentCodes.includes(room)) {
             window.location.href = `/room${room}`; 
         } 
@@ -40,6 +57,7 @@ $(() => {
 
     $('.back-btn').on('click', function(){
         $('#modal-bg').fadeOut(200)
+        $('#modal-bg-connect').fadeOut(200)
     }) 
 
     $('#modal-bg').on('click', function(element) {
@@ -47,6 +65,12 @@ $(() => {
             $(this).fadeOut(200)
         }
     })
+
+    $('.recconect-back-btn').on('click', () => {
+        console.log("GSDGGggggg")
+        clearCookie(["room", "state", "userAnswers", "userTimers", "userTokens", "temporaryName", "timeStop", "time"])
+        $('#modal-bg-connect').fadeOut(200)
+    }) 
 
     $('#room').on('keydown', function(event){
         if (event.key === "Enter"){
