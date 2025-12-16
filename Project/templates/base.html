@@ -40,11 +40,7 @@
             <div class="user-actions">
                 {% if is_authorization %}
                     <h2 class="username">{{ username }}</h2>
-                    <form action="/logout" method="post">
-                        {{ form.hidden_tag() }} 
-                        {{ form.name.label }}
-                        {{ form.name() }}
-                        {{ form.submit() }}
+                    <form action="/logout">
                         <button class="logout">Вийти</button>
                     </form>
                 {% else %}
