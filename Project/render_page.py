@@ -19,17 +19,15 @@ def render_page(template_name: str):
             if isinstance(context, flask.Response):
                 return context
 
-            # Блокировка доступа для не-учителей
             if template_name in block_temp and not current_user.is_teacher:
                 return flask.redirect("/")
-
-            # Обновляем контекст безопасно
+            
             context.update({
                 'is_authorization': current_user.is_authenticated,
                 'username': current_user.username if current_user.is_authenticated else "",
                 'email': current_user.email if current_user.is_authenticated else "",
                 'is_teacher': current_user.is_teacher if current_user.is_authenticated else False,
-                'is_admin': current_user.is_admin if current_user.is_authenticated else "",
+                'is_admin': current_user.is_admin if current_user.is_authenticated else False,
             })
 
             return flask.render_template(template_name, **context)
