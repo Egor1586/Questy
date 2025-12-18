@@ -327,7 +327,7 @@ def handle_user_answers(data):
         test_code= room
     )
 
-    print(data["user_answers"], "\n", data["user_timers"], "\n", new_token_list, "\n", accuracy, "\n", TEST.id, "\n", USER.id, "\n", user_name, "\n", room)
+    # print(data["user_answers"], "\n", data["user_timers"], "\n", new_token_list, "\n", accuracy, "\n", TEST.id, "\n", USER.id, "\n", user_name, "\n", room)
     if (USER):
         if USER.tokens:
             USER.tokens = int(USER.tokens) + tokens

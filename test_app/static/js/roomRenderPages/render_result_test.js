@@ -1,4 +1,4 @@
-function renderResultTest(username, total_question, list_quiz, list_answers, test_id) {
+function renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId) {
     let answersStr = getCookie("userAnswers");
     let answers_list= answersStr.split("|");
     let userAnswers = [];
@@ -18,18 +18,30 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
 
     let correctAnswer = 0;
 
-    for (let count = 0; count < list_quiz.length; count++) {
+    for (let count = 0; count < listQuiz.length; count++) {
         let arrayCorrectAnswers= []
         let arrayUserAnswers= []
-        if (list_quiz[count].question_type === "multiple_choice"){
-            arrayCorrectAnswers= list_quiz[count].correct_answer.split("%$№")
+        console.log(listQuiz[count].correct_answer, answersArrey[count], listQuiz[count].correct_answer === answersArrey[count])
+        if (listQuiz[count].question_type === "multiple_choice"){
+            arrayCorrectAnswers= listQuiz[count].correct_answer.split("%$№")
             arrayUserAnswers= answersArrey[count].split("$$$")
             let correctAnswerAccept= true
+            console.log(arrayCorrectAnswers.length === arrayUserAnswers.length, arrayCorrectAnswers, arrayUserAnswers)
+            //if (arrayCorrectAnswers.length === arrayUserAnswers.length){
+            //    arrayCorrectAnswers.sort();
+            //    arrayUserAnswers.sort();
+//
+            //    let correctAnswerAccept =
+            //        arrayCorrectAnswers.length === arrayUserAnswers.length &&
+            //        arrayCorrectAnswers.every((val, i) => val === arrayUserAnswers[i]);
+            //}
             if (arrayCorrectAnswers.length === arrayUserAnswers.length){
-                for (let answerIndex = 0; answerIndex < arrayCorrectAnswers.length; answerIndex++){
-                    if (arrayCorrectAnswers[answerIndex] !== arrayUserAnswers[answerIndex]){
-                        correctAnswerAccept= false;
-                        break
+                arrayCorrectAnswers.sort();
+                arrayUserAnswers.sort();
+
+                for(let question= 0; question < totalQuestion; question++){
+                    if (arrayCorrectAnswers[question] === arrayUserAnswers[question]){
+                        correctAnswerAccept= true;
                     }
                 }
             }
@@ -39,16 +51,18 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
 
             if (correctAnswerAccept){
                 correctAnswer++;
+                console.log("correctAnswer++;")
             }
         }
         else {
-            if (list_quiz[count].correct_answer === answersArrey[count]) {     
+            if (listQuiz[count].correct_answer === answersArrey[count]) {     
                 correctAnswer++;
+                console.log("correctAnswer++;")
             }
         }
     }
 
-    let accuracy = (correctAnswer / total_question) * 100;
+    let accuracy = (correctAnswer / totalQuestion) * 100;
 
     const resultContainer = document.getElementById("room-content");
     resultContainer.innerHTML = "";
@@ -62,7 +76,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
     testInfo.className = 'text-info';
 
     const info1 = document.createElement('p');
-    info1.innerHTML = `<strong>${username}</strong> ваш результат: <strong>${correctAnswer}</strong> з ${total_question}`;
+    info1.innerHTML = `<strong>${username}</strong> ваш результат: <strong>${correctAnswer}</strong> з ${totalQuestion}`;
 
     const info2 = document.createElement('p');
     info2.innerHTML = `Точність правильних відповідей: <strong>${accuracy.toFixed(1)}%</strong>`;
@@ -113,7 +127,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
         labels: ['Правильні відповіді', 'Усього питань'],
         datasets: [{
         label: 'Результат',
-        data: [correctAnswer, total_question - correctAnswer],
+        data: [correctAnswer, totalQuestion - correctAnswer],
         backgroundColor: [
             'rgba(75, 192, 192, 0.5)',
             'rgba(255, 99, 132, 0.5)'
@@ -132,8 +146,8 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
     }
     });
 
-    for (let quiz_number = 0; quiz_number < total_question; quiz_number++) {
-        let quiz= list_quiz[quiz_number]
+    for (let quiz_number = 0; quiz_number < totalQuestion; quiz_number++) {
+        let quiz= listQuiz[quiz_number]
         const questionBlock = document.createElement('div');
         questionBlock.className = 'question-block';
 
@@ -151,7 +165,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             imageDiv.className = "image-result-div";
 
             const image = document.createElement("img");
-            image.src = `/test_app/static/images/${test_id}/${quiz.image_name}`;
+            image.src = `/test_app/static/images/${testId}/${quiz.image_name}`;
             image.alt= "quiz image";
 
             imageDiv.appendChild(image)
@@ -172,8 +186,8 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
                 questionBlock.appendChild(notAnswerDiv);
             }
 
-            for (let answer_number = 0; answer_number < list_answers[quiz_number].length; answer_number++) {
-                let answerText = list_answers[quiz_number][answer_number];
+            for (let answer_number = 0; answer_number < listAnswers[quiz_number].length; answer_number++) {
+                let answerText = listAnswers[quiz_number][answer_number];
                 answers= answersArrey[quiz_number]
 
                 if (answerText !== quiz.correct_answer && answerText !== answers) {
@@ -197,7 +211,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             }
         }
         else if (quiz.question_type === "input"){
-            let answerText = list_answers[quiz_number];
+            let answerText = listAnswers[quiz_number];
             let answers= answersArrey[quiz_number]
 
             if (answers === "not_answer"){
@@ -231,7 +245,7 @@ function renderResultTest(username, total_question, list_quiz, list_answers, tes
             }
         }
         else if (quiz.question_type === "multiple_choice"){
-            let answerText = list_answers[quiz_number];
+            let answerText = listAnswers[quiz_number];
             let answers= answersArrey[quiz_number].split("$$$");
             let correct_answer_list= quiz.correct_answer.split("%$№");
 
