@@ -18,9 +18,10 @@ function renderWaiteQuestion(type) {
     let textWaiteQuestion= "Будь ласка, зачекайте, поки інші учасники відповідають..."
     if (type === "waite"){
         leaveButton= `<button class='leave-test' onclick="leaveTest()">Відключитися від тесту</button>`
-    }
-
-    if (type === "recconect"){
+    } else if (type === "start"){
+        textWaiteQuestion= "Зачекайте, поки організатор прийме вас до тесту"
+        leaveButton= `<button class='leave-test' onclick="leaveTest()">Відключитися від тесту</button>`
+    } else if (type === "recconect"){
         setCookie("recconect", "1")
         textWaiteQuestion= 'Тест завершено, ваш результат не буде зараховано'
         leaveButton= `<button class='leave-test' onclick="userLeaveTest()">Відключитися від тесту</button>`
@@ -120,12 +121,12 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                     let userTokens= getCookie("userTokens")
 
                     curTime= getCookie("time");
-                    allTime= plusAnswerTime+ listQuiz[Number(state.slice(questionNumber))].time
+                    allTime= plusAnswerTime+ listQuiz[Number(state.replace(/\D/g, ""))].time
                     userTimer= allTime- curTime
                     token= tokenTimePrecent(userTimer, allTime)
                     console.log(token)
 
-                    setCookie("state", `waite${state.slice(questionNumber)}`)
+                    setCookie("state", `waite${state.replace(/\D/g, "")}`)
                     
                     if (typeof cookie === "undefined"){
                         setCookie("userAnswers", `|${button.id}|`)
@@ -178,12 +179,12 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             let answerValue= document.querySelector(".input-with-answer").value.trim()
 
             curTime= getCookie("time");
-            allTime= plusAnswerTime+ listQuiz[Number(state.slice(questionNumber))].time
+            allTime= plusAnswerTime+ listQuiz[Number(state.replace(/\D/g, ""))].time
             userTimer= allTime- curTime
             token= tokenTimePrecent(userTimer, allTime)
             console.log(token)
 
-            setCookie("state", `waite${state.slice(questionNumber)}`)
+            setCookie("state", `waite${state.replace(/\D/g, "")}`)
             newUserTokens= userTokens+ `|${token}`
             newUserTimers= userTimers+ `|${userTimer}`
 
@@ -272,7 +273,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             let userTokens= getCookie("userTokens")                  
             let answerValue= ""
             let arreyUserMultipleChoice= document.querySelectorAll(".active-multiple-answer")
-            allTime= plusAnswerTime+ listQuiz[Number(state.slice(questionNumber))].time
+            allTime= plusAnswerTime+ listQuiz[Number(state.replace(/\D/g, ""))].time
             userTimer= allTime- curTime
             token= tokenTimePrecent(userTimer, allTime)
             console.log(token)
@@ -289,7 +290,7 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
                 }
             }
 
-            setCookie("state", `waite${state.slice(questionNumber)}`)
+            setCookie("state", `waite${state.replace(/\D/g, "")}`)
 
             if (typeof answerValue === "undefined"){
                 answerValue= "not_answer"

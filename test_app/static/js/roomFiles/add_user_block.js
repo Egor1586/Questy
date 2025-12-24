@@ -192,3 +192,16 @@ function createUserBlock(username, authorName, blockUsername, ip, type) {
 
     return
 }
+
+function getDeviceId() {
+    let id = localStorage.getItem("device_id");
+    if (!id) {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        id = "";
+        for (let i = 0; i < 16; i++) {
+            id += chars[Math.floor(Math.random() * chars.length)];
+        }
+        localStorage.setItem("device_id", id);
+    }
+    return id;
+}

@@ -28,6 +28,7 @@ def render_test_result():
     task_test_id = flask.request.cookies.get(key= 'taskTestId') or None
     class_id = flask.request.cookies.get(key= 'classId') or None
     print(user_answers_cookies, "user_answers_cookies")
+    
     if user_answers_cookies:
         user_answers_cookies= unquote(user_answers_cookies)
         user_answers_list= user_answers_cookies.split("|")

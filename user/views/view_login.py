@@ -12,8 +12,8 @@ def render_login_app():
     form = LoginForm()
 
     if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
+        email= form.email.data
+        password= form.password.data
         
         user = User.query.filter_by(email= email).first()
         

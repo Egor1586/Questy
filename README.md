@@ -419,7 +419,7 @@
             listener= function ( event ) {
                 let cookie= getCookie("user_answers")
                 let state= getCookie("state")
-                document.cookie= `state=waite${state.slice(questionNumber)}; path=/`;
+                document.cookie= `state=waite${state.replace(/\D/g, "")}; path=/`;
                 if (typeof cookie === "undefined"){
                     document.cookie = `user_answers= |${button.id}|; path = /`     
                 }

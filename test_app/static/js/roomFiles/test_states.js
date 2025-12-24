@@ -21,7 +21,7 @@ function nextQuestion(){
     const nextButton = document.getElementById("next-q");
 
     state = getCookie("state");
-    let numberOfQuestion= Number(state.slice(questionNumber)) + 1;
+    let numberOfQuestion= Number(state.replace(/\D/g, "")) + 1;
     // let countUsersAnswer= getCookie("countUsersAnswer");
     
     setCookie("timeStop", "false") 
@@ -84,21 +84,21 @@ function nextQuestion(){
 function checkAnswers(type){
     state = getCookie("state");
     let token= 0
-    const questionIndex= Number(state.slice(questionNumber))
+    const questionIndex= Number(state.replace(/\D/g, ""))
 
     let answers = getCookie("userAnswers") || ""
     let userTimers= getCookie("userTimers") || ""
     let userTokens= getCookie("userTokens") || ""
 
     const curTime= Number(getCookie("time")) || 0
-    const allTime= plusAnswerTime+ listQuiz[Number(state.slice(questionNumber))].time
+    const allTime= plusAnswerTime+ listQuiz[Number(state.replace(/\D/g, ""))].time
     const userTimer= allTime -curTime
     
     let answerList= answers.split("|")
     answerList= answerList.filter(answer => answer && answer !== " ")
 
     let missingCount= 1+ questionIndex- answerList.length
-    console.log(missingCount, questionIndex, answerList.length)
+    // console.log(missingCount, questionIndex, answerList.length)
 
     if (missingCount < 0){
         return
@@ -134,12 +134,12 @@ function checkAnswers(type){
         }
     }
 
-    console.log(missingCount, answers, userTimers, userTokens)
-    console.log("Before setCookie", userTimers, userTokens);
+    // console.log(missingCount, answers, userTimers, userTokens)
+    // console.log("Before setCookie", userTimers, userTokens);
     setCookie("userAnswers", answers)
     setCookie("userTimers", userTimers)
     setCookie("userTokens", userTokens)
-    console.log("After setCookie", document.cookie);
+    // console.log("After setCookie", document.cookie);
 }
 
 function sendMessage() {

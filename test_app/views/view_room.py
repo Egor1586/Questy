@@ -7,6 +7,8 @@ from ..models import Test, Room, Quiz
 from user.models import User, Score
 
 users= {}
+devices= {}
+user_devices= {}
 
 def get_sid(username):
     for sid, name in users.items():
@@ -32,10 +34,12 @@ def room_get_result(room, author_name, username):
     for user in users_list:
         if user:
             USER= User.query.filter_by(username= user).first()
-            if not USER and user != author_name:
-                UNREG_USER_LIST.append(user)
-            elif USER.username != author_name:
-                USER_LIST.append(USER)
+            if USER:
+                if USER.username != author_name:
+                    USER_LIST.append(USER)
+            else:
+                if user != author_name:
+                    UNREG_USER_LIST.append(user)
 
     SCORE_LIST= Score.query.filter_by(test_code= room).all()
     print("all lists")
@@ -104,7 +108,7 @@ def room_get_result(room, author_name, username):
                     if answers_list[index] == "not_answer":
                         correct_answers_list.append(2)
                         continue
-                    
+
                     if quiz.question_type  == "multiple_choice":
                         multi_choice_correct= quiz.correct_answer.split("%$№")
                         multi_choice_answer= answers_list[index].split("$$$")
@@ -165,8 +169,16 @@ def room_get_result(room, author_name, username):
 def handle_join(data):
     room= data['room']
     username= data['username']
-    users[flask.request.sid] = username
+    device_id= data["device_id"]
+    user_sid= flask.request.sid
 
+    if device_id in devices:
+        emit("kicked", {"succses": "succses"}, to= user_sid)
+        disconnect(sid= user_sid)
+
+    users[user_sid]= username
+    devices[device_id]= user_sid
+    user_devices[username]= device_id
     join_room(room)
 
     test= Test.query.filter_by(test_code = room).first()
@@ -198,17 +210,20 @@ def handle_disconnect():
     users.pop(flask.request.sid, None)
 
     if username:
-        ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
+        device_id= user_devices.pop(username, None)
+        if device_id:
+            devices.pop(device_id, None)
+            ROOM = Room.query.filter(Room.user_list.like(f"%|{username}|%")).first()
 
-        if ROOM and ROOM.user_list:
-            ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
-            db.session.commit()
+            if ROOM and ROOM.user_list:
+                ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
+                db.session.commit()
 
-            emit('user_disconnected', {
-                    'msg': f'{username} відключився',
-                    "username": f"{username}"
-                    }, 
-                to=ROOM.test_code)
+                emit('user_disconnected', {
+                        'msg': f'{username} відключився',
+                        "username": f"{username}"
+                        }, 
+                    to=ROOM.test_code)
 
 @Project.settings.socketio.on('reconnect_user')
 def handle_reconnect_user(data):
@@ -244,11 +259,18 @@ def handle_kick_user(data):
     username = data['user']
     room = data['room']
     
-    kick_sid = get_sid(username)
+    # kick_sid = get_sid(username)
+    device_id= user_devices.get(username)
+    kick_sid= devices.get(device_id)
 
     if kick_sid:
-        users.pop(kick_sid, None)
         emit('kicked', room= kick_sid)
+        disconnect(sid= kick_sid)
+
+        users.pop(kick_sid, None)
+        devices.pop(device_id, None)
+        user_devices.pop(username, None)
+
         ROOM = Room.query.filter_by(test_code=room).first()
         ROOM.user_list = ROOM.user_list.replace(f"|{username}|", "")
         db.session.commit()
@@ -299,9 +321,10 @@ def handle_user_answers(data):
     user_tokens= user_tokens.split("|")
 
     print(user_tokens, user_answers_list, data["user_timers"])
-    for index, quiz in enumerate(range(len(QUIZ_LIST))):
-        if user_answers_list[quiz] == QUIZ_LIST[quiz].correct_answer:
+    for index in range(len(QUIZ_LIST)):
+        if user_answers_list[index] == QUIZ_LIST[index].correct_answer:
             number_of_correct_answers += 1
+        else:
             user_tokens[index]= 0
 
     for token in user_tokens:

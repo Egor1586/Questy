@@ -61,13 +61,6 @@
         let plusAnswerTime= 0;
         let timerInterval= null;
         let plusTimeCount= 15
-        let questionNumber= 0
-
-        if (totalQuestion <= 9){
-            questionNumber= -1
-        } else if (totalQuestion <= 99){
-            questionNumber= -2
-        }
 
         if (timerPaused === NaN){
             setCookie("timeStop", "false")
@@ -81,7 +74,7 @@
         if (state && state.includes("authorStart")) {
             state= getCookie("state")
             let time= getCookie("time")
-            renderAuthorStart(listQuiz[Number(state.slice(questionNumber))], room, authorName, Number(state.slice(questionNumber)), totalQuestion, Number(state.slice(questionNumber)));
+            renderAuthorStart(listQuiz[Number(state.replace(/\D/g, ""))], room, authorName, Number(state.replace(/\D/g, "")), totalQuestion, Number(state.replace(/\D/g, "")));
         } 
         else if (state === "authorResultTest") {
             renderAuthorResultTest(username, authorName, totalQuestion);
@@ -101,7 +94,7 @@
         }
         else if (state && state.includes("question")) {
             let time= getCookie("time")
-            renderQuestion(Number("{{ test.id }}"), listQuiz[Number(state.slice(questionNumber))], listAnswers[Number(state.slice(questionNumber))], room, authorName);
+            renderQuestion(Number("{{ test.id }}"), listQuiz[Number(state.replace(/\D/g, ""))], listAnswers[Number(state.replace(/\D/g, ""))], room, authorName);
         } 
         else if (state && state.includes("waite")) {
             renderWaiteQuestion("test");
@@ -121,14 +114,15 @@
                     }
                 }
             } else{
-                renderWaiteQuestion("waite");
+                renderWaiteQuestion("start");
             }
         }
 
         socket.on("connect", function () {     
             socket.emit("join", {
                 room: room,
-                username: username
+                username: username,
+                device_id: getDeviceId()
             });
         
             if (username !== authorName && !state) {                            
@@ -195,7 +189,7 @@
             setCookie("countUsersAnswer", countUsersAnswer)
 
             state = getCookie("state");    
-            addUserAnswer(data["username"], answer, authorName, listQuiz[Number(state.slice(questionNumber))]);
+            addUserAnswer(data["username"], answer, authorName, listQuiz[Number(state.replace(/\D/g, ""))]);
             
             socket.emit("get_room_size", {
                 room: room,
@@ -220,9 +214,9 @@
                     new_state= -1
                     renderResultTest(username, totalQuestion, listQuiz, listAnswers, testId);
                 } else{
-                    new_state= Number(state.slice(questionNumber))
+                    new_state= Number(state.replace(/\D/g, ""))
                 }
-                console.log("AUTHOER DONE", Number(state.slice(questionNumber)))
+                console.log("AUTHOER DONE", Number(state.replace(/\D/g, "")))
             }
 
             socket.emit("new_state", {
@@ -271,7 +265,7 @@
             checkAnswers("test");
             plusAnswerTime= 0
             if (state != "authorResultTest") {
-                let numberOfQuestion= Number(state.slice(questionNumber));
+                let numberOfQuestion= Number(state.replace(/\D/g, ""));
                 setCookie("time", Number(listQuiz[numberOfQuestion + 1].time))
                 if (numberOfQuestion != totalQuestion - 1) {
                     setCookie("state", `question${numberOfQuestion + 1}`)
@@ -394,7 +388,7 @@
 
         socket.on('start_test', function(data) {   
             let stateCookies= getCookie("state")
-            let state= stateCookies ? Number(stateCookies.slice(questionNumber)) : 0;
+            let state= stateCookies ? Number(stateCookies.replace(/\D/g, "")) : 0;
             let messages = document.getElementById("messages");         
             if (messages){
                 messages.innerHTML += `<p>Start ${data["room"]}</p>`;
