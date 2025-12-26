@@ -34,7 +34,8 @@ def render_test_result():
         user_answers_list= user_answers_cookies.split("|")
 
         if len(user_answers_list) < len(quizzes_list):
-            return flask.redirect("/")
+            print(user_answers_list, quizzes_list)
+            # return flask.redirect("/")
 
         print(user_answers_list)
 
@@ -51,10 +52,11 @@ def render_test_result():
             if quiz.question_type == "multiple_choice":    
                 if sorted(quiz.correct_answer.split("%$№")) == sorted(user_answers_list[number]):
                     count_correct_answers += 1
-
-        USER= User.query.filter_by(id= current_user.id).first()
-        if (USER):
-            USER.tokens= int(USER.tokens) + (count_correct_answers * 500)
+        
+        if current_user.is_authenticated:
+            USER= User.query.filter_by(id= current_user.id).first()
+            if (USER):
+                USER.tokens= int(USER.tokens) + (count_correct_answers * 500)
 
         if current_user.is_authenticated:
             score = Score(
@@ -95,4 +97,5 @@ def render_test_result():
         
         return response
     
-    return flask.redirect("/")
+
+    # return flask.redirect("/")

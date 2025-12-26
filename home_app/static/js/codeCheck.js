@@ -1,7 +1,8 @@
 $(() => {
     let testId= ""
     let currentCodes = [];
-    let saevedRoom= getCookie("room")
+    let savedRoom= getCookie("room")
+    let savedTestAnswer= getCookie("userAnswers")
     
     async function updateCodes() {
         try {
@@ -13,14 +14,18 @@ $(() => {
         }
     }
 
-    if (saevedRoom){
+    if (savedRoom){
         $('#modal-bg-connect').fadeIn(200);
     }
 
+    if (savedTestAnswer){
+        clearCookie(["userAnswers"])
+    }
+
     $('#connect-test-btn').on('click', () => {
-        if (saevedRoom){
+        if (savedRoom){
             setCookie("recconect", "1")
-            window.location.href= `/room${saevedRoom}`
+            window.location.href= `/room${savedRoom}`
         }
     })
 

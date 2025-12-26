@@ -3,27 +3,21 @@ let donatChart;
 function addUserAnswer(username, answer, authorname, quiz) {
     const userAnswers = document.getElementById("user-answers");
     const countAnswerSpan  = document.getElementById("count-answer-span");
+    let correctAnswer= quiz.correct_answer.split("%$№").sort();
 
     countAnswerSpan.textContent= `${parseInt(countAnswerSpan.textContent) + 1}`;
 
-    let correctAnswerDiv  = document.getElementById("author-correct-answer");
-
-    let correctAnswer= '';
-    if (correctAnswerDiv.textContent.includes(':')){
-        correctAnswer= correctAnswerDiv.textContent.split(":")[1].trim()
-    }
-    else{
-        correctAnswer= correctAnswerDiv.textContent.trim()
-    }
-
     if (answer.includes("$$$")){
-        const sortedAnswers= answer.split("$$$").sort().join(" та ")
-        answer= sortedAnswers
-    }
-
-    if (answer === correctAnswer){
-        countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
-        setCookie("countCorrectAnswer", countCorrect)
+        userAnswer= answer.split("$$$").sort()
+        if (userAnswer.join(",") == correctAnswer.join(",")){
+            countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
+            setCookie("countCorrectAnswer", countCorrect)
+        }
+    } else {
+        if (answer == correctAnswer){
+            countCorrect= parseInt(getCookie("countCorrectAnswer"))+ 1
+            setCookie("countCorrectAnswer", countCorrect)
+        }
     }
 
     if (quiz.question_type){
@@ -46,12 +40,14 @@ function addUserAnswer(username, answer, authorname, quiz) {
     });
 
     socket.once('get_usernames', function(data){
-        let userArrey = data;
-        lengthArrey = userArrey.length
+        let userArrey= data;
+        lengthArrey= userArrey.length
 
         countUsersAnswer= getCookie("countUsersAnswer")
         correctAnswerChart= getCookie("countCorrectAnswer")
         
+        console.log("Create render DOUGHNUTCHART")
+        console.log(countUsersAnswer, correctAnswerChart)
         if (lengthArrey === Number(countUsersAnswer)){
             renderDoughnutChart("donat-chart", lengthArrey, correctAnswerChart)
         }
@@ -95,7 +91,7 @@ function renderAuthorStart(quiz, room, authorname, number_of_question, totalQues
     correctAnswer.style.display= "none"
 
     if (quiz.question_type === "multiple_choice"){
-        correctAnswer.textContent= `${quiz.correct_answer.replace("%$№", " та ")}`
+        correctAnswer.textContent= `${quiz.correct_answer.replaceAll("%$№", " та ")}`
     }
     else{
         correctAnswer.textContent= `${quiz.correct_answer}`

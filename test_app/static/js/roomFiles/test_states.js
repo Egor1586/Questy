@@ -60,7 +60,7 @@ function nextQuestion(){
     const correctAnswer = document.getElementById("author-correct-answer")
 
     if (listQuiz[numberOfQuestion].question_type === "multiple_choice"){
-        correctAnswer.textContent= `${listQuiz[numberOfQuestion].correct_answer.replace("%$№", " та ")}`
+        correctAnswer.textContent= `${listQuiz[numberOfQuestion].correct_answer.replaceAll("%$№", " та ")}`
     }
     else{
         correctAnswer.textContent= `${listQuiz[numberOfQuestion].correct_answer}`

@@ -4,20 +4,20 @@ const arreyMultipleChoiceButton= document.querySelectorAll(".multiple-answer")
 const inputButton = document.querySelector(".input-answer")
 const multipleChoiceButton = document.querySelector(".multiple-choice-answer")
 
-if (inputButton) {
+if (inputButton){
     inputButton.addEventListener("click", function(event) {   
-        let user_answer= getCookie("userAnswers")
+        let userAnswer= getCookie("userAnswers")
         let answerValue= document.querySelector(".input-with-answer").value
 
         if (!answerValue){
             answerValue= "not_answer"
         }
             
-        if (!user_answer){
+        if (!userAnswer){
             setCookie("userAnswers", answerValue) 
         } 
         else{
-            setCookie("userAnswers", `${user_answer}|${answerValue}`) 
+            setCookie("userAnswers", `${userAnswer}|${answerValue}`) 
         }  
     })
 }
@@ -28,7 +28,6 @@ if (multipleChoiceButton){
         let currentAnswers= getCookie("userAnswers");
 
         for (const value of document.querySelectorAll(".active-multiple-answer")){
-
             if (!answerValue){
                 answerValue += value.id
             }
@@ -40,17 +39,16 @@ if (multipleChoiceButton){
         if (!answerValue){
             answerValue= "not_answer"
         }
-        
+
         if (!currentAnswers){
             setCookie("userAnswers", answerValue) 
+        } else{
+            userAnswer = getCookie("userAnswers");
+            console.log(userAnswer, answerValue)
+            document.cookie = `userAnswers=${userAnswer}|${answerValue}; path= /`
+            setCookie("userAnswers", `${userAnswer}|${answerValue}`)     
         }
-        else{
-            user_answer = getCookie("userAnswers");
-            document.cookie = `userAnswers=${user_answer}|${answerValue}; path= /`
-        }       
-            setCookie("userAnswers", `${user_answer}|${answerValue}`) 
-        }      
-    )
+    })
 }
 
 for (let count = 0; count < arreyMultipleChoiceButton.length; count++ ) {
@@ -87,8 +85,8 @@ for (let count = 0; count < arreyButton.length; count++ ) {
                 setCookie("userAnswers", button.id) 
             }
             else{
-                user_answer = getCookie("userAnswers");
-                setCookie("userAnswers", `${user_answer}|${button.id}`) 
+                userAnswer = getCookie("userAnswers");
+                setCookie("userAnswers", `${userAnswer}|${button.id}`) 
             }      
         }
     )

@@ -322,7 +322,9 @@ def handle_user_answers(data):
 
     print(user_tokens, user_answers_list, data["user_timers"])
     for index in range(len(QUIZ_LIST)):
-        if user_answers_list[index] == QUIZ_LIST[index].correct_answer:
+        user= user_answers_list[index].split("$$$")
+        quiz= QUIZ_LIST[index].correct_answer.split("%$№")
+        if sorted(user) == sorted(quiz):
             number_of_correct_answers += 1
         else:
             user_tokens[index]= 0
