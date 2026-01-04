@@ -27,7 +27,7 @@ function renderRoomMain(testCode, authorName, username, quizzes, userListName) {
 
     const textCode = document.createElement("div");
     textCode.className = "info-text";
-    textCode.innerHTML = `Код тесту: <strong>${testCode}</strong>`;
+    textCode.innerHTML = `Код тесту:<strong>${testCode}</strong>`;
 
     infoBar.appendChild(textAuthor);
     infoBar.appendChild(textCode);

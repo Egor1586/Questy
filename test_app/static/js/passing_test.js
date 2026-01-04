@@ -68,6 +68,7 @@ for (let count = 0; count < arreyMultipleChoiceButton.length; count++ ) {
             }
             else{
                 button.className= "multiple-answer"
+                button.removeChild(checkmark)
             }
         }
     )

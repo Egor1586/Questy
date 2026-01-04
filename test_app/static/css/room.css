@@ -94,9 +94,13 @@ main {
     align-items: center;
     flex-direction: row;
 
-    gap: 0.8vw;
+    gap: 0.4vw;
 }
 
+.info-text strong {
+    color: var(--green-main);
+    font-weight: 700;
+}
 
 
 .waite-side-top{

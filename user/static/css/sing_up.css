@@ -213,13 +213,17 @@ form .linkTxt{
 }
 
 #error-message {
-    font-size: 1.5vh;
+    font-size: 2vh;
     color: red;
 }
 
 /*  */
 .input-box input {
     border-bottom: 0.32vh solid #b5bfd1;
+}
+
+.input-box::contentt {
+    background-color: red;
 }
 
 .input-box input:focus,
@@ -240,3 +244,13 @@ form .linkTxt{
 .input-box input:valid ~ i {
     color: #3b496d;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #f5faf6 inset;
+  -webkit-text-fill-color: #000;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
