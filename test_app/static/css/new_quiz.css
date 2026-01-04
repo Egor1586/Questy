@@ -82,6 +82,12 @@ h1, h3{
     transition:  0.3s ease;
 }
 
+.form-group textarea {
+    resize: vertical;
+    min-height: 10vh;
+    max-height: 30vh;
+}
+
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: var(--accent-color);

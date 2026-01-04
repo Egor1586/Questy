@@ -14,7 +14,7 @@
             <div class="test-info">
                 {% if username %}
                     <p><strong>{{ username }}</strong>, ваш результат: <strong>{{ count_correct_answers }} </strong>/ {{ list_quiz|length }}</p>
-                    <p>Зароблено <strong>монет</strong>за проходження тесту: {{tokens}}</p>
+                    <p>Зароблено <strong>монет </strong>за проходження тесту: {{tokens}}</p>
                 {% else %}
                     <p>Ваш результат: <strong>{{ count_correct_answers }}</strong> з {{ list_quiz|length }}</p>
                 {% endif %}
@@ -81,7 +81,7 @@
                 
                 {% if question.question_type == "choice" or question.question_type == "image"%}
                     <div class="question-text">
-                        Варіант відповідей.
+                        Варіант відповідей:
                     </div>
                     
                     {% for answer in answers %}
@@ -97,7 +97,7 @@
                     {% endfor %}
                 {% elif question.question_type == "input" %} 
                     <div class="question-text">
-                        Варіант відповідей.
+                        Ваша відповідь:
                     </div>
                     
                     {% if user_answer == "not_answer"%}
@@ -106,7 +106,7 @@
                     {% elif answer != user_answer %} 
                         <div class="answer incorrect">✗ {{user_answer}}</div>   
                         <div class="question-text">
-                            Правильний варіант.
+                            Правильна відповідь:
                         </div>
                         <div class="answer correct">✓ {{ question.correct_answer }}</div>   
                     {% else %}
@@ -116,7 +116,7 @@
                     {% set correct_answer_list = question.correct_answer.split("%$№") %}
                 
                     <div class="question-text">
-                        Варіант відповідей.
+                        Варіант відповідей:
                     </div>
                     
                     {% if "not_answer" in user_answers %}
@@ -125,11 +125,11 @@
                     
                     {% for answer in answers %}                                      
                         {% if answer in correct_answer_list%}
-                            <div class="answer correct">✗ {{answer}}</div>   
+                            <div class="answer correct">✓ {{answer}}</div>   
                         {% elif answer not in correct_answer_list and answer in user_answers %}
                             <div class="answer user_answers">✗ {{answer}}</div>
                         {% else %}
-                            <div class="answer incorrect">✓ {{ answer }}</div>
+                            <div class="answer incorrect">✗ {{ answer }}</div>
                         {% endif %}
 
                     {% endfor %}
