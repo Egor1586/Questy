@@ -187,8 +187,8 @@ form .linkTxt{
 .wrapper .rotate-bg{
     position: absolute;
     top:  -6.4vh;
-    right: 0;
-    width: 65vw;
+    right: -11;
+    width: 68vw;
     height: 134vh;
     background: rgba(113, 145, 107, 1);
     transform: rotate(10deg) skewY(40deg);

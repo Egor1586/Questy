@@ -202,9 +202,9 @@ form .linkTxt{
 .wrapper .rotate-bg{
     position: absolute;
     top:  0;
-    left: 0;
+    left: -15;
     width: 65vw;
-    height: 134vh;
+    height: 137vh;
     background: rgba(113, 145, 107, 1);
     transform: rotate(-10.5deg) skewY(-44deg);
     transform-origin: bottom left;

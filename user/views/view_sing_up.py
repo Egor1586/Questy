@@ -18,11 +18,11 @@ def render_sign_up():
             role = flask.request.form['is_teacher']
             user_role= None
             if role == "False":
-                user_role = False
+                user_role= False
             else:
-                user_role = True
+                user_role= True
 
-            db_user_email = User.query.filter_by(email = email).first()
+            db_user_email= User.query.filter_by(email= email).first()
 
             if password == password_confirmation and db_user_email is None: 
                 code= random.randint(100000, 999999)
@@ -46,7 +46,8 @@ def render_sign_up():
                 return flask.redirect(location = '/confirmation_account')
 
             else:
-                print('Not same password')
+                print('Not same password', password, password_confirmation, db_user_email
+                      , password == password_confirmation)
 
                 
         except Exception as error:
