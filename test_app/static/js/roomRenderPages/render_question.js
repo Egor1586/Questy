@@ -230,7 +230,14 @@ function renderQuestion(testId, quiz, answers, room, author_name) {
             const answerButton = document.createElement("button");
             answerButton.className = "multiple-answer";
             answerButton.id = answer;
-            answerButton.textContent = answer;
+
+            const textNode = document.createTextNode(answer);
+            const checkmark = document.createElement("span");
+            checkmark.className = "checkmark";
+            checkmark.textContent = "✔";
+
+            answerButton.appendChild(textNode)
+            answerButton.appendChild(checkmark)
 
             answerDiv.appendChild(answerButton);
             answersDiv.appendChild(answerDiv);

@@ -7,7 +7,12 @@ const multipleChoiceButton = document.querySelector(".multiple-choice-answer")
 if (inputButton){
     inputButton.addEventListener("click", function(event) {   
         let userAnswer= getCookie("userAnswers")
-        let answerValue= document.querySelector(".input-with-answer").value
+        let answerValue= ""
+
+        const input= document.querySelector(".input-with-answer")
+        if (input){
+            answerValue= input.value
+        }
 
         if (!answerValue){
             answerValue= "not_answer"
@@ -19,6 +24,8 @@ if (inputButton){
         else{
             setCookie("userAnswers", `${userAnswer}|${answerValue}`) 
         }  
+
+        window.location.href= inputButton.dataset.nextUrl
     })
 }
 
@@ -48,6 +55,8 @@ if (multipleChoiceButton){
             document.cookie = `userAnswers=${userAnswer}|${answerValue}; path= /`
             setCookie("userAnswers", `${userAnswer}|${answerValue}`)     
         }
+
+        window.location.href = multipleChoiceButton.dataset.nextUrl
     })
 }
 

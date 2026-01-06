@@ -27,7 +27,6 @@ def render_test_result():
     user_answers_cookies = flask.request.cookies.get("userAnswers")
     task_test_id = flask.request.cookies.get(key= 'taskTestId') or None
     class_id = flask.request.cookies.get(key= 'classId') or None
-    print(user_answers_cookies, "user_answers_cookies")
     
     if user_answers_cookies:
         user_answers_cookies= unquote(user_answers_cookies)
@@ -35,9 +34,9 @@ def render_test_result():
 
         if len(user_answers_list) < len(quizzes_list):
             print(user_answers_list, quizzes_list)
-            # return flask.redirect("/")
+            return flask.redirect("/")
 
-        print(user_answers_list)
+        print(user_answers_list, quizzes_list)
 
         for number, quiz in enumerate(quizzes_list):
             str_user_answers += f"|{user_answers_list[number]}|"
@@ -74,8 +73,8 @@ def render_test_result():
             db.session.add(score)
 
         db.session.commit()
-
-        result_test_page = flask.render_template(
+        
+        return flask.render_template(
             'result_test.html',
             test = test,
             tokens= count_correct_answers * 500,
@@ -92,10 +91,4 @@ def render_test_result():
             is_admin = current_user.is_admin if current_user.is_authenticated else ""
             )
 
-        response = clear_cookies(non_clear_cookie= "user_answers", maked_response= result_test_page)
-        response.set_cookie(key= "user_answers", value="", max_age=0) 
-        
-        return response
-    
-
-    # return flask.redirect("/")
+    return flask.redirect("/")

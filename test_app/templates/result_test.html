@@ -100,7 +100,7 @@
                         Ваша відповідь:
                     </div>
                     
-                    {% if user_answer == "not_answer"%}
+                    {% if user_answer == "not_answer" %}
                         <div class="answer no-answer">Відповідь відсутня</div>
                         <div class="answer correct">✓ {{ question.correct_answer }}</div>
                     {% elif answer != user_answer %} 
@@ -137,5 +137,7 @@
             </div>
         {% endfor %}
     </div>
+
+    <script src="{{ url_for('test_app.static', filename = 'js/resultTest.js') }}"></script>
     
 {% endblock %}

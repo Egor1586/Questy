@@ -1,10 +1,13 @@
-:root{
-    --green-main:  rgb(69, 154, 72);
-    --green-light: #a5d6a7;
-    --shadow: rgba(0, 0, 0, 0.2);
+:root {
+    --green-main: #4CAF50;
     --green-second: #66bb6a;
+    --green-light: #a5d6a7;
+    --bg-soft: #f4f7f4;
+    --text-main: #2f2f2f;
+    --text-muted: #6b6b6b;
+    --shadow-soft: 0 0.78vh 2.6vh rgba(0,0,0,0.08);
+    --shadow-hover: 0 1.3vh 3.9vh rgba(0,0,0,0.12);
 }
-
 
 body, html {
     margin: 0; 
@@ -30,14 +33,13 @@ main {
 }
 
 /* WAITING Room */
-#room-content {
+/* #room-content {
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
     height: 100vh;
     padding: 1vw;
     box-sizing: border-box;
-}
+} */
 
 .waite-side {
     display: flex;
@@ -470,11 +472,6 @@ main {
     gap: 2vh;
     z-index: 3000;
 }
-
-/* #room-content {
-    height: 100%;
-    width: 100%;
-} */
 
 .question {
     display: flex;
@@ -1384,7 +1381,7 @@ main {
     border-left-color: rgb(238, 72, 72);
 }
 
-.leave-btn{
+/* .leave-btn{
     background-color: #f44336;
     border: none;
     padding: 0.8vh 0.5vw;
@@ -1418,7 +1415,50 @@ main {
     justify-content: center;
     margin-top: auto; 
     margin-bottom: 1vh; 
+} */
+
+.button-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2.5vw;
+    flex-wrap: wrap;
 }
+
+.button-box button {
+    padding: 1.5vh 3vw;
+    font-size: 2.5vh;
+    font-weight: 600;
+    border-radius: 1.5vh;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.all-info-btn {
+    background: linear-gradient(135deg, #4CAF50, #43a047);
+}
+
+.exel-btn {
+    background: linear-gradient(135deg, #66bb6a, #4CAF50);
+    padding: 1.5vh 3vw;
+    font-size: 2.5vh;
+    font-weight: 600;
+    border-radius: 1.5vh;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.leave-btn {
+    background: linear-gradient(135deg, #f44336, #e53935);
+}
+
+/*  */
 
 .chart-wrapper {
     display: flex;
@@ -1524,7 +1564,7 @@ body {
     font-family: Arial, sans-serif;
     /* background-color: #d7f0d1; */
     background-color: hwb(120 82% 11% / 0.877);
-    overflow: hidden;
+    /* overflow: hidden; */
     display: flex;
     flex-direction: column;
 }
@@ -1869,6 +1909,14 @@ body {
     font-size: 4vh;
     font-weight: 600;
     color: rgb(5, 57, 22);
+}
+
+.checkmark {
+    display: none;
+}
+
+.active-multiple-answer .checkmark {
+    display: block;
 }
 
 /*  */

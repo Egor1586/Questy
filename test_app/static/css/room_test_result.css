@@ -9,13 +9,15 @@
 }
 
 .wrapper-author-results-container {
-  width: 100vw;
+  width: 100%;
+  height: auto;
   min-height: 100vh;
   padding: 0px !important;
   box-sizing: border-box;
-  background: #f5fff5; 
+  background: #f4f7f4; 
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-top: 2vh;
   gap: 2vh;
   font-family: "Segoe UI", sans-serif;
@@ -78,28 +80,44 @@
   gap: 1vw;
 }
 
+/* .content-box {
+    display: flex;
+    gap: 3vw;
+    align-items: stretch;
+} */
+
 .info-box{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: start; 
+  justify-content: space-between;
+  align-items: center; 
 
   width: 49vw;
-  height: 100%;
+  height: 70vh;
   gap: 2vh;
 }
 
 .base-info{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: start; 
 
   /* width:; */
   height: fit-content;
-  gap: 2vw;
+  gap: 1vh;
 }
 
+.chart-box select {
+    align-self: center;
+    padding: 1.5vh 2.5vw;
+    font-size: 2.2vh;
+    border-radius: 1.5vh;
+    border: 0.09vh solid var(--green-light);
+    background-color: #fff;
+    color: var(--text-main);
+    outline: none;
+}
 
 /* Графік */
 .chart-box {
@@ -113,7 +131,8 @@
   margin-left: 1vw;
   border: 0.2vh solid var(--green-light);
   box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
-  width: 52vw;
+  width: 100vw;
+  height: 70vh;
 }
 
 .chart-box h2 {
@@ -136,9 +155,8 @@
   font-weight: 500;
   border: 0.2vh solid var(--green-light);
   box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
-  width: 22vw;
+  width: 30vw;
   height: 17vh;
-  min-height: fit-content;
 }
 
 .results-info-box h3 {
@@ -160,7 +178,8 @@
   display: grid;
   border-radius: 1.5vh;
   overflow: hidden;
-  width: 46vw;
+  width: 90vw;
+  margin-bottom: 2vh;
 }
 
 .results-header, .results-row {
@@ -236,8 +255,8 @@
   border-radius: 1.5vh;
   padding: 1.5vw;
   box-shadow: 0 0.4vh 1vw rgba(0, 0, 0, 0.15);
-  border: 0.2vh solid var(--green-light);
-  width: 22vw;
+  /* border: 0.2vh solid var(--green-light); */
+  width: 30vw;
   height: 14.5vh;
   min-height: fit-content;
 }

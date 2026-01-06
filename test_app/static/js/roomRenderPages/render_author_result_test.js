@@ -87,11 +87,11 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
         const headerTitle = document.createElement('h1');
         headerTitle.textContent = "Результати тесту";
 
-        const headerText = document.createElement('p');
-        headerText.textContent = "Зведена статистика успішності всіх учасників";
+        // const headerText = document.createElement('p');
+        // headerText.textContent = "Зведена статистика успішності всіх учасників";
 
         header.appendChild(headerTitle);
-        header.appendChild(headerText);
+        // header.appendChild(headerText);
         container.appendChild(header);
 
         //
@@ -140,7 +140,7 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
         exelButton.addEventListener("click", () => exel_table(username, authorName, resultData, best_score_data));
 
         leftButtonBox.appendChild(allInfoButton)
-        rigthButtonBox.appendChild(exelButton)
+        // rigthButtonBox.appendChild(exelButton)
         rigthButtonBox.appendChild(leaveButton)
         buttonBox.appendChild(leftButtonBox)
         buttonBox.appendChild(rigthButtonBox)
@@ -162,8 +162,8 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
         const chartCanvas = document.createElement('canvas');
         chartCanvas.id = 'authorAccuracyChart';
         chartCanvas.className = 'authorAccuracyChart';
-        chartCanvas.width = 1100;
-        chartCanvas.height = 500;
+        chartCanvas.width = 1000;
+        chartCanvas.height = 600;
 
         chartBox.appendChild(headerTitle2);
 
@@ -207,14 +207,14 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
         resultsInfoBox.appendChild(headerTitle3);
         resultsInfoBox.appendChild(resultsInfoBoxText2);
         resultsInfoBox.appendChild(resultsInfoBoxText);
-        baseInfo.appendChild(resultsInfoBox);
+        // baseInfo.appendChild(resultsInfoBox);
 
         const resultTable = document.createElement('div');
         resultTable.className = 'results-table';
 
         resultTable.style.setProperty(
             'grid-template-columns',
-            `8vw repeat(${totalQuestion}, ${32 /totalQuestion}vw) 5.9vw`
+            `10vw repeat(${totalQuestion}, ${70 /totalQuestion}vw) 9.95vw`
         )
 
         const resultHeader = document.createElement('div');
@@ -259,15 +259,15 @@ function renderAuthorResultTest(username, authorName, totalQuestion) {
                         `
         legenBox.appendChild(legenBoxTitle);
         legenBox.appendChild(legend);
-        baseInfo.appendChild(legenBox);
-        
+        baseInfo.appendChild(legenBox); 
+        baseInfo.appendChild(resultsInfoBox)
         infoBox.appendChild(baseInfo)
-        infoBox.appendChild(resultTable);
-        
-        infoBox.appendChild(baseInfo)
-        infoBox.appendChild(resultTable);
+        infoBox.appendChild(exelButton)
+        // infoBox.appendChild(resultTable);
+
         contentBox.appendChild(infoBox)
         container.appendChild(contentBox)
+        container.appendChild(resultTable)
         
 
         document.getElementById('choice').addEventListener('change', function() {

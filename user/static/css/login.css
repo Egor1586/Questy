@@ -187,8 +187,8 @@ form .linkTxt{
 .wrapper .rotate-bg{
     position: absolute;
     top:  -6.4vh;
-    right: -11;
-    width: 68vw;
+    right: -100;
+    width: 70vw;
     height: 134vh;
     background: rgba(113, 145, 107, 1);
     transform: rotate(10deg) skewY(40deg);
@@ -201,9 +201,6 @@ form .linkTxt{
 .wrapper {
     margin: 4vh;
 }
-
-/* інпути */
-
 
 .input-box input {
     border-bottom: 0.32vh solid #b5bfd1;

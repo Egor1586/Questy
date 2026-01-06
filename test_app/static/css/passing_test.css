@@ -63,7 +63,7 @@ body {
 
 .answers-input{
     position: absolute;
-    margin-top: 50vh;
+    margin-top: 60vh;
     transform: translateY(-50%);
 
     width: 80vw;
@@ -345,43 +345,6 @@ body {
 .answer:active {
     transform: scale(0.97);
 }
-
-/* .multiple-choice-answer{
-    width: 100%;
-    background-color: var(--green-main);
-    border: none;
-    border-radius: 16px;
-    font-size: 3rem;
-    font-weight: 700;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-} */
-
-
-/*  */
-/* .multiple-answer {
-    position: relative;
-    padding: 1.5vh 1vw;
-    margin: 1vh 0;
-    width: 100%;
-    border: 0.4vh solid var(--green-main);
-    border-radius: 1.5vh;
-    background-color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
-} */
-
-
-/* .active-multiple-answer {
-    position: relative;
-    padding: 10px 15px;
-    margin: 8px 0;
-    width: 100%;
-    border: 2px solid var(--green-main);
-    border-radius: 10px;
-    background-color: rgb(122, 223, 156);
-    cursor: pointer;
-    transition: all 0.2s ease;
-} */
 
 .active-multiple-answer:active {
     transform: scale(0.95);
